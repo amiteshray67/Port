@@ -1,0 +1,72 @@
+:root {
+    --primary-color: #6366f1;
+    --primary-color-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --text-color: #1f2937;
+    --text-color-light: #4b5563;
+    --background-color: #ffffff;
+    --background-color-alt: #f9fafb;
+    --card-background: #ffffff;
+    --border-color: #e5e7eb;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --header-height: 70px;
+}
+
+.dark-mode {
+    --primary-color: #8b5cf6;
+    --primary-color-dark: #7c3aed;
+    --secondary-color: #6366f1;
+    --text-color: #f9fafb;
+    --text-color-light: #d1d5db;
+    --background-color: #111827;
+    --background-color-alt: #1f2937;
+    --card-background: #1f2937;
+    --border-color: #374151;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Back to Top Button Styles */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    z-index: 100;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background-color: var(--primary-color-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Add all other CSS styles from the HTML file here */ 

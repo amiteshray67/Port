@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amitesh Ray | Finance Professional</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-color-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --text-color: #1f2937;
+            --text-color-light: #4b5563;
+            --background-color: #ffffff;
+            --background-color-alt: #f9fafb;
+            --card-background: #ffffff;
+            --border-color: #e5e7eb;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --header-height: 70px;
+        }
+        
+        .dark-mode {
+            --primary-color: #8b5cf6;
+            --primary-color-dark: #7c3aed;
+            --secondary-color: #6366f1;
+            --text-color: #f9fafb;
+            --text-color-light: #d1d5db;
+            --background-color: #111827;
+            --background-color-alt: #1f2937;
+            --card-background: #1f2937;
+            --border-color: #374151;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            margin-top: 0;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+        
+        section {
+            padding: 80px 0;
+            transition: background-color 0.3s ease;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--background-color);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            height: var(--header-height);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .dark-mode-toggle:hover {
+            background-color: var(--background-color-alt);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            min-height: calc(100vh - var(--header-height));
+            display: flex;
+            align-items: center;
+            padding-top: var(--header-height);
+            background-color: var(--background-color);
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-heading {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .hero-heading span {
+            color: var(--primary-color);
+        }
+        
+        .hero-subheading {
+            font-size: 1.2rem;
+            color: var(--text-color-light);
+            margin-bottom: 30px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .profile-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 10px 25px var(--shadow-color);
+        }
+        
+        /* About Section */
+        .about-section {
+            background-color: var(--background-color-alt);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            transform: translateX(50%);
+        }
+        
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color-light);
+        }
+        
+        /* Timeline Styles */
+        .timeline-section {
+            padding: 80px 0;
+        }
+        
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: var(--border-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            display: flex;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            width: calc(50% - 30px);
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-background);
+            transform: rotate(45deg);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -10px;
+        }
+        
+        .timeline-date {
+            position: absolute;
+            top: 20px;
+            width: 100px;
+            padding: 8px 0;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-date {
+            right: -150px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-date {
+            left: -150px;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .timeline-subtitle {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .timeline-text {
+            font-size: 0.95rem;
+            color: var(--text-color-light);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        
+        /* Certifications Section */
+        .certifications-section {
+            background-color: var(--background-color);
+        }
+        
+        .certifications-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .certification-card {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            width: calc(50% - 15px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .certification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow-color);
+        }
+        
+        .certification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        
+        .certification-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .certification-issuer {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .certification-date {
+            font-size: 0.8rem;
+            color: var(--text-color-light);
+            margin-bottom: 15px;
+        }
+        
+        .certification-icon {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+        }
+        
+        /* Financial Tools Section */
+        .tools-section {
+            background-color: var(--background-color-alt);
+        }
+        
+        .tools-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .tools-tabs {
+            display: flex;
+            background-color: var(--card-background);
+            border-radius: 50px;
+            padding: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px var(--shadow-color);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tools-tab {
+            flex: 1;
+            padding: 12px 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+        
+        .tools-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .tool-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .tool-info {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        
+        .tool-info-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .tool-info-text {
+            font-size: 0.95rem;
+            color: var(--text-color-light);
+            line-height: 1.8;
+        }
+        
+        .tool-calculator {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        
+        .calculator-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-input {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .calculator-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .result-card {
+            background-color: var(--background-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px var(--shadow-color);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--text-color-light);
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            font-weight: 600;
+            background-color: var(--background-color-alt);
+            color: var(--text-color);
+        }
+        
+        tbody tr {
+            transition: background-color 0.3s ease;
+        }
+        
+        tbody tr:hover {
+            background-color: var(--background-color-alt);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background-color: var(--background-color);
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 200px;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--background-color-alt);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        .contact-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .contact-text {
+            font-size: 0.9rem;
+            color: var(--text-color-light);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--background-color-alt);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background-color-alt);
+            padding: 30px 0;
+            text-align: center;
+            color: var(--text-color-light);
+            font-size: 0.9rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 30px;
+            }
+            
+            .hero-heading {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .timeline-container::before {
+                left: 60px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 90px);
+                margin-left: 90px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -10px;
+            }
+            
+            .timeline-dot {
+                left: 60px;
+            }
+            
+            .timeline-date {
+                position: relative;
+                top: 0;
+                left: 0 !important;
+                right: 0 !important;
+                margin-bottom: 10px;
+                display: inline-block;
+            }
+            
+            .certification-card {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-heading {
+                font-size: 2rem;
+            }
+            
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .tools-tab {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">Amitesh <span>Ray</span></a>
+            <nav class="nav-links">
+                <a href="#about" class="active">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#tools">Financial Tools</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-heading">Let's Unravel <span>Finance</span> Together</h1>
+                    <p class="hero-subheading">Finance Professional with passion for equity research, valuations, and credit risk analysis.</p>
+                    <div class="hero-buttons">
+                        <a href="#tools" class="btn">Financial Tools</a>
+                        <a href="#contact" class="btn btn-outline">Contact Me</a>
+                        <a href="assets/Amitesh_Ray_Resume.pdf" class="btn btn-outline" download>Download Resume</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/images/profile.jpg" alt="Amitesh Ray" class="profile-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <p class="about-text">
+                    GREETINGS! I'm just a humble learner on a journey through the world of finance and entrepreneurship. With a foundation in ECE from HITK, Kolkata, I'm now expanding my horizons as an MBA grad at TAPMI Manipal.
+                </p>
+                <p class="about-text">
+                    My curiosity has led me to explore areas like personal finance, derivatives trading, digital marketing, SEO, AI tools, prompt engineering and video editing. I've been fortunate to participate in various technical events and community programs, which have enriched my learning experience.
+                </p>
+                <p class="about-text">
+                    I'm an avid reader, always seeking to absorb new insights in my field. My dream? To make a meaningful impact in the fin/tech industry, driving both business growth and positive social change.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience Section -->
+    <section id="experience" class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="timeline-container">
+                <!-- Arcesium -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">May 2025 - Present</span>
+                        <h3 class="timeline-title">Finance Analyst</h3>
+                        <h4 class="timeline-subtitle">Arcesium</h4>
+                        <p class="timeline-text">
+                            Will be joining Arcesium as a Finance Analyst, focusing on financial analysis, reporting, and strategic planning.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <!-- Bloomberg -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">Mar 2024 - Mar 2025</span>
+                        <h3 class="timeline-title">Bloomberg Champion</h3>
+                        <h4 class="timeline-subtitle">Bloomberg</h4>
+                        <p class="timeline-text">
+                            Part of the Bloomberg Championship Program with TAPMI Manipal, focusing on financial market analysis and Bloomberg Terminal expertise.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <!-- Samnidhy -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">Mar 2024 - Mar 2025</span>
+                        <h3 class="timeline-title">Senior Equity Research Analyst</h3>
+                        <h4 class="timeline-subtitle">Samnidhy</h4>
+                        <p class="timeline-text">
+                            Led equity research initiatives, conducted in-depth analysis of companies, and provided investment recommendations.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <!-- Blue Copper -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">Apr 2024 - Jun 2024</span>
+                        <h3 class="timeline-title">Market Research Intern</h3>
+                        <h4 class="timeline-subtitle">Blue Copper Technologies Pvt. Ltd.</h4>
+                        <p class="timeline-text">
+                            Conducted secondary market research to identify customer pain points and refine client acquisition strategy. Designed ZAPIER workflow for content automation reducing manual work by up to 70% and cost by 83%. Conducted analysis on 7+ payment rails, selecting the optimal option.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="timeline-section" style="background-color: var(--background-color-alt);">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="timeline-container">
+                <!-- MBA -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2023 - 2025</span>
+                        <h3 class="timeline-title">MBA - Finance</h3>
+                        <h4 class="timeline-subtitle">T. A. Pai Management Institute, Manipal</h4>
+                        <p class="timeline-text">
+                            CGPA: 6.18
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <!-- B.Tech -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2019 - 2023</span>
+                        <h3 class="timeline-title">B.Tech</h3>
+                        <h4 class="timeline-subtitle">Heritage Institute of Technology, Kolkata</h4>
+                        <p class="timeline-text">
+                            CGPA: 8.71
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <!-- CBSE XII -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2018 - 2019</span>
+                        <h3 class="timeline-title">CBSE - XII</h3>
+                        <h4 class="timeline-subtitle">South Point High School, Kolkata</h4>
+                        <p class="timeline-text">
+                            Percentage: 65%
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <!-- CBSE X -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2016 - 2017</span>
+                        <h3 class="timeline-title">CBSE - X</h3>
+                        <h4 class="timeline-subtitle">South Point High School, Kolkata</h4>
+                        <p class="timeline-text">
+                            CGPA: 9.4
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="certifications-section">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications-container">
+                <!-- CFA -->
+                <div class="certification-card">
+                    <div class="certification-icon"><i class="fas fa-award"></i></div>
+                    <h3 class="certification-title">CFA Level 1</h3>
+                    <div class="certification-issuer">
+                        <i class="fas fa-university"></i>
+                        CFA Institute
+                    </div>
+                    <div class="certification-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        2023
+                    </div>
+                    <p class="certification-text">
+                        Successfully cleared CFA Level 1 examination, demonstrating proficiency in investment analysis, portfolio management, and ethics.
+                    </p>
+                </div>
+                
+                <!-- Credit Risk Management -->
+                <div class="certification-card">
+                    <div class="certification-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="certification-title">Credit Risk Management: Frameworks and Strategies</h3>
+                    <div class="certification-issuer">
+                        <i class="fas fa-university"></i>
+                        New York Institute of Finance
+                    </div>
+                    <div class="certification-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        November 2023
+                    </div>
+                    <p class="certification-text">
+                        Mastered credit risk assessment techniques, portfolio management strategies, and risk mitigation frameworks.
+                    </p>
+                </div>
+                
+                <!-- DCF Modeling -->
+                <div class="certification-card">
+                    <div class="certification-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="certification-title">Discounted Cash Flow Modeling</h3>
+                    <div class="certification-issuer">
+                        <i class="fas fa-university"></i>
+                        Coursera
+                    </div>
+                    <div class="certification-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        October 2023
+                    </div>
+                    <p class="certification-text">
+                        Developed expertise in building DCF models for company valuation, forecasting, and investment analysis.
+                    </p>
+                </div>
+                
+                <!-- Bloomberg -->
+                <div class="certification-card">
+                    <div class="certification-icon"><i class="fas fa-desktop"></i></div>
+                    <h3 class="certification-title">Bloomberg Champion</h3>
+                    <div class="certification-issuer">
+                        <i class="fas fa-university"></i>
+                        Bloomberg
+                    </div>
+                    <div class="certification-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        2024 - 2025
+                    </div>
+                    <p class="certification-text">
+                        Selected for the Bloomberg Champion program, gaining advanced proficiency in Bloomberg Terminal and financial market analysis.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Tools Section -->
+    <section id="tools" class="tools-section">
+        <div class="container">
+            <h2 class="section-title">Financial Tools</h2>
+            <div class="tools-container">
+                <div class="tools-tabs">
+                    <div class="tools-tab active" data-tab="emi">EMI Calculator</div>
+                    <div class="tools-tab" data-tab="npv">NPV Calculator</div>
+                    <div class="tools-tab" data-tab="retirement">Retirement Calculator</div>
+                </div>
+                
+                <!-- EMI Calculator -->
+                <div class="tool-content active" id="emi-calculator">
+                    <div class="tool-info">
+                        <h3 class="tool-info-title">EMI (Equated Monthly Installment)</h3>
+                        <p class="tool-info-text">
+                            EMI is a fixed payment amount made by a borrower to a lender at a specified date each month. EMIs are calculated using the formula:
+                            <br><br>
+                            <strong>EMI = [P × r × (1 + r)^n]/[(1 + r)^n - 1]</strong>
+                            <br><br>
+                            Where:<br>
+                            P = Principal loan amount<br>
+                            r = Monthly interest rate<br>
+                            n = Number of monthly installments
+                        </p>
+                    </div>
+                    <div class="tool-calculator">
+                        <div class="calculator-form">
+                            <div class="form-group">
+                                <label class="form-label">Loan Amount (₹)</label>
+                                <input type="number" class="form-input" id="emi-loan-amount" value="1000000" min="1000" max="100000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Interest Rate (% per annum)</label>
+                                <input type="number" class="form-input" id="emi-interest-rate" value="10" min="1" max="50" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Loan Tenure (years)</label>
+                                <input type="number" class="form-input" id="emi-loan-tenure" value="20" min="1" max="30">
+                            </div>
+                        </div>
+                        <div class="calculator-results">
+                            <div class="result-card">
+                                <div class="result-value" id="emi-monthly-payment">₹ 9,650</div>
+                                <div class="result-label">Your Monthly EMI</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="emi-total-interest">₹ 13,16,074</div>
+                                <div class="result-label">Total Interest</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="emi-total-payment">₹ 23,16,074</div>
+                                <div class="result-label">Total Payment</div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="emi-chart"></canvas>
+                        </div>
+                        <h4 style="margin-bottom: 15px; font-size: 1.2rem; color: var(--text-color);">Amortization Schedule</h4>
+                        <div class="table-container">
+                            <table id="emi-schedule">
+                                <thead>
+                                    <tr>
+                                        <th>Payment No.</th>
+                                        <th>Date</th>
+                                        <th>EMI (₹)</th>
+                                        <th>Principal (₹)</th>
+                                        <th>Interest (₹)</th>
+                                        <th>Balance (₹)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NPV Calculator -->
+                <div class="tool-content" id="npv-calculator">
+                    <div class="tool-info">
+                        <h3 class="tool-info-title">NPV Calculator for Real Estate</h3>
+                        <p class="tool-info-text">
+                            Net Present Value (NPV) is a financial metric that calculates the difference between the present value of cash inflows and outflows over a period of time. For real estate investments, this helps determine if rental income and potential property appreciation justify the initial investment.
+                            <br><br>
+                            <strong>NPV = Initial Investment + Σ (Cash Flow_t / (1+r)^t) + (Final Sale Value / (1+r)^n)</strong>
+                            <br><br>
+                            Where:<br>
+                            r = Discount rate<br>
+                            t = Time period<br>
+                            n = Total number of periods
+                        </p>
+                    </div>
+                    <div class="tool-calculator">
+                        <div class="calculator-form">
+                            <div class="form-group">
+                                <label class="form-label">Property Purchase Price (₹)</label>
+                                <input type="number" class="form-input" id="npv-property-price" value="5000000" min="100000" max="1000000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Expected Monthly Rental (₹)</label>
+                                <input type="number" class="form-input" id="npv-monthly-rental" value="35000" min="1000" max="10000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Annual Rental Growth Rate (%)</label>
+                                <input type="number" class="form-input" id="npv-rental-growth" value="5" min="0" max="50" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Annual Maintenance Cost (₹)</label>
+                                <input type="number" class="form-input" id="npv-maintenance-cost" value="25000" min="0" max="10000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Investment Horizon (years)</label>
+                                <input type="number" class="form-input" id="npv-investment-horizon" value="10" min="1" max="50">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Discount Rate (% per annum)</label>
+                                <input type="number" class="form-input" id="npv-discount-rate" value="8" min="1" max="50" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Property Value Growth Rate (% per annum)</label>
+                                <input type="number" class="form-input" id="npv-property-growth" value="7" min="0" max="50" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check">
+                                    <input type="checkbox" id="npv-sell-property" checked>
+                                    <span>Sell Property at End of Period</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="calculator-results">
+                            <div class="result-card">
+                                <div class="result-value" id="npv-result">₹ 6,35,234</div>
+                                <div class="result-label">Net Present Value (NPV)</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="npv-sale-value">₹ 98,35,763</div>
+                                <div class="result-label">Final Sale Value</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="npv-viability">Viable Investment</div>
+                                <div class="result-label" id="npv-viability-description">NPV > 0</div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="npv-chart"></canvas>
+                        </div>
+                        <h4 style="margin-bottom: 15px; font-size: 1.2rem; color: var(--text-color);">Yearly Cash Flow Breakdown</h4>
+                        <div class="table-container">
+                            <table id="npv-schedule">
+                                <thead>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Rental Income (₹)</th>
+                                        <th>Expenses (₹)</th>
+                                        <th>Net Cash Flow (₹)</th>
+                                        <th>Present Value (₹)</th>
+                                        <th>Cumulative NPV (₹)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Retirement Calculator -->
+                <div class="tool-content" id="retirement-calculator">
+                    <div class="tool-info">
+                        <h3 class="tool-info-title">Retirement Planning</h3>
+                        <p class="tool-info-text">
+                            Retirement Planning involves calculating how much you need to save regularly to meet your retirement goals. This calculator uses the compound interest formula and accounts for inflation to give a realistic picture of your future needs.
+                            <br><br>
+                            <strong>FV = P × (1 + r)^n + PMT × ((1 + r)^n - 1) / r × (1 + r)</strong>
+                            <br><br>
+                            Where:<br>
+                            FV = Future Value needed<br>
+                            P = Initial principal<br>
+                            r = Interest rate<br>
+                            n = Number of periods<br>
+                            PMT = Regular payment amount
+                        </p>
+                    </div>
+                    <div class="tool-calculator">
+                        <div class="calculator-form">
+                            <div class="form-group">
+                                <label class="form-label">Current Age</label>
+                                <input type="number" class="form-input" id="retirement-current-age" value="30" min="18" max="80">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Retirement Age</label>
+                                <input type="number" class="form-input" id="retirement-retirement-age" value="60" min="40" max="85">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Life Expectancy</label>
+                                <input type="number" class="form-input" id="retirement-life-expectancy" value="85" min="60" max="120">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Current Monthly Expenses (₹)</label>
+                                <input type="number" class="form-input" id="retirement-monthly-expenses" value="50000" min="5000" max="10000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Expected Inflation Rate (% per annum)</label>
+                                <input type="number" class="form-input" id="retirement-inflation-rate" value="6" min="1" max="20" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Current Retirement Savings (₹)</label>
+                                <input type="number" class="form-input" id="retirement-current-savings" value="500000" min="0" max="1000000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Current Monthly Contribution (₹)</label>
+                                <input type="number" class="form-input" id="retirement-monthly-contribution" value="15000" min="0" max="10000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Expected Return Rate Before Retirement (% per annum)</label>
+                                <input type="number" class="form-input" id="retirement-pre-return-rate" value="12" min="1" max="50" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Expected Return Rate After Retirement (% per annum)</label>
+                                <input type="number" class="form-input" id="retirement-post-return-rate" value="8" min="1" max="50" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Annual Step-up in Monthly Contribution (%)</label>
+                                <input type="number" class="form-input" id="retirement-step-up-rate" value="5" min="0" max="50" step="0.1">
+                            </div>
+                        </div>
+                        <div class="calculator-results">
+                            <div class="result-card">
+                                <div class="result-value" id="retirement-corpus-required">₹ 4.23 Cr</div>
+                                <div class="result-label">Corpus Required at Retirement</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="retirement-corpus-expected">₹ 3.86 Cr</div>
+                                <div class="result-label">Expected Corpus at Retirement</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="retirement-monthly-shortfall">₹ -4,800</div>
+                                <div class="result-label">Monthly Shortfall/Surplus</div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="retirement-chart"></canvas>
+                        </div>
+                        <h4 style="margin-bottom: 15px; font-size: 1.2rem; color: var(--text-color);">Retirement Planning Strategy</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                            <div>
+                                <h5 style="font-size: 1.1rem; margin-bottom: 15px; color: var(--text-color);">Suggested Asset Allocation</h5>
+                                <div style="height: 200px;">
+                                    <canvas id="retirement-allocation-chart"></canvas>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 style="font-size: 1.1rem; margin-bottom: 15px; color: var(--text-color);">Key Recommendations</h5>
+                                <ul style="list-style-type: none; padding: 0;">
+                                    <li style="padding: 8px 0; display: flex; align-items: flex-start; gap: 10px;">
+                                        <i class="fas fa-check-circle" style="color: var(--primary-color); margin-top: 3px;"></i>
+                                        <span id="retirement-recommendation-1">Increase your monthly contribution by at least ₹4,800</span>
+                                    </li>
+                                    <li style="padding: 8px 0; display: flex; align-items: flex-start; gap: 10px;">
+                                        <i class="fas fa-check-circle" style="color: var(--primary-color); margin-top: 3px;"></i>
+                                        <span>Consider increasing equity exposure for better long-term returns</span>
+                                    </li>
+                                    <li style="padding: 8px 0; display: flex; align-items: flex-start; gap: 10px;">
+                                        <i class="fas fa-check-circle" style="color: var(--primary-color); margin-top: 3px;"></i>
+                                        <span>Review and rebalance your portfolio annually</span>
+                                    </li>
+                                    <li style="padding: 8px 0; display: flex; align-items: flex-start; gap: 10px;">
+                                        <i class="fas fa-check-circle" style="color: var(--primary-color); margin-top: 3px;"></i>
+                                        <span>Maximize tax-advantaged retirement accounts</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="contact-title">Location</h3>
+                    <p class="contact-text">Kolkata, West Bengal, India</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="contact-title">Email</h3>
+                    <p class="contact-text">amiteshray67@gmail.com</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="contact-title">Phone</h3>
+                    <p class="contact-text">+91 7602185147</p>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/amitesh-ray/" target="_blank" class="social-link">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://wa.me/917602185147" target="_blank" class="social-link">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="mailto:amiteshray67@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="assets/Amitesh_Ray_Resume.pdf" download class="social-link">
+                    <i class="fas fa-file-download"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2024 Amitesh Ray. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            // Update icon
+            if (body.classList.contains('dark-mode')) {
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70, // Adjust for header height
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Navigation Active State
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        function updateActiveLink() {
+            const scrollY = window.pageYOffset;
+            
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 100;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        function toggleBackToTopButton() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        }
+        
+        // Tools Tabs
+        const toolsTabs = document.querySelectorAll('.tools-tab');
+        const toolContents = document.querySelectorAll('.tool-content');
+        
+        toolsTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                toolsTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                toolContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === `${tabId}-calculator`) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // EMI Calculator
+        function calculateEMI() {
+            const loanAmount = parseFloat(document.getElementById('emi-loan-amount').value);
+            const interestRate = parseFloat(document.getElementById('emi-interest-rate').value) / 100 / 12; // Monthly rate
+            const loanTenure = parseFloat(document.getElementById('emi-loan-tenure').value) * 12; // In months
+            
+            const emi = loanAmount * interestRate * Math.pow(1 + interestRate, loanTenure) / (Math.pow(1 + interestRate, loanTenure) - 1);
+            const totalPayment = emi * loanTenure;
+            const totalInterest = totalPayment - loanAmount;
+            
+            document.getElementById('emi-monthly-payment').textContent = `₹ ${emi.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            document.getElementById('emi-total-interest').textContent = `₹ ${totalInterest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            document.getElementById('emi-total-payment').textContent = `₹ ${totalPayment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            
+            // Update Amortization Schedule
+            updateEMISchedule(loanAmount, interestRate, emi, loanTenure);
+            
+            // Update Chart
+            updateEMIChart(loanAmount, totalInterest);
+        }
+        
+        function updateEMISchedule(loanAmount, interestRate, emi, loanTenure) {
+            const scheduleTable = document.getElementById('emi-schedule').getElementsByTagName('tbody')[0];
+            scheduleTable.innerHTML = '';
+            
+            let balance = loanAmount;
+            const today = new Date();
+            
+            for (let i = 1; i <= Math.min(loanTenure, 240); i++) { // Limit to 240 rows (20 years)
+                const paymentDate = new Date(today);
+                paymentDate.setMonth(today.getMonth() + i);
+                
+                const interest = balance * interestRate;
+                const principal = emi - interest;
+                balance -= principal;
+                
+                const row = scheduleTable.insertRow();
+                
+                row.insertCell(0).textContent = i;
+                row.insertCell(1).textContent = paymentDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'short' });
+                row.insertCell(2).textContent = `₹ ${emi.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                row.insertCell(3).textContent = `₹ ${principal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                row.insertCell(4).textContent = `₹ ${interest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                row.insertCell(5).textContent = `₹ ${Math.max(0, balance).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            }
+        }
+        
+        function updateEMIChart(principal, interest) {
+            const ctx = document.getElementById('emi-chart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (window.emiChart) {
+                window.emiChart.destroy();
+            }
+            
+            window.emiChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Principal', 'Interest'],
+                    datasets: [{
+                        data: [principal, interest],
+                        backgroundColor: [
+                            getComputedStyle(document.body).getPropertyValue('--primary-color'),
+                            getComputedStyle(document.body).getPropertyValue('--secondary-color')
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.raw;
+                                    return `₹ ${value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // NPV Calculator
+        function calculateNPV() {
+            const propertyPrice = parseFloat(document.getElementById('npv-property-price').value);
+            const monthlyRental = parseFloat(document.getElementById('npv-monthly-rental').value);
+            const rentalGrowthRate = parseFloat(document.getElementById('npv-rental-growth').value) / 100;
+            const maintenanceCost = parseFloat(document.getElementById('npv-maintenance-cost').value);
+            const investmentHorizon = parseFloat(document.getElementById('npv-investment-horizon').value);
+            const discountRate = parseFloat(document.getElementById('npv-discount-rate').value) / 100;
+            const propertyGrowthRate = parseFloat(document.getElementById('npv-property-growth').value) / 100;
+            const sellProperty = document.getElementById('npv-sell-property').checked;
+            
+            let npv = -propertyPrice; // Initial investment (negative)
+            let yearlyData = [];
+            
+            for (let year = 1; year <= investmentHorizon; year++) {
+                // Calculate adjusted rental income with growth
+                const annualRental = monthlyRental * 12 * Math.pow(1 + rentalGrowthRate, year - 1);
+                const expenses = maintenanceCost * Math.pow(1 + rentalGrowthRate/2, year - 1); // Maintenance grows half as fast as rental
+                const netCashFlow = annualRental - expenses;
+                const presentValue = netCashFlow / Math.pow(1 + discountRate, year);
+                npv += presentValue;
+                
+                yearlyData.push({
+                    year,
+                    rentalIncome: annualRental,
+                    expenses,
+                    netCashFlow,
+                    presentValue,
+                    cumulativeNPV: -propertyPrice + yearlyData.reduce((sum, data) => sum + data.presentValue, 0) + presentValue
+                });
+            }
+            
+            // Add property sale value if selected
+            let finalSaleValue = 0;
+            if (sellProperty) {
+                finalSaleValue = propertyPrice * Math.pow(1 + propertyGrowthRate, investmentHorizon);
+                const presentValueOfSale = finalSaleValue / Math.pow(1 + discountRate, investmentHorizon);
+                npv += presentValueOfSale;
+                
+                // Add to the last year's data
+                if (yearlyData.length > 0) {
+                    const lastYear = yearlyData[yearlyData.length - 1];
+                    lastYear.netCashFlow += finalSaleValue;
+                    lastYear.presentValue += presentValueOfSale;
+                    lastYear.cumulativeNPV = npv;
+                }
+            }
+            
+            // Update results
+            document.getElementById('npv-result').textContent = `₹ ${npv.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            document.getElementById('npv-sale-value').textContent = `₹ ${finalSaleValue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            
+            if (npv > 0) {
+                document.getElementById('npv-viability').textContent = 'Viable Investment';
+                document.getElementById('npv-viability-description').textContent = 'NPV > 0';
+                document.getElementById('npv-viability').style.color = '#10b981'; // Green color
+            } else {
+                document.getElementById('npv-viability').textContent = 'Not Viable';
+                document.getElementById('npv-viability-description').textContent = 'NPV < 0';
+                document.getElementById('npv-viability').style.color = '#ef4444'; // Red color
+            }
+            
+            // Update yearly breakdown table
+            updateNPVTable(yearlyData);
+            
+            // Update chart
+            updateNPVChart(yearlyData);
+        }
+        
+        function updateNPVTable(yearlyData) {
+            const scheduleTable = document.getElementById('npv-schedule').getElementsByTagName('tbody')[0];
+            scheduleTable.innerHTML = '';
+            
+            yearlyData.forEach(data => {
+                const row = scheduleTable.insertRow();
+                
+                row.insertCell(0).textContent = data.year;
+                row.insertCell(1).textContent = `₹ ${data.rentalIncome.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                row.insertCell(2).textContent = `₹ ${data.expenses.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                row.insertCell(3).textContent = `₹ ${data.netCashFlow.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                row.insertCell(4).textContent = `₹ ${data.presentValue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                row.insertCell(5).textContent = `₹ ${data.cumulativeNPV.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            });
+        }
+        
+        function updateNPVChart(yearlyData) {
+            const ctx = document.getElementById('npv-chart').getContext('2d');
+            
+            // Prepare data
+            const years = yearlyData.map(data => `Year ${data.year}`);
+            const cashFlows = yearlyData.map(data => data.netCashFlow);
+            const presentValues = yearlyData.map(data => data.presentValue);
+            const cumulativeNPVs = yearlyData.map(data => data.cumulativeNPV);
+            
+            // Destroy previous chart if it exists
+            if (window.npvChart) {
+                window.npvChart.destroy();
+            }
+            
+            window.npvChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: 'Net Cash Flow',
+                            data: cashFlows,
+                            backgroundColor: getComputedStyle(document.body).getPropertyValue('--primary-color'),
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'Present Value',
+                            data: presentValues,
+                            backgroundColor: getComputedStyle(document.body).getPropertyValue('--secondary-color'),
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'Cumulative NPV',
+                            data: cumulativeNPVs,
+                            type: 'line',
+                            borderColor: '#10b981',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            pointBorderWidth: 2,
+                            pointBackgroundColor: '#10b981',
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color-light')
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color-light'),
+                                callback: function(value) {
+                                    return '₹ ' + value.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.raw;
+                                    return `${context.dataset.label}: ₹ ${value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Retirement Calculator
+        function calculateRetirement() {
+            const currentAge = parseInt(document.getElementById('retirement-current-age').value);
+            const retirementAge = parseInt(document.getElementById('retirement-retirement-age').value);
+            const lifeExpectancy = parseInt(document.getElementById('retirement-life-expectancy').value);
+            const monthlyExpenses = parseFloat(document.getElementById('retirement-monthly-expenses').value);
+            const inflationRate = parseFloat(document.getElementById('retirement-inflation-rate').value) / 100;
+            const currentSavings = parseFloat(document.getElementById('retirement-current-savings').value);
+            const monthlyContribution = parseFloat(document.getElementById('retirement-monthly-contribution').value);
+            const preReturnRate = parseFloat(document.getElementById('retirement-pre-return-rate').value) / 100;
+            const postReturnRate = parseFloat(document.getElementById('retirement-post-return-rate').value) / 100;
+            const stepUpRate = parseFloat(document.getElementById('retirement-step-up-rate').value) / 100;
+            
+            // Years until retirement and years in retirement
+            const yearsToRetirement = retirementAge - currentAge;
+            const yearsInRetirement = lifeExpectancy - retirementAge;
+            
+            // Monthly expenses at retirement (adjusted for inflation)
+            const expensesAtRetirement = monthlyExpenses * Math.pow(1 + inflationRate, yearsToRetirement);
+            const annualExpensesAtRetirement = expensesAtRetirement * 12;
+            
+            // Calculate required corpus at retirement
+            let requiredCorpus = 0;
+            
+            // Calculate corpus needed for retirement
+            // Using the formula for the present value of an annuity
+            if (postReturnRate > inflationRate) {
+                const realRate = (postReturnRate - inflationRate) / (1 + inflationRate);
+                requiredCorpus = annualExpensesAtRetirement * (1 - Math.pow(1 + realRate, -yearsInRetirement)) / realRate;
+            } else {
+                // If real return rate is negative or zero, use simple multiplication
+                requiredCorpus = annualExpensesAtRetirement * yearsInRetirement;
+            }
+            
+            // Calculate expected corpus at retirement
+            let expectedCorpus = currentSavings;
+            const monthlyReturnRate = Math.pow(1 + preReturnRate, 1/12) - 1;
+            
+            // Calculate future value with increasing contributions (SIP step-up)
+            let yearlyData = [];
+            let currentContribution = monthlyContribution;
+            
+            for (let year = 1; year <= yearsToRetirement; year++) {
+                let yearlyContribution = currentContribution * 12;
+                
+                // Compound for this year
+                expectedCorpus = expectedCorpus * (1 + preReturnRate) + yearlyContribution * ((Math.pow(1 + monthlyReturnRate, 12) - 1) / monthlyReturnRate);
+                
+                yearlyData.push({
+                    age: currentAge + year,
+                    corpus: expectedCorpus,
+                    contribution: yearlyContribution
+                });
+                
+                // Step up for next year
+                currentContribution *= (1 + stepUpRate);
+            }
+            
+            // Calculate monthly shortfall/surplus
+            const shortfall = requiredCorpus - expectedCorpus;
+            const monthsToRetirement = yearsToRetirement * 12;
+            const additionalMonthlyContribution = shortfall > 0 
+                ? shortfall / ((Math.pow(1 + monthlyReturnRate, monthsToRetirement) - 1) / monthlyReturnRate)
+                : 0;
+                
+            // Update results
+            document.getElementById('retirement-corpus-required').textContent = formatCurrency(requiredCorpus);
+            document.getElementById('retirement-corpus-expected').textContent = formatCurrency(expectedCorpus);
+            document.getElementById('retirement-monthly-shortfall').textContent = shortfall > 0 
+                ? `₹ ${additionalMonthlyContribution.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
+                : `₹ ${0}`;
+            
+            // Update recommendation
+            document.getElementById('retirement-recommendation-1').textContent = shortfall > 0 
+                ? `Increase your monthly contribution by at least ₹${additionalMonthlyContribution.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
+                : 'Your retirement plan is on track!';
+            
+            // Update charts
+            updateRetirementChart(yearlyData, requiredCorpus);
+            updateRetirementAllocationChart(currentAge);
+        }
+        
+        function formatCurrency(value) {
+            if (value >= 10000000) {
+                return `₹ ${(value / 10000000).toFixed(2)} Cr`;
+            } else if (value >= 100000) {
+                return `₹ ${(value / 100000).toFixed(2)} L`;
+            } else {
+                return `₹ ${value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            }
+        }
+        
+        function updateRetirementChart(yearlyData, requiredCorpus) {
+            const ctx = document.getElementById('retirement-chart').getContext('2d');
+            
+            // Prepare data
+            const ages = yearlyData.map(data => data.age);
+            const corpusValues = yearlyData.map(data => data.corpus);
+            const contributions = yearlyData.map(data => data.contribution);
+            
+            // Destroy previous chart if it exists
+            if (window.retirementChart) {
+                window.retirementChart.destroy();
+            }
+            
+            window.retirementChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ages,
+                    datasets: [
+                        {
+                            label: 'Expected Corpus',
+                            data: corpusValues,
+                            borderColor: getComputedStyle(document.body).getPropertyValue('--primary-color'),
+                            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Annual Contribution',
+                            data: contributions,
+                            borderColor: getComputedStyle(document.body).getPropertyValue('--secondary-color'),
+                            backgroundColor: 'transparent',
+                            borderDash: [5, 5],
+                            tension: 0
+                        },
+                        {
+                            label: 'Required Corpus',
+                            data: Array(yearlyData.length).fill(requiredCorpus),
+                            borderColor: '#ef4444',
+                            backgroundColor: 'transparent',
+                            borderDash: [3, 3],
+                            tension: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Age',
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                            },
+                            grid: {
+                                color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color-light')
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Amount (₹)',
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                            },
+                            grid: {
+                                color: getComputedStyle(document.body).getPropertyValue('--border-color')
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color-light'),
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.raw;
+                                    return `${context.dataset.label}: ${formatCurrency(value)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateRetirementAllocationChart(currentAge) {
+            const ctx = document.getElementById('retirement-allocation-chart').getContext('2d');
+            
+            // Calculate allocation based on age
+            let equity = Math.max(10, 100 - currentAge);
+            let debt = 100 - equity;
+            
+            // Destroy previous chart if it exists
+            if (window.allocationChart) {
+                window.allocationChart.destroy();
+            }
+            
+            window.allocationChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Equity', 'Debt'],
+                    datasets: [{
+                        data: [equity, debt],
+                        backgroundColor: [
+                            getComputedStyle(document.body).getPropertyValue('--primary-color'),
+                            getComputedStyle(document.body).getPropertyValue('--secondary-color')
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.raw;
+                                    return `${context.label}: ${value}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize calculators on page load
+        window.addEventListener('load', function() {
+            calculateEMI();
+            calculateNPV();
+            calculateRetirement();
+            
+            // Add event listeners to calculator inputs
+            document.getElementById('emi-loan-amount').addEventListener('input', calculateEMI);
+            document.getElementById('emi-interest-rate').addEventListener('input', calculateEMI);
+            document.getElementById('emi-loan-tenure').addEventListener('input', calculateEMI);
+            
+            document.getElementById('npv-property-price').addEventListener('input', calculateNPV);
+            document.getElementById('npv-monthly-rental').addEventListener('input', calculateNPV);
+            document.getElementById('npv-rental-growth').addEventListener('input', calculateNPV);
+            document.getElementById('npv-maintenance-cost').addEventListener('input', calculateNPV);
+            document.getElementById('npv-investment-horizon').addEventListener('input', calculateNPV);
+            document.getElementById('npv-discount-rate').addEventListener('input', calculateNPV);
+            document.getElementById('npv-property-growth').addEventListener('input', calculateNPV);
+            document.getElementById('npv-sell-property').addEventListener('change', calculateNPV);
+            
+            document.getElementById('retirement-current-age').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-retirement-age').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-life-expectancy').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-monthly-expenses').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-inflation-rate').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-current-savings').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-monthly-contribution').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-pre-return-rate').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-post-return-rate').addEventListener('input', calculateRetirement);
+            document.getElementById('retirement-step-up-rate').addEventListener('input', calculateRetirement);
+        });
+        
+        // Scroll event listeners
+        window.addEventListener('scroll', function() {
+            updateActiveLink();
+            toggleBackToTopButton();
+        });
+    </script>
+</body>
+</html>
