@@ -1,31 +1,39 @@
 // Theme Toggle
-const themeToggle = document.querySelector('.theme-toggle');
-const body = document.body;
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
 
-// Check for saved theme preference
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-    body.classList.add(savedTheme);
-    updateThemeIcon();
-}
-
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    const theme = body.classList.contains('dark-mode') ? 'dark-mode' : '';
-    localStorage.setItem('theme', theme);
-    updateThemeIcon();
-});
-
-function updateThemeIcon() {
-    const icon = themeToggle.querySelector('i');
-    if (body.classList.contains('dark-mode')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        body.classList.add(savedTheme);
+        updateThemeIcon();
     }
-}
+
+    // Check system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !savedTheme) {
+        body.classList.add('dark-mode');
+        updateThemeIcon();
+    }
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const theme = body.classList.contains('dark-mode') ? 'dark-mode' : '';
+        localStorage.setItem('theme', theme);
+        updateThemeIcon();
+    });
+
+    function updateThemeIcon() {
+        const icon = themeToggle.querySelector('i');
+        if (body.classList.contains('dark-mode')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+});
 
 // Mobile Navigation
 const hamburger = document.querySelector('.hamburger');

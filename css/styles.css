@@ -10,6 +10,7 @@
     --border-color: #e5e7eb;
     --shadow-color: rgba(0, 0, 0, 0.1);
     --header-height: 70px;
+    --transition-speed: 0.3s;
 }
 
 .dark-mode {
@@ -29,10 +30,30 @@ body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-color);
     background-color: var(--background-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
     line-height: 1.6;
     margin: 0;
     padding: 0;
+}
+
+/* Dark mode toggle button styles */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.dark-mode-toggle:hover {
+    background-color: var(--background-color-alt);
 }
 
 /* Back to Top Button Styles */
@@ -50,10 +71,10 @@ body {
     align-items: center;
     font-size: 1.2rem;
     z-index: 100;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--shadow-color);
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed);
     cursor: pointer;
     text-decoration: none;
 }
@@ -66,7 +87,7 @@ body {
 .back-to-top:hover {
     background-color: var(--primary-color-dark);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px var(--shadow-color);
 }
 
 /* Add all other CSS styles from the HTML file here */ 
