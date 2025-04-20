@@ -846,6 +846,91 @@
                 padding: 8px;
             }
         }
+        
+        /* Enhanced Goal Based Planner styles - improved dark mode, glassmorphism, and modern look */
+        #goal-planner-calculator {
+            padding: 32px 24px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            background: var(--card-background, #fff);
+            border: 1.5px solid var(--border-color, #e5e7eb);
+            backdrop-filter: blur(10px) saturate(180%);
+            transition: background 0.3s, color 0.3s, border 0.3s;
+        }
+        .goal-inputs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .goal-input-row {
+            background: var(--background-color-alt, #f9fafb);
+            border-radius: 14px;
+            box-shadow: 0 4px 18px var(--shadow-color);
+            border: 1.5px solid var(--border-color, #e5e7eb);
+            padding: 22px 16px 16px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            align-items: flex-end;
+            transition: background 0.3s, color 0.3s, border 0.3s;
+        }
+        .goal-input-row label {
+            color: var(--text-color, #1f2937);
+            font-weight: 500;
+            flex: 1 1 170px;
+        }
+        .goal-input-row input {
+            background: var(--card-background, #fff);
+            color: var(--text-color, #1f2937);
+            border: 1.5px solid var(--primary-color, #6366f1);
+            border-radius: 7px;
+            padding: 10px 12px;
+            margin-top: 4px;
+            width: 100%;
+            font-size: 1.08rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            transition: background 0.3s, color 0.3s, border 0.3s;
+        }
+        .goal-input-row input:focus {
+            border-color: var(--primary-color-dark, #4f46e5);
+            outline: none;
+            background: var(--background-color-alt, #f9fafb);
+        }
+        .goal-input-row .remove-goal-btn {
+            margin-top: 32px;
+            color: var(--primary-color, #6366f1);
+            border-color: var(--primary-color, #6366f1);
+            background: rgba(139,92,246,0.08);
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+        .goal-input-row .remove-goal-btn:hover {
+            background: var(--primary-color, #6366f1);
+            color: #fff;
+        }
+        .tool-summary > div {
+            background: var(--background-color-alt, #f9fafb);
+            color: var(--text-color, #1f2937);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 16px 18px;
+            font-weight: 500;
+            border: 1.5px solid var(--border-color, #e5e7eb);
+            box-shadow: 0 4px 18px var(--shadow-color);
+            font-size: 1.08rem;
+            transition: background 0.3s, color 0.3s, border 0.3s;
+            animation: floatCard 1s cubic-bezier(.22,1,.36,1) both;
+        }
+        .tool-summary h4 {
+            color: var(--primary-color, #6366f1);
+            font-size: 1.18rem;
+        }
+        @keyframes floatCard {
+            0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -1040,7 +1125,7 @@
                     </div>
                     <div class="certification-date">
                         <i class="fas fa-calendar-alt"></i>
-                        2023
+                        November 2024
                     </div>
                     <p class="certification-text">
                         Successfully cleared CFA Level 1 examination, demonstrating proficiency in investment analysis, portfolio management, and ethics.
@@ -1110,6 +1195,7 @@
                     <div class="tools-tab active" data-tab="emi">EMI Calculator</div>
                     <div class="tools-tab" data-tab="npv">NPV Calculator</div>
                     <div class="tools-tab" data-tab="retirement">Retirement Calculator</div>
+                    <div class="tools-tab" data-tab="goal-planner">Goal Based Planner</div>
                 </div>
                 
                 <!-- EMI Calculator -->
@@ -1379,6 +1465,24 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Goal Based Planner -->
+                <div class="tool-content" id="goal-planner-calculator">
+                    <h3 class="tool-title">Goal Based Planner</h3>
+                    <form id="goal-planner-form" class="tool-form">
+                        <div id="goal-inputs-container" class="goal-inputs-container"></div>
+                        <div class="tool-actions">
+                            <button type="button" id="add-goal-btn" class="btn btn-outline"><i class="fas fa-plus"></i> Add Another Goal</button>
+                            <button type="submit" class="btn"><i class="fas fa-chart-line"></i> Calculate</button>
+                        </div>
+                    </form>
+                    <div id="goal-planner-results" class="tool-results" style="display:none;">
+                        <div class="chart-container" style="max-width:600px;height:300px;margin:0 auto 24px auto;">
+                            <canvas id="goal-planner-chart"></canvas>
+                        </div>
+                        <div id="goal-planner-summary" class="tool-summary"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1430,7 +1534,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2024 Amitesh Ray. All rights reserved.</p>
+            <p> 2024 Amitesh Ray. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1443,5 +1547,6 @@
     <script src="js/main.js"></script>
     <script src="js/scroll.js"></script>
     <script src="js/tools.js"></script>
+    <script src="js/goalPlanner.js"></script>
 </body>
 </html>

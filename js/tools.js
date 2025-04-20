@@ -21,6 +21,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Goal Based Planner Tab Logic
+    const goalPlannerTab = document.querySelector('.tools-tab[data-tab="goal-planner"]');
+    const goalPlannerContent = document.getElementById('goal-planner-calculator');
+    if (goalPlannerTab && goalPlannerContent) {
+        goalPlannerTab.addEventListener('click', function() {
+            toolContents.forEach(content => content.classList.remove('active'));
+            toolsTabs.forEach(t => t.classList.remove('active'));
+            goalPlannerContent.classList.add('active');
+            goalPlannerTab.classList.add('active');
+        });
+    }
+    
     // EMI Calculator
     function calculateEMI() {
         const loanAmount = parseFloat(document.getElementById('emi-loan-amount').value);
