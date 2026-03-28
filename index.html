@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amitesh Ray | Finance Professional</title>
+    <!-- Favicon -->
+    <link rel="icon" href="images/profile.jpg">
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -966,7 +968,7 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <a href="#" class="logo">Amitesh <span>Ray</span></a>
+            <a href="/" class="logo">Amitesh <span>Ray</span></a>
             <nav class="nav-links">
                 <a href="#about" class="active">About</a>
                 <a href="#experience">Experience</a>
@@ -1364,10 +1366,10 @@
             <h2 class="section-title">Financial Tools</h2>
             <div class="tools-container">
                 <div class="tools-tabs">
-                    <div class="tools-tab active" data-tab="emi">EMI Calculator</div>
-                    <div class="tools-tab" data-tab="npv">NPV Calculator</div>
-                    <div class="tools-tab" data-tab="retirement">Retirement Calculator</div>
-                    <div class="tools-tab" data-tab="goal-planner">Goal Based Planner</div>
+                    <button class="tools-tab active" data-tab="emi">EMI Calculator</button>
+                    <button class="tools-tab" data-tab="npv">NPV Calculator</button>
+                    <button class="tools-tab" data-tab="retirement">Retirement Calculator</button>
+                    <button class="tools-tab" data-tab="goal-planner">Goal Based Planner</button>
                 </div>
 
                 <!-- EMI Calculator -->
@@ -1738,6 +1740,16 @@
                 <a href="assets/Amitesh_Ray_Resume.pdf" download class="social-link">
                     <i class="fas fa-file-download"></i>
                 </a>
+            </div>
+            
+            <div style="max-width: 600px; margin: 40px auto 0;">
+                <h3 class="contact-title" style="text-align: center; margin-bottom: 20px;">Send a Message</h3>
+                <form id="contact-form" style="display: flex; flex-direction: column; gap: 15px;">
+                    <input type="text" id="contact-name" class="form-input" placeholder="Your Name" required>
+                    <input type="email" id="contact-email" class="form-input" placeholder="Your Email" required>
+                    <textarea id="contact-message" class="form-input" rows="5" placeholder="Your Message" required style="resize: vertical;"></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
