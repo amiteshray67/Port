@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What If I Die — Idea Analysis | Amitesh Ray</title>
+  <meta name="description" content="Digital Legacy Vault: A deep-dive viability analysis of an app that helps families discover financial accounts, investments, insurance, and passwords after a loved one passes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:       #6366f1;
+      --primary-dark:  #4f46e5;
+      --secondary:     #8b5cf6;
+      --text:          #1f2937;
+      --text-light:    #4b5563;
+      --text-muted:    #9ca3af;
+      --bg:            #ffffff;
+      --bg-alt:        #f9fafb;
+      --border:        #e5e7eb;
+      --green:         #10b981;
+      --amber:         #f59e0b;
+      --red:           #ef4444;
+      --cyan:          #06b6d4;
+      --radius:        12px;
+      --shadow:        0 4px 20px rgba(99,102,241,0.10);
+      --shadow-md:     0 8px 32px rgba(99,102,241,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--text-light); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* ── LAYOUT ── */
+    main { max-width: 860px; margin: 0 auto; padding: 100px 2rem 80px; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      font-size: 0.8rem; color: var(--text-muted);
+      margin-bottom: 2rem; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .breadcrumb a { color: var(--primary); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* ── HERO ── */
+    .hero { margin-bottom: 3rem; }
+    .hero-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; border-radius: 100px;
+      padding: 0.3rem 0.9rem; margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(1.9rem, 5vw, 2.8rem);
+      font-weight: 700; line-height: 1.2;
+      color: var(--text); margin-bottom: 0.75rem;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--text-light);
+      max-width: 640px; margin-bottom: 1.5rem;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* ── VERDICT BANNER ── */
+    .verdict-banner {
+      background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+      border: 1px solid #c7d2fe;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .verdict-left h2 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.15rem; font-weight: 700; color: var(--primary-dark);
+      margin-bottom: 0.2rem;
+    }
+    .verdict-left p { font-size: 0.9rem; color: var(--text-light); max-width: 480px; }
+    .score-ring {
+      display: flex; flex-direction: column; align-items: center;
+      min-width: 90px;
+    }
+    .score-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary) 288deg, #e0e7ff 0deg);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .score-circle::before {
+      content: ''; position: absolute;
+      width: 54px; height: 54px;
+      background: #fff; border-radius: 50%;
+    }
+    .score-num {
+      position: relative; z-index: 1;
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--primary);
+    }
+    .score-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+    /* ── SECTION TITLES ── */
+    section { margin-bottom: 3.5rem; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+    h2 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--text); margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    p { color: var(--text-light); margin-bottom: 0.75rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px; background: var(--border);
+      margin: 0 0 3.5rem;
+    }
+
+    /* ── STAT CARDS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .stat-big {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--primary); line-height: 1.1;
+    }
+    .stat-unit { font-size: 1rem; font-weight: 500; }
+    .stat-label {
+      font-size: 0.8rem; color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+    .stat-card.accent-green .stat-big { color: var(--green); }
+    .stat-card.accent-amber .stat-big { color: var(--amber); }
+    .stat-card.accent-cyan  .stat-big { color: var(--cyan); }
+
+    /* ── PROBLEM CARDS ── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .problem-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+    .problem-icon {
+      font-size: 1.4rem; margin-bottom: 0.5rem;
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-left: 4px solid var(--amber);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      font-size: 0.9rem; color: #92400e;
+    }
+    .highlight-box.green {
+      background: #ecfdf5; border-color: #6ee7b7;
+      border-left-color: var(--green); color: #065f46;
+    }
+    .highlight-box.purple {
+      background: #eef2ff; border-color: #c7d2fe;
+      border-left-color: var(--primary); color: #3730a3;
+    }
+
+    /* ── SOLUTION FEATURES ── */
+    .feature-list { list-style: none; display: grid; gap: 0.75rem; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.9rem; color: var(--text-light);
+    }
+    .feature-dot {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      flex-shrink: 0; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.6rem;
+    }
+
+    /* ── COMPETITOR TABLE ── */
+    .comp-table-wrap { overflow-x: auto; margin-top: 1rem; }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    thead tr {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+    }
+    th {
+      padding: 0.75rem 1rem; text-align: left;
+      font-weight: 600; font-size: 0.8rem; letter-spacing: 0.03em;
+    }
+    th:first-child { border-radius: 8px 0 0 0; }
+    th:last-child { border-radius: 0 8px 0 0; }
+    td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-light);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: var(--bg-alt); }
+    .tag {
+      display: inline-block; padding: 0.15rem 0.5rem;
+      border-radius: 100px; font-size: 0.72rem; font-weight: 600;
+    }
+    .tag.green { background: #d1fae5; color: #065f46; }
+    .tag.red   { background: #fee2e2; color: #991b1b; }
+    .tag.amber { background: #fef3c7; color: #92400e; }
+    .tag.blue  { background: #dbeafe; color: #1e40af; }
+    .tag.purple{ background: #ede9fe; color: #4c1d95; }
+
+    /* ── REVENUE MODEL ── */
+    .revenue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem; margin-top: 1rem;
+    }
+    .rev-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      position: relative; overflow: hidden;
+    }
+    .rev-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    .rev-tier { font-size: 0.72rem; font-weight: 600; color: var(--primary); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.25rem; }
+    .rev-price { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .rev-desc  { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ── ROADMAP ── */
+    .roadmap { display: flex; flex-direction: column; gap: 0; margin-top: 1rem; }
+    .roadmap-item {
+      display: flex; gap: 1.25rem;
+      position: relative; padding-bottom: 1.75rem;
+    }
+    .roadmap-item:last-child { padding-bottom: 0; }
+    .roadmap-left {
+      display: flex; flex-direction: column; align-items: center;
+      flex-shrink: 0; width: 36px;
+    }
+    .roadmap-dot {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 0.8rem;
+      flex-shrink: 0; z-index: 1;
+    }
+    .roadmap-line {
+      flex: 1; width: 2px;
+      background: linear-gradient(to bottom, var(--primary) 0%, #e5e7eb 100%);
+      margin-top: 4px;
+    }
+    .roadmap-item:last-child .roadmap-line { display: none; }
+    .roadmap-content { padding-top: 0.4rem; }
+    .roadmap-phase {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--primary); margin-bottom: 0.2rem;
+    }
+    .roadmap-content h3 { margin-bottom: 0.35rem; }
+    .roadmap-content p { font-size: 0.87rem; }
+
+    /* ── DUAL VIABILITY ── */
+    .viability-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-top: 1rem;
+    }
+    @media (max-width: 560px) { .viability-grid { grid-template-columns: 1fr; } }
+    .viab-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+    .viab-card h3 { margin-bottom: 0.75rem; }
+    .viab-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .viab-row:last-child { border-bottom: none; }
+    .viab-key { color: var(--text-light); }
+    .viab-val { font-weight: 600; color: var(--text); }
+    .viab-val.green { color: var(--green); }
+    .viab-val.amber { color: var(--amber); }
+    .viab-val.red   { color: var(--red); }
+
+    /* ── RISK GRID ── */
+    .risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+    .risk-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.25rem;
+    }
+    .risk-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+    .risk-head h3 { font-size: 0.9rem; margin-bottom: 0; }
+    .risk-card p { font-size: 0.82rem; }
+
+    /* ── FINAL VERDICT ── */
+    .final-verdict {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      color: #fff;
+      text-align: center;
+    }
+    .final-verdict .fv-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; opacity: 0.75; margin-bottom: 0.5rem;
+    }
+    .final-verdict h2 {
+      color: #fff; font-size: 1.8rem; margin-bottom: 0.75rem;
+    }
+    .final-verdict p {
+      color: rgba(255,255,255,0.85); max-width: 540px;
+      margin: 0 auto 1.75rem; font-size: 0.95rem;
+    }
+    .fv-steps {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .fv-step {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 100px;
+      padding: 0.4rem 1.1rem;
+      font-size: 0.82rem; font-weight: 500; color: #fff;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      main { padding: 80px 1.25rem 60px; }
+      .verdict-banner { flex-direction: column; }
+      .viability-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://amiteshray.com" class="nav-logo">Amitesh Ray</a>
+  <ul class="nav-links">
+    <li><a href="https://amiteshray.com#about">About</a></li>
+    <li><a href="https://amiteshray.com#experience">Experience</a></li>
+    <li><a href="https://amiteshray.com/ideas/">All Ideas</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="https://amiteshray.com">Home</a>
+    <span>›</span>
+    <a href="https://amiteshray.com/ideas/">Ideas</a>
+    <span>›</span>
+    <span>What If I Die</span>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Idea Analysis — March 2026</div>
+    <h1>What If I <span>Die</span>?</h1>
+    <p class="hero-sub">A digital legacy vault that ensures your family can find your investments, insurance policies, bank accounts, and passwords — without you having to be there to guide them.</p>
+    <div class="hero-meta">
+      <span>🏷 Fintech · LegalTech · Consumer</span>
+      <span>🌍 India-first, Global potential</span>
+      <span>📅 Analysed March 28, 2026</span>
+    </div>
+  </div>
+
+  <!-- VERDICT BANNER -->
+  <div class="verdict-banner">
+    <div class="verdict-left">
+      <h2>Verdict: Build It</h2>
+      <p>Strong product-market fit in India. Clear pain point, emotionally charged use case, and a Rs.78,000+ Cr addressable market of unclaimed assets. Timing is ideal as digital wealth adoption accelerates.</p>
+    </div>
+    <div class="score-ring">
+      <div class="score-circle">
+        <span class="score-num">8/10</span>
+      </div>
+      <span class="score-label">Viability Score</span>
+    </div>
+  </div>
+
+  <!-- SECTION: PROBLEM -->
+  <section id="problem">
+    <div class="section-label">The Problem</div>
+    <h2>₹78,000 Cr Sits Unclaimed. Nobody Knows Where It Is.</h2>
+    <p>Every year, thousands of Indian families are left scrambling after a loved one passes — trying to piece together a financial life from scattered paperwork, old passbooks, and fading memories. The problem is systemic, emotionally devastating, and almost entirely unsolved.</p>
+
+    <div class="stats-grid" style="margin-top:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-big">₹78K<span class="stat-unit"> Cr</span></div>
+        <div class="stat-label">Unclaimed assets in India's banks, MFs & demat accounts</div>
+      </div>
+      <div class="stat-card accent-amber">
+        <div class="stat-big">₹21K<span class="stat-unit"> Cr</span></div>
+        <div class="stat-label">Unclaimed life insurance proceeds sitting with IRDA</div>
+      </div>
+      <div class="stat-card accent-cyan">
+        <div class="stat-big">35M+</div>
+        <div class="stat-label">Indian demat accounts — most with no named nominee</div>
+      </div>
+      <div class="stat-card accent-green">
+        <div class="stat-big">72%</div>
+        <div class="stat-label">of Indians have no documented financial estate plan</div>
+      </div>
+    </div>
+
+    <div class="problem-grid" style="margin-top:1.5rem;">
+      <div class="problem-card">
+        <div class="problem-icon">💰</div>
+        <h3>Hidden wealth</h3>
+        <p style="font-size:0.87rem;">Families don't know about PPF accounts, old FDs, demat accounts, or forgotten mutual fund folios.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🔐</div>
+        <h3>Digital lockout</h3>
+        <p style="font-size:0.87rem;">Email, banking apps, crypto wallets, and brokerage accounts are inaccessible without passwords.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📋</div>
+        <h3>Insurance lapse</h3>
+        <p style="font-size:0.87rem;">Policies expire unclaimed because nominees don't know they exist or don't know how to claim them.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">⏱</div>
+        <h3>Time pressure</h3>
+        <p style="font-size:0.87rem;">Legal access to deceased accounts takes months. Families often give up and lose the money permanently.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:1.5rem;">
+      <strong>Dead Man's Switch:</strong> The core mechanism — if you don't check in for X days (e.g. 30 days after a missed heartbeat), the vault unlocks and delivers everything to your designated beneficiaries securely.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: SOLUTION -->
+  <section id="solution">
+    <div class="section-label">The Solution</div>
+    <h2>A Living Will for the Digital Age</h2>
+    <p>A single secure vault where users store everything their family would need — with a dead man's switch that automatically transfers access to beneficiaries when triggered.</p>
+
+    <ul class="feature-list" style="margin-top:1.25rem;">
+      <li>
+        <div class="feature-dot">✓</div>
+        <span><strong style="color:var(--text);">Asset Registry</strong> — Link bank accounts, demat accounts, mutual funds, PPF, insurance policies, crypto wallets, and property documents in one place.</span>
+      </li>
+      <li>
+        <div class="feature-dot">✓</div>
+        <span><strong style="color:var(--text);">Encrypted Password Vault</strong> — Store credentials for email, banking, brokerages, and social accounts with AES-256 encryption, never readable in transit.</span>
+      </li>
+      <li>
+        <div class="feature-dot">✓</div>
+        <span><strong style="color:var(--text);">Dead Man's Switch</strong> — Configurable check-in schedule. If you miss a check-in, the system alerts you first, then your trusted contacts, then releases the vault.</span>
+      </li>
+      <li>
+        <div class="feature-dot">✓</div>
+        <span><strong style="color:var(--text);">Beneficiary Management</strong> — Assign what each person gets access to. Your spouse gets banking. Your child gets crypto. Your CA gets tax documents only.</span>
+      </li>
+      <li>
+        <div class="feature-dot">✓</div>
+        <span><strong style="color:var(--text);">Video Messages</strong> — Leave recorded instructions, last messages, or guidance for specific scenarios (marriage, graduation, a difficult decision).</span>
+      </li>
+      <li>
+        <div class="feature-dot">✓</div>
+        <span><strong style="color:var(--text);">Legal Document Store</strong> — Will, POA, property papers, medical directives — stored, versioned, and accessible by the right people at the right time.</span>
+      </li>
+    </ul>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: MARKET -->
+  <section id="market">
+    <div class="section-label">Market Opportunity</div>
+    <h2>India is the Perfect First Market</h2>
+    <p>India's digital wealth explosion — Zerodha alone has 13M+ active traders — has created millions of people with significant digital-first assets and almost zero succession planning. The regulatory push post-2022 (SEBI nominee mandates, IRDAI digitization) has created awareness without solving the core problem.</p>
+
+    <div class="stats-grid" style="margin-top:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-big">$15B</div>
+        <div class="stat-label">Global digital legacy market size by 2030</div>
+      </div>
+      <div class="stat-card accent-green">
+        <div class="stat-big">28%</div>
+        <div class="stat-label">CAGR of India's wealth management market 2024–28</div>
+      </div>
+      <div class="stat-card accent-amber">
+        <div class="stat-big">140M</div>
+        <div class="stat-label">Indian demat + MF investors as of 2025 — target TAM</div>
+      </div>
+      <div class="stat-card accent-cyan">
+        <div class="stat-big">6M</div>
+        <div class="stat-label">Estimated Serviceable Addressable Market (SAM) — Year 1</div>
+      </div>
+    </div>
+
+    <div class="highlight-box green" style="margin-top:1.25rem;">
+      <strong>Regulatory tailwind:</strong> SEBI made nominee registration mandatory for demat accounts in 2022. IRDAI's e-insurance push is driving digital policy awareness. Both create a "now what?" moment — exactly where this product sits.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: COMPETITORS -->
+  <section id="competitors">
+    <div class="section-label">Competitive Landscape</div>
+    <h2>A Fragmented, Mostly Western Market</h2>
+    <p>No credible India-first player exists. Global players don't understand India's asset types (PPF, NPS, demat, chit funds). Banks offer nominee services but not full-stack digital vault functionality.</p>
+
+    <div class="comp-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Type</th>
+            <th>India Focus</th>
+            <th>Password Vault</th>
+            <th>Dead Man's Switch</th>
+            <th>Asset Registry</th>
+            <th>Threat Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>What If I Die</strong></td>
+            <td><span class="tag purple">Our App</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Everplans</td>
+            <td><span class="tag blue">US SaaS</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td><span class="tag amber">Partial</span></td>
+            <td><span class="tag amber">Partial</span></td>
+            <td><span class="tag green">Low</span></td>
+          </tr>
+          <tr>
+            <td>Tomorrow</td>
+            <td><span class="tag blue">US App</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td><span class="tag green">Low</span></td>
+          </tr>
+          <tr>
+            <td>Willful</td>
+            <td><span class="tag blue">Canada</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag amber">Partial</span></td>
+            <td><span class="tag green">Low</span></td>
+          </tr>
+          <tr>
+            <td>Zerodha / Groww</td>
+            <td><span class="tag amber">Broker</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag amber">Medium</span></td>
+          </tr>
+          <tr>
+            <td>SBI / HDFC</td>
+            <td><span class="tag amber">Bank</span></td>
+            <td><span class="tag green">Yes ✓</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag red">No ✗</span></td>
+            <td><span class="tag amber">Medium</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box purple" style="margin-top:1.25rem;">
+      <strong>Moat opportunity:</strong> The real moat is data network effects — the more asset types, institutions, and family relationships the platform covers, the harder it becomes to migrate or replicate. First-mover advantage is significant.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: BUSINESS MODEL -->
+  <section id="business-model">
+    <div class="section-label">Business Model</div>
+    <h2>6 Revenue Streams — Freemium to Enterprise</h2>
+
+    <div class="revenue-grid">
+      <div class="rev-card">
+        <div class="rev-tier">B2C — Free</div>
+        <div class="rev-price">₹0 / month</div>
+        <div class="rev-desc">Basic vault (5 assets, 1 beneficiary). Entry funnel for the full product.</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-tier">B2C — Pro</div>
+        <div class="rev-price">₹499 / month</div>
+        <div class="rev-desc">Unlimited assets, 5 beneficiaries, video messages, premium check-in options.</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-tier">B2C — Family</div>
+        <div class="rev-price">₹999 / month</div>
+        <div class="rev-desc">Full household coverage. Up to 4 adults, joint asset registry, shared vault.</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-tier">B2B — Employer</div>
+        <div class="rev-price">₹200 / seat</div>
+        <div class="rev-desc">White-label vault as employee benefit. HR SaaS integration. Death-in-service coverage.</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-tier">B2B — Wealth Mgmt</div>
+        <div class="rev-price">Revenue share</div>
+        <div class="rev-desc">Co-branded vault for wealth managers and insurance brokers. Referral pipeline.</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-tier">Concierge</div>
+        <div class="rev-price">₹4,999 one-time</div>
+        <div class="rev-desc">Assisted vault setup with a verified financial planner. Premium onboarding service.</div>
+      </div>
+    </div>
+
+    <div class="stats-grid" style="margin-top:1.5rem;">
+      <div class="stat-card accent-green">
+        <div class="stat-big">~40%</div>
+        <div class="stat-label">Gross margin (SaaS) — post Year 2 at scale</div>
+      </div>
+      <div class="stat-card accent-cyan">
+        <div class="stat-big">₹850</div>
+        <div class="stat-label">Blended ARPU target — Year 3</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-big">₹42 Cr</div>
+        <div class="stat-label">ARR target at 50,000 paying subscribers — Year 3</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: ROADMAP -->
+  <section id="roadmap">
+    <div class="section-label">Roadmap</div>
+    <h2>Three Phases to Market Leadership</h2>
+
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <div class="roadmap-left">
+          <div class="roadmap-dot">1</div>
+          <div class="roadmap-line"></div>
+        </div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 1 — Months 0–6 · Foundation</div>
+          <h3>MVP: Vault + Dead Man's Switch</h3>
+          <p>Build core encrypted vault, beneficiary management, and check-in mechanism. Closed beta with 500 users from fintech communities (r/IndiaInvestments, Zerodha community). Validate trust and onboarding friction. Target: 500 beta users, NPS &gt; 50.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-left">
+          <div class="roadmap-dot">2</div>
+          <div class="roadmap-line"></div>
+        </div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 2 — Months 6–18 · Growth</div>
+          <h3>Integrations + B2B Pilot</h3>
+          <p>Launch account aggregator (AA) integration to auto-populate financial accounts (SEBI/RBI licensed). Pilot employer program with 3 corporate clients. Add video messages and legal document vault. Target: 10,000 paying subscribers, 2 corporate clients.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-left">
+          <div class="roadmap-dot">3</div>
+          <div class="roadmap-line"></div>
+        </div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">Phase 3 — Months 18–36 · Scale</div>
+          <h3>Platform + International</h3>
+          <p>Insurance partner integrations (claim filing automation). Expand to NRI segment (UAE, UK, Singapore — large Indian diaspora with cross-border assets). White-label product for wealth managers. Target: ₹42 Cr ARR, 50,000 paying users, Series A raise.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: VIABILITY INDIA VS GLOBAL -->
+  <section id="viability">
+    <div class="section-label">Viability Analysis</div>
+    <h2>India First. Then the World.</h2>
+    <p>India is a uniquely favourable first market: rapidly growing digital wealth, near-zero competition, acute family-finance problem, and regulatory tailwinds. Global expansion follows once trust and product depth are proven.</p>
+
+    <div class="viability-grid">
+      <div class="viab-card">
+        <h3>🇮🇳 India</h3>
+        <div class="viab-row"><span class="viab-key">Market timing</span><span class="viab-val green">Excellent</span></div>
+        <div class="viab-row"><span class="viab-key">Competition</span><span class="viab-val green">Minimal</span></div>
+        <div class="viab-row"><span class="viab-key">Regulatory risk</span><span class="viab-val amber">Moderate</span></div>
+        <div class="viab-row"><span class="viab-key">Trust barrier</span><span class="viab-val amber">High</span></div>
+        <div class="viab-row"><span class="viab-key">Willingness to pay</span><span class="viab-val amber">Emerging</span></div>
+        <div class="viab-row"><span class="viab-key">TAM</span><span class="viab-val green">₹5,000+ Cr</span></div>
+        <div class="viab-row"><span class="viab-key">Overall</span><span class="viab-val green">Strong ✓</span></div>
+      </div>
+      <div class="viab-card">
+        <h3>🌍 Global (Post-India)</h3>
+        <div class="viab-row"><span class="viab-key">Market timing</span><span class="viab-val green">Good</span></div>
+        <div class="viab-row"><span class="viab-key">Competition</span><span class="viab-val amber">Moderate</span></div>
+        <div class="viab-row"><span class="viab-key">Regulatory risk</span><span class="viab-val red">High (GDPR etc.)</span></div>
+        <div class="viab-row"><span class="viab-key">Trust barrier</span><span class="viab-val amber">Moderate</span></div>
+        <div class="viab-row"><span class="viab-key">Willingness to pay</span><span class="viab-val green">Proven</span></div>
+        <div class="viab-row"><span class="viab-key">TAM</span><span class="viab-val green">$15B by 2030</span></div>
+        <div class="viab-row"><span class="viab-key">Overall</span><span class="viab-val amber">Good — Year 3+</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: RISKS -->
+  <section id="risks">
+    <div class="section-label">Risks & Mitigations</div>
+    <h2>Key Risks to Watch</h2>
+
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="risk-head">
+          <h3>Trust & Security</h3>
+          <span class="tag red">High</span>
+        </div>
+        <p>"Who are you and why should I trust you with my entire financial life?" — Requires SOC 2, ISO 27001, and ideally a bank/NBFC partnership early.</p>
+      </div>
+      <div class="risk-card">
+        <div class="risk-head">
+          <h3>False Trigger</h3>
+          <span class="tag amber">Medium</span>
+        </div>
+        <p>Dead man's switch fires incorrectly — user is on a remote trek, in hospital, or just forgot. Multi-stage verification + trusted contact confirmation mitigates this.</p>
+      </div>
+      <div class="risk-card">
+        <div class="risk-head">
+          <h3>Monetization</h3>
+          <span class="tag amber">Medium</span>
+        </div>
+        <p>Indian consumer resistance to paying for "what-if" products. B2B employer channel de-risks this — companies pay for peace of mind on behalf of employees.</p>
+      </div>
+      <div class="risk-card">
+        <div class="risk-head">
+          <h3>Big Tech Entry</h3>
+          <span class="tag amber">Medium</span>
+        </div>
+        <p>Google/Apple adding digital legacy features. Apple already has Legacy Contact. Mitigation: go deeper on financial assets and Indian regulatory compliance where big tech won't follow.</p>
+      </div>
+      <div class="risk-card">
+        <div class="risk-head">
+          <h3>Legal Complexity</h3>
+          <span class="tag amber">Medium</span>
+        </div>
+        <p>What counts as authorised access to a deceased's account? Indian Succession Act grey areas. Solve by partnering with verified legal fiduciaries, not replacing them.</p>
+      </div>
+      <div class="risk-card">
+        <div class="risk-head">
+          <h3>Activation Inertia</h3>
+          <span class="tag green">Manageable</span>
+        </div>
+        <p>"I'll set it up later" — classic procrastination risk. Event-triggered onboarding (marriage, new baby, job change, buying property) dramatically improves activation rates.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FINAL VERDICT -->
+  <section id="verdict">
+    <div class="final-verdict">
+      <div class="fv-label">Final Verdict</div>
+      <h2>Build It. Start Narrow. Win Trust First.</h2>
+      <p>This is a high-urgency, emotionally resonant problem with a clear product shape and a first-mover window in India. The business model is proven globally. The Indian market is ready. The only real risk is trust — and that's a brand and security problem, not a product problem. Start with the digital-native investor segment (25–45, Zerodha/Groww users), nail the vault + dead man's switch MVP, get to 500 beta users, then raise.</p>
+      <div class="fv-steps">
+        <span class="fv-step">→ Register entity</span>
+        <span class="fv-step">→ ISO 27001 plan</span>
+        <span class="fv-step">→ Build MVP vault</span>
+        <span class="fv-step">→ 500 beta users</span>
+        <span class="fv-step">→ Corporate pilot</span>
+        <span class="fv-step">→ Raise seed</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Part of <a href="https://amiteshray.com/ideas/">Amitesh's Ideas Lab</a> — raw startup ideas researched and stress-tested. &nbsp;·&nbsp; <a href="https://amiteshray.com">amiteshray.com</a></p>
+</footer>
+
+</body>
+</html>
