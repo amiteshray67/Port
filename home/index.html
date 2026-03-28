@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>Hey Amitesh</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://www.google.com/s2/favicons?domain=amiteshray.com&sz=180">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-top">
+            <div class="logo">
+                <h1>Hey Amitesh</h1>
+            </div>
+            <div class="header-actions">
+                <div class="shortcuts">
+                    <a href="https://twitter.com" target="_blank" title="X (Twitter)"><img
+                            src="https://www.google.com/s2/favicons?domain=twitter.com&sz=32" alt="X"></a>
+                    <a href="https://linkedin.com" target="_blank" title="LinkedIn"><img
+                            src="https://www.google.com/s2/favicons?domain=linkedin.com&sz=32" alt="LinkedIn"></a>
+                </div>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search Google & Perplexity...">
+        </div>
+
+        <nav class="category-toolbar">
+            <button class="cat-btn active" data-category="all">All</button>
+            <button class="cat-btn" data-category="chat">Chat & Text</button>
+            <button class="cat-btn" data-category="image">Image & Video</button>
+            <button class="cat-btn" data-category="dev">Dev & Code</button>
+            <button class="cat-btn" data-category="productivity">Productivity</button>
+            <button class="cat-btn" data-category="utilities">Utilities</button>
+        </nav>
+    </header>
+
+    <div class="grid-container">
+        <!-- Chat & Text -->
+        <a href="https://chat.openai.com/" class="card" target="_blank" data-category="chat">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=chat.openai.com&sz=64"
+                    alt="ChatGPT"></div>
+            <div class="card-content">
+                <h2>ChatGPT</h2>
+                <p>OpenAI's advanced conversational model.</p>
+            </div>
+        </a>
+        <a href="https://bard.google.com/" class="card" target="_blank" data-category="chat">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=bard.google.com&sz=64"
+                    alt="Gemini"></div>
+            <div class="card-content">
+                <h2>Gemini</h2>
+                <p>Google's conversational AI.</p>
+            </div>
+        </a>
+        <a href="https://claude.ai" class="card" target="_blank" data-category="chat">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=claude.ai&sz=64" alt="Claude">
+            </div>
+            <div class="card-content">
+                <h2>Claude</h2>
+                <p>Anthropic's AI assistant.</p>
+            </div>
+        </a>
+        <a href="https://bhindi.io" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=bhindi.io&sz=64" alt="Bhindi AI">
+            </div>
+            <div class="card-content">
+                <h2>Bhindi AI</h2>
+                <p>AI productivity platform.</p>
+            </div>
+        </a>
+        <a href="https://opal.so" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=opal.so&sz=64" alt="Opal"></div>
+            <div class="card-content">
+                <h2>Opal</h2>
+                <p>Focus and digital well-being.</p>
+            </div>
+        </a>
+        <a href="https://www.copy.ai" class="card" target="_blank" data-category="chat">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=copy.ai&sz=64" alt="Copy AI">
+            </div>
+            <div class="card-content">
+                <h2>Copy AI</h2>
+                <p>AI-powered content generation.</p>
+            </div>
+        </a>
+        <a href="https://gravitywrite.com" class="card" target="_blank" data-category="chat">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=gravitywrite.com&sz=64"
+                    alt="Gravity Write"></div>
+            <div class="card-content">
+                <h2>Gravity Write</h2>
+                <p>Supercharged AI content creation.</p>
+            </div>
+        </a>
+
+        <!-- Image & Video -->
+        <a href="https://www.midjourney.com" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=midjourney.com&sz=64"
+                    alt="MidJourney"></div>
+            <div class="card-content">
+                <h2>MidJourney</h2>
+                <p>Create stunning visuals with AI.</p>
+            </div>
+        </a>
+        <a href="https://klingai.com" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=klingai.com&sz=64"
+                    alt="Kling AI"></div>
+            <div class="card-content">
+                <h2>Kling AI</h2>
+                <p>Text-to-video generation model.</p>
+            </div>
+        </a>
+        <a href="https://hailuo.ai" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=hailuo.ai&sz=64" alt="Hailuo AI">
+            </div>
+            <div class="card-content">
+                <h2>Hailuo AI</h2>
+                <p>Video generation tools.</p>
+            </div>
+        </a>
+        <a href="https://fluxai.studio" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=fluxai.studio&sz=64"
+                    alt="Flux AI"></div>
+            <div class="card-content">
+                <h2>Flux AI</h2>
+                <p>High-quality image generation.</p>
+            </div>
+        </a>
+        <a href="https://labs.google/fx/tools/imagefx" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=labs.google&sz=64" alt="ImageFX">
+            </div>
+            <div class="card-content">
+                <h2>Google ImageFX</h2>
+                <p>Google's image generation tool.</p>
+            </div>
+        </a>
+        <a href="https://www.dzine.ai" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=dzine.ai&sz=64" alt="Dzine AI">
+            </div>
+            <div class="card-content">
+                <h2>Dzine AI</h2>
+                <p>AI design tool for creators.</p>
+            </div>
+        </a>
+        <a href="https://www.jogg.ai" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=jogg.ai&sz=64" alt="Jogg AI">
+            </div>
+            <div class="card-content">
+                <h2>Jogg AI</h2>
+                <p>AI video ads creation.</p>
+            </div>
+        </a>
+        <a href="https://suno.com" class="card" target="_blank" data-category="image">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=suno.com&sz=64" alt="Suno AI">
+            </div>
+            <div class="card-content">
+                <h2>Suno AI</h2>
+                <p>Make music and songs with AI.</p>
+            </div>
+        </a>
+
+        <!-- Dev & Code -->
+        <a href="https://bolt.new" class="card" target="_blank" data-category="dev">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=bolt.new&sz=64" alt="Bolt.new">
+            </div>
+            <div class="card-content">
+                <h2>Bolt.new</h2>
+                <p>AI web development.</p>
+            </div>
+        </a>
+        <a href="https://aistudio.google.com/" class="card" target="_blank" data-category="dev">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=aistudio.google.com&sz=64"
+                    alt="AI Studio"></div>
+            <div class="card-content">
+                <h2>Google AI Studio</h2>
+                <p>Build with Gemini models.</p>
+            </div>
+        </a>
+        <a href="https://pinokio.computer" class="card" target="_blank" data-category="dev">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=pinokio.computer&sz=64"
+                    alt="Pinokio"></div>
+            <div class="card-content">
+                <h2>Pinokio</h2>
+                <p>Run AI models locally.</p>
+            </div>
+        </a>
+        <a href="https://same.dev" class="card" target="_blank" data-category="dev">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=same.dev&sz=64" alt="Same.Dev">
+            </div>
+            <div class="card-content">
+                <h2>Same.Dev</h2>
+                <p>Designs into code.</p>
+            </div>
+        </a>
+        <a href="https://a0.dev" class="card" target="_blank" data-category="dev">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=a0.dev&sz=64" alt="A0.Dev"></div>
+            <div class="card-content">
+                <h2>A0.Dev</h2>
+                <p>Generative UI development.</p>
+            </div>
+        </a>
+
+        <!-- Productivity -->
+        <a href="https://theresanaiforthat.com/" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=theresanaiforthat.com&sz=64"
+                    alt="AI For That"></div>
+            <div class="card-content">
+                <h2>AI For That</h2>
+                <p>Find the perfect AI tool.</p>
+            </div>
+        </a>
+        <a href="https://www.jotform.com" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=jotform.com&sz=64" alt="Jotform">
+            </div>
+            <div class="card-content">
+                <h2>Jotform</h2>
+                <p>Online form builder.</p>
+            </div>
+        </a>
+        <a href="https://www.softr.io" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=softr.io&sz=64" alt="Softr">
+            </div>
+            <div class="card-content">
+                <h2>Softr</h2>
+                <p>Build apps from Airtable.</p>
+            </div>
+        </a>
+        <a href="https://airtable.com" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=airtable.com&sz=64"
+                    alt="Airtable"></div>
+            <div class="card-content">
+                <h2>Airtable</h2>
+                <p>Connected apps cloud.</p>
+            </div>
+        </a>
+        <a href="https://nugget.ai" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=nugget.ai&sz=64" alt="Nugget">
+            </div>
+            <div class="card-content">
+                <h2>Nugget</h2>
+                <p>AI talent discovery.</p>
+            </div>
+        </a>
+        <a href="https://iki.ai" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=iki.ai&sz=64" alt="Iki.ai"></div>
+            <div class="card-content">
+                <h2>Iki.ai</h2>
+                <p>Intelligent knowledge interface.</p>
+            </div>
+        </a>
+        <a href="https://harpa.ai" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=harpa.ai&sz=64" alt="Harpa.ai">
+            </div>
+            <div class="card-content">
+                <h2>Harpa.ai</h2>
+                <p>AI automation agent.</p>
+            </div>
+        </a>
+        <a href="https://chat4data.ai" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=chat4data.ai&sz=64"
+                    alt="Chat4Data"></div>
+            <div class="card-content">
+                <h2>Chat4Data</h2>
+                <p>Chat with your data.</p>
+            </div>
+        </a>
+        <a href="https://jobright.ai" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=jobright.ai&sz=64"
+                    alt="Jobright"></div>
+            <div class="card-content">
+                <h2>Orion</h2>
+                <p>AI job search agent.</p>
+            </div>
+        </a>
+        <a href="https://wisprflow.ai" class="card" target="_blank" data-category="productivity">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=wisprflow.ai&sz=64"
+                    alt="Wispr Flow"></div>
+            <div class="card-content">
+                <h2>Wispr Flow</h2>
+                <p>Voice-first productivity.</p>
+            </div>
+        </a>
+
+        <!-- Utilities -->
+        <a href="https://www.fresha.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=fresha.com&sz=64" alt="Fresha">
+            </div>
+            <div class="card-content">
+                <h2>Fresha</h2>
+                <p>Booking software.</p>
+            </div>
+        </a>
+        <a href="https://akeyless.io" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=akeyless.io&sz=64"
+                    alt="Akeyless"></div>
+            <div class="card-content">
+                <h2>Akeyless</h2>
+                <p>Secrets management.</p>
+            </div>
+        </a>
+        <a href="https://bloomerang.co" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=bloomerang.co&sz=64"
+                    alt="Bloomerang"></div>
+            <div class="card-content">
+                <h2>Bloomerang</h2>
+                <p>Donor management.</p>
+            </div>
+        </a>
+        <a href="https://multibagg.ai" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=multibagg.ai&sz=64"
+                    alt="Multibagg"></div>
+            <div class="card-content">
+                <h2>Multibagg.ai</h2>
+                <p>AI stock analysis.</p>
+            </div>
+        </a>
+        <a href="https://eigenai.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=eigenai.com&sz=64" alt="Eigen">
+            </div>
+            <div class="card-content">
+                <h2>Eigen</h2>
+                <p>Unlock unstructured data.</p>
+            </div>
+        </a>
+        <a href="https://happenstance.ai" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=happenstance.ai&sz=64"
+                    alt="Happenstance"></div>
+            <div class="card-content">
+                <h2>Happenstance</h2>
+                <p>Serendipitous connections.</p>
+            </div>
+        </a>
+        <a href="https://mail.google.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=mail.google.com&sz=64"
+                    alt="Gmail"></div>
+            <div class="card-content">
+                <h2>Gmail</h2>
+                <p>Email.</p>
+            </div>
+        </a>
+        <a href="https://www.youtube.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=youtube.com&sz=64" alt="YouTube">
+            </div>
+            <div class="card-content">
+                <h2>YouTube</h2>
+                <p>Video streaming.</p>
+            </div>
+        </a>
+        <a href="https://www.linkedin.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=linkedin.com&sz=64"
+                    alt="LinkedIn"></div>
+            <div class="card-content">
+                <h2>LinkedIn</h2>
+                <p>Professional network.</p>
+            </div>
+        </a>
+        <a href="https://www.canva.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=canva.com&sz=64" alt="Canva">
+            </div>
+            <div class="card-content">
+                <h2>Canva</h2>
+                <p>Design platform.</p>
+            </div>
+        </a>
+        <a href="https://www.tradingview.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=tradingview.com&sz=64"
+                    alt="TradingView"></div>
+            <div class="card-content">
+                <h2>TradingView</h2>
+                <p>Market analysis.</p>
+            </div>
+        </a>
+        <a href="https://web.whatsapp.com" class="card" target="_blank" data-category="utilities">
+            <div class="card-icon"><img src="https://www.google.com/s2/favicons?domain=web.whatsapp.com&sz=64"
+                    alt="WhatsApp"></div>
+            <div class="card-content">
+                <h2>WhatsApp</h2>
+                <p>Messaging.</p>
+            </div>
+        </a>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

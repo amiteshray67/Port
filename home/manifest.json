@@ -1,0 +1,20 @@
+{
+    "name": "Hey Amitesh - AI Dashboard",
+    "short_name": "Hey Amitesh",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0f0f0f",
+    "theme_color": "#0f0f0f",
+    "icons": [
+        {
+            "src": "https://www.google.com/s2/favicons?domain=amiteshray.com&sz=192",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "https://www.google.com/s2/favicons?domain=amiteshray.com&sz=512",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
