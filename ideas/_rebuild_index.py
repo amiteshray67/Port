@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+import os, re
+
+ideas_dir = os.path.dirname(os.path.abspath(__file__))
+pages = []
+
+for f in sorted(os.listdir(ideas_dir)):
+    if f.endswith(".html") and f not in ("index.html",) and not f.startswith("_"):
+        slug = f[:-5]
+        with open(os.path.join(ideas_dir, f), encoding="utf-8") as fh:
+            content = fh.read()
+        title_m = re.search(r"<title>(.*?)</title>", content, re.I)
+        title = title_m.group(1).split("—")[0].strip() if title_m else slug.replace("-"," ").title()
+        desc_m  = re.search(r'<meta name="description" content="(.*?)"', content, re.I)
+        desc    = desc_m.group(1) if desc_m else ""
+        date_m  = re.search(r"Analysed\s+([\w]+\s+\d{4})", content)
+        date_s  = date_m.group(1) if date_m else "2026"
+        score_m = re.search(r"(\d+)/10", content)
+        score   = score_m.group(0) if score_m else ""
+        pages.append({"slug": slug, "title": title, "desc": desc, "date": date_s, "score": score})
+
+cards = ""
+for p in pages:
+    badge = f'<span class="score">{p["score"]}</span>' if p["score"] else ""
+    cards += f"""
+    <a href="/ideas/{p['slug']}.html" class="card">
+      <div class="card-meta"><span class="card-date">{p['date']}</span>{badge}</div>
+      <h2>{p['title']}</h2>
+      <p>{p['desc'][:150]}{'...' if len(p['desc'])>150 else ''}</p>
+      <span class="card-link">Read analysis →</span>
+    </a>"""
+
+html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Ideas Lab — Amitesh Ray</title>
+  <meta name="description" content="Raw startup ideas researched and stress-tested by Amitesh Ray."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
+    :root{{--p:#6366f1;--s:#8b5cf6;--t:#1f2937;--tl:#4b5563;--tm:#9ca3af;--bg:#fff;--bga:#f9fafb;--b:#e5e7eb;--r:12px}}
+    body{{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--t);line-height:1.7}}
+    nav{{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--b);padding:0 2rem;display:flex;align-items:center;height:60px}}
+    .logo{{font-family:'Raleway',sans-serif;font-weight:700;font-size:1.1rem;color:var(--p);text-decoration:none}}
+    main{{max-width:880px;margin:0 auto;padding:100px 2rem 80px}}
+    .hero{{text-align:center;margin-bottom:3rem}}
+    .chip{{display:inline-block;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:100px;padding:.3rem .9rem;margin-bottom:1rem}}
+    .hero h1{{font-family:'Raleway',sans-serif;font-size:clamp(1.8rem,5vw,2.5rem);font-weight:700;margin-bottom:.6rem}}
+    .hero h1 span{{color:var(--p)}}
+    .hero p{{color:var(--tl);max-width:480px;margin:0 auto;font-size:.95rem}}
+    .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:2rem}}
+    .card{{display:block;text-decoration:none;color:inherit;background:var(--bga);border:1px solid var(--b);border-radius:var(--r);padding:1.5rem;transition:box-shadow .2s,transform .2s}}
+    .card:hover{{box-shadow:0 8px 32px rgba(99,102,241,.13);transform:translateY(-3px)}}
+    .card-meta{{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}}
+    .card-date{{font-size:.75rem;color:var(--tm)}}
+    .score{{background:linear-gradient(135deg,var(--p),var(--s));color:#fff;font-size:.7rem;font-weight:700;border-radius:100px;padding:.15rem .55rem}}
+    .card h2{{font-family:'Raleway',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.4rem}}
+    .card p{{font-size:.84rem;color:var(--tl);margin-bottom:.9rem}}
+    .card-link{{font-size:.82rem;font-weight:600;color:var(--p)}}
+    footer{{border-top:1px solid var(--b);padding:2rem;text-align:center;font-size:.82rem;color:var(--tm)}}
+    footer a{{color:var(--p);text-decoration:none}}
+    @media(max-width:600px){{main{{padding:80px 1.25rem 60px}}nav{{padding:0 1.25rem}}}}
+  </style>
+</head>
+<body>
+<nav><a href="https://amiteshray.com" class="logo">Amitesh Ray</a></nav>
+<main>
+  <div class="hero">
+    <div class="chip">Ideas Lab</div>
+    <h1>Raw Ideas, <span>Stress-Tested</span></h1>
+    <p>Every idea gets fully researched — market size, competitors, a viability score, and a roadmap.</p>
+  </div>
+  <div class="grid">{cards if pages else '<p style="color:var(--tm);text-align:center;grid-column:1/-1;padding:3rem">No ideas yet.</p>'}
+  </div>
+</main>
+<footer><a href="https://amiteshray.com">← amiteshray.com</a></footer>
+</body>
+</html>"""
+
+out = os.path.join(ideas_dir, "index.html")
+with open(out, "w", encoding="utf-8") as fh:
+    fh.write(html)
+print(f"index.html rebuilt — {len(pages)} idea(s)")
