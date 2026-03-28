@@ -410,14 +410,16 @@
             padding: 25px;
             box-shadow: 0 5px 15px var(--shadow-color);
             width: calc(50% - 15px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
         }
 
         .certification-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--shadow-color);
+            transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
+            box-shadow: -10px 15px 35px var(--shadow-color);
+            border-color: var(--primary-color);
         }
 
         .certification-card::before {
@@ -601,11 +603,15 @@
             padding: 20px;
             box-shadow: 0 3px 10px var(--shadow-color);
             text-align: center;
-            transition: transform 0.3s ease;
+            border: 1px solid transparent;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+            transform-style: preserve-3d;
         }
 
         .result-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
+            box-shadow: -10px 15px 30px var(--shadow-color);
+            border-color: var(--primary-color);
         }
 
         .result-value {
@@ -961,6 +967,223 @@
                 transform: translateY(0) scale(1);
             }
         }
+
+        /* ------------------------------------- */
+        /*   NEW 3D EXPERIENCE UI & MODAL CSS    */
+        /* ------------------------------------- */
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+            margin-top: 40px;
+        }
+
+        .experience-card {
+            background-color: var(--card-background);
+            border-radius: 16px;
+            padding: 30px 25px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
+            box-shadow: -10px 15px 35px var(--shadow-color);
+            border-color: var(--primary-color);
+        }
+
+        .experience-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .exp-date {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .exp-role {
+            font-size: 1.35rem;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+        }
+
+        .exp-company {
+            font-size: 1.05rem;
+            color: var(--text-color-light);
+            font-weight: 500;
+        }
+
+        .exp-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            opacity: 0.8;
+            transition: transform 0.4s ease;
+        }
+
+        .experience-card:hover .exp-icon {
+            transform: scale(1.1) translateZ(20px);
+        }
+
+        .click-hint {
+            font-size: 0.8rem;
+            color: var(--text-color-light);
+            opacity: 0.6;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: opacity 0.3s ease;
+        }
+
+        .experience-card:hover .click-hint {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--background-color);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.8) translateY(20px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color-light);
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--background-color-alt);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .modal-role {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .modal-company {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-body li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 16px;
+            color: var(--text-color-light);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .modal-body li::before {
+            content: '➤';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .modal-body li strong {
+            color: var(--text-color);
+            font-weight: 600;
+        }
     </style>
 </head>
 
@@ -1032,143 +1255,100 @@
     <section id="experience" class="timeline-section">
         <div class="container">
             <h2 class="section-title">Professional Experience</h2>
-            <div class="timeline-container">
+            
+            <div class="experience-grid">
                 <!-- Arcesium -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">May 2025 - Present</span>
-                        <h3 class="timeline-title">Finance Analyst</h3>
-                        <h4 class="timeline-subtitle">Arcesium</h4>
-                        <ol>
-                            <li>Managed Middle Office operations for 4 Hedge Fund clients during US Night Shift, serving
-                                as primary contact for live market requests and handling high-priority trade amendments.
-                            </li>
-                            <li>Handled end-to-end trade lifecycle using Arcesium Opterra platform for complex products
-                                including Swaps, Swaptions, FX Options, and Fixed Income (Credit Facilities), ensuring
-                                accurate trade execution and settlement.</li>
-                            <li>Facilitated Reference Data creation and security master setup for new fund onboarding.
-                            </li>
-                            <li>Resolved trade kickouts by investigating data errors, to ensure 100% adherence to Client
-                                SLAs.</li>
-                            <li>Automated daily tasks using Python, Excel Macros, and Generative AI thus increasing
-                                efficiency by upto 20%.</li>
-                        </ol>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card" data-exp="arcesium">
+                    <div class="exp-icon"><i class="fas fa-chart-pie"></i></div>
+                    <span class="exp-date">May 2025 - Present</span>
+                    <h3 class="exp-role">Finance Analyst</h3>
+                    <div class="exp-company">Arcesium</div>
+                    <div class="click-hint">Click for details <i class="fas fa-arrow-right"></i></div>
                 </div>
 
                 <!-- Bloomberg -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">Mar 2024 - Mar 2025</span>
-                        <h3 class="timeline-title">Bloomberg Champion</h3>
-                        <h4 class="timeline-subtitle">Bloomberg</h4>
-                        <ol>
-                            <li>1st Runner-Up in the TAPMI Bloomberg Olympiad 2025</li>
-                            <li>Represented TAPMI at CFA Research Challenge</li>
-                            <li>Received extensive 40hrs+ training from Bloomberg on Financial Statement Analysis &
-                                Valuation models</li>
-                            <li>Assisted professors in academic research with financial data and insights using
-                                Bloomberg terminal</li>
-                            <li>Conducted terminal training for 700+ students and managed completion of BMC & ESG
-                                certification for 500+ students. Thereby increasing Bloomberg Terminal usage in campus.
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card" data-exp="bloomberg">
+                    <div class="exp-icon"><i class="fas fa-terminal"></i></div>
+                    <span class="exp-date">Mar 2024 - Mar 2025</span>
+                    <h3 class="exp-role">Bloomberg Champion</h3>
+                    <div class="exp-company">Bloomberg</div>
+                    <div class="click-hint">Click for details <i class="fas fa-arrow-right"></i></div>
                 </div>
 
                 <!-- Samnidhy -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">Mar 2024 - Mar 2025</span>
-                        <h3 class="timeline-title">Senior Equity Research Analyst</h3>
-                        <h4 class="timeline-subtitle">Samnidhy</h4>
-                        <ol>
-                            <li>Led equity research initiatives and strategy formulation.</li>
-                            <li>Conducted in-depth fundamental analysis of companies across various sectors.</li>
-                            <li>Provided detailed investment recommendations and research reports.</li>
-                        </ol>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card" data-exp="samnidhy">
+                    <div class="exp-icon"><i class="fas fa-search-dollar"></i></div>
+                    <span class="exp-date">Mar 2024 - Mar 2025</span>
+                    <h3 class="exp-role">Sr. Equity Research Analyst</h3>
+                    <div class="exp-company">Samnidhy</div>
+                    <div class="click-hint">Click for details <i class="fas fa-arrow-right"></i></div>
                 </div>
 
                 <!-- Blue Copper -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">Apr 2024 - Jun 2024</span>
-                        <h3 class="timeline-title">Market Research Intern</h3>
-                        <h4 class="timeline-subtitle">Blue Copper Technologies Pvt. Ltd.</h4>
-                        <ol>
-                            <li>Conducted secondary market research to identify customer pain points and refine client
-                                acquisition strategy.</li>
-                            <li>Designed ZAPIER workflow for content automation reducing manual work by up to 70% and
-                                cost by 83%.</li>
-                            <li>Conducted analysis on 7+ payment rails, selecting the optimal option for business
-                                operations.</li>
-                        </ol>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card" data-exp="bluecopper">
+                    <div class="exp-icon"><i class="fas fa-bullseye"></i></div>
+                    <span class="exp-date">Apr 2024 - Jun 2024</span>
+                    <h3 class="exp-role">Market Research Intern</h3>
+                    <div class="exp-company">Blue Copper Technologies</div>
+                    <div class="click-hint">Click for details <i class="fas fa-arrow-right"></i></div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Experience Modal Overlay -->
+    <div class="modal-overlay" id="expModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeExpModal"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <h3 class="modal-role" id="modalRole">Role</h3>
+                <div class="modal-company" id="modalCompany">Company | Date</div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Javascript will inject list items here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Education Section -->
     <section id="education" class="timeline-section" style="background-color: var(--background-color-alt);">
         <div class="container">
             <h2 class="section-title">Education</h2>
-            <div class="timeline-container">
+            <div class="experience-grid">
                 <!-- MBA -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">2023 - 2025</span>
-                        <h3 class="timeline-title">MBA - Finance</h3>
-                        <h4 class="timeline-subtitle">T. A. Pai Management Institute, Manipal</h4>
-                        <p class="timeline-text">
-                            CGPA: 6.18
-                        </p>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card">
+                    <div class="exp-icon"><i class="fas fa-university"></i></div>
+                    <span class="exp-date">2023 - 2025</span>
+                    <h3 class="exp-role">MBA - Finance</h3>
+                    <div class="exp-company">T. A. Pai Management Institute, Manipal</div>
+                    <div class="click-hint" style="opacity: 1; color: var(--text-color); font-weight: 600; margin-top: 15px;"><i class="fas fa-star" style="color: var(--primary-color); margin-right: 5px;"></i>CGPA: 6.18</div>
                 </div>
 
                 <!-- B.Tech -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">2019 - 2023</span>
-                        <h3 class="timeline-title">B.Tech</h3>
-                        <h4 class="timeline-subtitle">Heritage Institute of Technology, Kolkata</h4>
-                        <p class="timeline-text">
-                            CGPA: 8.71
-                        </p>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card">
+                    <div class="exp-icon"><i class="fas fa-laptop-code"></i></div>
+                    <span class="exp-date">2019 - 2023</span>
+                    <h3 class="exp-role">B.Tech</h3>
+                    <div class="exp-company">Heritage Institute of Technology, Kolkata</div>
+                    <div class="click-hint" style="opacity: 1; color: var(--text-color); font-weight: 600; margin-top: 15px;"><i class="fas fa-star" style="color: var(--primary-color); margin-right: 5px;"></i>CGPA: 8.71</div>
                 </div>
 
                 <!-- CBSE XII -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">2018 - 2019</span>
-                        <h3 class="timeline-title">CBSE - XII</h3>
-                        <h4 class="timeline-subtitle">South Point High School, Kolkata</h4>
-                        <p class="timeline-text">
-                            Percentage: 65%
-                        </p>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card">
+                    <div class="exp-icon"><i class="fas fa-school"></i></div>
+                    <span class="exp-date">2018 - 2019</span>
+                    <h3 class="exp-role">CBSE - XII</h3>
+                    <div class="exp-company">South Point High School, Kolkata</div>
+                    <div class="click-hint" style="opacity: 1; color: var(--text-color); font-weight: 600; margin-top: 15px;"><i class="fas fa-medal" style="color: var(--primary-color); margin-right: 5px;"></i>Percentage: 65%</div>
                 </div>
 
                 <!-- CBSE X -->
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <span class="timeline-date">2016 - 2017</span>
-                        <h3 class="timeline-title">CBSE - X</h3>
-                        <h4 class="timeline-subtitle">South Point High School, Kolkata</h4>
-                        <p class="timeline-text">
-                            CGPA: 9.4
-                        </p>
-                    </div>
-                    <div class="timeline-dot"></div>
+                <div class="experience-card">
+                    <div class="exp-icon"><i class="fas fa-book-open"></i></div>
+                    <span class="exp-date">2016 - 2017</span>
+                    <h3 class="exp-role">CBSE - X</h3>
+                    <div class="exp-company">South Point High School, Kolkata</div>
+                    <div class="click-hint" style="opacity: 1; color: var(--text-color); font-weight: 600; margin-top: 15px;"><i class="fas fa-star" style="color: var(--primary-color); margin-right: 5px;"></i>CGPA: 9.4</div>
                 </div>
             </div>
         </div>
