@@ -20,6 +20,8 @@ jobs:
           username: u944949387
           password: Sphs@05164426082001
           server-dir: /public_html/
+          protocol: ftps
+          port: 21
           exclude: |
             **/.git*
             **/.git*/**
