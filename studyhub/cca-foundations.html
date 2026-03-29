@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCA Foundations — Exam Prep Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ──────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:        #09090f;
+  --surface:   #111118;
+  --surface2:  #17171f;
+  --surface3:  #1e1e28;
+  --border:    #2a2a3a;
+  --border2:   #353548;
+  --text:      #f0f0f8;
+  --text2:     #9090aa;
+  --text3:     #55556a;
+  --accent:    #6c5ce7;
+  --accent-h:  #a29bfe;
+  --blue:      #5b9cf8;
+  --green:     #34d399;
+  --red:       #f87171;
+  --yellow:    #fbbf24;
+  --orange:    #fb923c;
+  --cyan:      #22d3ee;
+  --shadow:    0 1px 3px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.6);
+  --glow:      0 0 0 1px rgba(139,124,248,.25), 0 4px 24px rgba(139,124,248,.15);
+}
+[data-theme="light"] {
+  --bg:        #f5f5fb;
+  --surface:   #ffffff;
+  --surface2:  #f0f0f8;
+  --surface3:  #e8e8f4;
+  --border:    #e0e0ec;
+  --border2:   #ccccde;
+  --text:      #111120;
+  --text2:     #55556e;
+  --text3:     #9090aa;
+  --accent:    #6c5ce7;
+  --accent-h:  #a29bfe;
+  --blue:      #2563eb;
+  --green:     #059669;
+  --red:       #dc2626;
+  --yellow:    #d97706;
+  --orange:    #ea580c;
+  --cyan:      #0891b2;
+  --shadow:    0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.1);
+  --glow:      0 0 0 1px rgba(109,84,240,.2), 0 4px 24px rgba(109,84,240,.1);
+}
+
+/* ── RESET & BASE ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background .25s, color .25s;
+}
+h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.2; }
+h2 { font-size: 1.25rem; font-weight: 700; line-height: 1.3; color: var(--text); margin-bottom: 1.25rem; }
+h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: .75rem; }
+h4 { font-size: .9rem; font-weight: 700; color: var(--accent); margin-bottom: .5rem; }
+h5 { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .35rem; }
+p  { color: var(--text2); line-height: 1.75; }
+ul { color: var(--text2); padding-left: 1.25rem; line-height: 1.9; }
+li { margin-bottom: .15rem; }
+a  { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--text); font-weight: 600; }
+code { font-family: 'JetBrains Mono', monospace; font-size: .82em; background: var(--surface3); padding: .1em .35em; border-radius: 4px; color: var(--accent); }
+
+/* ── LAYOUT ─────────────────────────────────────────── */
+.page { max-width: 1280px; margin: 0 auto; padding: 0 24px 48px; }
+
+/* ── HEADER ─────────────────────────────────────────── */
+.top-header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.top-header-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  height: 64px; display: flex; align-items: center; gap: 16px;
+}
+.logo-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  color: #fff; font-weight: 700; font-size: .75rem;
+  letter-spacing: .06em; padding: 5px 12px; border-radius: 100px;
+  text-transform: uppercase; flex-shrink: 0;
+}
+.header-title { flex: 1; min-width: 0; }
+.header-title h1 { font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.header-title p  { font-size: .78rem; color: var(--text3); margin: 0; line-height: 1; }
+.theme-btn {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  border-radius: 10px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; transition: all .2s;
+  color: var(--text2);
+}
+.theme-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.05); }
+
+/* ── STAT STRIP ─────────────────────────────────────── */
+.stat-strip {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 12px; padding: 24px 0 0;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 16px; text-align: center;
+  box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.stat-val { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+.stat-lbl { font-size: .7rem; color: var(--text3); margin-top: 5px; text-transform: uppercase; letter-spacing: .07em; font-weight: 600; }
+
+/* ── TABS ───────────────────────────────────────────── */
+.tab-nav {
+  display: flex; gap: 4px; padding: 20px 0 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 8px 18px; border-radius: 8px;
+  background: transparent; border: 1px solid transparent;
+  cursor: pointer; font-size: .84rem; font-weight: 600;
+  color: var(--text3); white-space: nowrap;
+  transition: all .18s; font-family: inherit;
+}
+.tab-btn:hover { color: var(--text2); background: var(--surface2); border-color: var(--border); }
+.tab-btn.active {
+  color: var(--accent); background: var(--surface2);
+  border-color: var(--border2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* ── CONTENT PANE ───────────────────────────────────── */
+.content-pane {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px;
+  margin-top: 6px;
+  box-shadow: var(--shadow);
+  min-height: 500px;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── CARD ───────────────────────────────────────────── */
+.card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px;
+}
+.card + .card { margin-top: 12px; }
+.card.stripe-accent  { border-left: 3px solid var(--accent); }
+.card.stripe-green   { border-left: 3px solid var(--green); }
+.card.stripe-red     { border-left: 3px solid var(--red); }
+.card.stripe-yellow  { border-left: 3px solid var(--yellow); }
+.card.stripe-cyan    { border-left: 3px solid var(--cyan); }
+.card.stripe-orange  { border-left: 3px solid var(--orange); }
+
+/* ── GRIDS ──────────────────────────────────────────── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* ── BADGE ──────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px; border-radius: 100px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em;
+}
+.b-purple { background: rgba(139,124,248,.15); color: var(--accent); border: 1px solid rgba(139,124,248,.25); }
+.b-blue   { background: rgba(91,156,248,.15);  color: var(--blue);   border: 1px solid rgba(91,156,248,.25); }
+.b-green  { background: rgba(52,211,153,.15);  color: var(--green);  border: 1px solid rgba(52,211,153,.25); }
+.b-yellow { background: rgba(251,191,36,.15);  color: var(--yellow); border: 1px solid rgba(251,191,36,.25); }
+.b-cyan   { background: rgba(34,211,238,.15);  color: var(--cyan);   border: 1px solid rgba(34,211,238,.25); }
+.b-orange { background: rgba(251,146,60,.15);  color: var(--orange); border: 1px solid rgba(251,146,60,.25); }
+
+/* ── DIVIDER ────────────────────────────────────────── */
+.sep { height: 1px; background: var(--border); margin: 28px 0; }
+
+/* ── DOMAIN BAR ─────────────────────────────────────── */
+.dbar { margin-bottom: 16px; }
+.dbar-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: .84rem; font-weight: 600; color: var(--text2); }
+.dbar-track { height: 8px; background: var(--surface3); border-radius: 8px; overflow: hidden; }
+.dbar-fill  { height: 100%; border-radius: 8px; transition: width 1.2s cubic-bezier(.22,1,.36,1); }
+
+/* ── SCENARIO GRID ──────────────────────────────────── */
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.sc-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 18px; transition: border-color .2s; }
+.sc-card:hover { border-color: var(--border2); }
+.sc-num { font-size: 1.8rem; font-weight: 800; color: var(--accent); opacity: .25; line-height: 1; }
+.sc-card h4 { font-size: .84rem; color: var(--text); margin: 4px 0 6px; }
+.sc-card p  { font-size: .8rem; line-height: 1.6; }
+
+/* ── TASK STATEMENT ─────────────────────────────────── */
+.task-stmt {
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px;
+  margin-bottom: 14px;
+  background: var(--surface2);
+  transition: border-color .2s;
+}
+.task-stmt:hover { border-color: var(--border2); }
+.task-stmt > h4 { font-size: .95rem; color: var(--text); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.kn h5 { color: var(--cyan); margin-top: 12px; }
+.sk h5 { color: var(--yellow); margin-top: 12px; }
+.task-stmt ul { font-size: .84rem; line-height: 1.85; }
+
+/* ── PATTERN CARD ───────────────────────────────────── */
+.pat-card { border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; background: var(--surface2); }
+.pat-card h4 { font-size: .95rem; color: var(--text); margin-bottom: 6px; }
+.pat-card > p { font-size: .84rem; margin-bottom: 14px; }
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vs-bad  { background: rgba(248,113,113,.07); border: 1px solid rgba(248,113,113,.2); border-radius: 8px; padding: 14px; }
+.vs-good { background: rgba(52,211,153,.07);  border: 1px solid rgba(52,211,153,.2);  border-radius: 8px; padding: 14px; }
+.vs-bad  h5 { color: var(--red); }
+.vs-good h5 { color: var(--green); }
+.vs-bad p, .vs-good p { font-size: .82rem; line-height: 1.65; }
+
+/* ── WEEK TIMELINE ──────────────────────────────────── */
+.week-list { display: flex; flex-direction: column; gap: 0; }
+.week-item { display: flex; gap: 16px; align-items: flex-start; position: relative; padding-bottom: 20px; }
+.week-item:last-child { padding-bottom: 0; }
+.week-item::before { content: ''; position: absolute; left: 17px; top: 34px; bottom: 0; width: 2px; background: var(--border); }
+.week-item:last-child::before { display: none; }
+.wk-num {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .75rem; color: #fff;
+  box-shadow: var(--glow); z-index: 1;
+}
+.wk-body h4 { font-size: .9rem; color: var(--text); margin-bottom: 4px; }
+.wk-body p  { font-size: .82rem; }
+
+/* ── EXERCISE CARD ──────────────────────────────────── */
+.ex-card { border: 1px solid var(--border); border-left: 3px solid var(--orange); border-radius: 12px; padding: 20px; margin-bottom: 14px; background: var(--surface2); }
+.ex-card h4 { color: var(--orange); font-size: .9rem; margin-bottom: 6px; }
+.ex-card p  { font-size: .84rem; }
+
+/* ── PRACTICE Q's ───────────────────────────────────── */
+.q-card { border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; background: var(--surface2); }
+.q-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+.q-text { font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.65; margin-bottom: 16px; }
+.q-opts { display: flex; flex-direction: column; gap: 8px; }
+.q-opt {
+  padding: 12px 16px; border-radius: 9px;
+  background: var(--surface3); border: 1px solid var(--border);
+  font-size: .88rem; color: var(--text2); line-height: 1.5;
+  transition: border-color .15s;
+}
+.q-ans { display: none; margin-top: 14px; padding: 16px; background: rgba(139,124,248,.08); border: 1px solid rgba(139,124,248,.25); border-radius: 10px; font-size: .88rem; color: var(--text2); line-height: 1.7; }
+.q-ans.show { display: block; }
+.q-ans strong { color: var(--accent); font-weight: 700; }
+.reveal-btn {
+  padding: 7px 18px; background: var(--accent); color: #fff;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-size: .8rem; font-weight: 700; font-family: inherit;
+  transition: opacity .15s, transform .15s;
+}
+.reveal-btn:hover { opacity: .85; transform: translateY(-1px); }
+
+/* ── CODE BLOCK ─────────────────────────────────────── */
+.code {
+  background: #07070e; border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 20px;
+  font-family: 'JetBrains Mono', monospace; font-size: .8rem;
+  color: #c0c8e0; overflow-x: auto; margin: 10px 0;
+  line-height: 1.8; white-space: pre;
+}
+[data-theme="light"] .code { background: #1a1a2e; }
+.kw  { color: #a78bfa; }
+.str { color: #6ee7b7; }
+.cmt { color: #3d4060; }
+.fn  { color: #93c5fd; }
+
+/* ── REF TABLE ──────────────────────────────────────── */
+.ref-table { width: 100%; border-collapse: collapse; font-size: .83rem; margin-top: 14px; }
+.ref-table th { background: var(--surface3); padding: 11px 14px; text-align: left; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text3); border-bottom: 1px solid var(--border); }
+.ref-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table td:first-child { color: var(--accent); font-weight: 600; font-size: .8rem; }
+.ref-table tr:hover td { background: var(--surface3); }
+
+/* ── RESOURCE CARD ──────────────────────────────────── */
+.res-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 10px; transition: border-color .2s; }
+.res-card:hover { border-color: var(--border2); }
+.res-card a { font-size: .95rem; font-weight: 600; }
+.res-card p  { font-size: .82rem; margin-top: 4px; }
+
+/* ── TRACKER ────────────────────────────────────────── */
+.tracker-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.tracker-col { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.tracker-col h4 { font-size: .8rem; margin-bottom: 12px; }
+.t-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; cursor: pointer; }
+.t-item input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; margin-top: 2px; flex-shrink: 0; }
+.t-item label { font-size: .78rem; color: var(--text2); cursor: pointer; line-height: 1.4; }
+.prog-wrap { margin-top: 12px; }
+.prog-track { height: 5px; background: var(--surface3); border-radius: 5px; overflow: hidden; }
+.prog-fill  { height: 100%; background: var(--accent); border-radius: 5px; transition: width .3s; }
+.prog-lbl   { font-size: .7rem; color: var(--text3); margin-top: 5px; }
+
+/* ── INFO BOX ───────────────────────────────────────── */
+.info-box { padding: 14px 18px; border-radius: 10px; margin: 14px 0; font-size: .88rem; line-height: 1.65; }
+.ib-yellow { background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.25); color: var(--yellow); }
+.ib-blue   { background: rgba(91,156,248,.08); border: 1px solid rgba(91,156,248,.25); color: var(--blue); }
+.ib-green  { background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.25); color: var(--green); }
+
+/* ── QUICK-FACT CHIPS ───────────────────────────────── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.chip { padding: 5px 12px; background: var(--surface3); border: 1px solid var(--border); border-radius: 100px; font-size: .78rem; color: var(--text2); font-weight: 500; }
+
+/* ── OVERALL PROGRESS ───────────────────────────────── */
+.overall-prog { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.overall-prog .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 700; font-size: .9rem; }
+.overall-prog .pct { color: var(--accent); font-weight: 800; font-size: 1.1rem; }
+.overall-track { height: 10px; background: var(--surface3); border-radius: 10px; overflow: hidden; }
+.overall-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--blue)); border-radius: 10px; transition: width .3s; }
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 1100px) { .stat-strip { grid-template-columns: repeat(3, 1fr); } .tracker-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 800px)  { .g2, .g3, .scenario-grid, .vs { grid-template-columns: 1fr; } .content-pane { padding: 20px; } }
+@media (max-width: 640px)  { .stat-strip { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div id="back-nav" style="width:100%;background:linear-gradient(135deg,#6c5ce7,#a29bfe);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font-family:'Poppins',sans-serif;flex-shrink:0;z-index:9999;">
+  <a href="https://amiteshray.com" style="color:white;text-decoration:none;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">← Back to amiteshray.com</a>
+  <span style="color:rgba(255,255,255,0.7);font-size:11px;font-weight:500;">Study Hub · Claude Code Architect Exam</span>
+</div>
+
+<!-- STICKY HEADER -->
+<header class="top-header">
+  <div class="top-header-inner">
+    <div class="logo-pill">✦ Anthropic Certified</div>
+    <div class="header-title">
+      <h1>Claude Certified Architect — Foundations</h1>
+      <p>Exam Prep Dashboard &nbsp;·&nbsp; 301-Level &nbsp;·&nbsp; Launched March 12, 2026 &nbsp;·&nbsp; Official Exam Guide v0.1 + Architect's Playbook</p>
+    </div>
+    <button class="theme-btn" id="themeBtn" title="Toggle dark / light mode" aria-label="Toggle theme">🌙</button>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-card"><div class="stat-val">60</div><div class="stat-lbl">MCQ Questions</div></div>
+    <div class="stat-card"><div class="stat-val">720</div><div class="stat-lbl">Passing Score</div></div>
+    <div class="stat-card"><div class="stat-val">5</div><div class="stat-lbl">Domains</div></div>
+    <div class="stat-card"><div class="stat-val">6</div><div class="stat-lbl">Scenarios</div></div>
+    <div class="stat-card"><div class="stat-val">28</div><div class="stat-lbl">Task Statements</div></div>
+    <div class="stat-card"><div class="stat-val">$99</div><div class="stat-lbl">Exam Fee</div></div>
+  </div>
+
+  <!-- TABS -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('domains',this)">🗂 Domains &amp; Tasks</button>
+    <button class="tab-btn" onclick="switchTab('playbook',this)">🏗 Playbook Patterns</button>
+    <button class="tab-btn" onclick="switchTab('studyplan',this)">📅 Study Plan</button>
+    <button class="tab-btn" onclick="switchTab('resources',this)">📚 Resources</button>
+    <button class="tab-btn" onclick="switchTab('practice',this)">🧪 Practice Q's</button>
+    <button class="tab-btn" onclick="switchTab('cheatsheet',this)">⚡ Cheatsheet</button>
+    <button class="tab-btn" onclick="switchTab('tracker',this)">✅ Tracker</button>
+  </nav>
+
+  <div class="content-pane">
+
+<!-- ═══════════════════════════════════════════════════
+     OVERVIEW
+═══════════════════════════════════════════════════ -->
+<div id="panel-overview" class="panel active">
+  <div class="g2">
+    <div>
+      <h2>About the Exam</h2>
+      <div class="card stripe-accent" style="margin-bottom:14px">
+        <h3>Format &amp; Scoring</h3>
+        <ul style="margin-top:8px">
+          <li><strong>301-level</strong> exam — 60 MCQ, 4 options each, 120 minutes</li>
+          <li>Scaled score <strong>100–1000</strong> &nbsp;·&nbsp; Passing: <strong style="color:var(--green)">720</strong></li>
+          <li>4 of 6 scenarios randomly selected per sitting</li>
+          <li>All questions grounded in real-world production scenario contexts</li>
+          <li>Launched <strong>March 12, 2026</strong> &nbsp;·&nbsp; Exam Guide v0.1 &nbsp;·&nbsp; $99 USD</li>
+          <li>Strictly proctored — no Claude, no docs, no external tools allowed</li>
+        </ul>
+      </div>
+      <div class="card stripe-green" style="margin-bottom:14px">
+        <h3>Target Candidate &amp; Prerequisites</h3>
+        <p>Architects and senior engineers who design, implement, and deploy production AI systems using the Claude API, Claude Code, and MCP integrations. <strong style="color:var(--text)">Expected: 6+ months hands-on Claude API &amp; Claude Code experience, Python familiarity, and real project work.</strong></p>
+        <ul style="margin-top:8px;font-size:.84rem">
+          <li>Experienced AI developers: <strong style="color:var(--green)">2–4 weeks</strong> to prepare</li>
+          <li>Developers new to Claude: <strong style="color:var(--yellow)">2–4 months</strong> (build real projects first)</li>
+        </ul>
+      </div>
+      <div class="card stripe-cyan" style="margin-bottom:14px">
+        <h3>🔥 What Makes This Exam Unlike Any Other</h3>
+        <p style="margin-bottom:8px">This is <strong style="color:var(--text)">not a prompting literacy badge</strong>. It doesn't care how many prompts you've written. Every question drops you into a real production system and asks you to make the right architectural call.</p>
+        <ul style="font-size:.84rem">
+          <li><strong style="color:var(--text)">Scenario-anchored:</strong> you answer as the architect of a specific production system, not in the abstract</li>
+          <li><strong style="color:var(--text)">Anti-patterns as distractors:</strong> wrong answers are architectural mistakes engineers commonly reach for. <em>Knowing what NOT to do is half the exam.</em></li>
+          <li><strong style="color:var(--text)">Community verdict:</strong> "The depth on agentic architecture, MCP tool integration, and multi-agent orchestration is no joke. This isn't a watch-a-tutorial-and-pass certification."</li>
+        </ul>
+      </div>
+      <div class="card stripe-yellow">
+        <h3>The Core Exam Principle</h3>
+        <p style="font-size:1.05rem;font-weight:700;color:var(--yellow);margin-bottom:8px">"Code guarantees. Prompts suggest."</p>
+        <p>Programmatic enforcement — app-layer intercepts, schema-validated <code>tool_use</code>, structured error handling — always trumps prompt-based guidance for reliability and compliance. This principle underlies the answer to most hard questions.</p>
+      </div>
+    </div>
+    <div>
+      <h2>Domain Weightings</h2>
+      <div class="card">
+        <div class="dbar"><div class="dbar-label"><span>D1 · Agentic Architecture &amp; Orchestration</span><strong style="color:var(--accent)">27%</strong></div><div class="dbar-track"><div class="dbar-fill" style="width:27%;background:var(--accent)"></div></div></div>
+        <div class="dbar"><div class="dbar-label"><span>D3 · Claude Code Configuration &amp; Workflows</span><strong style="color:var(--cyan)">20%</strong></div><div class="dbar-track"><div class="dbar-fill" style="width:20%;background:var(--cyan)"></div></div></div>
+        <div class="dbar"><div class="dbar-label"><span>D4 · Prompt Engineering &amp; Structured Output</span><strong style="color:var(--green)">20%</strong></div><div class="dbar-track"><div class="dbar-fill" style="width:20%;background:var(--green)"></div></div></div>
+        <div class="dbar"><div class="dbar-label"><span>D2 · Tool Design &amp; MCP Integration</span><strong style="color:var(--blue)">18%</strong></div><div class="dbar-track"><div class="dbar-fill" style="width:18%;background:var(--blue)"></div></div></div>
+        <div class="dbar" style="margin-bottom:0"><div class="dbar-label"><span>D5 · Context Management &amp; Reliability</span><strong style="color:var(--yellow)">15%</strong></div><div class="dbar-track"><div class="dbar-fill" style="width:15%;background:var(--yellow)"></div></div></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Official Prep Steps</h3>
+        <ol style="padding-left:18px;line-height:2;font-size:.88rem;color:var(--text2)">
+          <li>Review the official exam guide thoroughly</li>
+          <li>Build a working agentic loop from scratch</li>
+          <li>Create an MCP server with all three primitives</li>
+          <li>Configure Claude Code with CLAUDE.md &amp; rules</li>
+          <li>Practice structured output with tool_use schemas</li>
+          <li>Study all Architect's Playbook patterns</li>
+          <li>Complete all 4 official preparation exercises</li>
+          <li>Review the 12 sample questions &amp; explanations</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- CRITICAL EXAM TIPS -->
+  <h2>⚡ Critical Implementation Rules <span style="font-size:.8rem;font-weight:500;color:var(--text3);margin-left:6px">high-probability exam traps</span></h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:8px">
+    <div class="card stripe-red">
+      <h4 style="color:var(--red)">Tool Count Rule</h4>
+      <p>Give each agent a <strong style="color:var(--text)">maximum of 4–5 tools</strong>. With 18+ tools, Claude's tool selection reliability degrades noticeably. Scope tools tightly to each agent's specific role.</p>
+    </div>
+    <div class="card stripe-yellow">
+      <h4 style="color:var(--yellow)">Hub-and-Spoke Architecture</h4>
+      <p>The canonical multi-agent pattern: a <strong style="color:var(--text)">central coordinator</strong> + specialized subagents. The hub routes tasks, subagents return structured results. Never let subagents talk to each other directly.</p>
+    </div>
+    <div class="card stripe-accent">
+      <h4>Token Economics</h4>
+      <p><strong style="color:var(--text)">Isolate context for each subagent</strong> — pass only what's needed for that task. Shared context leakage across subagents is the #1 cause of token bloat in multi-agent systems.</p>
+    </div>
+    <div class="card stripe-cyan">
+      <h4 style="color:var(--cyan)">Confidence Calibration</h4>
+      <p>Assign a <strong style="color:var(--text)">confidence score</strong> to outputs and define threshold triggers for human escalation. Don't rely on Claude self-reporting uncertainty — measure it structurally.</p>
+    </div>
+    <div class="card stripe-green">
+      <h4 style="color:var(--green)">Validation Retry Loop</h4>
+      <p>When structured output fails schema validation, <strong style="color:var(--text)">feed the error back to Claude</strong> with the validation message as a new user turn. One retry with explicit error context succeeds far more often than a blank retry.</p>
+    </div>
+    <div class="card stripe-orange">
+      <h4 style="color:var(--orange)">Exam Is Strictly Proctored</h4>
+      <p><strong style="color:var(--text)">No Claude, no docs, no external tools.</strong> Everything from memory. Build real implementations — rote reading alone won't cut it.</p>
+    </div>
+    <div class="card stripe-red">
+      <h4 style="color:var(--red)">Subagent Context Isolation</h4>
+      <p>Subagents have <strong style="color:var(--text)">isolated context</strong> — they do NOT inherit the coordinator's conversation history automatically. Pass only what's needed for that specific goal. This is one of the most commonly missed facts on the exam.</p>
+    </div>
+    <div class="card stripe-accent">
+      <h4>Same-Session Self-Review = Anti-Pattern</h4>
+      <p>Never use the same Claude session to review its own work. <strong style="color:var(--text)">Use a separate session</strong> (fork_session) for independent review. The same session has anchoring bias toward its own output.</p>
+    </div>
+    <div class="card stripe-green">
+      <h4 style="color:var(--green)">PostToolUse Normalizes Formats</h4>
+      <p><code>PostToolUse</code> hooks intercept tool results <strong style="color:var(--text)">before the model processes them</strong>. Use to normalize heterogeneous formats (timestamps, status codes, currency) from different MCP tools into a consistent schema.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+  <h2>The 6 Exam Scenarios</h2>
+  <p>Four of these six are randomly selected per sitting. Every exam question is anchored to one of these real-world contexts.</p>
+  <div class="scenario-grid">
+    <div class="sc-card"><div class="sc-num">01</div><h4>Customer Support Resolution Agent</h4><p>Agentic loop, tool use, escalation decisions, and human handoff patterns.</p></div>
+    <div class="sc-card"><div class="sc-num">02</div><h4>Code Generation with Claude Code</h4><p>Claude Code CLI, CLAUDE.md config, custom commands, CI integration.</p></div>
+    <div class="sc-card"><div class="sc-num">03</div><h4>Multi-Agent Research System</h4><p>Orchestrator + specialist subagents, context handoff, shared memory.</p></div>
+    <div class="sc-card"><div class="sc-num">04</div><h4>Developer Productivity with Claude</h4><p>MCP server design, tool interfaces, and developer workflow optimization.</p></div>
+    <div class="sc-card"><div class="sc-num">05</div><h4>Claude Code for CI</h4><p>CI/CD integration, headless mode (<code>--print</code>), JSON output, schema validation.</p></div>
+    <div class="sc-card"><div class="sc-num">06</div><h4>Structured Data Extraction</h4><p>tool_use for schema enforcement, batch processing, resilient schemas.</p></div>
+  </div>
+
+  <div class="sep"></div>
+  <div class="g2">
+    <div>
+      <h2>In-Scope Topics</h2>
+      <div class="card stripe-green">
+        <ul>
+          <li>Agentic loop implementation &amp; <code>stop_reason</code> handling</li>
+          <li>Multi-agent orchestration patterns</li>
+          <li>Subagent context management &amp; handoff</li>
+          <li>Tool interface design &amp; JSON schema authoring</li>
+          <li>MCP tools, resources &amp; prompts primitives</li>
+          <li>MCP server config (<code>.mcp.json</code> / <code>~/.claude.json</code>)</li>
+          <li>Error handling, <code>isError</code> flag, retry strategies</li>
+          <li>Escalation &amp; human-in-the-loop decision making</li>
+          <li>CLAUDE.md configuration hierarchy</li>
+          <li>Custom commands &amp; skills in Claude Code</li>
+          <li>Plan mode vs direct execution</li>
+          <li>Structured output via <code>tool_use</code></li>
+          <li>Few-shot prompting &amp; prompt engineering</li>
+          <li>Batch processing (Message Batches API)</li>
+          <li>Context window optimization</li>
+          <li>Information provenance &amp; human review workflows</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h2>Out-of-Scope Topics</h2>
+      <div class="card stripe-red">
+        <ul>
+          <li>Fine-tuning or model training</li>
+          <li>API authentication &amp; billing details</li>
+          <li>Infrastructure deployment &amp; cloud provider configs</li>
+          <li>Constitutional AI internals</li>
+          <li>Embedding models</li>
+          <li>Computer use &amp; vision APIs</li>
+          <li>Streaming &amp; SSE implementation details</li>
+          <li>Rate limiting strategies</li>
+          <li>OAuth flows</li>
+          <li>Prompt caching implementation details</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     DOMAINS & TASKS
+═══════════════════════════════════════════════════ -->
+<div id="panel-domains" class="panel">
+  <h2>Domain 1 · Agentic Architecture &amp; Orchestration <span class="badge b-purple" style="margin-left:8px">27%</span></h2>
+
+  <div class="task-stmt"><h4>1.1 Design and implement agentic loops using the Claude API</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>stop_reason: "tool_use"</code> → execute tools and continue; <code>"end_turn"</code> → exit loop</li><li>Agentic loop structure: send → check stop_reason → execute tool → append result → repeat</li><li>Message array construction for multi-turn tool conversations</li><li><code>tool_use_id</code> must exactly match between the <code>tool_use</code> block and the <code>tool_result</code> response</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Implementing a while-loop that runs until <code>stop_reason == "end_turn"</code></li><li>Parsing <code>tool_use</code> blocks from Claude's response and routing to handlers</li><li>Appending <code>tool_result</code> messages with the correct <code>tool_use_id</code></li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.2 Implement multi-agent orchestration patterns</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Orchestrator–subagent: parent delegates goals, children execute and return structured results</li><li><code>Task</code> tool in Claude Agent SDK for spawning subagents</li><li><code>fork_session</code> for parallel subagent execution</li><li><code>AgentDefinition</code> for reusable agent configurations</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Designing orchestration hierarchies with clear responsibility boundaries</li><li>Passing structured context payloads from orchestrator to subagents</li><li>Preventing context explosion via Goal-Oriented Delegation (goals, not implementation details)</li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.3 Design lifecycle hooks for agentic workflows</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>PostToolUse</code> hook: fires after every tool execution — use for logging and audit</li><li><code>PreToolUse</code> hook: intercepts before execution — use for compliance enforcement</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Implementing <code>PostToolUse</code> for audit trails and observability</li><li>Using <code>PreToolUse</code> to block prohibited actions at the application layer</li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.4 Implement escalation and human-in-the-loop decision patterns</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Escalation triggers: irreversible actions, ambiguous intent, compliance boundaries, low confidence</li><li>Structured escalation: include context, reason, and recommended next action</li><li>Human review workflows: approval queues, audit logs, override mechanisms</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Designing escalation triggers based on action type and risk level</li><li>Surfacing actionable context to human reviewers</li><li>Calibrating automation vs human oversight for different scenarios</li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.5 Design error handling and retry strategies</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Error categories: transient (retryable) vs permanent (non-retryable)</li><li>Exponential backoff with jitter for transient errors — prevents retry storms</li><li>Maximum retry limits to prevent infinite loops</li><li>Limits of automated retry — when to escalate to humans</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Implementing retry logic with exponential backoff and max bounds</li><li>Classifying errors and propagating structured error context through agent chains</li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.6 Manage subagent context and information handoff</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Context window limits and their impact on multi-agent systems</li><li>Information provenance: tracking where facts originated</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Designing minimal, structured context payloads for subagents</li><li>Summarizing completed subtask results before injecting into parent context</li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.7 Apply allowedTools and AgentDefinition</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>allowedTools</code>: array of tool names the agent is permitted to call (principle of least privilege)</li><li><code>AgentDefinition</code>: reusable config object — system prompt, tools, model</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Scoping agent capabilities via <code>AgentDefinition</code></li><li>Restricting subagent tool access to only what's necessary</li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.8 Design compliance enforcement in agentic systems</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Zero-Tolerance Compliance Pattern: application-layer intercepts over prompt instructions</li><li>"Code guarantees. Prompts suggest." — programmatic vs prompt-based enforcement</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Implementing pre/post execution intercepts for deterministic compliance</li><li>Designing allow/deny lists enforced at the application layer</li></ul></div></div>
+
+  <div class="task-stmt"><h4>1.9 Implement asynchronous and resumable sessions</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>--resume</code> flag in Claude Code for continuing paused sessions</li><li>Filtering stale <code>tool_results</code> when resuming async sessions</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Designing sessions that can be safely paused and resumed</li><li>Identifying and removing stale tool results on resume</li></ul></div></div>
+
+  <div class="sep"></div>
+  <h2>Domain 2 · Tool Design &amp; MCP Integration <span class="badge b-blue" style="margin-left:8px">18%</span></h2>
+
+  <div class="task-stmt"><h4>2.1 Design MCP tool interfaces with JSON schemas</h4><div class="kn"><h5>Knowledge of</h5><ul><li>MCP primitives: <strong>Tools</strong> (actions), <strong>Resources</strong> (data), <strong>Prompts</strong> (templates)</li><li>Tool definition: name, description, inputSchema (JSON Schema)</li><li><code>isError</code> flag — signals error while keeping the agentic loop alive</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Writing precise JSON Schema for tool input parameters</li><li>Crafting tool descriptions that guide Claude's selection</li><li>Implementing <code>isError: true</code> responses for recoverable failures</li><li>Knowing when to use Tools vs Resources vs Prompts</li></ul></div></div>
+
+  <div class="task-stmt"><h4>2.2 Configure MCP server connections</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>.mcp.json</code>: project-level MCP server config (committed to repo)</li><li><code>~/.claude.json</code>: user-level MCP server config (personal tools)</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Writing <code>.mcp.json</code> with correct server definitions and env var references</li><li>Choosing project-level vs user-level config based on audience</li></ul></div></div>
+
+  <div class="task-stmt"><h4>2.3 Implement structured error handling in MCP tools</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>isError: true</code> keeps the loop alive; the exception/throw pattern terminates it</li><li><code>errorCategory</code> for classifying error types; <code>isRetryable</code> for retry guidance</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Returning structured error responses with classification metadata Claude can act on</li></ul></div></div>
+
+  <div class="task-stmt"><h4>2.4 Control tool invocation with tool_choice</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>"auto"</code> — Claude decides; <code>"any"</code> — must use some tool; <code>{type:"tool",name:"X"}</code> — forces specific tool</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Forcing tool execution order via sequential <code>tool_choice</code> per step</li><li>Using <code>"any"</code> to guarantee structured output via tool_use</li></ul></div></div>
+
+  <div class="task-stmt"><h4>2.5 &amp; 2.6 Design MCP Resources and Prompts</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Resources: read-only URI-based data sources (knowledge bases, files, structured data)</li><li>Prompts: parameterized reusable templates for standardized workflows</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Choosing resource vs tool for different data access patterns</li><li>Designing reusable prompt templates with parameterization</li></ul></div></div>
+
+  <div class="sep"></div>
+  <h2>Domain 3 · Claude Code Configuration &amp; Workflows <span class="badge b-cyan" style="margin-left:8px">20%</span></h2>
+
+  <div class="task-stmt"><h4>3.1 Configure CLAUDE.md hierarchy</h4><div class="kn"><h5>Knowledge of</h5><ul><li><strong>User-level:</strong> <code>~/.claude/CLAUDE.md</code> — applies to all projects</li><li><strong>Project-level:</strong> <code>.claude/CLAUDE.md</code> — applies to the project (committed to repo)</li><li><strong>Directory-level:</strong> subdirectory <code>CLAUDE.md</code> — overrides everything above</li><li>Precedence: more specific (directory) overrides less specific (user)</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Writing effective CLAUDE.md files with architecture context and conventions</li><li>Using <code>/memory</code> to view and manage active context</li></ul></div></div>
+
+  <div class="task-stmt"><h4>3.2 Create custom commands in Claude Code</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Project commands: <code>.claude/commands/*.md</code>; User commands: <code>~/.claude/commands/*.md</code></li><li>Commands are Markdown files; use <code>$ARGUMENTS</code> placeholder for parameters</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Writing command files for repetitive workflows (e.g., <code>/review</code>, <code>/deploy</code>)</li></ul></div></div>
+
+  <div class="task-stmt"><h4>3.3 Configure .claude/rules/ for context-aware automation</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Rules: YAML frontmatter with glob patterns — activate automatically when matching files are in context</li><li>More targeted than CLAUDE.md for directory- or file-type-specific behaviors</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Writing rules with glob patterns for specific file types or directories</li></ul></div></div>
+
+  <div class="task-stmt"><h4>3.4 Implement Claude Code skills with SKILL.md</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Skills: <code>.claude/skills/</code> directory with <code>SKILL.md</code> files</li><li>Frontmatter fields: <code>context: fork</code> (isolated session) or <code>context: current</code> (shared session)</li><li><code>allowed-tools</code> and <code>argument-hint</code> frontmatter fields</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Choosing <code>fork</code> vs <code>current</code> context based on isolation needs</li></ul></div></div>
+
+  <div class="task-stmt"><h4>3.5 Use Claude Code CLI flags for CI/CD</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>-p</code> / <code>--print</code>: headless mode — single response, no interactive UI</li><li><code>--output-format json</code>: structured JSON output for scripting</li><li><code>--json-schema</code>: validate output against a JSON schema</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Scripting Claude Code invocations inside CI pipelines</li></ul></div></div>
+
+  <div class="task-stmt"><h4>3.6 Apply plan mode and iterative refinement</h4><div class="kn"><h5>Knowledge of</h5><ul><li><strong>Plan mode:</strong> Claude proposes plan, waits for approval before executing — use for risky ops</li><li><code>/compact</code>: compresses conversation history to extend effective session length</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Choosing plan mode for complex or irreversible operations</li><li>Using <code>/compact</code> strategically at milestone boundaries</li></ul></div></div>
+
+  <div class="sep"></div>
+  <h2>Domain 4 · Prompt Engineering &amp; Structured Output <span class="badge b-green" style="margin-left:8px">20%</span></h2>
+
+  <div class="task-stmt"><h4>4.1 Design prompts that produce reliable structured output</h4><div class="kn"><h5>Knowledge of</h5><ul><li><code>tool_use</code> for schema-enforced structured output — the strongest guarantee</li><li>JSON Schema for defining output structure in tool definitions</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Defining tool schemas that map exactly to the desired output structure</li><li>Using the tool_use extraction pattern to guarantee schema compliance</li></ul></div></div>
+
+  <div class="task-stmt"><h4>4.2 Apply advanced prompting techniques</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Chain-of-thought: explicit step-by-step reasoning before final answer</li><li>Scratchpad Pattern: internal reasoning separate from final output (<code>&lt;thinking&gt;</code> tags)</li><li>Structured Intermediate Representations: typed objects between pipeline stages</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Separating internal reasoning from output to keep responses clean and structured</li></ul></div></div>
+
+  <div class="task-stmt"><h4>4.3 Design resilient output schemas</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Resilient schema: always add <code>"other"</code> enum value + <code>detail</code> field for unclassified inputs</li><li>Mathematical consistency checks: <code>calculated_total</code> vs <code>stated_total</code></li><li>Explicit null vs absent vs empty string handling and normalization rules</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Designing schemas that handle unexpected input without failing</li><li>Adding consistency validation fields to catch extraction errors</li></ul></div></div>
+
+  <div class="task-stmt"><h4>4.4 Implement batch processing with Message Batches API</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Message Batches API: <strong>50% cost savings</strong> for large-scale non-interactive workloads</li><li>24-hour processing window &nbsp;·&nbsp; <code>custom_id</code> field for matching results to inputs</li><li>Limitation: no multi-turn tool calling in batch mode</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Constructing batch payloads with <code>custom_id</code> and polling for results</li></ul></div></div>
+
+  <div class="sep"></div>
+  <h2>Domain 5 · Context Management &amp; Reliability <span class="badge b-yellow" style="margin-left:8px">15%</span></h2>
+
+  <div class="task-stmt"><h4>5.1 Manage context window constraints</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Tool Context Pruning: replace verbose tool outputs with compact summaries</li><li>Compressing Long Sessions: summarize at natural context boundaries</li><li><code>/compact</code> command for mid-session compression</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Identifying when context compression is needed and applying it proactively</li></ul></div></div>
+
+  <div class="task-stmt"><h4>5.2 Design shared memory for multi-agent systems</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Shared Memory Architecture: vector store or KV store accessible to all agents</li><li>Memory types: episodic (events), semantic (facts), procedural (workflows)</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Designing vector store schemas and coordinating read/write across concurrent agents</li></ul></div></div>
+
+  <div class="task-stmt"><h4>5.3 Implement parallelization and caching</h4><div class="kn"><h5>Knowledge of</h5><ul><li>Parallelization: run independent subtasks concurrently to reduce latency</li><li>Caching: store deterministic tool results to avoid redundant API calls</li></ul></div><div class="sk"><h5>Skills in</h5><ul><li>Identifying independent subtasks for parallel execution</li><li>Implementing result caching with appropriate TTL and invalidation strategy</li></ul></div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PLAYBOOK PATTERNS
+═══════════════════════════════════════════════════ -->
+<div id="panel-playbook" class="panel">
+  <h2>Architect's Playbook Patterns</h2>
+  <p style="margin-bottom:16px">20+ architectural patterns from The Architect's Playbook. Each shows the anti-pattern and the correct solution. <strong style="color:var(--text)">The wrong answers on the exam ARE these anti-patterns</strong> — recognising them lets you eliminate 2–3 options immediately.</p>
+  <div class="info-box ib-yellow"><strong>Core Principle:</strong> "Code guarantees. Prompts suggest." — Always prefer programmatic enforcement over prompt-based guidance for compliance, reliability, and consistency.</div>
+  <div class="info-box ib-blue" style="margin-top:12px"><strong>Exam Strategy:</strong> Don't just memorise the correct patterns — study each <em>wrong</em> approach deeply. Ask "what production failure mode does this anti-pattern cause?" That reasoning is exactly what the exam tests.</div>
+
+  <div class="sep"></div>
+  <h3>Compliance &amp; Safety</h3>
+
+  <div class="pat-card"><h4>Zero-Tolerance Compliance Pattern</h4><p>Application-layer intercepts that programmatically enforce content and behavioral rules, rather than relying on prompt instructions.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Adding "never output prohibited terms" to the system prompt. Prompts can be forgotten, misunderstood, or bypassed.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p><code>PreToolUse</code> hook + post-generation filter that intercepts output and blocks prohibited content before it reaches the user. Programmatic guarantee.</p></div></div></div>
+
+  <div class="pat-card"><h4>Calibrating Human-in-the-Loop</h4><p>Designing escalation triggers based on action reversibility, confidence, and business risk — not just uncertainty.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Always escalating uncertain actions OR never escalating (full automation). Both extremes fail differently.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Escalate irreversible actions, high-value decisions, and compliance boundaries. Automate reversible, low-risk, high-confidence operations.</p></div></div></div>
+
+  <div class="sep"></div>
+  <h3>Context Management</h3>
+
+  <div class="pat-card"><h4>Tool Context Pruning</h4><p>Replace verbose tool outputs in message history with compact summaries to prevent context explosion in long sessions.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Accumulating raw tool outputs — full API responses, database dumps — in the message array. Context fills up rapidly.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>After processing each tool result, replace it with a structured summary: <code>{"result":"success","key_findings":[...]}</code>. Preserve signal, discard noise.</p></div></div></div>
+
+  <div class="pat-card"><h4>Compressing Long Sessions</h4><p>Summarize conversation history at natural boundaries to extend effective session length.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Letting the conversation grow unbounded until hitting context limits, causing degraded performance or silent truncation.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>At milestone points — task completion, phase transitions — compress history into a structured summary. Use <code>/compact</code> or implement programmatic compression.</p></div></div></div>
+
+  <div class="pat-card"><h4>Resuming Async Sessions</h4><p>Safely resume paused agentic sessions by filtering stale tool_results from prior execution.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Replaying the full message history on resume, including old <code>tool_results</code> that are no longer valid or relevant.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Filter out tool_results older than the session pause time. Re-establish current state with fresh context. Use <code>--resume</code> flag in Claude Code.</p></div></div></div>
+
+  <div class="sep"></div>
+  <h3>Multi-Agent Orchestration</h3>
+
+  <div class="pat-card"><h4>Goal-Oriented Delegation</h4><p>The orchestrator tracks goals and outcomes; subagents handle implementation details. Prevents orchestrator context collapse.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Orchestrator receives full implementation details from every subagent, quickly filling its context window with irrelevant noise.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Orchestrator sends goal + success criteria. Subagent returns <code>{goal_achieved:true, summary:"...", artifacts:[...]}</code>. Orchestrator never sees raw implementation.</p></div></div></div>
+
+  <div class="pat-card"><h4>Shared Memory Architecture</h4><p>A vector store or key-value store accessible to all agents for persistent, cross-agent knowledge sharing.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Passing all shared state through message payloads between agents. Creates tight coupling and context bloat.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Agents read/write to shared vector store. Semantic search for relevant memories. Each agent maintains minimal local context + shared memory reference.</p></div></div></div>
+
+  <div class="pat-card"><h4>Parallelization &amp; Caching</h4><p>Run independent subtasks concurrently; cache deterministic tool results to avoid redundant calls.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Sequential execution of independent tasks. Making identical API calls multiple times. No result reuse.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Identify independent subtasks → execute in parallel. Hash tool inputs as cache keys. Serve cached results for identical calls within TTL window.</p></div></div></div>
+
+  <div class="sep"></div>
+  <h3>Tool Design &amp; Execution</h3>
+
+  <div class="pat-card"><h4>Forcing Execution Order (tool_choice)</h4><p>Use <code>tool_choice</code> to guarantee Claude calls tools in the required sequence, especially when data dependencies exist.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Instructing Claude to "always call authenticate before query" via prompt. Claude may skip this if context implies authentication already happened.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Step 1: <code>tool_choice:{name:"authenticate"}</code> → Step 2: after result, <code>tool_choice:{name:"query"}</code>. Programmatic sequencing guarantee.</p></div></div></div>
+
+  <div class="pat-card"><h4>Scratchpad Pattern</h4><p>Internal reasoning space separate from final output — Claude thinks through the problem without contaminating the response.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Asking Claude to "think step by step" and including all reasoning in the final response. Output becomes verbose and unstructured.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Use <code>&lt;thinking&gt;</code> tags or a dedicated reasoning field in tool output. Extract only the final structured result. Keep reasoning internal.</p></div></div></div>
+
+  <div class="sep"></div>
+  <h3>Structured Output</h3>
+
+  <div class="pat-card"><h4>Structured Intermediate Representations</h4><p>Type-safe intermediate objects between pipeline stages prevent errors from silently propagating through multi-step workflows.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Passing raw text between pipeline stages. Each stage re-parses and re-interprets, and can silently drift from the original intent.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Define typed schemas for each stage's output. Stage N output is Stage N+1's validated input. Use <code>tool_use</code> for schema enforcement.</p></div></div></div>
+
+  <div class="pat-card"><h4>Designing Resilient Schemas</h4><p>Schemas that gracefully handle unexpected values instead of failing silently or crashing downstream systems.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Strict enum schema: <code>{type:"string", enum:["A","B","C"]}</code>. Any novel value causes validation failure or a null that's hard to debug.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Add <code>"other"</code> + detail field: <code>{category:"other", category_detail:"new_type_X"}</code>. Schema captures all inputs; new types become observable and trackable.</p></div></div></div>
+
+  <div class="pat-card"><h4>Mathematical Consistency Validation</h4><p>Include calculated values alongside stated values to detect extraction errors in financial and numerical data.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Extracting only <code>stated_total</code> from a document. If the document itself has a calculation error, the extraction silently propagates it.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Schema includes both <code>stated_total</code> AND <code>calculated_total</code> (sum of line items). If they differ → flag for human review. Catches both document errors and extraction errors.</p></div></div></div>
+
+  <div class="pat-card"><h4>Normalization &amp; Null Handling</h4><p>Explicit rules for representing missing, null, and equivalent values consistently across all extractions.</p><div class="vs"><div class="vs-bad"><h5>❌ Anti-Pattern</h5><p>Allowing null, <code>""</code>, <code>"N/A"</code>, <code>"none"</code>, and absent fields to all represent "missing". Downstream systems break on the inconsistency.</p></div><div class="vs-good"><h5>✅ Correct Pattern</h5><p>Define in schema: absent = not mentioned; null = explicitly absent; <code>""</code> = invalid. Normalize equivalents (<code>"USD"</code>, <code>"$"</code>, <code>"dollars"</code> → <code>"USD"</code>).</p></div></div></div>
+
+  <div class="sep"></div>
+  <h3>Architect's Reference Matrix</h3>
+  <table class="ref-table">
+    <thead><tr><th>Pattern</th><th>Problem Solved</th><th>Key Mechanism</th><th>When to Use</th></tr></thead>
+    <tbody>
+      <tr><td>Zero-Tolerance Compliance</td><td>Prompt instructions can be bypassed</td><td>App-layer PreToolUse/PostGen intercept</td><td>Compliance-critical systems</td></tr>
+      <tr><td>Tool Context Pruning</td><td>Context fills with raw tool outputs</td><td>Replace outputs with summaries</td><td>Long agentic sessions</td></tr>
+      <tr><td>Compressing Long Sessions</td><td>Context exhaustion in long runs</td><td>/compact or programmatic summary</td><td>Sessions &gt;50% context used</td></tr>
+      <tr><td>Resuming Async Sessions</td><td>Stale state on resume</td><td>Filter old tool_results + --resume</td><td>Long-running async agents</td></tr>
+      <tr><td>Scratchpad Pattern</td><td>Verbose reasoning in output</td><td>&lt;thinking&gt; tags / reasoning field</td><td>Complex reasoning tasks</td></tr>
+      <tr><td>Shared Memory Architecture</td><td>State sharing between agents</td><td>Vector store with semantic search</td><td>Multi-agent coordination</td></tr>
+      <tr><td>Forcing Execution Order</td><td>Non-deterministic tool sequence</td><td>tool_choice: {name: "specific_tool"}</td><td>Required tool sequencing</td></tr>
+      <tr><td>Structured Intermediate Reps</td><td>Error propagation between stages</td><td>Typed schemas at pipeline boundaries</td><td>Multi-stage pipelines</td></tr>
+      <tr><td>Parallelization &amp; Caching</td><td>Sequential + redundant API calls</td><td>Concurrent subtasks + result cache</td><td>Performance-critical workloads</td></tr>
+      <tr><td>Goal-Oriented Delegation</td><td>Orchestrator context explosion</td><td>Return goals not implementation details</td><td>Complex multi-agent systems</td></tr>
+      <tr><td>Resilient Schemas</td><td>Schema validation failures</td><td>"other" + detail field</td><td>Data extraction at scale</td></tr>
+      <tr><td>Mathematical Consistency</td><td>Silent numerical errors</td><td>stated vs calculated fields</td><td>Financial data extraction</td></tr>
+      <tr><td>Human-in-the-Loop Calibration</td><td>Wrong automation/oversight balance</td><td>Risk-based escalation triggers</td><td>All production systems</td></tr>
+      <tr><td>Subagent Context Isolation</td><td>Context leak / coordinator bloat</td><td>Pass structured goal payload, not history</td><td>All multi-agent systems</td></tr>
+      <tr><td>PostToolUse Normalization</td><td>Heterogeneous tool output formats</td><td>PostToolUse hook normalises before model sees it</td><td>Multi-MCP integrations</td></tr>
+      <tr><td>Same-Session Self-Review</td><td>Anchoring bias in quality review</td><td>fork_session for independent second opinion</td><td>Quality-critical pipelines</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     STUDY PLAN
+═══════════════════════════════════════════════════ -->
+<div id="panel-studyplan" class="panel">
+  <div class="g2">
+    <div>
+      <h2>8-Week Study Plan</h2>
+      <div class="info-box ib-blue" style="margin-bottom:12px;font-size:.82rem">
+        Course links match the <strong>Anthropic Academy</strong> on Skilljar (launched March 2, 2026 — 10 days before the exam). Each course is free, self-paced, and awards a certificate.
+      </div>
+      <div class="info-box ib-yellow" style="margin-bottom:16px;font-size:.82rem">
+        <strong>Timeline Reality Check:</strong> Experienced AI devs typically need <strong>2–4 weeks</strong> of focused prep. Developers new to Claude should expect <strong>2–4 months</strong>, including time building real projects. <em>Do not sit the exam without hands-on API and Claude Code experience.</em>
+      </div>
+      <div class="week-list">
+        <div class="week-item"><div class="wk-num">W1</div><div class="wk-body"><h4>Foundations — Claude 101 + API Intro</h4><p>Complete <a href="https://anthropic.skilljar.com/claude-101" target="_blank">Claude 101</a> for orientation. Start <a href="https://anthropic.skilljar.com/claude-with-the-anthropic-api" target="_blank">Building with the Claude API</a> (first half). Read the official exam guide end-to-end. Study stop_reason handling and message array construction.</p></div></div>
+        <div class="week-item"><div class="wk-num">W2</div><div class="wk-body"><h4>Agentic Architecture — API Course (D1)</h4><p>Finish <a href="https://anthropic.skilljar.com/claude-with-the-anthropic-api" target="_blank">Building with the Claude API</a> (second half). Build an agentic loop from scratch. Implement hub-and-spoke orchestrator + 2 subagents. Practice max 4–5 tools per agent and Goal-Oriented Delegation.</p></div></div>
+        <div class="week-item"><div class="wk-num">W3</div><div class="wk-body"><h4>MCP Deep Dive (D2)</h4><p>Complete <a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol" target="_blank">Introduction to MCP</a> then <a href="https://anthropic.skilljar.com/model-context-protocol-advanced-topics" target="_blank">MCP Advanced Topics</a>. Build an MCP server with Tools + Resources + Prompts. Configure <code>.mcp.json</code>. Test <code>isError</code> and all three <code>tool_choice</code> modes.</p></div></div>
+        <div class="week-item"><div class="wk-num">W4</div><div class="wk-body"><h4>Claude Code Configuration (D3)</h4><p>Complete <a href="https://anthropic.skilljar.com/claude-code-in-action" target="_blank">Claude Code in Action</a> and <a href="https://anthropic.skilljar.com/introduction-to-agent-skills" target="_blank">Introduction to Agent Skills</a>. Set up CLAUDE.md hierarchy. Create custom commands + rules with glob patterns. Build a CI pipeline using <code>--print</code> and <code>--output-format json</code>.</p></div></div>
+        <div class="week-item"><div class="wk-num">W5</div><div class="wk-body"><h4>Prompt Engineering &amp; Structured Output (D4)</h4><p>Master the tool_use extraction pattern. Design resilient schemas with "other" fields. Implement the Validation Retry Loop pattern. Build a batch pipeline using the <a href="https://docs.anthropic.com/en/docs/build-with-claude/message-batches" target="_blank">Message Batches API</a>.</p></div></div>
+        <div class="week-item"><div class="wk-num">W6</div><div class="wk-body"><h4>Context Management &amp; Reliability (D5)</h4><p>Implement Tool Context Pruning and Compressing Long Sessions. Design a shared memory architecture. Add Confidence Calibration to an agent. Practice <code>/compact</code> and <code>--resume</code> patterns.</p></div></div>
+        <div class="week-item"><div class="wk-num">W7</div><div class="wk-body"><h4>Architect's Playbook Mastery</h4><p>Study all 13 patterns cold — each anti-pattern vs correct pattern. Complete all 4 official preparation exercises. Review the Architect's Reference Matrix. Study the <a href="https://github.com/anthropics/claude-cookbooks" target="_blank">Claude Cookbooks</a> for real code examples. Practise subagent context isolation and PostToolUse normalization patterns.</p></div></div>
+        <div class="week-item"><div class="wk-num">W8</div><div class="wk-body"><h4>Anti-Patterns Review &amp; Mock Exams</h4><p><strong>Anti-patterns ARE the distractors</strong> — spend this week studying what NOT to do. Review the 5 key anti-patterns (natural language loop termination, prompt-based compliance, same-session self-review, &gt;5 tools per agent, aggregate metrics hiding type-level failures). Then: complete all 15 practice questions, try the <a href="https://www.udemy.com/course/claude-certified-architect-certification-practice-tests/" target="_blank">Udemy practice tests</a>, and for every wrong answer spend 3× more time on the explanation than re-taking questions. Revisit any domain below 80% on the Tracker.</p></div></div>
+      </div>
+    </div>
+    <div>
+      <h2>4 Official Preparation Exercises</h2>
+      <div class="ex-card"><h4>Exercise 1 · Build an Agentic Loop</h4><p>Implement a complete agentic loop that calls at least 2 different tools, handles <code>stop_reason</code> correctly, and gracefully recovers from a tool error (<code>isError: true</code>). Include exponential backoff for transient failures.</p></div>
+      <div class="ex-card"><h4>Exercise 2 · Create an MCP Server</h4><p>Build an MCP server that exposes at least one Tool, one Resource, and one Prompt primitive. Configure it in <code>.mcp.json</code>. Implement structured error responses with <code>errorCategory</code> and <code>isRetryable</code> fields.</p></div>
+      <div class="ex-card"><h4>Exercise 3 · Configure Claude Code for a Team</h4><p>Set up a complete Claude Code workspace: user-level CLAUDE.md with global conventions, project-level CLAUDE.md with architecture context, at least 2 custom commands, and a rule with a glob pattern scoped to a specific directory.</p></div>
+      <div class="ex-card"><h4>Exercise 4 · Design a Structured Extraction Pipeline</h4><p>Build a data extraction pipeline using <code>tool_use</code> for schema enforcement. Include a resilient schema with "other" + detail fields, mathematical consistency validation (stated vs calculated totals), and batch processing with the Message Batches API.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     RESOURCES
+═══════════════════════════════════════════════════ -->
+<div id="panel-resources" class="panel">
+
+  <div class="info-box ib-green" style="margin-bottom:24px">
+    <strong>One-stop resource list.</strong> Every link below goes directly to the official source — course, doc page, or repo. Bookmark this tab and work through each course in order.
+  </div>
+
+  <!-- ANTHROPIC ACADEMY -->
+  <h2>🎓 Anthropic Academy <span style="font-size:.78rem;font-weight:500;color:var(--text3);margin-left:8px">13 free courses · certificate on completion · no credit card</span></h2>
+  <p style="margin-bottom:16px">All courses are free and self-paced on <a href="https://anthropic.skilljar.com/" target="_blank">anthropic.skilljar.com</a>. Complete these in order for the best exam prep coverage.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px">
+    <div class="card stripe-accent">
+      <div class="badge b-purple" style="margin-bottom:8px">⭐ Exam Priority</div>
+      <h4><a href="https://anthropic.skilljar.com/claude-with-the-anthropic-api" target="_blank">Building with the Claude API</a></h4>
+      <p>8+ hr flagship course. Messages API → tool use → context windows → agentic architecture → RAG pipelines. <strong style="color:var(--text)">Do this first.</strong></p>
+    </div>
+    <div class="card stripe-accent">
+      <div class="badge b-purple" style="margin-bottom:8px">⭐ Exam Priority</div>
+      <h4><a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol" target="_blank">Introduction to MCP</a></h4>
+      <p>Build MCP servers and clients from scratch. Master the three core primitives: tools, resources, and prompts.</p>
+    </div>
+    <div class="card stripe-accent">
+      <div class="badge b-purple" style="margin-bottom:8px">⭐ Exam Priority</div>
+      <h4><a href="https://anthropic.skilljar.com/model-context-protocol-advanced-topics" target="_blank">MCP: Advanced Topics</a></h4>
+      <p>Advanced MCP patterns, transport mechanisms (stdio/SSE), tool boundary design, reasoning overload prevention.</p>
+    </div>
+    <div class="card stripe-cyan">
+      <div class="badge b-cyan" style="margin-bottom:8px">Exam Priority</div>
+      <h4><a href="https://anthropic.skilljar.com/claude-code-in-action" target="_blank">Claude Code in Action</a></h4>
+      <p>CLAUDE.md hierarchies, custom slash commands, rules, skills, CI/CD integration with <code>--print</code> and JSON output.</p>
+    </div>
+    <div class="card stripe-cyan">
+      <div class="badge b-cyan" style="margin-bottom:8px">Exam Priority</div>
+      <h4><a href="https://anthropic.skilljar.com/introduction-to-agent-skills" target="_blank">Introduction to Agent Skills</a></h4>
+      <p>Build, configure, and share Skills in Claude Code — reusable markdown instructions with fork/current context modes.</p>
+    </div>
+    <div class="card">
+      <h4><a href="https://anthropic.skilljar.com/claude-101" target="_blank">Claude 101</a></h4>
+      <p>Official baseline on Claude usage, everyday workflows, and core capabilities. Good orientation before the API course.</p>
+    </div>
+    <div class="card">
+      <h4><a href="https://anthropic.skilljar.com/claude-in-amazon-bedrock" target="_blank">Claude in Amazon Bedrock</a></h4>
+      <p>Claude deployment via AWS Bedrock — useful if your production environment is on AWS.</p>
+    </div>
+    <div class="card">
+      <h4><a href="https://anthropic.skilljar.com/claude-with-google-vertex" target="_blank">Claude with Google Vertex AI</a></h4>
+      <p>Claude deployment via GCP Vertex AI — useful if your production environment is on GCP.</p>
+    </div>
+    <div class="card">
+      <h4><a href="https://anthropic.skilljar.com/" target="_blank">AI Fluency + 5 more courses →</a></h4>
+      <p>AI Fluency Framework, Teaching AI Fluency, AI Fluency for Students, Nonprofits, and Educators tracks also available.</p>
+    </div>
+  </div>
+
+  <!-- OFFICIAL DOCS -->
+  <h2>📖 Official Documentation</h2>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px">
+    <div class="res-card"><a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use" target="_blank">Tool Use Guide</a><p>JSON Schema definition, tool_choice modes (auto / any / forced), structured output patterns, tool_use_id matching.</p></div>
+    <div class="res-card"><a href="https://docs.anthropic.com/en/docs/build-with-claude/message-batches" target="_blank">Message Batches API</a><p>50% cost savings, 24-hour window, custom_id mapping, batch result polling. Critical for D4 questions.</p></div>
+    <div class="res-card"><a href="https://docs.anthropic.com/en/docs/mcp" target="_blank">MCP Integration Guide</a><p>Tools/Resources/Prompts primitives, <code>.mcp.json</code> vs <code>~/.claude.json</code>, isError handling.</p></div>
+    <div class="res-card"><a href="https://code.claude.com/docs/en/overview" target="_blank">Claude Code Docs (Official)</a><p>Complete reference for CLAUDE.md, custom commands, rules, skills, plan mode, and all CLI flags.</p></div>
+    <div class="res-card"><a href="https://docs.anthropic.com/en/api/getting-started" target="_blank">Anthropic API Reference</a><p>Complete API reference — Messages, tool_use blocks, stop_reason values, and all request parameters.</p></div>
+    <div class="res-card"><a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank">Agent Skills Engineering Blog</a><p>Anthropic engineering post on Agent Skills — how real-world skills are designed and deployed.</p></div>
+    <div class="res-card"><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank">Agent Skills Overview (Platform Docs)</a><p>Official platform docs for Agent Skills — configuration, context modes, and deployment.</p></div>
+    <div class="res-card"><a href="https://claude.com/resources/courses" target="_blank">Claude.com Learning Resources</a><p>Official Claude learning hub — links to all courses, guides, and certification paths.</p></div>
+  </div>
+
+  <!-- GITHUB -->
+  <h2>⚙️ GitHub: Code Examples &amp; Repos</h2>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px">
+    <div class="res-card"><a href="https://github.com/anthropics/claude-cookbooks" target="_blank">anthropics/claude-cookbooks</a><p>Official collection of notebooks and recipes — agentic loops, tool use, RAG, multi-agent patterns. Copy-paste Python examples.</p></div>
+    <div class="res-card"><a href="https://github.com/anthropics/claude-quickstarts" target="_blank">anthropics/claude-quickstarts</a><p>Deployable starter apps including a two-agent pattern (initializer + coding agent) built on the Claude Agent SDK.</p></div>
+    <div class="res-card"><a href="https://github.com/anthropics/claude-code" target="_blank">anthropics/claude-code</a><p>Claude Code source and documentation — understand how CLAUDE.md, rules, commands, and skills are actually loaded.</p></div>
+    <div class="res-card"><a href="https://github.com/anthropics/skills" target="_blank">anthropics/skills</a><p>Public repository of Agent Skills — real examples of SKILL.md frontmatter, fork vs current context, and allowed-tools.</p></div>
+    <div class="res-card"><a href="https://github.com/anthropics/anthropic-sdk-python" target="_blank">anthropics/anthropic-sdk-python</a><p>Official Python SDK with typed interfaces for the Messages API, tool use, and batch processing.</p></div>
+    <div class="res-card"><a href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank">awesome-claude-code (community)</a><p>Curated list of skills, hooks, slash commands, agent orchestrators, and plugins for Claude Code.</p></div>
+  </div>
+
+  <!-- EXAM RESOURCES -->
+  <h2>📝 Exam-Specific Resources</h2>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px">
+    <div class="res-card"><a href="https://www.udemy.com/course/claude-certified-architect-certification-practice-tests/" target="_blank">Udemy: CCA Practice Tests</a><p>Third-party practice exam questions for the Claude Certified Architect Foundations certification.</p></div>
+    <div class="res-card"><a href="https://awesomeclaude.ai" target="_blank">Awesome Claude — Resource Directory</a><p>Community-curated directory of Claude AI resources, tools, integrations, and examples.</p></div>
+    <div class="res-card"><a href="https://lobehub.com/mcp/connectry-io-connectrylab-architect-cert-mcp" target="_blank">Architect Cert MCP (LobeHub)</a><p>An MCP server specifically built to help study for the CCA exam — practice questions via MCP interface.</p></div>
+    <div class="res-card"><a href="https://anthropic.skilljar.com/" target="_blank">Anthropic Academy (Main Hub)</a><p>Your primary study destination. Start here, complete all 5 exam-priority courses, earn your certificates.</p></div>
+  </div>
+
+  <!-- TECH REFERENCE -->
+  <h2>🔧 Technology Quick Reference</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+    <div class="card">
+      <h3>Claude Agent SDK</h3>
+      <div class="chip-row"><span class="chip">Task tool</span><span class="chip">fork_session</span><span class="chip">AgentDefinition</span><span class="chip">allowedTools</span><span class="chip">PostToolUse hook</span><span class="chip">PreToolUse hook</span><span class="chip">"tool_use"</span><span class="chip">"end_turn"</span></div>
+    </div>
+    <div class="card">
+      <h3>Claude Code CLI</h3>
+      <div class="chip-row"><span class="chip">CLAUDE.md</span><span class="chip">.claude/commands/</span><span class="chip">.claude/rules/</span><span class="chip">.claude/skills/</span><span class="chip">-p / --print</span><span class="chip">--output-format json</span><span class="chip">--resume</span><span class="chip">/compact</span><span class="chip">/memory</span></div>
+    </div>
+    <div class="card">
+      <h3>MCP Protocol</h3>
+      <div class="chip-row"><span class="chip">Tools</span><span class="chip">Resources</span><span class="chip">Prompts</span><span class="chip">.mcp.json</span><span class="chip">~/.claude.json</span><span class="chip">isError: true</span><span class="chip">errorCategory</span><span class="chip">isRetryable</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PRACTICE Q's
+═══════════════════════════════════════════════════ -->
+<div id="panel-practice" class="panel">
+  <h2>Practice Questions</h2>
+  <p style="margin-bottom:16px">From the CCA Foundations Exam Guide v0.1 + community-derived scenarios. Answer mentally before revealing — this is the most important study technique.</p>
+
+  <div class="info-box ib-yellow" style="margin-bottom:24px">
+    <strong>🎯 Exam Strategy — Anti-Patterns ARE the Distractors:</strong> The wrong answers on this exam are not random — they are architectural mistakes engineers commonly reach for before understanding production implications. If you can spot what's architecturally wrong with an option, you can eliminate 2–3 choices immediately and find the correct answer by exclusion. <strong>After each practice set: spend more time analysing why each wrong answer is wrong than re-taking tests.</strong> The 5 most-tested anti-patterns: (1) parsing natural language to detect loop end instead of checking <code>stop_reason</code>, (2) prompt-based enforcement for compliance-critical rules, (3) same-session self-review instead of fork, (4) &gt;5 tools per agent, (5) aggregate accuracy metrics that mask per-type failure rates.
+  </div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-purple">Q1 · D1 Agentic Architecture</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">An architect is designing an agentic system that calls an external API which occasionally returns transient 503 errors. Which approach best ensures the system handles this gracefully?</div><div class="q-opts"><div class="q-opt">A) Immediately escalate all 503 errors to human reviewers</div><div class="q-opt">B) Implement exponential backoff with jitter and a maximum retry limit</div><div class="q-opt">C) Cache all API responses to avoid the need for retries</div><div class="q-opt">D) Switch to a different API provider after the first error</div></div><div class="q-ans"><strong>✅ B — Exponential backoff with jitter</strong><br><br>Exponential backoff is the standard pattern for transient errors. It prevents retry storms (via jitter), gives the service time to recover (via exponential delays), and the maximum retry limit prevents infinite loops. Caching (C) doesn't address the error itself. Escalation (A) wastes human time on transient issues. Switching providers (D) is extreme for a recoverable error.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-purple">Q2 · D1 Agentic Architecture</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A developer is building a customer support agent that needs to search a knowledge base and escalate complex issues. Which stop_reason value indicates that Claude wants to use a tool?</div><div class="q-opts"><div class="q-opt">A) "end_turn"</div><div class="q-opt">B) "max_tokens"</div><div class="q-opt">C) "tool_use"</div><div class="q-opt">D) "stop_sequence"</div></div><div class="q-ans"><strong>✅ C — "tool_use"</strong><br><br>"tool_use" is the stop_reason that signals Claude wants to invoke one or more tools. The agentic loop should parse the tool_use blocks, execute the tools, append tool_result messages with matching tool_use_id, and continue. "end_turn" (A) means Claude is done. "max_tokens" (B) means the response was truncated. "stop_sequence" (D) means a stop string was hit.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-cyan">Q3 · D3 Claude Code</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">An architect needs to configure Claude Code to automatically apply specific coding standards to files in the /src/api/ directory. Which configuration approach is most appropriate?</div><div class="q-opts"><div class="q-opt">A) Add the standards to the top of every prompt sent to Claude Code</div><div class="q-opt">B) Create a custom command in .claude/commands/ that applies standards</div><div class="q-opt">C) Configure a .claude/rules/ YAML file with a glob pattern for /src/api/</div><div class="q-opt">D) Use the --print flag with the standards as a prefix</div></div><div class="q-ans"><strong>✅ C — .claude/rules/ with glob pattern</strong><br><br>Rules with YAML frontmatter glob patterns activate automatically when files matching the pattern are in context — exactly the right tool for directory-scoped, automatic behaviors. Custom commands (B) require manual invocation. Repeated manual prompt prefix (A) is error-prone and inconsistent. The --print flag (D) is for CI mode, unrelated to context injection.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-cyan">Q4 · D3 Claude Code</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A team wants Claude Code to follow specific API design conventions from their architecture docs. Where should they place these instructions for maximum effectiveness across all team members?</div><div class="q-opts"><div class="q-opt">A) In the system prompt of each Claude API call</div><div class="q-opt">B) In a project-level .claude/CLAUDE.md file committed to the repository</div><div class="q-opt">C) In each individual prompt sent to Claude Code</div><div class="q-opt">D) In environment variables on each developer's machine</div></div><div class="q-ans"><strong>✅ B — Project-level CLAUDE.md committed to the repo</strong><br><br>Project-level CLAUDE.md is automatically loaded for all team members working in that project — persistent architectural context with zero per-developer configuration. Individual prompts (C) are inconsistent across the team. Environment variables (D) don't inject architectural context. System prompt per API call (A) is manual and not what CLAUDE.md is for.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-purple">Q5 · D1 Agentic Architecture</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">An architect is designing a multi-agent system where an orchestrator delegates to several specialized subagents. Which pattern best prevents the orchestrator from losing context as tool outputs accumulate?</div><div class="q-opts"><div class="q-opt">A) Summarize completed subtask results and replace the detailed tool outputs in the message history</div><div class="q-opt">B) Increase the context window allocation for the orchestrator agent</div><div class="q-opt">C) Have each subagent maintain its own context independently</div><div class="q-opt">D) Use streaming to process context incrementally as it arrives</div></div><div class="q-ans"><strong>✅ A — Tool Context Pruning</strong><br><br>Replacing detailed tool outputs with compact summaries prevents context explosion — this is the Tool Context Pruning pattern. It preserves essential signal while eliminating noise. Increasing the context window (B) is a workaround, not a solution. Independent subagent context (C) doesn't solve the orchestrator's accumulation problem. Streaming (D) addresses latency, not context size.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-purple">Q6 · D1 Agentic Architecture</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A compliance-critical application must ensure Claude never outputs certain prohibited terms. Which approach provides the strongest guarantee?</div><div class="q-opts"><div class="q-opt">A) Include "never output prohibited terms" in the system prompt</div><div class="q-opt">B) Apply constitutional AI principles through careful model selection</div><div class="q-opt">C) Implement application-layer output filtering that intercepts Claude's responses before they reach users</div><div class="q-opt">D) Fine-tune the model to avoid these terms</div></div><div class="q-ans"><strong>✅ C — Application-layer output filtering</strong><br><br>This is the Zero-Tolerance Compliance Pattern. "Code guarantees. Prompts suggest." Application-layer filtering provides a deterministic, programmatic guarantee. System prompt instructions (A) can be misunderstood or bypassed. Constitutional AI (B) and fine-tuning (D) are both out of exam scope and don't provide deterministic guarantees anyway.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-blue">Q7 · D2 Tool Design &amp; MCP</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">An MCP server tool call fails due to an invalid parameter. What is the correct way to signal this error while allowing the agentic loop to continue and potentially recover?</div><div class="q-opts"><div class="q-opt">A) Throw an exception from the MCP server, causing the loop to terminate</div><div class="q-opt">B) Return a tool result response with isError: true and a descriptive message</div><div class="q-opt">C) Return an empty response to signal failure</div><div class="q-opt">D) Close the MCP connection to force reconnection</div></div><div class="q-ans"><strong>✅ B — isError: true in the tool result</strong><br><br>Returning <code>isError: true</code> signals the error to Claude while keeping the agentic loop alive. Claude can then retry with different parameters, ask for clarification, or escalate. Throwing an exception (A) or closing the connection (D) kill the loop. An empty response (C) is ambiguous — Claude has no actionable information to work with.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-green">Q8 · D4 Prompt Engineering</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A developer needs to extract structured data from documents and ensure the output always conforms to a specific JSON schema. Which approach best guarantees schema compliance?</div><div class="q-opts"><div class="q-opt">A) Include the JSON schema in the system prompt and ask Claude to follow it</div><div class="q-opt">B) Use tool_use with the target structure defined as the tool's input schema</div><div class="q-opt">C) Use few-shot examples of correctly formatted outputs</div><div class="q-opt">D) Parse and validate the output after generation, retrying on failure</div></div><div class="q-ans"><strong>✅ B — tool_use with the schema as tool input schema</strong><br><br>Defining the target structure as a tool's input schema forces Claude to produce schema-valid output before the tool call can be made — a structural guarantee. System prompt (A) and few-shot (C) are suggestions, not guarantees. Post-validation retry (D) works but adds latency, failure risk, and API cost.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-green">Q9 · D4 Prompt Engineering</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">An architect is designing a pipeline to extract structured data from 10,000 documents. Which Claude API feature provides the most cost-effective approach for this scale?</div><div class="q-opts"><div class="q-opt">A) Streaming responses to reduce time-to-first-token</div><div class="q-opt">B) The Message Batches API with 50% cost savings</div><div class="q-opt">C) Prompt caching to reuse repeated context prefixes</div><div class="q-opt">D) Parallel API calls with multiple API keys</div></div><div class="q-ans"><strong>✅ B — Message Batches API (50% cost savings)</strong><br><br>The Message Batches API provides a flat 50% cost reduction for large-scale, non-interactive workloads — the most cost-effective choice at 10,000 documents. Streaming (A) reduces latency, not cost. Prompt caching (C) helps with repeated context but the savings vary. Multiple API keys (D) don't reduce the per-request cost at all. Key caveat: 24-hour window, no multi-turn tool calling in batch mode.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-cyan">Q10 · D3 Claude Code</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A long-running Claude Code agentic session needs to be paused overnight and resumed the next morning with full session state. Which Claude Code feature enables this?</div><div class="q-opts"><div class="q-opt">A) The /compact command to compress the context before pausing</div><div class="q-opt">B) The --resume flag to continue a saved session from where it left off</div><div class="q-opt">C) The /memory command to save session state to CLAUDE.md</div><div class="q-opt">D) Environment variables to store the session ID for later retrieval</div></div><div class="q-ans"><strong>✅ B — --resume flag</strong><br><br>The <code>--resume</code> flag in Claude Code allows resuming a paused agentic session with full session state preserved. /compact (A) compresses context for the current session but doesn't enable resume. /memory (C) manages persistent CLAUDE.md memory files, not session state. Environment variables (D) don't provide built-in session persistence.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-blue">Q11 · D2 Tool Design &amp; MCP</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">An architect needs to design a workflow where Claude must always call an "authenticate" tool before any "query" tools. Which API configuration enforces this sequencing requirement?</div><div class="q-opts"><div class="q-opt">A) Set tool_choice to "auto" and include sequencing instructions in the system prompt</div><div class="q-opt">B) Set tool_choice to "any" to ensure Claude uses at least one tool</div><div class="q-opt">C) In step 1, force tool_choice to "authenticate"; in step 2, force tool_choice to the query tool</div><div class="q-opt">D) Include the tool name in the stop_sequences array</div></div><div class="q-ans"><strong>✅ C — Sequential forced tool_choice per step</strong><br><br>This is the Forcing Execution Order pattern. Step 1: <code>tool_choice:{type:"tool",name:"authenticate"}</code> → Step 2: after receiving the auth result, <code>tool_choice:{type:"tool",name:"query_tool"}</code>. Programmatic sequencing guarantee. "auto" (A) relies on prompts. "any" (B) only guarantees some tool is used, not which one. stop_sequences (D) don't control tool invocation.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-purple">Q12 · D1 Agentic Architecture</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A multi-agent research system has an orchestrator delegating to specialist subagents. The orchestrator needs to track task completion without its context filling with all subagent implementation details. Which pattern addresses this?</div><div class="q-opts"><div class="q-opt">A) Scratchpad Pattern — subagents write reasoning to internal scratchpad</div><div class="q-opt">B) Goal-Oriented Delegation — orchestrator receives goal completion status, not implementation details</div><div class="q-opt">C) Shared Memory Architecture — all agents read/write to a central vector store</div><div class="q-opt">D) Compressing Long Sessions — apply /compact at context boundaries</div></div><div class="q-ans"><strong>✅ B — Goal-Oriented Delegation</strong><br><br>The orchestrator sends a goal + success criteria. The subagent returns <code>{goal_achieved:true, summary:"...", artifacts:[...]}</code>. The orchestrator never accumulates raw implementation details. Scratchpad (A) is about isolating internal reasoning, not reducing orchestrator context. Shared Memory (C) helps coordination but doesn't prevent orchestrator bloat. /compact (D) is a reactive measure, not a preventive architectural pattern.</div></div>
+
+  <div class="sep" style="margin:20px 0 16px"></div>
+  <h3 style="margin-bottom:16px;font-size:1rem;color:var(--text2)">Community Practice Scenarios</h3>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-purple">Q13 · D1 Multi-Agent</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A developer is building a multi-agent research system where a coordinator spawns specialist subagents. One subagent needs to access the coordinator's prior conversation history to provide context-aware results. How should this be implemented?</div><div class="q-opts"><div class="q-opt">A) The subagent automatically inherits the coordinator's full conversation history</div><div class="q-opt">B) Pass a structured context payload from the coordinator containing only the relevant information for that goal</div><div class="q-opt">C) Have the coordinator send its entire message array to each subagent on invocation</div><div class="q-opt">D) Use a shared session ID so all agents access the same conversation context</div></div><div class="q-ans"><strong>✅ B — Structured context payload with only relevant information</strong><br><br>Subagents have <strong>isolated context by default — they do NOT inherit the coordinator's conversation history automatically</strong>. The coordinator must explicitly pass context to each subagent, and should pass only what's needed for that specific goal (Goal-Oriented Delegation principle). Passing the entire message array (C) defeats the purpose of context isolation and causes token bloat. A "shared session ID" (D) is not how the Agent SDK works. Option A is a common misconception that the exam specifically tests against.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-purple">Q14 · D1 Agentic Loop</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">An architect reviews a colleague's agentic loop implementation. The loop uses the following logic: <code>if "I have completed the task" in response.content[0].text: break</code>. What is the primary problem with this approach?</div><div class="q-opts"><div class="q-opt">A) The string comparison is case-sensitive and may miss variations</div><div class="q-opt">B) It parses natural language to detect loop termination instead of checking stop_reason</div><div class="q-opt">C) The loop should check all content blocks, not just the first one</div><div class="q-opt">D) Natural language completion signals are more flexible than stop_reason</div></div><div class="q-ans"><strong>✅ B — Natural language parsing for loop termination is the anti-pattern</strong><br><br>This is a classic exam trap. The correct way to detect loop completion is to check <code>response.stop_reason == "end_turn"</code>. Natural language parsing is fragile — Claude may phrase completion differently, may not include that phrase even when done, or may include it prematurely. <strong>"Code guarantees. Prompts suggest."</strong> stop_reason is a deterministic, programmatic signal. A and C are minor implementation details, not the core flaw. D is incorrect — natural language signals are never more reliable than structured API values.</div></div>
+
+  <div class="q-card"><div class="q-head"><span class="badge b-blue">Q15 · D2 MCP / PostToolUse</span><button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button></div><div class="q-text">A multi-agent system integrates 4 different MCP servers. Each server returns timestamps in a different format (ISO 8601, Unix epoch, human-readable strings, and relative times like "2 hours ago"). The architect wants to normalize all timestamps to ISO 8601 before Claude processes them. What is the most appropriate implementation pattern?</div><div class="q-opts"><div class="q-opt">A) Add a system prompt instruction: "Always interpret timestamps as ISO 8601"</div><div class="q-opt">B) Implement a PostToolUse hook that normalizes timestamp formats before the model receives tool results</div><div class="q-opt">C) Update each MCP server to return ISO 8601 directly</div><div class="q-opt">D) Ask Claude to normalize timestamps as the first step of each task</div></div><div class="q-ans"><strong>✅ B — PostToolUse hook for normalization</strong><br><br>The <code>PostToolUse</code> hook fires after every tool execution and before the model processes the result — making it the ideal insertion point for normalizing heterogeneous data formats. This is a programmatic guarantee that timestamps will always be standardized before Claude reasons about them. System prompt (A) is a suggestion, not a guarantee. Modifying each server (C) may not be feasible when integrating third-party MCPs. Asking Claude to normalize (D) adds latency and is unreliable. This question tests whether candidates understand that PostToolUse is for data normalization, not just logging.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CHEATSHEET
+═══════════════════════════════════════════════════ -->
+<div id="panel-cheatsheet" class="panel">
+  <div class="g2">
+    <div>
+      <h3>Agentic Loop (Python)</h3>
+      <div class="code"><span class="kw">import</span> anthropic
+client = anthropic.Anthropic()
+messages = []
+
+<span class="kw">def</span> <span class="fn">run_agent</span>(user_input: str):
+    messages.append({<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: user_input})
+
+    <span class="kw">while True</span>:
+        response = client.messages.create(
+            model=<span class="str">"claude-opus-4-6"</span>,
+            max_tokens=<span class="str">4096</span>,
+            tools=TOOLS,
+            messages=messages
+        )
+        messages.append({
+            <span class="str">"role"</span>: <span class="str">"assistant"</span>,
+            <span class="str">"content"</span>: response.content
+        })
+
+        <span class="kw">if</span> response.stop_reason == <span class="str">"end_turn"</span>:
+            <span class="kw">break</span>                       <span class="cmt"># ← done</span>
+
+        <span class="kw">if</span> response.stop_reason == <span class="str">"tool_use"</span>:
+            tool_results = []
+            <span class="kw">for</span> block <span class="kw">in</span> response.content:
+                <span class="kw">if</span> block.type == <span class="str">"tool_use"</span>:
+                    result = execute_tool(block.name, block.input)
+                    tool_results.append({
+                        <span class="str">"type"</span>:        <span class="str">"tool_result"</span>,
+                        <span class="str">"tool_use_id"</span>: block.id,   <span class="cmt"># ← must match</span>
+                        <span class="str">"content"</span>:     result
+                    })
+            messages.append({
+                <span class="str">"role"</span>:    <span class="str">"user"</span>,
+                <span class="str">"content"</span>: tool_results
+            })</div>
+
+      <h3 style="margin-top:20px">tool_choice Modes</h3>
+      <div class="code"><span class="cmt"># Claude decides whether to use a tool</span>
+tool_choice={<span class="str">"type"</span>: <span class="str">"auto"</span>}
+
+<span class="cmt"># Claude MUST use some tool</span>
+tool_choice={<span class="str">"type"</span>: <span class="str">"any"</span>}
+
+<span class="cmt"># Claude MUST use THIS specific tool</span>
+tool_choice={<span class="str">"type"</span>: <span class="str">"tool"</span>, <span class="str">"name"</span>: <span class="str">"authenticate"</span>}</div>
+
+      <h3 style="margin-top:20px">MCP Error Response</h3>
+      <div class="code"><span class="cmt"># Success</span>
+{<span class="str">"content"</span>: [{<span class="str">"type"</span>: <span class="str">"text"</span>, <span class="str">"text"</span>: result}]}
+
+<span class="cmt"># Error — loop continues, Claude can recover</span>
+{
+  <span class="str">"isError"</span>:       <span class="kw">True</span>,
+  <span class="str">"content"</span>:       [{<span class="str">"type"</span>: <span class="str">"text"</span>,
+                     <span class="str">"text"</span>: <span class="str">"Error: invalid param 'x'"</span>}],
+  <span class="str">"errorCategory"</span>: <span class="str">"INVALID_INPUT"</span>,
+  <span class="str">"isRetryable"</span>:   <span class="kw">False</span>
+}</div>
+
+      <h3 style="margin-top:20px">Message Batches API</h3>
+      <div class="code">batch = client.beta.messages.batches.create(
+    requests=[{
+        <span class="str">"custom_id"</span>: <span class="str">"doc-001"</span>,    <span class="cmt"># ← match results</span>
+        <span class="str">"params"</span>: {
+            <span class="str">"model"</span>:     <span class="str">"claude-opus-4-6"</span>,
+            <span class="str">"max_tokens"</span>: <span class="str">1024</span>,
+            <span class="str">"messages"</span>:  [{...}]
+        }
+    }]  <span class="cmt"># supports thousands of requests</span>
+)
+<span class="cmt"># 50% cost savings
+# 24-hour processing window
+# No multi-turn tool calling</span></div>
+    </div>
+    <div>
+      <h3>CLAUDE.md Hierarchy</h3>
+      <div class="code"><span class="cmt"># 1. User-level — applies to ALL projects</span>
+~/.claude/CLAUDE.md
+
+<span class="cmt"># 2. Project-level — applies to THIS project</span>
+.claude/CLAUDE.md
+
+<span class="cmt"># 3. Directory-level — highest precedence</span>
+src/api/CLAUDE.md
+
+<span class="cmt"># More specific overrides less specific</span></div>
+
+      <h3 style="margin-top:20px">Claude Code CLI Flags</h3>
+      <div class="code"><span class="cmt"># Headless / CI mode</span>
+claude -p <span class="str">"Generate tests for auth.py"</span>
+
+<span class="cmt"># Structured JSON output for scripting</span>
+claude -p <span class="str">"..."</span> --output-format json
+
+<span class="cmt"># Validate output against schema</span>
+claude -p <span class="str">"..."</span> --json-schema schema.json
+
+<span class="cmt"># Resume a paused session</span>
+claude --resume &lt;session-id&gt;
+
+<span class="cmt"># Compress context mid-session</span>
+/compact
+
+<span class="cmt"># View active memory</span>
+/memory</div>
+
+      <h3 style="margin-top:20px">.mcp.json Config</h3>
+      <div class="code">{
+  <span class="str">"mcpServers"</span>: {
+    <span class="str">"my-server"</span>: {
+      <span class="str">"command"</span>: <span class="str">"node"</span>,
+      <span class="str">"args"</span>:    [<span class="str">"./mcp-server.js"</span>],
+      <span class="str">"env"</span>:     { <span class="str">"API_KEY"</span>: <span class="str">"${MY_API_KEY}"</span> }
+    }
+  }
+}
+<span class="cmt"># Project scope: .mcp.json
+# User scope:    ~/.claude.json</span></div>
+
+      <h3 style="margin-top:20px">Resilient Schema</h3>
+      <div class="code">{
+  <span class="str">"category"</span>: {
+    <span class="str">"type"</span>: <span class="str">"string"</span>,
+    <span class="str">"enum"</span>: [<span class="str">"billing"</span>, <span class="str">"technical"</span>,
+              <span class="str">"general"</span>, <span class="str">"other"</span>]  <span class="cmt"># ← always add "other"</span>
+  },
+  <span class="str">"category_detail"</span>: {             <span class="cmt"># ← capture specifics</span>
+    <span class="str">"type"</span>: [<span class="str">"string"</span>, <span class="str">"null"</span>]
+  },
+  <span class="str">"stated_total"</span>:     {<span class="str">"type"</span>: <span class="str">"number"</span>},
+  <span class="str">"calculated_total"</span>: {           <span class="cmt"># ← consistency check</span>
+    <span class="str">"type"</span>: <span class="str">"number"</span>,
+    <span class="str">"description"</span>: <span class="str">"Sum of line items"</span>
+  }
+}</div>
+
+      <h3 style="margin-top:20px">Key Distinctions</h3>
+      <div class="card" style="margin-bottom:12px">
+        <ul style="line-height:2.2;font-size:.85rem">
+          <li><code>stop_reason "tool_use"</code> → parse &amp; execute tools, loop continues</li>
+          <li><code>stop_reason "end_turn"</code>  → exit loop, return response</li>
+          <li><code>isError: true</code> → tool failed, loop stays alive, Claude can adapt</li>
+          <li><code>.mcp.json</code> = project scope &nbsp;·&nbsp; <code>~/.claude.json</code> = user scope</li>
+          <li>Plan mode → propose first, get approval, then execute</li>
+          <li><code>context: fork</code> = isolated &nbsp;·&nbsp; <code>context: current</code> = shared session</li>
+          <li><code>tool_choice "any"</code> = some tool (use for structured output)</li>
+          <li><code>tool_choice forced</code> = this specific tool (use for sequencing)</li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top:20px">5 Anti-Patterns That Appear as Distractors</h3>
+      <table class="ref-table" style="margin-bottom:20px">
+        <thead><tr><th>Anti-Pattern</th><th>Why It's Wrong</th><th>Correct Approach</th></tr></thead>
+        <tbody>
+          <tr><td>Natural language loop termination</td><td>Fragile, unreliable, not deterministic</td><td>Check <code>stop_reason == "end_turn"</code></td></tr>
+          <tr><td>Prompt-based compliance enforcement</td><td>Prompts suggest; can be bypassed or misinterpreted</td><td>PreToolUse hook + app-layer intercept</td></tr>
+          <tr><td>Same-session self-review</td><td>Anchoring bias — same session can't objectively review its own output</td><td>Use <code>fork_session</code> for independent review</td></tr>
+          <tr><td>18+ tools per agent</td><td>Tool selection reliability degrades significantly above ~5 tools</td><td>Max 4–5 tools, role-specific agents</td></tr>
+          <tr><td>Aggregate accuracy metrics only</td><td>Hides per-document-type or per-category failure rates</td><td>Track accuracy broken down by type/category</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Production Implementation Rules</h3>
+      <div class="card stripe-red" style="margin-bottom:10px">
+        <h4 style="color:var(--red);margin-bottom:6px">⚠️ Max 4–5 Tools Per Agent</h4>
+        <p style="font-size:.82rem">Tool selection reliability degrades with more than ~5 tools. Design narrow, role-specific agents rather than one agent with many tools.</p>
+      </div>
+      <div class="card stripe-yellow" style="margin-bottom:10px">
+        <h4 style="color:var(--yellow);margin-bottom:6px">Hub-and-Spoke Multi-Agent Pattern</h4>
+        <div class="code" style="margin:4px 0 0">coordinator = AgentDefinition(
+    system=<span class="str">"Route tasks to specialists"</span>,
+    tools=[<span class="str">"delegate_to_research"</span>,
+           <span class="str">"delegate_to_writer"</span>,
+           <span class="str">"delegate_to_reviewer"</span>]
+)
+<span class="cmt"># Subagents NEVER talk to each other directly
+# All results flow back through the coordinator</span></div>
+      </div>
+      <div class="card stripe-accent" style="margin-bottom:10px">
+        <h4 style="margin-bottom:6px">Validation Retry Loop Pattern</h4>
+        <div class="code" style="margin:4px 0 0"><span class="kw">for</span> attempt <span class="kw">in</span> range(3):
+    result = extract_structured(doc)
+    error = validate_schema(result)
+    <span class="kw">if not</span> error:
+        <span class="kw">return</span> result
+    <span class="cmt"># Feed error back as user turn</span>
+    messages.append({
+        <span class="str">"role"</span>: <span class="str">"user"</span>,
+        <span class="str">"content"</span>: <span class="str">f"Schema error: </span>{error}<span class="str">. Retry."</span>
+    })</div>
+      </div>
+      <div class="card stripe-cyan">
+        <h4 style="color:var(--cyan);margin-bottom:6px">Confidence Calibration Pattern</h4>
+        <div class="code" style="margin:4px 0 0"><span class="cmt"># Include confidence in your tool schema</span>
+{
+  <span class="str">"answer"</span>:     {<span class="str">"type"</span>: <span class="str">"string"</span>},
+  <span class="str">"confidence"</span>: {
+    <span class="str">"type"</span>: <span class="str">"number"</span>,
+    <span class="str">"minimum"</span>: 0, <span class="str">"maximum"</span>: 1
+  },
+  <span class="str">"reasoning"</span>:  {<span class="str">"type"</span>: <span class="str">"string"</span>}
+}
+<span class="cmt"># Then escalate if confidence &lt; threshold
+if result.confidence &lt; 0.7:
+    escalate_to_human(result)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     TRACKER
+═══════════════════════════════════════════════════ -->
+<div id="panel-tracker" class="panel">
+  <h2>Progress Tracker</h2>
+  <p style="margin-bottom:20px">Check off topics as you master them. Progress auto-saves in your browser.</p>
+  <div class="overall-prog">
+    <div class="row"><span>Overall Readiness</span><span class="pct" id="overall-pct">0%</span></div>
+    <div class="overall-track"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+  </div>
+  <div class="tracker-grid">
+    <div class="tracker-col">
+      <h4 style="color:var(--accent)">D1 · Agentic Architecture</h4>
+      <div class="t-item"><input type="checkbox" id="t1_1" onchange="updateProgress()"><label for="t1_1">Agentic loop implementation</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_2" onchange="updateProgress()"><label for="t1_2">stop_reason handling</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_3" onchange="updateProgress()"><label for="t1_3">Multi-agent orchestration</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_4" onchange="updateProgress()"><label for="t1_4">Task tool &amp; fork_session</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_5" onchange="updateProgress()"><label for="t1_5">PostToolUse / PreToolUse hooks</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_6" onchange="updateProgress()"><label for="t1_6">Escalation patterns</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_7" onchange="updateProgress()"><label for="t1_7">Retry + exponential backoff</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_8" onchange="updateProgress()"><label for="t1_8">Zero-Tolerance Compliance</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_9" onchange="updateProgress()"><label for="t1_9">allowedTools + AgentDefinition</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_10" onchange="updateProgress()"><label for="t1_10">--resume async sessions</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_11" onchange="updateProgress()"><label for="t1_11">Subagent context isolation</label></div>
+      <div class="t-item"><input type="checkbox" id="t1_12" onchange="updateProgress()"><label for="t1_12">Same-session self-review anti-pattern</label></div>
+      <div class="prog-wrap"><div class="prog-track"><div class="prog-fill" id="d1-fill" style="width:0%"></div></div><div class="prog-lbl" id="d1-lbl">0 / 12</div></div>
+    </div>
+    <div class="tracker-col">
+      <h4 style="color:var(--blue)">D2 · Tool &amp; MCP</h4>
+      <div class="t-item"><input type="checkbox" id="t2_1" onchange="updateProgress()"><label for="t2_1">Tools / Resources / Prompts</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_2" onchange="updateProgress()"><label for="t2_2">JSON Schema for tool inputs</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_3" onchange="updateProgress()"><label for="t2_3">isError flag handling</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_4" onchange="updateProgress()"><label for="t2_4">errorCategory + isRetryable</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_5" onchange="updateProgress()"><label for="t2_5">.mcp.json vs ~/.claude.json</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_6" onchange="updateProgress()"><label for="t2_6">tool_choice: auto/any/forced</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_7" onchange="updateProgress()"><label for="t2_7">Forcing execution order</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_8" onchange="updateProgress()"><label for="t2_8">Resources vs Tools distinction</label></div>
+      <div class="t-item"><input type="checkbox" id="t2_9" onchange="updateProgress()"><label for="t2_9">MCP Prompts templates</label></div>
+      <div class="prog-wrap"><div class="prog-track"><div class="prog-fill" id="d2-fill" style="width:0%" style="background:var(--blue)"></div></div><div class="prog-lbl" id="d2-lbl">0 / 9</div></div>
+    </div>
+    <div class="tracker-col">
+      <h4 style="color:var(--cyan)">D3 · Claude Code</h4>
+      <div class="t-item"><input type="checkbox" id="t3_1" onchange="updateProgress()"><label for="t3_1">CLAUDE.md hierarchy</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_2" onchange="updateProgress()"><label for="t3_2">Custom commands</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_3" onchange="updateProgress()"><label for="t3_3">Rules with glob patterns</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_4" onchange="updateProgress()"><label for="t3_4">Skills: fork vs current</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_5" onchange="updateProgress()"><label for="t3_5">-p / --print headless mode</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_6" onchange="updateProgress()"><label for="t3_6">--output-format json</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_7" onchange="updateProgress()"><label for="t3_7">--resume flag</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_8" onchange="updateProgress()"><label for="t3_8">Plan mode vs direct execution</label></div>
+      <div class="t-item"><input type="checkbox" id="t3_9" onchange="updateProgress()"><label for="t3_9">/compact and /memory</label></div>
+      <div class="prog-wrap"><div class="prog-track"><div class="prog-fill" id="d3-fill" style="width:0%"></div></div><div class="prog-lbl" id="d3-lbl">0 / 9</div></div>
+    </div>
+    <div class="tracker-col">
+      <h4 style="color:var(--green)">D4 · Prompt Engineering</h4>
+      <div class="t-item"><input type="checkbox" id="t4_1" onchange="updateProgress()"><label for="t4_1">tool_use for structured output</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_2" onchange="updateProgress()"><label for="t4_2">Resilient schema design</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_3" onchange="updateProgress()"><label for="t4_3">Mathematical consistency check</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_4" onchange="updateProgress()"><label for="t4_4">Null handling &amp; normalization</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_5" onchange="updateProgress()"><label for="t4_5">Message Batches API</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_6" onchange="updateProgress()"><label for="t4_6">custom_id + 24hr window</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_7" onchange="updateProgress()"><label for="t4_7">Scratchpad Pattern</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_8" onchange="updateProgress()"><label for="t4_8">Structured Intermediate Reps</label></div>
+      <div class="t-item"><input type="checkbox" id="t4_9" onchange="updateProgress()"><label for="t4_9">Few-shot prompting</label></div>
+      <div class="prog-wrap"><div class="prog-track"><div class="prog-fill" id="d4-fill" style="width:0%"></div></div><div class="prog-lbl" id="d4-lbl">0 / 9</div></div>
+    </div>
+    <div class="tracker-col">
+      <h4 style="color:var(--yellow)">D5 · Context &amp; Reliability</h4>
+      <div class="t-item"><input type="checkbox" id="t5_1" onchange="updateProgress()"><label for="t5_1">Tool Context Pruning</label></div>
+      <div class="t-item"><input type="checkbox" id="t5_2" onchange="updateProgress()"><label for="t5_2">Compressing Long Sessions</label></div>
+      <div class="t-item"><input type="checkbox" id="t5_3" onchange="updateProgress()"><label for="t5_3">Shared Memory Architecture</label></div>
+      <div class="t-item"><input type="checkbox" id="t5_4" onchange="updateProgress()"><label for="t5_4">Parallelization &amp; Caching</label></div>
+      <div class="t-item"><input type="checkbox" id="t5_5" onchange="updateProgress()"><label for="t5_5">Goal-Oriented Delegation</label></div>
+      <div class="t-item"><input type="checkbox" id="t5_6" onchange="updateProgress()"><label for="t5_6">Cache invalidation strategies</label></div>
+      <div class="t-item"><input type="checkbox" id="t5_7" onchange="updateProgress()"><label for="t5_7">Human-in-the-Loop calibration</label></div>
+      <div class="t-item"><input type="checkbox" id="t5_8" onchange="updateProgress()"><label for="t5_8">Limits of automated retry</label></div>
+      <div class="prog-wrap"><div class="prog-track"><div class="prog-fill" id="d5-fill" style="width:0%"></div></div><div class="prog-lbl" id="d5-lbl">0 / 8</div></div>
+    </div>
+  </div>
+</div>
+
+  </div><!-- end .content-pane -->
+</div><!-- end .page -->
+
+<script>
+/* ── THEME TOGGLE ───────────────────────────────────── */
+const html = document.documentElement;
+const btn  = document.getElementById('themeBtn');
+const saved = localStorage.getItem('cca_theme') || 'dark';
+setTheme(saved);
+
+btn.addEventListener('click', () => {
+  setTheme(html.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+function setTheme(t) {
+  html.dataset.theme = t;
+  btn.textContent = t === 'dark' ? '🌙' : '☀️';
+  btn.title = t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  localStorage.setItem('cca_theme', t);
+}
+
+/* ── TABS ───────────────────────────────────────────── */
+function switchTab(name, el) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+/* ── PRACTICE Q's ───────────────────────────────────── */
+function toggleAnswer(btn) {
+  const ans = btn.closest('.q-card').querySelector('.q-ans');
+  ans.classList.toggle('show');
+  btn.textContent = ans.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+}
+
+/* ── PROGRESS TRACKER ───────────────────────────────── */
+const DOMAINS = {
+  d1: { ids: ['t1_1','t1_2','t1_3','t1_4','t1_5','t1_6','t1_7','t1_8','t1_9','t1_10','t1_11','t1_12'], total: 12 },
+  d2: { ids: ['t2_1','t2_2','t2_3','t2_4','t2_5','t2_6','t2_7','t2_8','t2_9'],         total: 9  },
+  d3: { ids: ['t3_1','t3_2','t3_3','t3_4','t3_5','t3_6','t3_7','t3_8','t3_9'],         total: 9  },
+  d4: { ids: ['t4_1','t4_2','t4_3','t4_4','t4_5','t4_6','t4_7','t4_8','t4_9'],         total: 9  },
+  d5: { ids: ['t5_1','t5_2','t5_3','t5_4','t5_5','t5_6','t5_7','t5_8'],                total: 8  },
+};
+
+function updateProgress() {
+  let totalDone = 0, totalAll = 0;
+  for (const [key, cfg] of Object.entries(DOMAINS)) {
+    const done = cfg.ids.filter(id => document.getElementById(id)?.checked).length;
+    totalDone += done; totalAll += cfg.total;
+    const pct = Math.round((done / cfg.total) * 100);
+    document.getElementById(key + '-fill').style.width = pct + '%';
+    document.getElementById(key + '-lbl').textContent = done + ' / ' + cfg.total;
+  }
+  const overall = Math.round((totalDone / totalAll) * 100);
+  document.getElementById('overall-fill').style.width = overall + '%';
+  document.getElementById('overall-pct').textContent = overall + '%';
+  try {
+    const state = {};
+    Object.values(DOMAINS).forEach(cfg => cfg.ids.forEach(id => {
+      state[id] = document.getElementById(id)?.checked || false;
+    }));
+    localStorage.setItem('cca_progress', JSON.stringify(state));
+  } catch(e) {}
+}
+
+(function loadProgress() {
+  try {
+    const state = JSON.parse(localStorage.getItem('cca_progress') || '{}');
+    Object.entries(state).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.checked = val;
+    });
+  } catch(e) {}
+  updateProgress();
+})();
+</script>
+</body>
+</html>
