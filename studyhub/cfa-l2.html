@@ -651,156 +651,6 @@ body {
 .eup-cancel{padding:10px 18px;background:none;border:1px solid #334155;border-radius:8px;color:#64748b;font-size:13px;cursor:pointer}
 .eup-cancel:hover{background:#1e293b;color:#f1f5f9}
 
-/* ════════════════════════════════
-   MOCK SIMULATOR VIEW
-════════════════════════════════ */
-#v-mock {
-  padding: 24px;
-  overflow-y: auto;
-}
-
-.mock-header {
-  margin-bottom: 24px;
-}
-
-.mock-header h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.mock-header p {
-  font-size: 12px;
-  color: var(--text3);
-}
-
-.mock-placeholder {
-  background: var(--surface);
-  border: 2px dashed var(--border);
-  border-radius: 12px;
-  padding: 40px;
-  text-align: center;
-  color: var(--text3);
-}
-
-.mock-placeholder-icon {
-  font-size: 36px;
-  margin-bottom: 16px;
-}
-
-.mock-placeholder h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text2);
-  margin-bottom: 8px;
-}
-
-.mock-placeholder p {
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-/* ════════════════════════════════
-   FORMULA HUB VIEW
-════════════════════════════════ */
-#v-formulas {
-  padding: 24px;
-  overflow-y: auto;
-}
-
-.formula-header {
-  margin-bottom: 24px;
-}
-
-.formula-header h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.formula-header p {
-  font-size: 12px;
-  color: var(--text3);
-}
-
-.formula-placeholder {
-  background: var(--surface);
-  border: 2px dashed var(--border);
-  border-radius: 12px;
-  padding: 40px;
-  text-align: center;
-  color: var(--text3);
-}
-
-.formula-placeholder-icon {
-  font-size: 36px;
-  margin-bottom: 16px;
-}
-
-.formula-placeholder h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text2);
-  margin-bottom: 8px;
-}
-
-.formula-placeholder p {
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-/* ════════════════════════════════
-   ANALYTICS VIEW
-════════════════════════════════ */
-#v-analytics {
-  padding: 24px;
-  overflow-y: auto;
-}
-
-.analytics-header {
-  margin-bottom: 24px;
-}
-
-.analytics-header h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.analytics-header p {
-  font-size: 12px;
-  color: var(--text3);
-}
-
-.analytics-placeholder {
-  background: var(--surface);
-  border: 2px dashed var(--border);
-  border-radius: 12px;
-  padding: 40px;
-  text-align: center;
-  color: var(--text3);
-}
-
-.analytics-placeholder-icon {
-  font-size: 36px;
-  margin-bottom: 16px;
-}
-
-.analytics-placeholder h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text2);
-  margin-bottom: 8px;
-}
-
-.analytics-placeholder p {
-  font-size: 12px;
-  line-height: 1.6;
-}
-
 /* ══════════════════════════════════════════════════
    SCROLLBARS
 ══════════════════════════════════════════════════ */
@@ -865,27 +715,20 @@ body {
       <span>Dashboard</span>
     </div>
     <div class="sb-item" onclick="switchView('notes')">
-      <span class="sb-item-icon">📄</span>
+      <span class="sb-item-icon">📝</span>
       <span>Notes Navigator</span>
     </div>
     <div class="sb-item" onclick="switchView('explainers')">
       <span class="sb-item-icon">🎨</span>
       <span>Explainers</span>
     </div>
-    <div class="sb-item" onclick="switchView('mock')">
-      <span class="sb-item-icon">✏️</span>
-      <span>Mock Simulator</span>
+    <div class="sb-item" onclick="switchView('downloads')">
+      <span class="sb-item-icon">📥</span>
+      <span>Downloads</span>
     </div>
 
-    <div class="sb-section-label" style="margin-top:12px;">REFERENCE</div>
-    <div class="sb-item" onclick="switchView('formulas')">
-      <span class="sb-item-icon">∑</span>
-      <span>Formula Hub</span>
-    </div>
-    <div class="sb-item" onclick="switchView('analytics')">
-      <span class="sb-item-icon">📈</span>
-      <span>Analytics</span>
-    </div>
+
+
   </nav>
 
   <div class="sb-footer">
@@ -921,20 +764,13 @@ body {
         <div class="stat-sub">Visual guides (add more)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-lbl">FORMULAS</div>
-        <div class="stat-val" id="db-formula-count">285</div>
-        <div class="stat-sub">Quick reference sheet</div>
+        <div class="stat-lbl">DOWNLOADS</div>
+        <div class="stat-val">📥</div>
+        <div class="stat-sub">Notes & explainers offline</div>
       </div>
     </div>
 
-    <div class="upload-banner">
-      <div class="upload-icon">📁</div>
-      <div class="upload-text">
-        <h3>Add Explainers</h3>
-        <p>Drop JPG/PNG or HTML files into explainers/[topic]/ then run rebuild_hub.py</p>
-      </div>
-      <button class="upload-cta">Learn More</button>
-    </div>
+
 
     <div class="section-hdr">
       <h2>Topics Overview</h2>
@@ -1013,7 +849,7 @@ body {
 
     <div class="quick-actions">
       <div class="qa-card" onclick="switchView('notes')">
-        <div class="qa-icon-wrap">📄</div>
+        <div class="qa-icon-wrap">📝</div>
         <div>
           <div class="qa-title">Browse Notes</div>
           <div class="qa-desc">Explore 61 indexed note pages from handwritten study materials</div>
@@ -1026,11 +862,11 @@ body {
           <div class="qa-desc">AI-generated visual guides and detailed HTML explanations</div>
         </div>
       </div>
-      <div class="qa-card" onclick="switchView('formulas')">
-        <div class="qa-icon-wrap">∑</div>
+      <div class="qa-card" onclick="switchView('downloads')">
+        <div class="qa-icon-wrap">📥</div>
         <div>
-          <div class="qa-title">Formula Hub</div>
-          <div class="qa-desc">Quick reference for all major formulas across L2 curriculum</div>
+          <div class="qa-title">Downloads</div>
+          <div class="qa-desc">Download notes and explainers for offline study</div>
         </div>
       </div>
     </div>
@@ -1132,36 +968,64 @@ body {
     </div>
   </div>
 
-  <!-- MOCK SIMULATOR VIEW -->
-  <div <div id="v-mock" class="view">
-    <!\-\-\ ──\ MOCK\ SIMULATOR\ ──\ \-\->\
-\ \ <div\ id="v\-mock"\ class="view">\
-\ \ \ \ <div\ style="padding:24px;overflow\-y:auto;flex:1">\
-\ \ \ \ <div\ class="db\-header"><h1>🎯\ Mock\ Simulator</h1><p>Vignette\-style\ ·\ CFA\ exam\ format\ ·\ Adaptive\ difficulty\ ·\ Tracks\ your\ weak\ areas</p></div>\
+  <!-- DOWNLOADS VIEW -->
+  <div id="v-downloads" class="view" style="overflow-y:auto;">
+    <div style="padding:24px;max-width:900px;">
+      <div class="db-header">
+        <h1>📥 Downloads</h1>
+        <p>Download notes and explainers for offline study</p>
+      </div>
 
+      <!-- Notes Download Section -->
+      <div style="margin-bottom:32px;">
+        <div class="section-hdr" style="margin-bottom:16px;"><h2>📝 Handwritten Notes</h2></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">📈</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Equity Valuation Notes</div>
+                <div style="font-size:11px;color:var(--text3);">20 pages · Handwritten flashcards</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers DDM, FCFE/FCFF, price multiples, residual income, and private company valuation.</p>
+            <button onclick="downloadNotesZip('equity')" style="width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download Equity Notes (20 images)
+            </button>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">🏦</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Fixed Income Notes</div>
+                <div style="font-size:11px;color:var(--text3);">41 pages · Handwritten flashcards</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers term structure, credit analysis, securitization, CDS, and portfolio management.</p>
+            <button onclick="downloadNotesZip('fi')" style="width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download FI Notes (41 images)
+            </button>
+          </div>
+        </div>
+        <button onclick="downloadNotesZip('all')" style="width:100%;margin-top:12px;padding:12px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 15px rgba(108,92,231,0.3);" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+          📦 Download All Notes (61 images)
+        </button>
+      </div>
 
-
-  <!-- FORMULA HUB VIEW -->
-  <div <div id="v-formulas" class="view">
-    <div style="padding:24px;overflow-y:auto;flex:1">
-    <div class="db-header"><h1>🧮 Formula Hub</h1><p>Every CFA L2 formula — click to see full derivation, context, and exam tip</p></div>
-    <div class="fh-grid" id="fh-grid"></div>
+      <!-- Explainers Download Section -->
+      <div>
+        <div class="section-hdr" style="margin-bottom:16px;"><h2>🎨 Explainers</h2></div>
+        <div id="dl-explainer-grid" style="display:grid;grid-template-columns:1fr;gap:12px;">
+          <!-- Populated by JS -->
+        </div>
+        <div id="dl-no-explainers" style="background:var(--surface);border:2px dashed var(--border);border-radius:12px;padding:30px;text-align:center;color:var(--text3);display:none;">
+          <div style="font-size:28px;margin-bottom:8px;">🎨</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:4px;">No explainers available</div>
+          <div style="font-size:11px;">Add explainers via the Explainers tab</div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- ANALYTICS VIEW -->
-  <div id="v-analytics" class="view">
-    <div class="analytics-header">
-      <h2>Study Analytics</h2>
-      <p>Track your study progress and identify weak areas</p>
-    </div>
-    <div class="analytics-placeholder">
-      <div class="analytics-placeholder-icon">📊</div>
-      <h3>Coming Soon</h3>
-      <p>Analytics dashboard is under development. Track your study patterns soon!</p>
-    </div>
-  </div>
-
 </main>
 
 <script src="./assets/seed_explainers.js"></script>
@@ -1215,6 +1079,7 @@ function switchView(viewName) {
   // Initialize view-specific code
   if (viewName === 'notes') buildNsIndex();
   if (viewName === 'explainers') expInit();
+  if (viewName === 'downloads') initDownloadsView();
 }
 
 function getNavLabel(viewName) {
@@ -1222,9 +1087,7 @@ function getNavLabel(viewName) {
     dashboard: 'dashboard',
     notes: 'notes',
     explainers: 'explainers',
-    mock: 'mock',
-    formulas: 'formula',
-    analytics: 'analytics'
+    downloads: 'downloads'
   };
   return map[viewName] || viewName;
 }
@@ -2127,6 +1990,183 @@ function openFhModal(id){
   document.getElementById("fh-modal").classList.add("open");
 }
 function closeFhModal(){document.getElementById("fh-modal").classList.remove("open");}
+
+
+
+// ════════════════════════════════════════════════════════════════
+// DOWNLOADS VIEW
+// ════════════════════════════════════════════════════════════════
+
+async function downloadNotesZip(section) {
+  // Collect image URLs
+  const urls = [];
+  if (section === 'equity' || section === 'all') {
+    for (let i = 1; i <= 20; i++) {
+      const key = 'equity-' + String(i).padStart(2, '0');
+      if (PAGE_IMAGES[key]) urls.push({ name: key + '.jpg', url: PAGE_IMAGES[key] });
+    }
+  }
+  if (section === 'fi' || section === 'all') {
+    for (let i = 1; i <= 41; i++) {
+      const key = 'fi-' + String(i).padStart(2, '0');
+      if (PAGE_IMAGES[key]) urls.push({ name: key + '.jpg', url: PAGE_IMAGES[key] });
+    }
+  }
+
+  // Download as individual images in a zip-like approach (use blob download)
+  // Since we can't create real ZIPs without a library, download as individual files
+  // Better approach: create a temporary link for each image with the download attribute
+  if (urls.length === 0) { alert('No images found for this section.'); return; }
+
+  const label = section === 'all' ? 'All Notes' : section === 'equity' ? 'Equity Notes' : 'FI Notes';
+  if (!confirm(`Download ${urls.length} images (${label})?\nImages will be saved individually to your downloads folder.`)) return;
+
+  for (const item of urls) {
+    try {
+      const resp = await fetch(item.url);
+      const blob = await resp.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = item.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+      // Small delay to avoid browser throttling
+      await new Promise(r => setTimeout(r, 200));
+    } catch(e) {
+      console.error('Failed to download:', item.name, e);
+    }
+  }
+}
+
+function initDownloadsView() {
+  const grid = document.getElementById('dl-explainer-grid');
+  const noExp = document.getElementById('dl-no-explainers');
+  if (!grid) return;
+
+  // Gather all explainers (uploaded + seed)
+  const allExp = [...EXPLAINERS];
+  if (typeof SEED_EXPLAINERS !== 'undefined') {
+    SEED_EXPLAINERS.forEach(se => {
+      if (!allExp.find(e => e.id === se.id)) allExp.push(se);
+    });
+  }
+
+  if (allExp.length === 0) {
+    grid.style.display = 'none';
+    noExp.style.display = 'block';
+    return;
+  }
+  grid.style.display = 'grid';
+  noExp.style.display = 'none';
+
+  // Group by topic
+  const byTopic = {};
+  allExp.forEach(e => {
+    const t = e.topic || 'other';
+    if (!byTopic[t]) byTopic[t] = [];
+    byTopic[t].push(e);
+  });
+
+  const topicNames = {
+    equity: '📈 Equity Valuation',
+    fi: '🏦 Fixed Income',
+    deriv: '⚡ Derivatives',
+    econ: '🌐 Economics',
+    fsa: '📊 Financial Statement Analysis',
+    corp: '🏢 Corporate Finance',
+    alt: '💎 Alternative Investments',
+    pm: '🎯 Portfolio Management',
+    ethics: '⚖️ Ethics',
+    quant: '📐 Quantitative Methods'
+  };
+
+  grid.innerHTML = '';
+  Object.keys(byTopic).sort().forEach(topic => {
+    const items = byTopic[topic];
+    const topicLabel = topicNames[topic] || topic;
+
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;';
+    
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;cursor:pointer;';
+    header.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:14px;font-weight:700;color:var(--text);">${topicLabel}</span>
+        <span style="font-size:10px;color:var(--text3);background:var(--bg);padding:2px 8px;border-radius:10px;">${items.length} files</span>
+      </div>
+      <button onclick="downloadTopicExplainers('${topic}')" style="padding:6px 14px;background:#6c5ce7;color:white;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">⬇ Download All</button>
+    `;
+    card.appendChild(header);
+
+    const list = document.createElement('div');
+    list.style.cssText = 'display:flex;flex-direction:column;gap:6px;';
+    items.forEach(e => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;transition:background .1s;cursor:pointer;';
+      row.onmouseover = () => row.style.background = 'var(--bg)';
+      row.onmouseout = () => row.style.background = 'transparent';
+      
+      const icon = e.type === 'html' ? '🌐' : '🖼️';
+      const title = e.title || e.id;
+      row.innerHTML = `
+        <span style="font-size:12px;">${icon}</span>
+        <span style="font-size:11px;color:var(--text2);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${title}</span>
+        <span style="font-size:9px;color:var(--text3);text-transform:uppercase;background:var(--bg);padding:1px 6px;border-radius:4px;">${e.type || 'img'}</span>
+      `;
+      row.onclick = () => { switchView('explainers'); setTimeout(() => expSelectById(e.id), 200); };
+      list.appendChild(row);
+    });
+    card.appendChild(list);
+    grid.appendChild(card);
+  });
+}
+
+function downloadTopicExplainers(topic) {
+  const allExp = [...EXPLAINERS];
+  if (typeof SEED_EXPLAINERS !== 'undefined') {
+    SEED_EXPLAINERS.forEach(se => {
+      if (!allExp.find(e => e.id === se.id)) allExp.push(se);
+    });
+  }
+  const items = allExp.filter(e => e.topic === topic);
+  if (items.length === 0) return;
+
+  items.forEach(e => {
+    if (e.type === 'html' && e.data) {
+      const blob = new Blob([e.data], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = (e.title || e.id).replace(/[^a-zA-Z0-9]/g, '_') + '.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    } else if (e.data) {
+      const ext = e.ext || 'jpg';
+      const a = document.createElement('a');
+      a.href = 'data:image/' + ext + ';base64,' + e.data;
+      a.download = (e.title || e.id).replace(/[^a-zA-Z0-9]/g, '_') + '.' + ext;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  });
+}
+
+// Helper to select explainer by ID (used from Downloads view)
+function expSelectById(id) {
+  const allExp = [...EXPLAINERS];
+  if (typeof SEED_EXPLAINERS !== 'undefined') {
+    SEED_EXPLAINERS.forEach(se => {
+      if (!allExp.find(e => e.id === se.id)) allExp.push(se);
+    });
+  }
+  const idx = allExp.findIndex(e => e.id === id);
+  if (idx >= 0) expSelect(idx, allExp);
+}
 
 </script>
 
