@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CFA L2 Study Hub — Amitesh Ray | amiteshray.com</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1a2540;
+  --surface2: #1e2d45;
+  --border: #243454;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --accent: #6c5ce7;
+  --accent2: #a29bfe;
+}
+
+[data-theme="light"] {
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --surface2: #f8fafc;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --accent: #6c5ce7;
+  --accent2: #7c3aed;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  flex-direction: column;
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: 230px;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.25s;
+  box-shadow: inset -1px 0 0 var(--border);
+}
+
+.sb-logo {
+  padding: 18px 14px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(162, 155, 254, 0.1));
+}
+
+.sb-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+}
+
+.sb-logo-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.sb-logo-sub {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.sb-nav {
+  flex: 1;
+  padding: 14px 8px;
+  overflow-y: auto;
+}
+
+.sb-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text3);
+  padding: 10px 12px 5px;
+  margin-top: 6px;
+}
+
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text3);
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+}
+
+.sb-item:hover {
+  background: rgba(108, 92, 231, 0.1);
+  color: var(--text2);
+  transform: translateX(2px);
+}
+
+.sb-item.active {
+  background: rgba(108, 92, 231, 0.15);
+  color: #a5b4fc;
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+
+.sb-item-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.sb-badge {
+  margin-left: auto;
+  background: rgba(108, 92, 231, 0.1);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 10px;
+  color: var(--text3);
+  border: 1px solid rgba(108, 92, 231, 0.2);
+}
+
+.sb-item.active .sb-badge {
+  background: rgba(108, 92, 231, 0.2);
+  color: #a5b4fc;
+}
+
+.sb-footer {
+  padding: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(108, 92, 231, 0.1);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s;
+  color: var(--text2);
+}
+
+.theme-toggle:hover {
+  background: rgba(108, 92, 231, 0.2);
+  color: var(--accent);
+}
+
+/* ── MAIN ── */
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ── VIEW CONTAINERS ── */
+.view {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-in;
+}
+
+.view.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0.95; }
+  to { opacity: 1; }
+}
+
+/* ════════════════════════════════
+   DASHBOARD VIEW
+════════════════════════════════ */
+#v-dashboard {
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.db-header {
+  margin-bottom: 24px;
+}
+
+.db-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.db-header p {
+  font-size: 13px;
+  color: var(--text3);
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.stat-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+}
+
+.stat-val {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.stat-lbl {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-sub {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.upload-banner {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(162, 155, 254, 0.1));
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.upload-icon {
+  font-size: 28px;
+}
+
+.upload-text h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 3px;
+}
+
+.upload-text p {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.upload-cta {
+  margin-left: auto;
+  background: var(--accent);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: none;
+  transition: all 0.2s;
+}
+
+.upload-cta:hover {
+  background: var(--accent2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+}
+
+.section-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-hdr h2 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-legend {
+  display: flex;
+  gap: 12px;
+}
+
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.leg-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.topic-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.topic-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(108, 92, 231, 0.15);
+}
+
+.topic-card.has-notes {
+  border-color: rgba(108, 92, 231, 0.4);
+  box-shadow: 0 0 12px rgba(108, 92, 231, 0.15);
+}
+
+.tc-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.tc-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.tc-weight {
+  font-size: 10px;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.tc-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.tc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.qa-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.qa-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+}
+
+.qa-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  background: rgba(108, 92, 231, 0.1);
+}
+
+.qa-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.qa-desc {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.5;
+}
+
+/* ════════════════════════════════
+   NOTES NAVIGATOR VIEW
+════════════════════════════════ */
+#v-notes{flex-direction:row}
+
+/* NAV search bar */
+#notes-topbar{padding:10px 16px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:10px;flex-shrink:0;background:#0a1120}
+.notes-search-wrap{flex:1;position:relative}
+#notes-search{width:100%;padding:8px 12px 8px 34px;background:#1e293b;border:1px solid #334155;border-radius:8px;color:#f1f5f9;font-size:12px;outline:none}
+#notes-search:focus{border-color:#6c5ce7}
+#notes-search::placeholder{color:#475569}
+.ns-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#475569;font-size:13px}
+#sr-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1e293b;border:1px solid #334155;border-radius:9px;max-height:300px;overflow-y:auto;z-index:200;display:none;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.sr-item{display:flex;align-items:flex-start;gap:9px;padding:9px 13px;cursor:pointer;border-bottom:1px solid #0f172a;transition:background .1s}
+.sr-item:hover{background:#334155}
+.sr-item:last-child{border:none}
+.sr-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.sr-name{font-size:12px;font-weight:600;color:#f1f5f9}
+.sr-meta{font-size:10px;color:#64748b;margin-top:1px}
+.sr-snippet{font-size:10px;color:#94a3b8;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px}
+.sr-pg{flex-shrink:0;font-size:9px;color:#a5b4fc;background:#6c5ce720;padding:1px 7px;border-radius:8px;border:1px solid #6c5ce740;margin-top:2px}
+.no-sr{padding:16px;text-align:center;color:#475569;font-size:12px}
+.ttabs{display:flex;gap:5px}
+.ttab{padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #334155;color:#64748b;background:#1e293b;transition:all .12s;white-space:nowrap}
+.ttab.active{background:#6c5ce7;border-color:#6c5ce7;color:white}
+
+/* Index list */
+#notes-body{display:flex;flex:1;overflow:hidden}
+#idx-panel{width:280px;border-right:1px solid #1e293b;display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;background:#0a1120}
+#idx-header{padding:10px 12px;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between}
+.idx-title{font-size:11px;font-weight:700;color:#94a3b8}
+.idx-count-badge{font-size:10px;color:#475569}
+#idx-list{flex:1;overflow-y:auto;padding:4px}
+.grp{margin-bottom:2px}
+.grp-hdr{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:7px;cursor:pointer;transition:background .1s;user-select:none}
+.grp-hdr:hover{background:#1e293b}
+.grp-arrow{font-size:9px;color:#475569;transition:transform .18s;flex-shrink:0}
+.grp-arrow.open{transform:rotate(90deg)}
+.grp-icon{font-size:14px;flex-shrink:0}
+.grp-name{font-size:12px;font-weight:700;color:#e2e8f0;flex:1}
+.grp-cnt{font-size:9px;color:#475569;background:#1e293b;padding:1px 6px;border-radius:8px}
+.grp-items{display:none;padding:0 0 3px 6px}
+.grp-items.open{display:block}
+.sub-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#2d3f55;padding:6px 9px 2px}
+.idx-item{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:6px;cursor:pointer;transition:all .1s;border-left:2px solid transparent;margin-bottom:1px}
+.idx-item:hover{background:#1e293b;border-left-color:#6c5ce750}
+.idx-item.active{background:linear-gradient(135deg,#6c5ce715,#a29bfe15);border-left-color:#6c5ce7}
+.idx-item-icon{font-size:12px;flex-shrink:0}
+.idx-item-name{font-size:11px;color:#cbd5e1;flex:1;line-height:1.3}
+.idx-item.active .idx-item-name{color:#a5b4fc;font-weight:600}
+.idx-item-page{font-size:9px;color:#475569;flex-shrink:0;background:#0f172a;padding:1px 6px;border-radius:7px}
+
+/* Viewer */
+#viewer-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#viewer-bar{padding:9px 14px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:8px;flex-shrink:0}
+#viewer-title{flex:1;font-size:12px;font-weight:600;color:#f1f5f9;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#viewer-src{font-size:10px;color:#64748b;background:#1e293b;padding:2px 9px;border-radius:7px;white-space:nowrap}
+.v-btn{padding:4px 10px;background:#1e293b;border:1px solid #334155;border-radius:6px;color:#94a3b8;cursor:pointer;font-size:11px;transition:all .1s}
+.v-btn:hover:not(:disabled){background:#334155;color:#f1f5f9}
+.v-btn:disabled{opacity:.3;cursor:default}
+#pg-ind{font-size:11px;color:#64748b;white-space:nowrap}
+.z-btn{padding:4px 9px;background:#1e293b;border:1px solid #334155;border-radius:6px;color:#94a3b8;cursor:pointer;font-size:13px;line-height:1;transition:all .1s}
+.z-btn:hover{background:#334155;color:#f1f5f9}
+#viewer-canvas{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:16px;background:#060d1a}
+#page-img{max-width:100%;border-radius:7px;box-shadow:0 4px 28px rgba(0,0,0,.6);transform-origin:top center;transition:transform .15s;display:none}
+#viewer-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#1e293b;text-align:center;padding:40px}
+.empty-icon{font-size:44px;margin-bottom:12px}
+.empty-title{font-size:14px;font-weight:600;color:#334155;margin-bottom:5px}
+.empty-sub{font-size:11px;color:#1e293b}
+#concept-strip{border-top:1px solid #1e293b;padding:12px 16px;background:#0a1120;display:none;flex-shrink:0;max-height:200px;overflow-y:auto}
+.strip-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#6c5ce7;margin-bottom:6px}
+.strip-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.strip-box{background:#1e293b;border-radius:7px;padding:10px 12px}
+.strip-box-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.strip-formula{font-family:'Courier New',monospace;font-size:10px;color:#a5b4fc;background:#0f172a;border-radius:5px;padding:7px;line-height:1.6;white-space:pre-wrap;border-left:2px solid #6c5ce7}
+.strip-concept{font-size:10px;color:#94a3b8;line-height:1.6}
+.strip-tip{background:#f9731615;border:1px solid #f9731630;border-radius:6px;padding:8px;font-size:10px;color:#fdba74;line-height:1.6}
+
+/* ════════════════════════════════
+
+/* ════════════════════════════════
+   EXPLAINER NAVIGATOR VIEW
+════════════════════════════════ */
+#v-explainers{flex-direction:column}
+
+/* top bar */
+#exp-topbar{padding:10px 16px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:10px;flex-shrink:0;background:#0a1120}
+.exp-search-wrap{flex:1;position:relative}
+#exp-search{width:100%;padding:8px 12px 8px 34px;background:#1e293b;border:1px solid #334155;border-radius:8px;color:#f1f5f9;font-size:12px;outline:none}
+#exp-search:focus{border-color:#f59e0b}
+#exp-search::placeholder{color:#475569}
+.exp-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#475569;font-size:13px}
+#exp-sr-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1e293b;border:1px solid #334155;border-radius:9px;max-height:300px;overflow-y:auto;z-index:200;display:none;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.exp-ttabs{display:flex;gap:5px}
+.exp-ttab{padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #334155;color:#64748b;background:#1e293b;transition:all .12s;white-space:nowrap}
+.exp-ttab.active{background:#f59e0b;border-color:#f59e0b;color:#0a1120}
+.exp-upload-btn{padding:5px 14px;background:#f59e0b;border:none;border-radius:7px;color:#0a1120;font-size:11px;font-weight:700;cursor:pointer;transition:all .12s;white-space:nowrap;flex-shrink:0}
+.exp-upload-btn:hover{background:#fbbf24}
+
+/* body layout */
+#exp-body{display:flex;flex:1;overflow:hidden}
+
+/* index panel */
+#exp-idx-panel{width:280px;border-right:1px solid #1e293b;display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;background:#0a1120}
+#exp-idx-header{padding:10px 12px;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.exp-idx-title{font-size:11px;font-weight:700;color:#94a3b8}
+#exp-count-badge{font-size:10px;color:#475569;flex:1}
+.exp-add-btn{padding:3px 9px;background:#f59e0b;border:none;border-radius:5px;color:#0a1120;font-size:11px;font-weight:700;cursor:pointer}
+.exp-add-btn:hover{background:#fbbf24}
+#exp-idx-list{flex:1;overflow-y:auto;padding:4px}
+.exp-grp{margin-bottom:2px}
+.exp-grp-hdr{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:7px;cursor:pointer;transition:background .1s;user-select:none}
+.exp-grp-hdr:hover{background:#1e293b}
+.exp-grp-arrow{font-size:9px;color:#475569;transition:transform .18s;flex-shrink:0}
+.exp-grp-arrow.open{transform:rotate(90deg)}
+.exp-grp-icon{font-size:14px;flex-shrink:0}
+.exp-grp-name{font-size:12px;font-weight:700;color:#e2e8f0;flex:1}
+.exp-grp-cnt{font-size:9px;padding:1px 6px;border-radius:8px;background:#1e293b;min-width:18px;text-align:center}
+.exp-grp-items{display:none;padding:0 0 3px 6px}
+.exp-grp-items.open{display:block}
+.exp-idx-item{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:6px;cursor:pointer;transition:all .1s;border-left:2px solid transparent;margin-bottom:1px}
+.exp-idx-item:hover{background:#1e293b;border-left-color:#f59e0b50}
+.exp-idx-item.active{background:linear-gradient(135deg,#f59e0b15,#fb923c15);border-left-color:#f59e0b}
+.exp-item-icon{font-size:12px;flex-shrink:0}
+.exp-item-name{font-size:11px;color:#cbd5e1;flex:1;line-height:1.3;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.exp-idx-item.active .exp-item-name{color:#fbbf24;font-weight:600}
+.exp-item-badge{font-size:8px;color:#475569;background:#0f172a;padding:1px 5px;border-radius:5px;flex-shrink:0;text-transform:uppercase}
+
+/* viewer area */
+#exp-viewer-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#exp-viewer-bar{padding:9px 14px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:8px;flex-shrink:0}
+#exp-viewer-title{flex:1;font-size:12px;font-weight:600;color:#f1f5f9;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#exp-topic-label{font-size:10px;color:#64748b;background:#1e293b;padding:2px 9px;border-radius:7px;white-space:nowrap}
+.ev-btn{padding:4px 10px;background:#1e293b;border:1px solid #334155;border-radius:6px;color:#94a3b8;cursor:pointer;font-size:11px;transition:all .1s}
+.ev-btn:hover{background:#334155;color:#f1f5f9}
+.ez-btn{padding:4px 9px;background:#1e293b;border:1px solid #334155;border-radius:6px;color:#94a3b8;cursor:pointer;font-size:13px;line-height:1;transition:all .1s}
+.ez-btn:hover{background:#334155;color:#f1f5f9}
+.del-btn{padding:4px 10px;background:#ef444415;border:1px solid #ef444430;border-radius:6px;color:#f87171;cursor:pointer;font-size:11px;transition:all .1s;display:none}
+.del-btn:hover{background:#ef444430}
+#exp-viewer-canvas{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:16px;background:#060d1a;position:relative}
+#exp-img{max-width:100%;border-radius:7px;box-shadow:0 4px 28px rgba(0,0,0,.6);transform-origin:top center;transition:transform .15s;display:none}
+#exp-iframe{width:100%;height:100%;border:none;border-radius:7px;box-shadow:0 4px 28px rgba(0,0,0,.6);background:white;display:none;min-height:500px}
+#exp-viewer-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#1e293b;text-align:center;padding:40px}
+.exp-empty-icon{font-size:48px;margin-bottom:14px}
+.exp-empty-title{font-size:14px;font-weight:600;color:#334155;margin-bottom:6px}
+.exp-empty-sub{font-size:11px;color:#1e293b;margin-bottom:20px}
+.exp-empty-btn{padding:10px 22px;background:#f59e0b;border:none;border-radius:8px;color:#0a1120;font-weight:700;font-size:12px;cursor:pointer}
+.exp-empty-btn:hover{background:#fbbf24}
+
+/* Upload Modal */
+#exp-upload-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center}
+#exp-upload-box{background:#0f172a;border:1px solid #334155;border-radius:14px;padding:28px;width:420px;max-width:90vw;box-shadow:0 20px 60px rgba(0,0,0,.8)}
+.eup-title{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:20px}
+.eup-label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;margin-top:14px}
+.eup-label:first-of-type{margin-top:0}
+#exp-drop-zone{border:2px dashed #334155;border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .15s;background:#1e293b;margin-bottom:4px}
+#exp-drop-zone:hover,#exp-drop-zone.drag-over{border-color:#f59e0b;background:#f59e0b10}
+.edz-icon{font-size:32px;margin-bottom:8px}
+.edz-main{font-size:13px;color:#94a3b8;margin-bottom:4px}
+.edz-sub{font-size:11px;color:#475569}
+#exp-file-input{display:none}
+#exp-file-name{font-size:11px;color:#f59e0b;margin-top:6px;text-align:center;min-height:16px}
+#exp-topic-select{width:100%;padding:8px 12px;background:#1e293b;border:1px solid #334155;border-radius:8px;color:#f1f5f9;font-size:12px;outline:none}
+#exp-topic-select:focus{border-color:#f59e0b}
+#exp-title-input{width:100%;padding:8px 12px;background:#1e293b;border:1px solid #334155;border-radius:8px;color:#f1f5f9;font-size:12px;outline:none;box-sizing:border-box}
+#exp-title-input:focus{border-color:#f59e0b}
+#exp-title-input::placeholder{color:#475569}
+.eup-actions{display:flex;gap:10px;margin-top:20px}
+.eup-submit{flex:1;padding:10px;background:#f59e0b;border:none;border-radius:8px;color:#0a1120;font-weight:700;font-size:13px;cursor:pointer}
+.eup-submit:hover{background:#fbbf24}
+.eup-cancel{padding:10px 18px;background:none;border:1px solid #334155;border-radius:8px;color:#64748b;font-size:13px;cursor:pointer}
+.eup-cancel:hover{background:#1e293b;color:#f1f5f9}
+
+/* ════════════════════════════════
+   MOCK SIMULATOR VIEW
+════════════════════════════════ */
+#v-mock {
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.mock-header {
+  margin-bottom: 24px;
+}
+
+.mock-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.mock-header p {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.mock-placeholder {
+  background: var(--surface);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text3);
+}
+
+.mock-placeholder-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.mock-placeholder h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.mock-placeholder p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════
+   FORMULA HUB VIEW
+════════════════════════════════ */
+#v-formulas {
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.formula-header {
+  margin-bottom: 24px;
+}
+
+.formula-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.formula-header p {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.formula-placeholder {
+  background: var(--surface);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text3);
+}
+
+.formula-placeholder-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.formula-placeholder h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.formula-placeholder p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════
+   ANALYTICS VIEW
+════════════════════════════════ */
+#v-analytics {
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.analytics-header {
+  margin-bottom: 24px;
+}
+
+.analytics-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.analytics-header p {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.analytics-placeholder {
+  background: var(--surface);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text3);
+}
+
+.analytics-placeholder-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.analytics-placeholder h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.analytics-placeholder p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════════════
+   SCROLLBARS
+══════════════════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text3);
+}
+
+</style>
+</head>
+<body>
+<div id="back-nav" style="
+  width:100%;
+  background:linear-gradient(135deg,#6c5ce7,#a29bfe);
+  padding:8px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:'Poppins',sans-serif;
+  flex-shrink:0;
+  z-index:9999;
+">
+  <a href="https://amiteshray.com" style="
+    color:white;text-decoration:none;font-size:13px;font-weight:500;
+    display:flex;align-items:center;gap:6px;opacity:0.9;transition:opacity 0.2s;
+  " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+    ← Back to amiteshray.com
+  </a>
+  <span style="color:rgba(255,255,255,0.7);font-size:11px;font-weight:500;">
+    Study Hub · CFA Level 2
+  </span>
+</div>
+
+<div id="app-container" style="display:flex;flex:1;overflow:hidden;">
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-icon">📚</div>
+    <div>
+      <div class="sb-logo-text">CFA L2 Hub</div>
+      <div class="sb-logo-sub">Study Tool</div>
+    </div>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="sb-section-label">MAIN</div>
+    <div class="sb-item active" onclick="switchView('dashboard')">
+      <span class="sb-item-icon">📊</span>
+      <span>Dashboard</span>
+    </div>
+    <div class="sb-item" onclick="switchView('notes')">
+      <span class="sb-item-icon">📄</span>
+      <span>Notes Navigator</span>
+    </div>
+    <div class="sb-item" onclick="switchView('explainers')">
+      <span class="sb-item-icon">🎨</span>
+      <span>Explainers</span>
+    </div>
+    <div class="sb-item" onclick="switchView('mock')">
+      <span class="sb-item-icon">✏️</span>
+      <span>Mock Simulator</span>
+    </div>
+
+    <div class="sb-section-label" style="margin-top:12px;">REFERENCE</div>
+    <div class="sb-item" onclick="switchView('formulas')">
+      <span class="sb-item-icon">∑</span>
+      <span>Formula Hub</span>
+    </div>
+    <div class="sb-item" onclick="switchView('analytics')">
+      <span class="sb-item-icon">📈</span>
+      <span>Analytics</span>
+    </div>
+  </nav>
+
+  <div class="sb-footer">
+    <span>Theme</span>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">🌙</button>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT AREA -->
+<main id="main">
+
+  <!-- DASHBOARD VIEW -->
+  <div id="v-dashboard" class="view active">
+    <div class="db-header">
+      <h1>CFA Level 2 Study Hub</h1>
+      <p>Comprehensive exam preparation with notes, explainers, and mock questions</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-lbl">INDEXED TOPICS</div>
+        <div class="stat-val">10</div>
+        <div class="stat-sub">Full curriculum coverage</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">NOTE PAGES</div>
+        <div class="stat-val">61</div>
+        <div class="stat-sub">Handwritten flashcards</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">EXPLAINERS</div>
+        <div class="stat-val" id="db-exp-count">0</div>
+        <div class="stat-sub">Visual guides (add more)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">FORMULAS</div>
+        <div class="stat-val" id="db-formula-count">285</div>
+        <div class="stat-sub">Quick reference sheet</div>
+      </div>
+    </div>
+
+    <div class="upload-banner">
+      <div class="upload-icon">📁</div>
+      <div class="upload-text">
+        <h3>Add Explainers</h3>
+        <p>Drop JPG/PNG or HTML files into explainers/[topic]/ then run rebuild_hub.py</p>
+      </div>
+      <button class="upload-cta">Learn More</button>
+    </div>
+
+    <div class="section-hdr">
+      <h2>Topics Overview</h2>
+      <div class="status-legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#6c5ce7;"></div> Has Notes</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#64748b;"></div> No Notes Yet</div>
+      </div>
+    </div>
+
+    <div class="topics-grid">
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">📐</div>
+        <div class="tc-name">Quantitative</div>
+        <div class="tc-weight">5-8%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 23 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">🌐</div>
+        <div class="tc-name">Economics</div>
+        <div class="tc-weight">8-12%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 31 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">📊</div>
+        <div class="tc-name">FSA</div>
+        <div class="tc-weight">13-17%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 42 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">🏢</div>
+        <div class="tc-name">Corporate</div>
+        <div class="tc-weight">8-12%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 18 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">📈</div>
+        <div class="tc-name">Equity</div>
+        <div class="tc-weight">10-12%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 47 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">🏦</div>
+        <div class="tc-name">Fixed Income</div>
+        <div class="tc-weight">10-12%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 68 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">⚡</div>
+        <div class="tc-name">Derivatives</div>
+        <div class="tc-weight">5-8%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 24 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">💎</div>
+        <div class="tc-name">Alternatives</div>
+        <div class="tc-weight">5-8%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 19 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">🎯</div>
+        <div class="tc-name">Portfolio Mgmt</div>
+        <div class="tc-weight">5-8%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 22 items</div>
+      </div>
+      <div class="topic-card has-notes" onclick="switchView('notes')">
+        <div class="tc-icon">⚖️</div>
+        <div class="tc-name">Ethics</div>
+        <div class="tc-weight">10-15%</div>
+        <div class="tc-status"><div class="tc-dot" style="background:#6c5ce7;"></div> 34 items</div>
+      </div>
+    </div>
+
+    <div class="section-hdr">
+      <h2>Quick Actions</h2>
+    </div>
+
+    <div class="quick-actions">
+      <div class="qa-card" onclick="switchView('notes')">
+        <div class="qa-icon-wrap">📄</div>
+        <div>
+          <div class="qa-title">Browse Notes</div>
+          <div class="qa-desc">Explore 61 indexed note pages from handwritten study materials</div>
+        </div>
+      </div>
+      <div class="qa-card" onclick="switchView('explainers')">
+        <div class="qa-icon-wrap">🎨</div>
+        <div>
+          <div class="qa-title">View Explainers</div>
+          <div class="qa-desc">AI-generated visual guides and detailed HTML explanations</div>
+        </div>
+      </div>
+      <div class="qa-card" onclick="switchView('formulas')">
+        <div class="qa-icon-wrap">∑</div>
+        <div>
+          <div class="qa-title">Formula Hub</div>
+          <div class="qa-desc">Quick reference for all major formulas across L2 curriculum</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NOTES NAVIGATOR ── -->
+  <div id="v-notes" class="view" style="flex-direction:column">
+    <div id="notes-topbar">
+      <div class="notes-search-wrap">
+        <span class="ns-icon">🔍</span>
+        <input id="notes-search" type="text" placeholder="Search concepts, formulas, exam tips across all notes…" oninput="nsSearch()" onfocus="nsShowSearch()" onblur="nsHideSearch()"/>
+        <div id="sr-dropdown"></div>
+      </div>
+      <div class="ttabs">
+        <div class="ttab active" onclick="nsFilter('all',this)">All</div>
+        <div class="ttab" onclick="nsFilter('equity',this)">📈 Equity</div>
+        <div class="ttab" onclick="nsFilter('fi',this)">🏦 Fixed Income</div>
+      </div>
+    </div>
+    <div id="notes-body">
+      <div id="idx-panel">
+        <div id="idx-header">
+          <span class="idx-title">📑 Notes Index</span>
+          <span class="idx-count-badge" id="idx-count-badge">61 concepts</span>
+        </div>
+        <div id="idx-list"></div>
+      </div>
+      <div id="viewer-area">
+        <div id="viewer-bar">
+          <div id="viewer-title">← Select a concept to view its page</div>
+          <span id="viewer-src" style="display:none" class="v-btn" style="cursor:default"></span>
+          <button class="v-btn" id="btn-prev" onclick="vPrev()" disabled>◀</button>
+          <span id="pg-ind" style="display:none"></span>
+          <button class="v-btn" id="btn-next" onclick="vNext()" disabled>▶</button>
+          <button class="z-btn" onclick="vzoom(-0.15)">−</button>
+          <button class="z-btn" onclick="vzoom(0.15)">+</button>
+          <button class="z-btn" onclick="vreset()" title="Reset zoom">⊡</button>
+        </div>
+        <div id="viewer-canvas">
+          <div id="viewer-empty">
+            <div class="empty-icon">📖</div>
+            <div class="empty-title">Select a concept from the index</div>
+            <div class="empty-sub">Click any item to jump directly to that page in your handwritten notes</div>
+          </div>
+          <img id="page-img" alt="Note page"/>
+        </div>
+        <div id="concept-strip">
+          <div class="strip-label">Concept Summary</div>
+          <div class="strip-grid" id="strip-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPLAINER NAVIGATOR VIEW -->
+  <div id="v-explainers" class="view" style="flex-direction:column">
+    <div id="exp-topbar">
+      <div class="exp-search-wrap">
+        <span class="exp-search-icon">🔍</span>
+        <input id="exp-search" type="text" placeholder="Search explainers across all topics…" oninput="expSearch()" onfocus="expShowSearch()" onblur="expHideSearch()"/>
+        <div id="exp-sr-dropdown"></div>
+      </div>
+      <div class="exp-ttabs">
+        <div class="exp-ttab active" onclick="expTypeFilter('all',this)">All</div>
+        <div class="exp-ttab" onclick="expTypeFilter('image',this)">🖼️ Images</div>
+        <div class="exp-ttab" onclick="expTypeFilter('html',this)">🌐 HTML</div>
+      </div>
+      <button class="exp-upload-btn" onclick="expOpenUpload()">＋ Upload</button>
+    </div>
+    <div id="exp-body">
+      <div id="exp-idx-panel">
+        <div id="exp-idx-header">
+          <span class="exp-idx-title">🎨 Explainers</span>
+          <span id="exp-count-badge">0 files</span>
+          <button class="exp-add-btn" onclick="expOpenUpload()">+</button>
+        </div>
+        <div id="exp-idx-list"></div>
+      </div>
+      <div id="exp-viewer-area">
+        <div id="exp-viewer-bar">
+          <div id="exp-viewer-title">← Upload or select an explainer</div>
+          <span id="exp-topic-label" style="font-size:10px;color:#64748b;background:#1e293b;padding:2px 9px;border-radius:7px;white-space:nowrap;display:none"></span>
+          <button class="ez-btn" onclick="expZoomAct(-0.15)">−</button>
+          <button class="ez-btn" onclick="expZoomAct(0.15)">+</button>
+          <button class="ez-btn" onclick="expZoomReset()" title="Reset zoom">⊡</button>
+          <button class="del-btn" id="btn-exp-delete" onclick="expDeleteActive()">🗑 Delete</button>
+        </div>
+        <div id="exp-viewer-canvas">
+          <div id="exp-viewer-empty">
+            <div class="exp-empty-icon">🎨</div>
+            <div class="exp-empty-title">No explainers yet</div>
+            <div class="exp-empty-sub">Upload JPG, PNG, or HTML explainer files — they'll be indexed here by topic</div>
+            <button class="exp-empty-btn" onclick="expOpenUpload()">＋ Upload your first explainer</button>
+          </div>
+          <img id="exp-img" alt="Explainer"/>
+          <iframe id="exp-iframe" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOCK SIMULATOR VIEW -->
+  <div <div id="v-mock" class="view">
+    <!\-\-\ ──\ MOCK\ SIMULATOR\ ──\ \-\->\
+\ \ <div\ id="v\-mock"\ class="view">\
+\ \ \ \ <div\ style="padding:24px;overflow\-y:auto;flex:1">\
+\ \ \ \ <div\ class="db\-header"><h1>🎯\ Mock\ Simulator</h1><p>Vignette\-style\ ·\ CFA\ exam\ format\ ·\ Adaptive\ difficulty\ ·\ Tracks\ your\ weak\ areas</p></div>\
+
+
+
+  <!-- FORMULA HUB VIEW -->
+  <div <div id="v-formulas" class="view">
+    <div style="padding:24px;overflow-y:auto;flex:1">
+    <div class="db-header"><h1>🧮 Formula Hub</h1><p>Every CFA L2 formula — click to see full derivation, context, and exam tip</p></div>
+    <div class="fh-grid" id="fh-grid"></div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS VIEW -->
+  <div id="v-analytics" class="view">
+    <div class="analytics-header">
+      <h2>Study Analytics</h2>
+      <p>Track your study progress and identify weak areas</p>
+    </div>
+    <div class="analytics-placeholder">
+      <div class="analytics-placeholder-icon">📊</div>
+      <h3>Coming Soon</h3>
+      <p>Analytics dashboard is under development. Track your study patterns soon!</p>
+    </div>
+  </div>
+
+</main>
+
+<script src="./assets/seed_explainers.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════
+// THEME TOGGLE
+// ════════════════════════════════════════════════════════════════
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const newTheme = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateThemeButton();
+}
+
+function updateThemeButton() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const btn = document.querySelector('.theme-toggle');
+  btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem('theme');
+  const theme = saved || 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeButton();
+}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW SWITCHING
+// ════════════════════════════════════════════════════════════════
+function switchView(viewName) {
+  // Hide all views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+
+  // Show target view
+  const viewId = 'v-' + viewName;
+  const view = document.getElementById(viewId);
+  if (view) view.classList.add('active');
+
+  // Mark nav item as active
+  const navItems = document.querySelectorAll('.sb-item');
+  navItems.forEach(item => {
+    if (item.textContent.toLowerCase().includes(getNavLabel(viewName))) {
+      item.classList.add('active');
+    }
+  });
+
+  // Initialize view-specific code
+  if (viewName === 'notes') buildNsIndex();
+  if (viewName === 'explainers') expInit();
+}
+
+function getNavLabel(viewName) {
+  const map = {
+    dashboard: 'dashboard',
+    notes: 'notes',
+    explainers: 'explainers',
+    mock: 'mock',
+    formulas: 'formula',
+    analytics: 'analytics'
+  };
+  return map[viewName] || viewName;
+}
+
+// ════════════════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════════════════
+
+const PAGE_IMAGES = {"equity-01":"./assets/notes/equity-01.jpg","equity-02":"./assets/notes/equity-02.jpg","equity-03":"./assets/notes/equity-03.jpg","equity-04":"./assets/notes/equity-04.jpg","equity-05":"./assets/notes/equity-05.jpg","equity-06":"./assets/notes/equity-06.jpg","equity-07":"./assets/notes/equity-07.jpg","equity-08":"./assets/notes/equity-08.jpg","equity-09":"./assets/notes/equity-09.jpg","equity-10":"./assets/notes/equity-10.jpg","equity-11":"./assets/notes/equity-11.jpg","equity-12":"./assets/notes/equity-12.jpg","equity-13":"./assets/notes/equity-13.jpg","equity-14":"./assets/notes/equity-14.jpg","equity-15":"./assets/notes/equity-15.jpg","equity-16":"./assets/notes/equity-16.jpg","equity-17":"./assets/notes/equity-17.jpg","equity-18":"./assets/notes/equity-18.jpg","equity-19":"./assets/notes/equity-19.jpg","equity-20":"./assets/notes/equity-20.jpg","fi-01":"./assets/notes/fi-01.jpg","fi-02":"./assets/notes/fi-02.jpg","fi-03":"./assets/notes/fi-03.jpg","fi-04":"./assets/notes/fi-04.jpg","fi-05":"./assets/notes/fi-05.jpg","fi-06":"./assets/notes/fi-06.jpg","fi-07":"./assets/notes/fi-07.jpg","fi-08":"./assets/notes/fi-08.jpg","fi-09":"./assets/notes/fi-09.jpg","fi-10":"./assets/notes/fi-10.jpg","fi-11":"./assets/notes/fi-11.jpg","fi-12":"./assets/notes/fi-12.jpg","fi-13":"./assets/notes/fi-13.jpg","fi-14":"./assets/notes/fi-14.jpg","fi-15":"./assets/notes/fi-15.jpg","fi-16":"./assets/notes/fi-16.jpg","fi-17":"./assets/notes/fi-17.jpg","fi-18":"./assets/notes/fi-18.jpg","fi-19":"./assets/notes/fi-19.jpg","fi-20":"./assets/notes/fi-20.jpg","fi-21":"./assets/notes/fi-21.jpg","fi-22":"./assets/notes/fi-22.jpg","fi-23":"./assets/notes/fi-23.jpg","fi-24":"./assets/notes/fi-24.jpg","fi-25":"./assets/notes/fi-25.jpg","fi-26":"./assets/notes/fi-26.jpg","fi-27":"./assets/notes/fi-27.jpg","fi-28":"./assets/notes/fi-28.jpg","fi-29":"./assets/notes/fi-29.jpg","fi-30":"./assets/notes/fi-30.jpg","fi-31":"./assets/notes/fi-31.jpg","fi-32":"./assets/notes/fi-32.jpg","fi-33":"./assets/notes/fi-33.jpg","fi-34":"./assets/notes/fi-34.jpg","fi-35":"./assets/notes/fi-35.jpg","fi-36":"./assets/notes/fi-36.jpg","fi-37":"./assets/notes/fi-37.jpg","fi-38":"./assets/notes/fi-38.jpg","fi-39":"./assets/notes/fi-39.jpg","fi-40":"./assets/notes/fi-40.jpg","fi-41":"./assets/notes/fi-41.jpg"};const INDEX = [
+  // ─── EQUITY ───────────────────────────────────────────
+  { id:"eq1",  topic:"equity", name:"Intrinsic Value vs Market Value",             icon:"💎", pages:[1],        source:"equity", type:["concept","exam"],
+    formula:null,
+    concept:"<b>Intrinsic Value (IV):</b> True value estimated by analyst with complete understanding of the security. <b>Market Value:</b> Actual price set by the market. Mispricing = IV ≠ Market Value → opportunity.",
+    examTip:"IV > Market Price → undervalued (BUY). IV < Market Price → overvalued (SELL). Know Liquidation vs Going Concern." },
+
+  { id:"eq2",  topic:"equity", name:"Top-Down Framework: Economy → Industry → Company", icon:"🌍", pages:[1,2], source:"equity", type:["concept"],
+    formula:null,
+    concept:"Start macro → industry → company. <b>Porter's 5 Forces:</b> competitive rivalry, buyers, suppliers, substitutes, new entrants. Cost leadership, differentiation, focus strategies.",
+    examTip:"Know which Porter force a vignette is referencing. Information sources: footnotes, investor calls, earnings quality." },
+
+  { id:"eq3",  topic:"equity", name:"Absolute vs Relative Valuation Models",      icon:"📐", pages:[2],        source:"equity", type:["concept","formula"],
+    formula:"Absolute: DDM, FCFE, FCFF, Residual Income\nRelative: P/E, P/B, P/S, EV/EBITDA, EV/Sales",
+    concept:"Absolute estimates IV from cash flows. Relative benchmarks against peers or history. Choice depends on dividend policy, data availability, industry norms.",
+    examTip:"No dividends → FCFE or RI. Natural resources → NAV. Conglomerates → sum-of-parts. Financials → P/B." },
+
+  { id:"eq4",  topic:"equity", name:"DDM — Single Period & Gordon Growth",         icon:"💵", pages:[3,4],      source:"equity", type:["formula","exam"],
+    formula:"1-Period: V₀ = (D₁ + P₁)/(1+re)\nGordon Growth: V₀ = D₁/(re - g)\ng = ROE × b   [b = retention ratio]\nD₁ = D₀(1+g)",
+    concept:"Use when company pays stable dividends. g must be < re. Leading dividend D₁ always in numerator.",
+    examTip:"Leading vs Trailing: D₁ = D₀(1+g) is leading. Always use D₁ in Gordon Growth numerator — common exam trap." },
+
+  { id:"eq5",  topic:"equity", name:"Multi-Stage DDM & PRAT Model",               icon:"📊", pages:[4],        source:"equity", type:["formula","concept"],
+    formula:"PRAT: g = P × R × A × T\n  P = Profit Margin\n  R = Retention Ratio (1−payout)\n  A = Asset Turnover\n  T = Financial Leverage (Assets/Equity)",
+    concept:"PRAT decomposes sustainable growth. Equivalent to g = ROE × b but shows which lever management uses. Higher leverage (T) boosts g but increases risk.",
+    examTip:"If leverage increases → effect on V₀ depends on net impact of re vs g. Don't assume higher g always increases value." },
+
+  { id:"eq6",  topic:"equity", name:"Justified P/E — Leading & Trailing",         icon:"📉", pages:[5],        source:"equity", type:["formula","exam"],
+    formula:"Justified Leading P/E = (1−b)/(re−g)\nJustified Trailing P/E = (1−b)(1+g)/(re−g)\nLeading P/E = Trailing P/E × (1+g)",
+    concept:"Justified = derived from DDM fundamentals, not market trading. If Justified P/E > Actual → undervalued.",
+    examTip:"Very common: calculate justified P/E from re, g, payout → compare to actual market P/E → determine mis-valuation." },
+
+  { id:"eq7",  topic:"equity", name:"PVGO — Present Value of Growth Opportunities", icon:"🌱", pages:[6],      source:"equity", type:["formula","exam"],
+    formula:"P₀ = E₁/re + PVGO\nPVGO = P₀ − E₁/re\nIf ROE = re → PVGO = 0 (no value from retention)",
+    concept:"E₁/re = value if all earnings paid as dividends. PVGO = premium for growth. Undervalued if implied PVGO < fundamental PVGO.",
+    examTip:"If ROE = re, retaining earnings adds zero value (PVGO = 0). This is a key conceptual point." },
+
+  { id:"eq8",  topic:"equity", name:"FCFE — Free Cash Flow to Equity",             icon:"💰", pages:[8],        source:"equity", type:["formula","exam"],
+    formula:"FCFE = NI + D&A − CapEx − ΔNWC + Net Borrowings\nFCFE = CFO − CapEx + Net Borrowings\nV₀ = FCFE₁/(re − g)",
+    concept:"Cash to equity holders AFTER debt obligations. Use when dividends ≠ capacity to pay (cash hoarding or debt-financed dividends).",
+    examTip:"FCFE vs DDM: use FCFE when dividends are not a good proxy for cash-generating ability." },
+
+  { id:"eq9",  topic:"equity", name:"Price Multiples: P/B, P/S, P/CF, EV/EBITDA", icon:"📋", pages:[9,10,11,12], source:"equity", type:["formula","exam"],
+    formula:"P/B Justified = (ROE−g)/(re−g)\nP/S = Net Profit Margin × P/E\nEV = Mkt Cap + Debt − Cash\nPEG = P/E ÷ g  (lower = cheaper, same risk)",
+    concept:"P/B for financials. P/S for start-ups. EV/EBITDA for cross-border & capital-intensive. PEG adjusts P/E for growth rate.",
+    examTip:"Harmonic mean of P/E for indices reduces outlier bias. Median also used. PEG: lower is better assuming same risk profile." },
+
+  { id:"eq10", topic:"equity", name:"Yardeni Model & Fed Model",                   icon:"🏛️", pages:[10],       source:"equity", type:["formula","concept"],
+    formula:"Yardeni: E/P = Yb − d×LTEG\n  Yb = Moody's A-rated bond yield\n  LTEG = long-term earnings growth\nFed Model: E/P = 10yr Treasury yield",
+    concept:"Models to assess equity market over/undervaluation vs bonds. Fed model ignores risk premium; Yardeni adds growth.",
+    examTip:"Yardeni is an improvement on Fed model — it incorporates a long-term earnings growth component." },
+
+  { id:"eq11", topic:"equity", name:"Harmonic Mean & Index P/E",                   icon:"📊", pages:[11],       source:"equity", type:["formula","concept"],
+    formula:"Harmonic Mean: P/Eₕ = n / Σ(1/P/Eᵢ)\nWeighted Harmonic: 1 / Σ(wᵢ × Eᵢ/Pᵢ)",
+    concept:"Arithmetic mean of P/E overstated by outliers. Harmonic mean more conservative and robust. Median P/E = alternative.",
+    examTip:"When asked to aggregate P/E of an index: use harmonic mean, NOT simple arithmetic average." },
+
+  { id:"eq12", topic:"equity", name:"PCF, CFO Adjustments & EBITDA Multiple",     icon:"💹", pages:[12],       source:"equity", type:["formula","concept"],
+    formula:"CF = NI + NCC\nFCFE = CFO − CapEx + Net Borrowings\nEV/EBITDA: pre-interest, pre-D&A",
+    concept:"EBITDA more volatile than earnings; ignores capex intensity. FCFE via CFO most reliable.",
+    examTip:"EBITDA ≠ Cash Flow. Distinguish: EBITDA vs FCFF vs FCFE vs CFO. Know each relationship." },
+
+  { id:"eq13", topic:"equity", name:"Residual Income Model",                       icon:"🧮", pages:[13,14],    source:"equity", type:["formula","exam"],
+    formula:"RI_t = EPS_t − re × BV_{t−1}\n     = (ROE − re) × BV_{t−1}\nSingle-Stage: V₀ = B₀ + RI₁/(re−g)\nClean Surplus: BV_t = BV_{t-1} + NI_t − Div_t",
+    concept:"RI > 0 → value created. RI < 0 → destroyed. Anchors to book value. Tobin's Q = MV/Replacement cost.",
+    examTip:"Clean Surplus Violations: OCI items that bypass P&L (FX gains, pension adjustments, AFS securities) → RI model gives incorrect result." },
+
+  { id:"eq14", topic:"equity", name:"RI Persistence Factor & Competitive Advantage", icon:"📈", pages:[14,15],  source:"equity", type:["concept","exam"],
+    formula:"ω → 1: RI fades slowly (strong moat)\nω → 0: RI disappears quickly\nV₀ = B₀ + PV of all forecast RI",
+    concept:"Strong competitive advantage → high RI persistence. High accruals → lower quality earnings → lower persistence.",
+    examTip:"Non-recurring items reduce RI persistence. Exam may ask you to identify which factor reduces the persistence factor ω." },
+
+  { id:"eq15", topic:"equity", name:"Clean Surplus Violations",                    icon:"⚠️", pages:[16],       source:"equity", type:["concept","exam"],
+    formula:"Violations: FX gains/losses, pension adjustments,\nAFS securities, IFRS asset revaluations, SPE items",
+    concept:"RI model assumes Clean Surplus. Violations mis-state RI. IFRS more prone to violations than GAAP.",
+    examTip:"If OCI items exist in vignette → recognize as Clean Surplus violation → state RI model needs adjustment before applying." },
+
+  { id:"eq16", topic:"equity", name:"Private Company Valuation",                   icon:"🏢", pages:[17,18],    source:"equity", type:["concept","exam"],
+    formula:"Build-Up: re = RF + ERP + Industry RP + Size RP + Company RP\nCAMP: re = RF + β×(Rm−RF) + Size Prem + Specific Prem",
+    concept:"Key differences: size premium, illiquidity (DLOM), control (DLOC), key-person risk, normalized earnings.",
+    examTip:"Three approaches: Income (DCF), Market (multiples), Asset-based. Income most common. Normalize earnings before applying." },
+
+  { id:"eq17", topic:"equity", name:"DLOC & DLOM — Private Company Discounts",    icon:"🔒", pages:[19],       source:"equity", type:["formula","exam"],
+    formula:"DLOC = 1 − 1/(1 + Control Premium)\nValue = Enterprise Value × (1−DLOC) × (1−DLOM)\n[Multiplicative, not additive]",
+    concept:"DLOC: minority shareholders can't direct policy. DLOM: no active market to sell shares. Strategic buyer may eliminate DLOC.",
+    examTip:"If control premium = 25% → DLOC = 1 − 1/1.25 = 20%. Discounts are multiplicative. Very frequently tested." },
+
+  { id:"eq18", topic:"equity", name:"Beta Unlevering & Relevering (Hamada)",       icon:"⚡", pages:[18],       source:"equity", type:["formula","exam"],
+    formula:"β_L = β_U × [1 + (1−t)×(D/E)]\nβ_U = β_L / [1 + (1−t)×(D/E)]\nSteps:\n1. Get public comp β_L\n2. Unlever using public D/E\n3. Relever using private D/E",
+    concept:"Debt amplifies equity risk → levered β > unlevered β. Borrow comparable public firm's unlevered beta for private firm.",
+    examTip:"Always unlever with PUBLIC comp D/E, relever with PRIVATE firm D/E. Using wrong D/E for relevering is the most common mistake." },
+
+  { id:"eq19", topic:"equity", name:"Income Approach — DCF for Private Firms",     icon:"💡", pages:[19,20],    source:"equity", type:["formula","concept"],
+    formula:"FCFF = EBIT(1−t) + D&A − CapEx − ΔNWC\nCapitalization: V = FCFF/(WACC−g)\nNormalized earnings = remove owner perks, non-recurring items",
+    concept:"Normalize first: remove owner salary above market, personal expenses, non-recurring items. Then apply DCF or capitalized CF approach.",
+    examTip:"Capitalized CF approach used when growth is stable. Private firm earnings must always be normalized before valuation." },
+
+  { id:"eq20", topic:"equity", name:"FCFF — Free Cash Flow to the Firm",           icon:"🏭", pages:[8,12,19,20], source:"equity", type:["formula","exam"],
+    formula:"FCFF = NI + D&A + Int(1−t) − CapEx − ΔNWC\n     = EBIT(1−t) + D&A − CapEx − ΔNWC\n     = CFO + Int(1−t) − CapEx\nV_firm = FCFF₁/(WACC−g);  V_equity = V_firm − Debt",
+    concept:"Pre-debt cash flow → to all capital providers. Use WACC as discount rate. Use when capital structure unstable or doing M&A.",
+    examTip:"Adding back Int(1−t): FCFF is pre-debt. FCFF > FCFE for levered firms. This distinction is heavily tested." },
+
+  // ─── FIXED INCOME ─────────────────────────────────────
+  { id:"fi1",  topic:"fi", name:"Bond Valuation & YTM",                            icon:"🏦", pages:[1],        source:"fi", type:["formula","exam"],
+    formula:"Price = Σ[Coupon/(1+YTM)^t] + Par/(1+YTM)^N\nYTM = IRR of all cash flows\nPremium: Coupon > YTM → Price > Par\nDiscount: Coupon < YTM → Price < Par",
+    concept:"YTM assumes reinvestment at YTM — key assumption. If reinvestment rate ≠ YTM, realized return ≠ YTM. Price-yield relationship: inverse and convex.",
+    examTip:"Semiannual: PMT=Coupon/2, N=years×2, i=YTM/2. Premium/discount/par bond rules are very high-frequency exam questions." },
+
+  { id:"fi2",  topic:"fi", name:"Constant Yield Price Trajectory & Accrued Interest", icon:"📉", pages:[2],    source:"fi", type:["formula","concept"],
+    formula:"Dirty Price = Clean Price + Accrued Interest\nAI = Coupon × (days since last coupon / days in period)\nTreasury: Actual/Actual  |  Corporate: 30/360",
+    concept:"Clean price = what is quoted. Dirty price = what you actually pay. Premium bond drifts DOWN to par; discount drifts UP ('pull to par').",
+    examTip:"Corporate bonds: 30/360. Treasury: Actual/Actual. Exam will specify convention — use the correct one." },
+
+  { id:"fi3",  topic:"fi", name:"Spot Rates, Zero-Coupon Bonds & Bootstrapping",   icon:"📐", pages:[3,4,5],   source:"fi", type:["formula","exam"],
+    formula:"Price = Σ[CF_t/(1+z_t)^t]\nBootstrapping: solve for z_N using z1…z_{N-1}\n(1+z2)² = (1+z1)(1+f(1,1))",
+    concept:"Spot rates are purer than YTM — no reinvestment assumption. Zero-coupon bond: single CF at maturity, no reinvestment risk.",
+    examTip:"Bootstrapping is a process (iterative), not a formula. Know the steps. Bond priced with spot rates is more accurate than single YTM." },
+
+  { id:"fi4",  topic:"fi", name:"Forward Rates",                                   icon:"⏩", pages:[4,5],      source:"fi", type:["formula","exam"],
+    formula:"(1+z_j)^j × (1+f(j,k))^k = (1+z_{j+k})^{j+k}\nExample: z1=5%, z2=6%\n→ f(1,1) = (1.06²/1.05) − 1 = 7.01%",
+    concept:"Forward rate = future rate implied by current spots. Investing 2yr vs rolling two 1yr investments → forward rates make you indifferent (pure expectations).",
+    examTip:"f(1,1)=7% means 'market implies 1yr rate 1yr from now = 7%'. Know how to extract forward rates from spot rates." },
+
+  { id:"fi5",  topic:"fi", name:"Par Rates & Yield Curves",                        icon:"📊", pages:[5,6],      source:"fi", type:["concept","exam"],
+    formula:"Par rate = YTM where bond prices at par\nCurve ordering (upward sloping):\nPar < Spot < Forward",
+    concept:"Normal: short < long rates. Inverted: short > long. Flat. Humped. Par curve: each bond prices at par → used to derive spot & forward curves.",
+    examTip:"When yield curve upward sloping: Par < Spot < Forward. Inverted: order reversed. This ordering is a direct exam question." },
+
+  { id:"fi6",  topic:"fi", name:"Reinvestment Risk & Realized Return",             icon:"🔄", pages:[7],        source:"fi", type:["formula","exam"],
+    formula:"If reinvestment rate > YTM → Realized Return > YTM\nIf reinvestment rate < YTM → Realized Return < YTM\nZero-coupon: Realized Return = YTM (no coupons to reinvest)",
+    concept:"YTM only realized if: (1) held to maturity AND (2) coupons reinvested at exactly YTM. Zero-coupon bonds have zero reinvestment risk.",
+    examTip:"Longer maturity → more coupons → more reinvestment risk. ZCBs eliminate reinvestment risk entirely." },
+
+  { id:"fi7",  topic:"fi", name:"Matrix Pricing & Spread Types",                   icon:"🔢", pages:[8],        source:"fi", type:["formula","exam"],
+    formula:"G-Spread = YTM_bond − YTM_govt\nI-Spread = YTM_bond − Swap rate\nZ-Spread: parallel shift to spot curve\nOAS = Z-Spread − Option Value",
+    concept:"Matrix pricing: estimate illiquid bond YTM via interpolation from liquid comparables. G-spread simple; Z-spread more accurate; OAS for option-embedded.",
+    examTip:"Z-spread vs OAS: callable bond OAS < Z-spread (option value removed). Putable bond OAS > Z-spread. Heavily tested." },
+
+  { id:"fi8",  topic:"fi", name:"OAS — Option-Adjusted Spread",                    icon:"⚙️", pages:[9,10],     source:"fi", type:["formula","exam"],
+    formula:"OAS = Z-spread − Option Value\nCallable: OAS_CB < Z_CB\nPutable: OAS_PB > Z_PB\nHigher OAS (same rating) → cheaper bond → BUY",
+    concept:"OAS removes option component → true apples-to-apples credit comparison. Used for MBS, callable corporates. Cannot use Z-spread for option-embedded bonds.",
+    examTip:"If OAS_bond1 > OAS_bond2 (same rating) → bond1 offers more compensation for credit risk → bond1 is relatively cheaper." },
+
+  { id:"fi9",  topic:"fi", name:"Floating Rate Notes (FRN) & Discount Margin",    icon:"🌊", pages:[10],       source:"fi", type:["formula","concept"],
+    formula:"FRN Coupon = MRR + Quoted Margin\nDiscount Margin (DM): rate to discount FRN CFs to market price\nDM > QM → FRN at discount\nDM < QM → FRN at premium",
+    concept:"FRN resets periodically → minimal interest rate risk → price stays near par. Credit risk still exists between resets.",
+    examTip:"DM vs QM: exact parallel to YTM vs coupon for fixed-rate bonds. FRN price at par only when DM = QM." },
+
+  { id:"fi10", topic:"fi", name:"Money Market & Bond Equivalent Yield (BEY)",      icon:"💵", pages:[11],       source:"fi", type:["formula","exam"],
+    formula:"BEY = Add-on Yield × (365/days)\nDiscount → BEY:\n  Price = Par × (1 − disc × days/360)\n  BEY = (Par−Price)/Price × 365/days",
+    concept:"CD: add-on yield. T-bills: discount yield. BEY standardizes to 365-day, semiannual basis for comparison.",
+    examTip:"Know how to convert between discount yield, add-on yield, and BEY. T-bill discount yield understates true yield." },
+
+  { id:"fi11", topic:"fi", name:"Macaulay Duration",                                icon:"⏱️", pages:[12,13],   source:"fi", type:["formula","exam"],
+    formula:"MacDur = Σ[t × PV(CF_t)/Price]\nZCB: MacDur = Maturity\nPerpetuity: MacDur = (1+YTM)/YTM\nMacDur < Maturity for coupon bonds always",
+    concept:"Weighted average time to receive CFs. Duration = horizon at which price risk and reinvestment risk cancel. Higher coupon → lower duration.",
+    examTip:"MacDur = Maturity ONLY for ZCBs. Duration increases with maturity, decreases with higher coupon and higher YTM." },
+
+  { id:"fi12", topic:"fi", name:"Modified & Effective Duration",                    icon:"📏", pages:[14,15,16,17], source:"fi", type:["formula","exam"],
+    formula:"ModDur = MacDur/(1+YTM/m)\nΔP/P ≈ −ModDur × ΔY\nEffective Duration = (P₋−P₊)/(2×P₀×ΔY)\n[Use ED for option-embedded bonds]",
+    concept:"ModDur: assumes fixed CFs, parallel shifts. Effective Duration: allows CF changes (callable/putable bonds). ED < ModDur for callable bonds.",
+    examTip:"ALWAYS use Effective Duration for callable/putable bonds. ModDur/MacDur require fixed, certain cash flows." },
+
+  { id:"fi13", topic:"fi", name:"Duration Gap & Immunization",                     icon:"🛡️", pages:[12,13],   source:"fi", type:["formula","exam"],
+    formula:"Duration Gap = MacDur_Assets − MacDur_Liabilities\nImmunization: MacDur_Portfolio = Investment Horizon\n→ Price risk & reinvestment risk cancel",
+    concept:"Duration Gap > 0: rising rates hurt more. Gap < 0: falling rates hurt more. Immunization requires ongoing rebalancing.",
+    examTip:"One-time immunization setup is insufficient. Must rebalance as rates change and time passes (duration changes dynamically)." },
+
+  { id:"fi14", topic:"fi", name:"Convexity & Duration-Convexity Adjustment",       icon:"📈", pages:[14,15],   source:"fi", type:["formula","exam"],
+    formula:"ΔP/P ≈ −ED×ΔY + ½×EC×(ΔY)²\nEC = (P₋+P₊−2P₀)/(P₀×ΔY²)\nCallable: negative convexity at low yields\nPutable & Straight: always positive convexity",
+    concept:"Duration = linear approx. Convexity corrects for curvature. Higher convexity = better price behavior in large rate moves.",
+    examTip:"Same duration, higher convexity = better (outperforms in large moves either direction). Callable bonds: negative convexity." },
+
+  { id:"fi15", topic:"fi", name:"Callable & Putable Bonds",                        icon:"📞", pages:[15,16],   source:"fi", type:["formula","exam"],
+    formula:"V_CB = V_NCB − V_call  (OAS_CB < Z_CB)\nV_PB = V_NPB + V_put   (OAS_PB > Z_PB)\nYTM_CB > YTM_NCB (investor compensated)\nYTM_PB < YTM_NPB (investor accepts lower yield)",
+    concept:"Callable: issuer holds call → investor bears reinvestment risk → higher yield. Putable: investor holds put → protection → lower yield.",
+    examTip:"Volatility ↑ → call value ↑ → CB price ↓. Volatility ↑ → put value ↑ → PB price ↑. Straight bond: unaffected by volatility." },
+
+  { id:"fi16", topic:"fi", name:"Duration Parameters & Perpetuity",                icon:"🔢", pages:[16,17],   source:"fi", type:["formula","concept"],
+    formula:"↑Maturity → ↑Duration (always)\n↑Coupon → ↓Duration\n↑YTM → ↓Duration\nPerpetuity: MacDur = (1+YTM)/YTM",
+    concept:"ZCB: highest duration for given maturity. Deep discount bonds: duration peaks then may slightly decrease at very long maturities.",
+    examTip:"Exception for deep discount very long bonds is minor. Focus on the three main parameter rules for exam." },
+
+  { id:"fi17", topic:"fi", name:"PVBP, Money Duration & Dollar Duration",          icon:"💲", pages:[18],       source:"fi", type:["formula","exam"],
+    formula:"PVBP = (P₋−P₊)/2  [for 1bp shift]\n     = ED × MktValue × 0.0001\nMoneyDur = ED × MktValue\nΔMktValue = −MoneyDur × ΔY",
+    concept:"PVBP = dollar change for 1bp yield move. Money Duration scales duration by portfolio size → actual $ sensitivity.",
+    examTip:"Hedge ratio = PVBP_portfolio / PVBP_instrument. Also called DV01. Used by traders to size hedges." },
+
+  { id:"fi18", topic:"fi", name:"Key Rate Duration (KRD)",                         icon:"🗝️", pages:[18,19],   source:"fi", type:["formula","exam"],
+    formula:"ΔP/P = −Σ[KRD_i × Δy_i]\nΣ(KRD × weight) = Effective Duration\nPortfolio KRD = Σ(w_i × KRD_i)",
+    concept:"Regular duration assumes parallel shift. KRD captures sensitivity to one maturity point. Barbell vs Bullet: same total duration, different KRD profile.",
+    examTip:"When curve twists (not parallel shift) → KRD matters. Barbell has different KRD at 2yr, 10yr, 30yr vs bullet at 10yr." },
+
+  { id:"fi19", topic:"fi", name:"Portfolio Duration & Yield",                      icon:"📦", pages:[20],       source:"fi", type:["formula","exam"],
+    formula:"D_port = Σ(w_i × D_i)  [market-value weighted]\nPortfolio Yield ≠ Weighted average YTM\n(Use IRR of all portfolio CFs for true yield)",
+    concept:"Portfolio duration = market-value weighted average. Portfolio yield should be computed as IRR of all CFs, not weighted average of individual YTMs.",
+    examTip:"Exam often presents weighted avg YTM ≠ true portfolio yield (IRR). Be careful not to confuse them." },
+
+  { id:"fi20", topic:"fi", name:"Analytical vs Empirical Duration",                icon:"📊", pages:[20],       source:"fi", type:["concept","exam"],
+    formula:"Analytical: ModDur = MacDur/(1+YTM/m)\n  [assumes constant credit spread]\nEmpirical: regression of price changes on yield changes\n  [allows credit spread to change]",
+    concept:"Analytical overestimates corporate bond sensitivity (assumes fixed credit spreads). Empirical: lower duration — captures negative correlation between rates and spreads.",
+    examTip:"Risk-off events: rates fall but corporate spreads widen → corporates don't rally as much as analytical duration predicts → empirical duration is lower." },
+
+  { id:"fi21", topic:"fi", name:"Credit Risk: PD, LGD, EAD & Hazard Rate",        icon:"⚠️", pages:[20,38],   source:"fi", type:["formula","exam"],
+    formula:"Expected Loss = PD × LGD × EAD\n  LGD = 1 − Recovery Rate\nHazard Rate λ: instantaneous default prob\n  PD(t) ≈ 1 − e^(−λt)\n  PS(t) = 1 − PD(t)",
+    concept:"5 C's of Credit: Capacity, Capital, Collateral, Covenants, Character. Default, downgrade, and spread risk are the three components of credit risk.",
+    examTip:"EL = PD × LGD is the core formula. Hazard rate is instantaneous (conditional) vs PD which is cumulative. Know the difference." },
+
+  { id:"fi22", topic:"fi", name:"Term Structure Theories",                         icon:"📐", pages:[22],       source:"fi", type:["concept","exam"],
+    formula:"1. Pure Expectations: Forward = Expected spot (no premium)\n2. Liquidity Preference: Forward = Expected spot + Liquidity Premium\n3. Market Segmentation: Supply/demand by maturity\n4. Preferred Habitat: Will cross maturities for yield",
+    concept:"Most realistic: Preferred Habitat. Normal curve: liquidity preference + positive rate expectations. Inverted: market expects rate cuts.",
+    examTip:"Segmentation: no crossing between maturities. Preferred Habitat: will cross for adequate yield compensation. Know the distinction." },
+
+  { id:"fi23", topic:"fi", name:"Portfolio Immunization & CF Matching",            icon:"🛡️", pages:[23],       source:"fi", type:["formula","exam"],
+    formula:"Classical Immunization:\n  MacDur_assets = MacDur_liability\n  PV_assets ≥ PV_liability\n  Convexity_assets ≥ Convexity_liability\nCF Matching: match each CF individually",
+    concept:"CF matching = no reinvestment risk but more expensive. Immunization needs ongoing rebalancing. Spread duration used to hedge credit spread changes.",
+    examTip:"Immunization conditions: 3 requirements. Higher convexity is always better. Rebalancing is required as rates change." },
+
+  { id:"fi24", topic:"fi", name:"Asset-Backed Securities & Covered Bonds",        icon:"🏗️", pages:[24],       source:"fi", type:["concept","exam"],
+    formula:"ABS: off-balance sheet (true sale)\nCovered Bond: on-balance sheet (dual recourse)\n→ Investor claims from issuer AND covered pool\nYTM_covered < YTM_ABS",
+    concept:"Securitization: illiquid loans → tradeable securities. Covered bonds safer: investor has claim on both issuer AND the pool.",
+    examTip:"Dual recourse = safer → lower yield. ABS investors only have pool recourse. Post-GFC: covered bonds preferred over ABS." },
+
+  { id:"fi25", topic:"fi", name:"MBS Structures: Pass-Through, CMO, CDO",         icon:"🏠", pages:[25],       source:"fi", type:["concept","exam"],
+    formula:"Pass-Through: CFs passed proportionally (shared prepayment risk)\nCMO: tranches absorb prepayment sequentially\nPAC tranche: protected within prepayment collar\nCDO: corporate/loan collateral → tranches",
+    concept:"CMO redistributes prepayment risk. PAC: stable CF within prepayment band. Support tranche absorbs variability. CDO equity = first loss, highest return.",
+    examTip:"PAC tranche protected from both prepayment AND extension risk within the collar. Support tranche absorbs the variability — key distinction." },
+
+  { id:"fi26", topic:"fi", name:"Credit Enhancement — Internal & External",       icon:"🛡️", pages:[25],       source:"fi", type:["concept","exam"],
+    formula:"Internal:\n1. Overcollateralization\n2. Excess Spread\n3. Subordination (tranching)\n4. Reserve accounts\nExternal: LOC, Bond Insurance, Guarantees",
+    concept:"Subordination most common. Senior tranche protected by junior as buffer. External enhancement concentrates counterparty risk.",
+    examTip:"Post-GFC: external enhancement (bond insurers) proved dangerous as insurers themselves failed. Internal enhancement more reliable." },
+
+  { id:"fi27", topic:"fi", name:"Arbitrage-Free Valuation & Binomial Tree",       icon:"⚖️", pages:[26,30,31], source:"fi", type:["formula","exam"],
+    formula:"V = [pu×Vu + pd×Vd + CF] / (1 + rate)\n  pu = pd = 0.5 (risk-neutral)\nCallable node: V = Min(Call Price, V_noncall)\nPutable node: V = Max(Put Price, V_nonput)",
+    concept:"Arbitrage-free: calibrated to current term structure. Backward induction from maturity to today. Rates log-normally distributed (no negative rates).",
+    examTip:"Master backward induction — it's a guaranteed exam question. Apply option rule at each node for callable/putable bonds." },
+
+  { id:"fi28", topic:"fi", name:"Swap Rate Curve & Plain Vanilla Interest Rate Swap", icon:"🔄", pages:[27],  source:"fi", type:["formula","exam"],
+    formula:"SFR = [1 − DF_N] / Σ(discount factors)\nAt initiation: V_swap = 0\nV_payer = V_floating − V_fixed\nFixed payer: benefits if rates RISE",
+    concept:"SFR = par rate on swap curve. Swap curve used as benchmark (often more liquid than govt). Fixed payer benefits from rising rates.",
+    examTip:"Company with floating-rate debt: pay fixed, receive floating → converts to fixed rate exposure → rate hedged." },
+
+  { id:"fi29", topic:"fi", name:"Spread Measures Summary & TED/Swap Spread",     icon:"📊", pages:[29],       source:"fi", type:["concept","exam"],
+    formula:"Swap Spread = Swap rate − Govt rate\nTED Spread = LIBOR − T-bill rate\nI-Spread = YTM − Swap rate\nG-Spread = YTM − Govt yield",
+    concept:"Swap spread: interbank credit risk + liquidity. TED spread: money market stress indicator (spiked 400bps in 2008).",
+    examTip:"Risk-off events widen all spreads. TED spread is the classic financial stress indicator — know it by name." },
+
+  { id:"fi30", topic:"fi", name:"Binomial Tree: Option-Embedded Bond Valuation",  icon:"🌳", pages:[30,31,33], source:"fi", type:["formula","exam"],
+    formula:"Backward induction mechanics:\n1. Start at maturity, fill terminal values\n2. At each node: V=(0.5×Vu + 0.5×Vd + CF)/(1+r)\n3. Apply option constraint at each node\n4. Roll back to today",
+    concept:"Calibrate tree to match on-the-run benchmark prices. For callable/putable: apply Min/Max rule at each relevant node.",
+    examTip:"Exam provides tree and asks you to value option-embedded bond. Know the exact mechanic. Practice 3-period tree calculations." },
+
+  { id:"fi31", topic:"fi", name:"Monte Carlo Simulation for MBS",                 icon:"🎲", pages:[32],       source:"fi", type:["concept","exam"],
+    formula:"Steps:\n1. Generate interest rate paths\n2. Compute prepayments per path (PSA model)\n3. Compute CFs per path\n4. Discount at path-specific rates\n5. Average across all paths",
+    concept:"MBS = path-dependent (prepayment depends on rate history) → binomial tree can't handle → must use Monte Carlo. OAS calibration adjusts spread until model price = market price.",
+    examTip:"MBS must use Monte Carlo (not binomial tree) because of path-dependency. This is a conceptual distinction directly tested." },
+
+  { id:"fi32", topic:"fi", name:"Interest Rate Models: Equilibrium vs Arbitrage-Free", icon:"🔬", pages:[32], source:"fi", type:["concept","exam"],
+    formula:"Equilibrium: CIR, Vasicek\n  → Don't fit current term structure\n  → Mean-reversion built in\nArbitrage-Free: Ho-Lee, Hull-White\n  → Calibrated to current yield curve",
+    concept:"CIR: no negative rates (σ√r term). Vasicek: allows negative rates. Ho-Lee: simplest arbitrage-free. Hull-White: adds mean reversion.",
+    examTip:"CIR vs Vasicek: both equilibrium. Ho-Lee vs Hull-White: both arbitrage-free. Know the category of each model." },
+
+  { id:"fi33", topic:"fi", name:"Option-Embedded Bond: OAS & Volatility",         icon:"📝", pages:[33,34,35,36], source:"fi", type:["formula","exam"],
+    formula:"Volatility ↑: call value ↑ → V_CB ↓, OAS_CB ↓\nVolatility ↑: put value ↑ → V_PB ↑, OAS_PB ↑\nStraight bond: unaffected by volatility\nED_CB < ED_NCB;  ED_PB < ED_NPB",
+    concept:"Both options reduce effective duration — both cap price moves. Straight bond value unchanged by volatility (no option).",
+    examTip:"Volatility effect on prices: CB ↓, PB ↑, Straight unchanged. This is one of the most directly tested points in Fixed Income." },
+
+  { id:"fi34", topic:"fi", name:"Convertible Bonds",                              icon:"🔀", pages:[37],       source:"fi", type:["formula","exam"],
+    formula:"Conversion Value = Share Price × Conversion Ratio\nMin Value CB = Max(Straight Value, Conversion Value)\nMarket Conversion Price = CB Price / Conversion Ratio\nConversion Premium = MCP − Share Price",
+    concept:"CB = Straight bond + Equity call option. Downside protected by straight value (floor). Upside by equity. Busted CB trades like straight bond.",
+    examTip:"Busted convertible: stock so low → trades near straight value. Deep in-the-money: trades like equity. At-the-money: most complex pricing." },
+
+  { id:"fi35", topic:"fi", name:"Capped & Floored Floaters",                      icon:"🌊", pages:[38],       source:"fi", type:["formula","concept"],
+    formula:"Capped FRN = Straight FRN − Cap (benefits issuer)\nFloored FRN = Straight FRN + Floor (benefits investor)\nCollar = Cap + Floor",
+    concept:"Cap limits max coupon → issuer benefits. Floor limits min coupon → investor benefits. Capped FRN ≈ callable bond. Floored FRN ≈ putable bond.",
+    examTip:"Capped FRN trades like callable bond (cap limits upside). Floored FRN trades like putable bond (floor provides protection)." },
+
+  { id:"fi36", topic:"fi", name:"Credit Default Swap (CDS) — Structure & Pricing", icon:"🛡️", pages:[39,40],  source:"fi", type:["formula","exam"],
+    formula:"CDS spread ≈ (1−RR) × Hazard Rate\nUpfront = (CDS spread − Coupon) × Duration_CDS\nIf spread > coupon: buyer pays upfront (trades at premium)\nIf spread < coupon: seller pays upfront",
+    concept:"Protection buyer: pays premium. Protection seller: pays on credit event. Standard coupons: 100bps or 500bps. Physical or cash settlement.",
+    examTip:"Long credit = sell protection. Short credit = buy protection. Wider CDS spread = more bearish on credit (cheaper to short)." },
+
+  { id:"fi37", topic:"fi", name:"Hazard Rate & Probability of Default",           icon:"📉", pages:[38,39],   source:"fi", type:["formula","exam"],
+    formula:"PD(t) = 1 − e^(−λ×t)  ≈ λ×t\nPS(t) = e^(−λ×t)\nCumulative PD(N) = 1 − (1−annual PD)^N\nPD_yr2 = conditional on survival through yr1",
+    concept:"Hazard rate = instantaneous conditional default probability. Credit spread ≈ hazard rate × LGD (rough approximation).",
+    examTip:"PD in year 2 is CONDITIONAL on surviving year 1. Don't just double the hazard rate — must apply sequential survival probabilities." },
+
+  { id:"fi38", topic:"fi", name:"Return on Bond: HPR & Riding the Yield Curve",   icon:"🚀", pages:[26,27],   source:"fi", type:["formula","exam"],
+    formula:"HPR = (P_end + CF − P_beg) / P_beg\nBreakeven ΔY = Coupon / Duration\nRolling down: buy LT, sell before maturity\n→ Coupon income + capital gain (if curve stable)",
+    concept:"'Riding the yield curve' works if: curve is upward sloping AND stays stable. Bond rolls to shorter maturity → lower yield → capital gain.",
+    examTip:"If rates rise more than breakeven ΔY → rolling strategy fails. Know the condition for strategy to work." },
+
+  { id:"fi39", topic:"fi", name:"CDS Applications — Long/Short Credit",           icon:"🎯", pages:[40,41],   source:"fi", type:["concept","exam"],
+    formula:"Long credit (sell protection): P&L = −ΔSpread × Duration × NP\nShort credit (buy protection): P&L = +ΔSpread × Duration × NP\nBasis = Bond Spread − CDS Spread",
+    concept:"CDS separates credit risk from interest rate risk. CDX/iTraxx: CDS indices for macro credit views. Negative basis: bond spread < CDS spread → buy bond + buy protection.",
+    examTip:"CDS seller = long credit (like owning bond, minus rate risk). CDS buyer = short credit. P&L driven by spread changes × duration." },
+
+  { id:"fi40", topic:"fi", name:"CDS Pricing — Upfront Premium & P&L",           icon:"💹", pages:[40],       source:"fi", type:["formula","exam"],
+    formula:"V_CDS_buyer = NP × (CDS spread − Coupon) × Duration\nΔV_CDS = ΔSpread × Duration × NP\nCDS at premium: buyer pays NP×(spread−coupon)×dur\nCDS at discount: seller pays NP×(coupon−spread)×dur",
+    concept:"Standard coupon structure: 100bps or 500bps. Upfront payment compensates for difference. P&L for spread widening favors protection buyer.",
+    examTip:"SVB crisis (2023): regional bank CDS spreads spiked 50→300bps overnight. Protection buyers made ~(250bps × duration × NP) in profit." },
+
+  { id:"fi41", topic:"fi", name:"Yield Curve Strategies: Barbell, Bullet, Ladder", icon:"🎯", pages:[29,30],  source:"fi", type:["concept","exam"],
+    formula:"Barbell: short + long ends → higher convexity, same duration\nBullet: one maturity → lower convexity\nLadder: equal across all maturities\nBarbell outperforms in large rate moves; underperforms on twists",
+    concept:"Same duration achievable with different structures. Barbell: higher convexity but more KRD mismatch. Bullet: stable curve. Ladder: diversified.",
+    examTip:"Barbell has higher convexity (good) but more key rate duration mismatch (risky if curve twists). Choose based on rate view and curve expectation." },
+]
+
+const GROUPS = [
+  { id:"equity", label:"Equity Valuation", icon:"📈", color:"#f97316",
+    subtopics:[
+      { label:"Valuation Framework",   ids:["eq1","eq2","eq3"] },
+      { label:"DDM Models",            ids:["eq4","eq5","eq6","eq7"] },
+      { label:"Cash Flow Models",      ids:["eq8","eq20"] },
+      { label:"Price Multiples",       ids:["eq9","eq10","eq11","eq12"] },
+      { label:"Residual Income",       ids:["eq13","eq14","eq15"] },
+      { label:"Private Company",       ids:["eq16","eq17","eq18","eq19"] },
+    ]
+  },
+  { id:"fi", label:"Fixed Income", icon:"🏦", color:"#a29bfe",
+    subtopics:[
+      { label:"Bond Basics",           ids:["fi1","fi2","fi3"] },
+      { label:"Rates & Curves",        ids:["fi4","fi5","fi6","fi7","fi8"] },
+      { label:"Instruments",           ids:["fi9","fi10","fi35"] },
+      { label:"Duration & Convexity",  ids:["fi11","fi12","fi13","fi14","fi16","fi17","fi18","fi19","fi20"] },
+      { label:"Option-Embedded Bonds", ids:["fi15","fi30","fi33","fi34"] },
+      { label:"Structured Products",   ids:["fi24","fi25","fi26"] },
+      { label:"Interest Rate Models",  ids:["fi27","fi28","fi31","fi32"] },
+      { label:"Term Structure",        ids:["fi22","fi23","fi29","fi38","fi41"] },
+      { label:"Credit Analysis",       ids:["fi21","fi36","fi37","fi39","fi40"] },
+    ]
+  }
+]
+
+const EXPLAINERS = [];
+
+const EXP_TOPICS = [
+  {id:"quant", label:"Quantitative Methods", icon:"📐", color:"#6c5ce7", folder:"quant"},
+  {id:"econ",  label:"Economics",            icon:"🌐", color:"#0ea5e9", folder:"econ"},
+  {id:"fsa",   label:"Financial Statement Analysis", icon:"📊", color:"#f59e0b", folder:"fsa"},
+  {id:"corp",  label:"Corporate Issuers",    icon:"🏢", color:"#10b981", folder:"corp"},
+  {id:"equity",label:"Equity Valuation",     icon:"📈", color:"#f97316", folder:"equity"},
+  {id:"fi",    label:"Fixed Income",         icon:"🏦", color:"#a29bfe", folder:"fi"},
+  {id:"deriv", label:"Derivatives",          icon:"⚡", color:"#ec4899", folder:"deriv"},
+  {id:"alts",  label:"Alternative Investments", icon:"💎", color:"#14b8a6", folder:"alts"},
+  {id:"pm",    label:"Portfolio Management", icon:"🎯", color:"#64748b", folder:"pm"},
+  {id:"ethics",label:"Ethics & Standards",   icon:"⚖️", color:"#dc2626", folder:"ethics"},
+];
+const SOURCES = {
+  equity: { label: "Equity Notes" },
+  fi:     { label: "Fixed Income Notes" }
+};
+const CONCEPTS = INDEX; // alias for notes navigator
+
+
+// ════════════════════════════════════════════
+// NOTES NAVIGATOR
+// ════════════════════════════════════════════
+let nsTopicFilter="all", nsActiveId=null, nsZoom=1.0, nsPages=[], nsPageIdx=0, nsGroupOpen={};
+
+function buildNsIndex(){
+  const list = document.getElementById("idx-list");
+  list.innerHTML="";
+  GROUPS.forEach(group=>{
+    if(nsTopicFilter!=="all" && nsTopicFilter!==group.id) return;
+    const isOpen = nsGroupOpen[group.id]!==false;
+    const div=document.createElement("div");
+    div.className="grp";
+    const cnt=CONCEPTS.filter(c=>c.topic===group.id).length;
+    div.innerHTML=`<div class="grp-hdr" onclick="nsToggleGroup('${group.id}')">
+      <span class="grp-arrow${isOpen?" open":""}" id="nsarr-${group.id}">▶</span>
+      <span class="grp-icon">${group.icon}</span>
+      <span class="grp-name">${group.label}</span>
+      <span class="grp-cnt">${cnt}</span>
+    </div>
+    <div class="grp-items${isOpen?" open":""}" id="nsgi-${group.id}"></div>`;
+    const itemsDiv=div.querySelector(".grp-items");
+    group.subtopics.forEach(sub=>{
+      const subs=sub.ids.map(id=>CONCEPTS.find(c=>c.id===id)).filter(Boolean);
+      if(!subs.length) return;
+      const lbl=document.createElement("div");
+      lbl.className="sub-label";
+      lbl.textContent=sub.label;
+      itemsDiv.appendChild(lbl);
+      subs.forEach(c=>{
+        const it=document.createElement("div");
+        it.className="idx-item"+(nsActiveId===c.id?" active":"");
+        it.id="nsit-"+c.id;
+        it.onclick=()=>nsSelect(c.id);
+        const pgLabel=c.pages.length>1?`p.${c.pages[0]}–${c.pages[c.pages.length-1]}`:`p.${c.pages[0]}`;
+        it.innerHTML=`<span class="idx-item-icon">${c.icon}</span><span class="idx-item-name">${c.name}</span><span class="idx-item-page">${pgLabel}</span>`;
+        itemsDiv.appendChild(it);
+      });
+    });
+    list.appendChild(div);
+  });
+  const total=CONCEPTS.filter(c=>nsTopicFilter==="all"||c.topic===nsTopicFilter).length;
+  document.getElementById("idx-count-badge").textContent=total+" concepts";
+}
+
+function nsToggleGroup(id){
+  nsGroupOpen[id]=nsGroupOpen[id]===false?true:false;
+  buildNsIndex();
+}
+
+function nsFilter(t, el){
+  nsTopicFilter=t;
+  document.querySelectorAll(".ttab").forEach(x=>x.classList.remove("active"));
+  if(el) el.classList.add("active");
+  else {
+    // find matching ttab by text
+    document.querySelectorAll(".ttab").forEach(x=>{
+      if((t==="all"&&x.textContent.trim()==="All")||(t==="equity"&&x.textContent.includes("Equity"))||(t==="fi"&&x.textContent.includes("Fixed")))
+        x.classList.add("active");
+    });
+  }
+  buildNsIndex();
+}
+
+function nsSelect(id){
+  const c=CONCEPTS.find(x=>x.id===id);
+  if(!c) return;
+  nsActiveId=id;
+  document.querySelectorAll(".idx-item").forEach(x=>x.classList.remove("active"));
+  const el=document.getElementById("nsit-"+id);
+  if(el){el.classList.add("active");el.scrollIntoView({behavior:"smooth",block:"nearest"});}
+  nsPages=c.pages.map(p=>{
+    const pad=String(p).padStart(2,"0");
+    const key=c.source+"-"+pad;
+    return PAGE_IMAGES[key]?PAGE_IMAGES[key]:null;
+  });
+  nsPageIdx=0;
+  nsShowPage(c);
+  nsShowStrip(c);
+}
+
+function nsShowPage(c){
+  const concept=c||CONCEPTS.find(x=>x.id===nsActiveId);
+  const img=document.getElementById("page-img");
+  const empty=document.getElementById("viewer-empty");
+  const src=nsPages[nsPageIdx];
+  if(!src){img.style.display="none";empty.style.display="flex";return;}
+  img.src=src;
+  img.style.display="block";
+  empty.style.display="none";
+  img.style.transform=`scale(${nsZoom})`;
+  document.getElementById("viewer-title").textContent=concept.icon+" "+concept.name;
+  const srcEl=document.getElementById("viewer-src");
+  srcEl.style.display="inline";
+  srcEl.textContent=SOURCES[concept.source].label+" · p."+concept.pages[nsPageIdx];
+  const pi=document.getElementById("pg-ind");
+  if(nsPages.length>1){pi.style.display="inline";pi.textContent=`${nsPageIdx+1}/${nsPages.length}`;}
+  else{pi.style.display="none";}
+  document.getElementById("btn-prev").disabled=nsPageIdx===0;
+  document.getElementById("btn-next").disabled=nsPageIdx===nsPages.length-1;
+}
+
+function nsShowStrip(c){
+  const strip=document.getElementById("concept-strip");
+  const grid=document.getElementById("strip-grid");
+  strip.style.display="block";
+  let html="";
+  if(c.formula) html+=`<div class="strip-box"><div class="strip-box-label" style="color:#6c5ce7">🧮 Formula</div><div class="strip-formula">${c.formula}</div></div>`;
+  if(c.concept) html+=`<div class="strip-box"><div class="strip-box-label" style="color:#0ea5e9">💡 Concept</div><div class="strip-concept">${c.concept}</div></div>`;
+  if(c.examTip) html+=`<div class="strip-box" style="grid-column:1/-1"><div class="strip-box-label" style="color:#f97316">⚠️ Exam Tip</div><div class="strip-tip">${c.examTip}</div></div>`;
+  grid.innerHTML=html;
+}
+
+function vPrev(){if(nsPageIdx>0){nsPageIdx--;nsShowPage();}}
+function vNext(){if(nsPageIdx<nsPages.length-1){nsPageIdx++;nsShowPage();}}
+function vzoom(d){nsZoom=Math.min(3,Math.max(0.4,nsZoom+d));document.getElementById("page-img").style.transform=`scale(${nsZoom})`;}
+function vreset(){nsZoom=1;document.getElementById("page-img").style.transform="scale(1)";}
+
+// Search
+let nsTimer;
+function nsSearch(){clearTimeout(nsTimer);nsTimer=setTimeout(_nsSearch,130);}
+function _nsSearch(){
+  const q=document.getElementById("notes-search").value.toLowerCase().trim();
+  const dd=document.getElementById("sr-dropdown");
+  if(!q){dd.style.display="none";return;}
+  const hits=CONCEPTS.filter(c=>{
+    const hay=[c.name,c.concept||"",c.formula||"",c.examTip||""].join(" ").toLowerCase();
+    return (nsTopicFilter==="all"||c.topic===nsTopicFilter)&&hay.includes(q);
+  }).slice(0,10);
+  if(!hits.length){dd.innerHTML=`<div class="no-sr">No results for "${q}"</div>`;dd.style.display="block";return;}
+  dd.innerHTML=hits.map(c=>{
+    const hay=(c.concept||"")+" "+(c.formula||"");
+    const idx=hay.toLowerCase().indexOf(q);
+    const snip=idx>=0?"…"+hay.substring(Math.max(0,idx-15),idx+50).replace(/<[^>]+>/g,"")+"…":"";
+    const pg=c.pages.length>1?`pp.${c.pages[0]}–${c.pages[c.pages.length-1]}`:`p.${c.pages[0]}`;
+    return `<div class="sr-item" onmousedown="nsPickSearch('${c.id}')">
+      <span class="sr-icon">${c.icon}</span>
+      <div style="flex:1;min-width:0">
+        <div class="sr-name">${c.name}</div>
+        <div class="sr-meta">${c.topic==="equity"?"📈 Equity":"🏦 FI"} · ${SOURCES[c.source].label}</div>
+        ${snip?`<div class="sr-snippet">${snip}</div>`:""}
+      </div>
+      <span class="sr-pg">${pg}</span>
+    </div>`;
+  }).join("");
+  dd.style.display="block";
+}
+function nsPickSearch(id){
+  document.getElementById("sr-dropdown").style.display="none";
+  document.getElementById("notes-search").value="";
+  nsSelect(id);
+}
+let nsHideT;
+function nsShowSearch(){clearTimeout(nsHideT);if(document.getElementById("notes-search").value)_nsSearch();}
+function nsHideSearch(){nsHideT=setTimeout(()=>{document.getElementById("sr-dropdown").style.display="none";},200);}
+
+// ════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+// EXPLAINER NAVIGATOR
+// ════════════════════════════════════════════════════════════════
+
+const SEED_EXPLAINERS = window.__SEED_EXPLAINERS || [];
+const EXP_STORAGE_KEY = 'cfa_l2_explainers_v2';
+let expItems = [];
+let expActiveId = null;
+let expCurTypeFilter = 'all';
+let expZoomLevel = 1.0;
+let expGrpOpen = {};
+let expChosenFile = null;
+
+function expInit(){
+  // Start with pre-loaded seed explainers
+  expItems = SEED_EXPLAINERS.slice();
+  // Merge user-uploaded items from localStorage (by id, avoiding duplicates)
+  try{
+    const saved=localStorage.getItem(EXP_STORAGE_KEY);
+    if(saved){
+      const userItems=JSON.parse(saved);
+      // Only add user items whose id doesn't conflict with seeds
+      const seedIds=new Set(SEED_EXPLAINERS.map(e=>e.id));
+      userItems.forEach(u=>{ if(!seedIds.has(u.id)) expItems.push(u); });
+    }
+  }catch(e){}
+  expBuildIndex();
+  updateExpCount();
+}
+
+function expSave(){
+  try{
+    // Only persist user-uploaded items, not seeds
+    const seedIds=new Set(SEED_EXPLAINERS.map(e=>e.id));
+    const userItems=expItems.filter(e=>!seedIds.has(e.id));
+    localStorage.setItem(EXP_STORAGE_KEY,JSON.stringify(userItems));
+  }catch(e){
+    console.warn('localStorage unavailable',e);
+  }
+}
+
+function expBuildIndex(){
+  const list=document.getElementById('exp-idx-list');
+  if(!list) return;
+  list.innerHTML='';
+  EXP_TOPICS.forEach(topic=>{
+    let items=expItems.filter(e=>e.topic===topic.id);
+    if(expCurTypeFilter!=='all') items=items.filter(e=>e.type===expCurTypeFilter);
+    const isOpen=expGrpOpen[topic.id]!==false;
+    const div=document.createElement('div');
+    div.className='exp-grp';
+    div.innerHTML=`<div class="exp-grp-hdr" onclick="expToggleGroup('${topic.id}')">
+      <span class="exp-grp-arrow${isOpen?' open':''}" id="exparr-${topic.id}">▶</span>
+      <span class="exp-grp-icon">${topic.icon}</span>
+      <span class="exp-grp-name">${topic.label}</span>
+      <span class="exp-grp-cnt" style="color:${topic.color}">${items.length}</span>
+    </div>
+    <div class="exp-grp-items${isOpen?' open':''}" id="expgi-${topic.id}"></div>`;
+    const itemsDiv=div.querySelector('.exp-grp-items');
+    items.forEach(e=>{
+      const it=document.createElement('div');
+      it.className='exp-idx-item'+(expActiveId===e.id?' active':'');
+      it.id='expit-'+e.id;
+      it.onclick=()=>expSelect(e.id);
+      const typeIcon=e.type==='html'?'🌐':'🖼️';
+      it.innerHTML=`<span class="exp-item-icon">${typeIcon}</span><span class="exp-item-name">${e.title}</span><span class="exp-item-badge">${e.type==='html'?'HTML':'IMG'}</span>`;
+      itemsDiv.appendChild(it);
+    });
+    list.appendChild(div);
+  });
+  const total=expCurTypeFilter==='all'?expItems.length:expItems.filter(e=>e.type===expCurTypeFilter).length;
+  const badge=document.getElementById('exp-count-badge');
+  if(badge) badge.textContent=total+' file'+(total===1?'':'s');
+}
+
+function expToggleGroup(id){
+  expGrpOpen[id]=expGrpOpen[id]===false?true:false;
+  expBuildIndex();
+}
+
+function expSelect(id){
+  const e=expItems.find(x=>x.id===id);
+  if(!e) return;
+  expActiveId=id;
+  document.querySelectorAll('.exp-idx-item').forEach(x=>x.classList.remove('active'));
+  const el=document.getElementById('expit-'+id);
+  if(el){el.classList.add('active');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  const img=document.getElementById('exp-img');
+  const iframe=document.getElementById('exp-iframe');
+  const empty=document.getElementById('exp-viewer-empty');
+  empty.style.display='none';
+  document.getElementById('exp-viewer-title').textContent=e.title;
+  const topicEl=document.getElementById('exp-topic-label');
+  const topic=EXP_TOPICS.find(t=>t.id===e.topic);
+  topicEl.style.display='inline';
+  topicEl.textContent=(topic?topic.icon+' '+topic.label:'');
+  document.getElementById('btn-exp-delete').style.display='inline-block';
+  expZoomLevel=1.0;
+  if(e.type==='html'){
+    img.style.display='none';
+    iframe.style.display='block';
+    iframe.srcdoc=e.data;
+  } else {
+    iframe.style.display='none';
+    img.style.display='block';
+    img.src='data:image/'+(e.ext==='png'?'png':'jpeg')+';base64,'+e.data;
+    img.style.transform='scale(1)';
+  }
+}
+
+function expZoomAct(d){
+  expZoomLevel=Math.min(3,Math.max(0.4,expZoomLevel+d));
+  const img=document.getElementById('exp-img');
+  if(img.style.display!=='none') img.style.transform=`scale(${expZoomLevel})`;
+}
+function expZoomReset(){
+  expZoomLevel=1.0;
+  const img=document.getElementById('exp-img');
+  if(img) img.style.transform='scale(1)';
+}
+
+function expDeleteActive(){
+  if(!expActiveId) return;
+  const e=expItems.find(x=>x.id===expActiveId);
+  if(!e) return;
+  if(e.seed){alert('Seed explainers cannot be deleted.');return;}
+  if(!confirm('Delete "'+e.title+'"?')) return;
+  expItems=expItems.filter(x=>x.id!==expActiveId);
+  expActiveId=null;
+  expSave();
+  expBuildIndex();
+  updateExpCount();
+  // Reset viewer
+  document.getElementById('exp-img').style.display='none';
+  document.getElementById('exp-iframe').style.display='none';
+  document.getElementById('exp-viewer-empty').style.display='flex';
+  document.getElementById('exp-viewer-title').textContent='← Upload or select an explainer';
+  document.getElementById('exp-topic-label').style.display='none';
+  document.getElementById('btn-exp-delete').style.display='none';
+}
+
+// ─── Upload ─────────────────────────────────────────────────────────────────
+function expOpenUpload(){
+  document.getElementById('exp-upload-modal').style.display='flex';
+  document.getElementById('exp-file-input').value='';
+  document.getElementById('exp-file-name').textContent='';
+  document.getElementById('exp-title-input').value='';
+  expChosenFile=null;
+}
+function expCloseUpload(){
+  document.getElementById('exp-upload-modal').style.display='none';
+}
+
+function expFileChosen(input){
+  if(input.files.length){
+    expChosenFile=input.files[0];
+    document.getElementById('exp-file-name').textContent='✓ '+expChosenFile.name;
+  }
+}
+
+function expHandleDrop(e){
+  e.preventDefault();
+  document.getElementById('exp-drop-zone').classList.remove('drag-over');
+  const file=e.dataTransfer.files[0];
+  if(!file) return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(!['jpg','jpeg','png','html'].includes(ext)){
+    alert('Please drop a JPG, PNG, or HTML file');
+    return;
+  }
+  expChosenFile=file;
+  document.getElementById('exp-file-name').textContent='✓ '+file.name;
+}
+
+function expDoUpload(){
+  if(!expChosenFile){alert('Please select a file first');return;}
+  const file=expChosenFile;
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(!['jpg','jpeg','png','html'].includes(ext)){
+    alert('Only JPG, PNG, and HTML files are supported');
+    return;
+  }
+  const type=ext==='html'?'html':'image';
+  const titleVal=document.getElementById('exp-title-input').value.trim();
+  const title=titleVal||file.name.replace(/\.[^.]+$/,'');
+  const topic=document.getElementById('exp-topic-select').value;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    let data;
+    if(type==='html'){
+      data=ev.target.result;
+    } else {
+      // strip "data:image/...;base64,"
+      data=ev.target.result.split(',')[1];
+    }
+    const item={
+      id:'exp_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),
+      title,topic,type,ext,data,
+      uploaded:new Date().toISOString()
+    };
+    expItems.push(item);
+    expSave();
+    expBuildIndex();
+    updateExpCount();
+    expCloseUpload();
+    // Select newly uploaded item
+    expSelect(item.id);
+    // Open the group so user sees it
+    expGrpOpen[topic]=true;
+    expBuildIndex();
+    // Re-select to highlight
+    setTimeout(()=>{
+      document.querySelectorAll('.exp-idx-item').forEach(x=>x.classList.remove('active'));
+      const el=document.getElementById('expit-'+item.id);
+      if(el){el.classList.add('active');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+    },50);
+  };
+  if(type==='html') reader.readAsText(file);
+  else reader.readAsDataURL(file);
+}
+
+// ─── Search ──────────────────────────────────────────────────────────────────
+let expSearchTimer2;
+function expSearch(){clearTimeout(expSearchTimer2);expSearchTimer2=setTimeout(_expSearch,130);}
+function _expSearch(){
+  const q=document.getElementById('exp-search').value.toLowerCase().trim();
+  const dd=document.getElementById('exp-sr-dropdown');
+  if(!q){dd.style.display='none';return;}
+  const hits=expItems.filter(e=>e.title.toLowerCase().includes(q)
+    ||(EXP_TOPICS.find(t=>t.id===e.topic)?.label||'').toLowerCase().includes(q)
+  ).slice(0,10);
+  if(!hits.length){dd.innerHTML=`<div class="no-sr">No results for "${q}"</div>`;dd.style.display='block';return;}
+  dd.innerHTML=hits.map(e=>{
+    const topic=EXP_TOPICS.find(t=>t.id===e.topic);
+    return `<div class="sr-item" onmousedown="expPickSearch('${e.id}')">
+      <span class="sr-icon">${e.type==='html'?'🌐':'🖼️'}</span>
+      <div style="flex:1;min-width:0">
+        <div class="sr-name">${e.title}</div>
+        <div class="sr-meta">${topic?topic.icon+' '+topic.label:''}</div>
+      </div>
+      <span class="sr-pg">${e.type==='html'?'HTML':'IMG'}</span>
+    </div>`;
+  }).join('');
+  dd.style.display='block';
+}
+function expPickSearch(id){
+  document.getElementById('exp-sr-dropdown').style.display='none';
+  document.getElementById('exp-search').value='';
+  expGrpOpen[expItems.find(x=>x.id===id)?.topic]=true;
+  expBuildIndex();
+  expSelect(id);
+}
+let expHideTimer;
+function expShowSearch(){clearTimeout(expHideTimer);if(document.getElementById('exp-search').value)_expSearch();}
+function expHideSearch(){expHideTimer=setTimeout(()=>{document.getElementById('exp-sr-dropdown').style.display='none';},200);}
+
+function expTypeFilter(t,el){
+  expCurTypeFilter=t;
+  document.querySelectorAll('.exp-ttab').forEach(x=>x.classList.remove('active'));
+  if(el) el.classList.add('active');
+  expBuildIndex();
+}
+
+function updateExpCount(){
+  const el=document.getElementById('db-exp-count');
+  if(el) el.textContent=expItems.length;
+}
+
+
+// ════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════
+loadTheme();
+expInit();
+
+// Update dashboard stats
+// exp count updated by expInit/updateExpCount
+
+
+
+
+
+const MOCK_Q = {
+  vignette:"Meridian Capital Management is analyzing TechNova Inc. Net Income = $80M, D&A = $60M, CapEx = $40M, ΔNWC = $20M, Interest Expense = $15M, tax rate = 30%. WACC = 9.5%. Shares outstanding: 50M at $28/share. Debt = $500M.",
+  question:"Using the FCFF approach, TechNova's FCFF is closest to:",
+  options:["A) $80M","B) $130.5M","C) $140M","D) $160M"],
+  answer:"B",
+  explanation:"FCFF = NI + D&A + Int×(1−t) − CapEx − ΔNWC = 80 + 60 + 15×0.7 − 40 − 20 = 80+60+10.5−60 = $130.5M. The key step is adding back after-tax interest since FCFF is pre-debt."
+};
+const FH_GROUPS=[
+  { title:"Equity Valuation", icon:"📈", color:"#f97316", ids:["eq4","eq5","eq6","eq7","eq8","eq9","eq10","eq12","eq13","eq17","eq18","eq20"] },
+  { title:"Fixed Income — Rates & Spreads", icon:"🏦", color:"#a29bfe", ids:["fi1","fi2","fi3","fi4","fi5","fi6","fi7","fi8","fi9","fi10"] },
+  { title:"Duration & Convexity", icon:"📏", color:"#6c5ce7", ids:["fi11","fi12","fi13","fi14","fi17","fi18","fi19"] },
+  { title:"Option-Embedded & Structured", icon:"⚙️", color:"#ec4899", ids:["fi15","fi27","fi30","fi33","fi34","fi35"] },
+  { title:"Credit Analysis & CDS", icon:"⚠️", color:"#dc2626", ids:["fi21","fi36","fi37","fi39","fi40"] },
+  { title:"Term Structure & Strategies", icon:"📊", color:"#0ea5e9", ids:["fi22","fi23","fi28","fi29","fi38","fi41"] },
+];
+function startMock(mode){
+  document.getElementById("mock-home").style.display="none";
+  const qv=document.getElementById("q-view");
+  qv.classList.add("active");
+  document.getElementById("q-vignette").textContent=MOCK_Q.vignette;
+  document.getElementById("q-text").textContent=MOCK_Q.question;
+  renderOptions();
+  // Start timer
+  startTimer(14*60+32);
+}
+function renderOptions(){
+  document.getElementById("q-options").innerHTML=MOCK_Q.options.map((o,i)=>`
+    <div class="option" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`).join("");
+  document.getElementById("q-check").style.display="none";
+  document.getElementById("q-explanation").style.display="none";
+  mockSelected=null;
+}
+function selectOpt(i){
+  document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+  document.getElementById("opt-"+i).classList.add("selected");
+  mockSelected=i;
+  document.getElementById("q-check").style.display="inline-block";
+}
+function checkAnswer(){
+  if(mockSelected===null) return;
+  const correct=MOCK_Q.answer;
+  MOCK_Q.options.forEach((o,i)=>{
+    const el=document.getElementById("opt-"+i);
+    el.classList.add("locked");
+    if(o[0]===correct) el.classList.add("correct");
+    else if(i===mockSelected) el.classList.add("wrong");
+  });
+  document.getElementById("q-check").style.display="none";
+  document.getElementById("q-exp-text").textContent=MOCK_Q.explanation;
+  document.getElementById("q-explanation").style.display="block";
+}
+function nextQuestion(){renderOptions();}
+function exitMock(){
+  document.getElementById("mock-home").style.display="block";
+  document.getElementById("q-view").classList.remove("active");
+  clearInterval(timerInterval);
+}
+function startTimer(secs){
+  clearInterval(timerInterval);
+  let s=secs;
+  timerInterval=setInterval(()=>{
+    s--;
+    if(s<=0){clearInterval(timerInterval);}
+    const m=Math.floor(s/60),sec=s%60;
+    document.getElementById("q-timer").textContent=`⏱ ${m}:${String(sec).padStart(2,"0")}`;
+  },1000);
+}
+function buildFH(){
+  document.getElementById("fh-grid").innerHTML=FH_GROUPS.map(g=>{
+    const items=g.ids.map(id=>CONCEPTS.find(c=>c.id===id)).filter(Boolean);
+    return `<div class="fh-group">
+      <div class="fh-group-hdr" style="border-left:3px solid ${g.color}">
+        <span class="fh-group-icon">${g.icon}</span>
+        <span class="fh-group-title">${g.title}</span>
+        <span class="fh-group-cnt">${items.length} formulas</span>
+      </div>
+      <div class="fh-list">
+        ${items.map(c=>`<div class="fh-item" onclick="openFhModal('${c.id}')">
+          <span class="fh-item-icon">${c.icon}</span>
+          <span class="fh-item-name">${c.name}</span>
+          ${c.formula?'<span class="fh-has-formula">f(x)</span>':""}
+        </div>`).join("")}
+      </div>
+    </div>`;
+  }).join("");
+}
+function openFhModal(id){
+  const c=CONCEPTS.find(x=>x.id===id);
+  if(!c) return;
+  document.getElementById("fh-modal-icon").textContent=c.icon;
+  document.getElementById("fh-modal-title").textContent=c.name;
+  const fb=document.getElementById("fh-modal-formula");
+  if(c.formula){fb.textContent=c.formula;fb.style.display="block";}else{fb.style.display="none";}
+  document.getElementById("fh-modal-concept").innerHTML=c.concept||"";
+  const tb=document.getElementById("fh-modal-tip");
+  if(c.examTip){tb.textContent=c.examTip;tb.style.display="block";}else{tb.style.display="none";}
+  document.getElementById("fh-modal").classList.add("open");
+}
+function closeFhModal(){document.getElementById("fh-modal").classList.remove("open");}
+
+</script>
+
+<!-- FORMULA DETAIL MODAL -->
+<div id="fh-modal" onclick="if(event.target===this)closeFhModal()">
+  <div class="fh-modal-box">
+    <div class="fh-modal-hdr">
+      <span id="fh-modal-icon" style="font-size:18px"></span>
+      <div class="fh-modal-title" id="fh-modal-title"></div>
+
+<!-- EXPLAINER UPLOAD MODAL -->
+<div id="exp-upload-modal" onclick="if(event.target===this)expCloseUpload()">
+  <div id="exp-upload-box">
+    <div class="eup-title">📤 Upload Explainer</div>
+    <div class="eup-label">File (JPG, PNG, HTML)</div>
+    <div id="exp-drop-zone" onclick="document.getElementById('exp-file-input').click()"
+         ondragover="event.preventDefault();this.classList.add('drag-over')"
+         ondragleave="this.classList.remove('drag-over')"
+         ondrop="expHandleDrop(event)">
+      <div class="edz-icon">📁</div>
+      <div class="edz-main">Click to browse or drag &amp; drop</div>
+      <div class="edz-sub">Supports .jpg, .jpeg, .png, .html</div>
+    </div>
+    <input type="file" id="exp-file-input" accept=".jpg,.jpeg,.png,.html" onchange="expFileChosen(this)"/>
+    <div id="exp-file-name"></div>
+    <div class="eup-label">Topic</div>
+    <select id="exp-topic-select">
+      <option value="quant">📐 Quantitative Methods</option>
+      <option value="econ">🌐 Economics</option>
+      <option value="fsa">📊 Financial Statement Analysis</option>
+      <option value="corp">🏢 Corporate Issuers</option>
+      <option value="equity">📈 Equity Valuation</option>
+      <option value="fi">🏦 Fixed Income</option>
+      <option value="deriv">⚡ Derivatives</option>
+      <option value="alts">💎 Alternative Investments</option>
+      <option value="pm">🎯 Portfolio Management</option>
+      <option value="ethics">⚖️ Ethics &amp; Standards</option>
+    </select>
+    <div class="eup-label">Title <span style="font-weight:400;color:#475569">(optional — defaults to filename)</span></div>
+    <input id="exp-title-input" type="text" placeholder="e.g. Duration & Convexity explained"/>
+    <div class="eup-actions">
+      <button class="eup-submit" onclick="expDoUpload()">Upload →</button>
+      <button class="eup-cancel" onclick="expCloseUpload()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
