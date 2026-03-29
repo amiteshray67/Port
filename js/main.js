@@ -133,7 +133,7 @@ if (contactForm) {
 }
 
 // ----------------------------------------------------
-//     EXPERIENCE MODAL POPUP LOGIC AND DATABASE
+//     EXPERIENCE TIMELINE LOGIC AND DATABASE
 // ----------------------------------------------------
 const experienceData = {
     arcesium: {
@@ -179,51 +179,35 @@ const experienceData = {
     }
 };
 
-const experienceCards = document.querySelectorAll('.experience-card[data-exp]');
-const expModal = document.getElementById('expModal');
-const closeExpModalBtn = document.getElementById('closeExpModal');
-const modalRole = document.getElementById('modalRole');
-const modalCompany = document.getElementById('modalCompany');
-const modalBody = document.getElementById('modalBody');
-
-// Open modal popup smoothly when card is clicked
-if (experienceCards && expModal) {
-    experienceCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const expKey = card.getAttribute('data-exp');
-            const data = experienceData[expKey];
-            
-            if (data) {
-                // Populate Modal Content
-                modalRole.textContent = data.role;
-                modalCompany.textContent = data.companyDate;
-                
-                // Build robust, readable bullet list
-                let listHtml = '<ul>';
-                data.details.forEach(detail => {
-                    listHtml += `<li>${detail}</li>`;
-                });
-                listHtml += '</ul>';
-                modalBody.innerHTML = listHtml;
-                
-                // Display Modal
-                expModal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-            }
-        });
-    });
-
-    // Close Modal via button
-    closeExpModalBtn.addEventListener('click', () => {
-        expModal.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-
-    // Close Modal when clicking on background overlay
-    expModal.addEventListener('click', (e) => {
-        if (e.target === expModal) {
-            expModal.classList.remove('active');
-            document.body.style.overflow = '';
+// Populate timeline detail panels on page load
+document.addEventListener('DOMContentLoaded', () => {
+    Object.keys(experienceData).forEach(key => {
+        const detailsPanel = document.getElementById(`details-${key}`);
+        if (detailsPanel) {
+            let listHtml = '<ul>';
+            experienceData[key].details.forEach(detail => {
+                listHtml += `<li>${detail}</li>`;
+            });
+            listHtml += '</ul>';
+            detailsPanel.innerHTML = listHtml;
         }
     });
-}
+});
+
+// Timeline accordion: click header to toggle, close others
+const tlItems = document.querySelectorAll('.tl-item[data-exp]');
+tlItems.forEach(item => {
+    const header = item.querySelector('.tl-header');
+    header.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        // Close all items
+        tlItems.forEach(other => other.classList.remove('active'));
+
+        // If it wasn't already open, open it
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
