@@ -1613,7 +1613,7 @@ function nsHideSearch(){nsHideT=setTimeout(()=>{document.getElementById("sr-drop
 // EXPLAINER NAVIGATOR
 // ════════════════════════════════════════════════════════════════
 
-const SEED_EXPLAINERS = window.__SEED_EXPLAINERS || [];
+if (typeof SEED_EXPLAINERS === 'undefined') { var SEED_EXPLAINERS = []; }
 const EXP_STORAGE_KEY = 'cfa_l2_explainers_v2';
 let expItems = [];
 let expActiveId = null;
