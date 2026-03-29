@@ -179,7 +179,7 @@ const experienceData = {
     }
 };
 
-const experienceCards = document.querySelectorAll('.experience-card');
+const experienceCards = document.querySelectorAll('.experience-card[data-exp]');
 const expModal = document.getElementById('expModal');
 const closeExpModalBtn = document.getElementById('closeExpModal');
 const modalRole = document.getElementById('modalRole');
