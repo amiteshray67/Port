@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CQF Study Tool — Amitesh</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--border:#30363d;--accent:#6c5ce7;--gold:#e3b341;--green:#3fb950;--red:#f85149;--purple:#bc8cff;--text:#e6edf3;--muted:#8b949e;--card:#1c2128;--hover:#21262d;--sw:255px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden;}
+#sb{width:var(--sw);background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0;}
+.sb-head{padding:16px 14px 10px;border-bottom:1px solid var(--border);}
+.sb-head h2{font-size:14px;font-weight:700;color:var(--gold);}
+.sb-head p{font-size:11px;color:var(--muted);margin-top:2px;}
+.sb-pbar{background:var(--border);border-radius:3px;height:4px;overflow:hidden;margin-top:6px;}
+.sb-pfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .4s;}
+.sb-plbl{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;margin-top:4px;}
+.nl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;padding:7px 14px 2px;}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;font-size:12.5px;color:var(--muted);border-left:3px solid transparent;transition:all .12s;}
+.ni:hover{background:var(--hover);color:var(--text);}
+.ni.active{background:rgba(88,166,255,.1);color:var(--accent);border-left-color:var(--accent);}
+.ni .ic{font-size:14px;width:17px;text-align:center;}
+.ni .pm{font-size:10px;color:var(--muted);margin-left:auto;}
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+#topbar{padding:11px 24px;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+#topbar h1{font-size:15px;font-weight:600;}
+.badge{background:rgba(88,166,255,.15);color:var(--accent);font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600;}
+#content{flex:1;overflow-y:auto;padding:20px 24px;}
+.tbar{display:flex;gap:2px;margin-bottom:16px;border-bottom:1px solid var(--border);}
+.tab{padding:7px 14px;font-size:12.5px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .12s;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tc{display:none;}.tc.active{display:block;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:15px;margin-bottom:11px;}
+.ct{font-size:13px;font-weight:600;margin-bottom:7px;display:flex;align-items:center;gap:7px;}
+.cb{font-size:12.5px;color:var(--muted);line-height:1.7;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:13px 15px;}
+.sv{font-size:23px;font-weight:700;}.sl{font-size:11px;color:var(--muted);margin-top:2px;}
+.pb{background:var(--border);border-radius:3px;height:5px;overflow:hidden;margin-top:7px;}
+.pf{height:100%;border-radius:3px;background:var(--accent);transition:width .4s;}
+.pf.g{background:var(--green);}
+.btn{padding:5px 12px;border-radius:5px;border:1px solid var(--border);background:var(--panel);color:var(--text);font-size:11.5px;cursor:pointer;transition:all .12s;white-space:nowrap;}
+.btn:hover{background:var(--hover);}
+.btn.pr{background:var(--accent);border-color:var(--accent);color:#0d1117;font-weight:600;}
+.btn.pr:hover{opacity:.88;}
+.btn.pdf{background:rgba(248,81,73,.1);border-color:rgba(248,81,73,.25);color:#ff9090;font-size:11px;padding:3px 8px;}
+.btn.ex{background:rgba(227,179,65,.1);border-color:rgba(227,179,65,.25);color:var(--gold);font-size:11px;padding:3px 8px;}
+.btn.sol{background:rgba(63,185,80,.1);border-color:rgba(63,185,80,.25);color:var(--green);font-size:11px;padding:3px 8px;}
+.btn.wb{background:rgba(188,140,255,.1);border-color:rgba(188,140,255,.25);color:var(--purple);font-size:11px;padding:3px 8px;}
+.ch{font-size:13px;font-weight:600;color:var(--gold);margin:14px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--border);}
+.ci{font-size:12.5px;color:var(--muted);line-height:1.8;margin-bottom:5px;padding-left:11px;border-left:2px solid var(--border);}
+.ci strong{color:var(--text);}.hi{color:var(--accent);}
+.fbl{background:#0a1e30;border:1px solid #1a3a55;border-radius:5px;padding:9px 12px;font-family:'Courier New',monospace;font-size:11.5px;color:#7bbfff;margin:6px 0;overflow-x:auto;white-space:pre;}
+.lec-row{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:11px 13px;margin-bottom:7px;}
+.lec-top{display:flex;align-items:center;gap:9px;margin-bottom:7px;}
+.lec-num{font-size:10px;font-weight:700;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:2px 7px;}
+.lec-title{font-size:12.5px;font-weight:600;color:var(--text);flex:1;}
+.lec-cb{width:17px;height:17px;border-radius:4px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;transition:all .12s;}
+.lec-cb.done{background:var(--green);border-color:var(--green);}
+.lec-btns{display:flex;gap:5px;flex-wrap:wrap;}
+.qq{font-size:13px;font-weight:500;margin-bottom:13px;line-height:1.6;}
+.qo{display:flex;flex-direction:column;gap:7px;}
+.qopt{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:10px 13px;font-size:12.5px;cursor:pointer;transition:all .12s;color:var(--text);}
+.qopt:hover{border-color:var(--accent);background:rgba(88,166,255,.06);}
+.qopt.cor{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);}
+.qopt.wr{border-color:var(--red);background:rgba(248,81,73,.1);color:var(--red);}
+.qexp{background:var(--card);border-left:3px solid var(--gold);border-radius:4px;padding:10px 12px;margin-top:10px;font-size:12px;color:var(--muted);line-height:1.7;display:none;}
+.qnav{display:flex;gap:8px;margin-top:14px;align-items:center;}
+.qsc{font-size:12px;color:var(--muted);margin-left:auto;}
+.trk-mod{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden;}
+.trk-head{padding:11px 15px;display:flex;align-items:center;gap:9px;cursor:pointer;background:var(--panel);}
+.trk-head:hover{background:var(--hover);}
+.trk-title{font-size:13px;font-weight:600;flex:1;}
+.trk-bar-wrap{width:80px;background:var(--border);border-radius:3px;height:4px;overflow:hidden;}
+.trk-bar{height:100%;border-radius:3px;background:var(--accent);transition:width .3s;}
+.trk-pct{font-size:11px;color:var(--muted);width:32px;text-align:right;}
+.trk-body{padding:8px 15px;display:none;}
+.trk-mod.open .trk-body{display:block;}
+.trk-item{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid var(--border);}
+.trk-item:last-child{border-bottom:none;}
+.trk-cb{width:16px;height:16px;border-radius:3px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;transition:all .12s;}
+.trk-cb.done{background:var(--green);border-color:var(--green);}
+.trk-lbl{font-size:12px;color:var(--muted);flex:1;}.trk-lbl.done{color:var(--text);}
+.trk-links{display:flex;gap:4px;}
+.wp{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden;}
+.wh{padding:10px 15px;background:var(--panel);display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13px;font-weight:600;}
+.wh:hover{background:var(--hover);}
+.wb2{padding:10px 15px;display:none;}
+.wp.open .wb2{display:block;}
+.dr{display:flex;align-items:flex-start;gap:11px;padding:8px 0;border-bottom:1px solid var(--border);}
+.dr:last-child{border-bottom:none;}
+.dl{font-size:10px;color:var(--gold);font-weight:700;width:28px;flex-shrink:0;margin-top:3px;}
+.dt{flex:1;}.dt .mt{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:5px;}
+.dt .mt strong{color:var(--text);}
+.dt .res{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+.dc{width:17px;height:17px;border-radius:4px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:3px;transition:all .12s;}
+.dc.done{background:var(--green);border-color:var(--green);}
+.tl{position:relative;padding-left:20px;}
+.tl::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--border);}
+.tl-i{position:relative;margin-bottom:13px;}
+.tl-d{width:12px;height:12px;border-radius:50%;background:var(--accent);position:absolute;left:-17px;top:3px;border:2px solid var(--bg);}
+.tl-d.gd{background:var(--gold);}.tl-d.mu{background:var(--border);}
+.tl-t{font-size:12.5px;font-weight:600;}.tl-s{font-size:11.5px;color:var(--muted);margin-top:1px;line-height:1.5;}
+#mm-cvs{width:100%;height:560px;border-radius:8px;border:1px solid var(--border);background:#070c12;cursor:grab;display:block;}
+#mm-cvs:active{cursor:grabbing;}
+.mm-leg{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+.mm-li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+.mm-ld{width:10px;height:10px;border-radius:50%;}
+.mt{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-right:4px;}
+.m0{background:rgba(139,148,158,.15);color:#8b949e;}
+.m1{background:rgba(88,166,255,.2);color:#58a6ff;}
+.m2{background:rgba(63,185,80,.2);color:#3fb950;}
+.m3{background:rgba(227,179,65,.2);color:#e3b341;}
+.m4{background:rgba(188,140,255,.2);color:#bc8cff;}
+.m5{background:rgba(248,81,73,.2);color:#f85149;}
+.m6{background:rgba(240,136,62,.2);color:#f0883e;}
+.nlm{background:#080f1a;border:1px solid #1a3a5c;border-radius:8px;padding:16px;font-size:12px;color:#8ab8d8;line-height:1.85;font-family:'Courier New',monospace;white-space:pre-wrap;max-height:560px;overflow-y:auto;}
+.copybtn{background:rgba(88,166,255,.12);border:1px solid var(--accent);color:var(--accent);padding:7px 16px;border-radius:6px;cursor:pointer;font-size:12px;transition:all .15s;}
+.copybtn:hover{background:rgba(88,166,255,.22);}
+.copybtn.ok{background:rgba(63,185,80,.12);border-color:var(--green);color:var(--green);}
+.fs{margin-bottom:18px;}
+.ft{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.9px;margin-bottom:8px;}
+.fr{display:flex;align-items:center;gap:9px;margin-bottom:4px;}
+.fn{font-size:11px;color:var(--muted);width:145px;flex-shrink:0;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+  <script src="assets/cqf_data.js"></script>
+</head>
+<body style="flex-direction:column;">
+<div id="back-nav" style="width:100%;height:35px;background:linear-gradient(135deg, #6c5ce7, #a29bfe);padding:0 20px;display:flex;align-items:center;justify-content:space-between;font-family:'Poppins', sans-serif;flex-shrink:0;z-index:9999;">
+  <a href="https://amiteshray.com" style="color:white;text-decoration:none;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">← Back to amiteshray.com</a>
+  <span style="color:rgba(255,255,255,0.7);font-size:11px;font-weight:500;">Study Hub · CQF Course</span>
+</div>
+<div style="display:flex;flex:1;overflow:hidden;">
+<div id="sb">
+  <div class="sb-head">
+    <h2>⚡ CQF Study Tool</h2>
+    <p>Amitesh · Beginner Track · 2026</p>
+    <div class="sb-pbar"><div class="sb-pfill" id="sb-fill" style="width:0%"></div></div>
+    <div class="sb-plbl"><span>Overall Progress</span><span id="sb-pct">0%</span></div>
+  </div>
+  <div style="padding:5px 0">
+    <div class="nl">Overview</div>
+    <div class="ni active" onclick="nav('dashboard',this)"><span class="ic">🏠</span>Dashboard</div>
+    <div class="ni" onclick="nav('studyplan',this)"><span class="ic">📅</span>Study Plan</div>
+    <div class="ni" onclick="nav('tracker',this)"><span class="ic">✅</span>Progress Tracker</div>
+    <div class="ni" onclick="nav('mindmap',this)"><span class="ic">🗺️</span>Mind Map</div>
+    <div class="nl">Modules</div>
+    <div class="ni" onclick="nav('pre',this)"><span class="ic">📐</span>Pre-Course — Math<span class="pm" id="pm-pre"></span></div>
+    <div class="ni" onclick="nav('m1',this)"><span class="ic">〽️</span>M1 — Quant Foundations<span class="pm" id="pm-m1"></span></div>
+    <div class="ni" onclick="nav('m2',this)"><span class="ic">📊</span>M2 — Risk & Return<span class="pm" id="pm-m2"></span></div>
+    <div class="ni" onclick="nav('m3',this)"><span class="ic">📈</span>M3 — Equities & FX<span class="pm" id="pm-m3"></span></div>
+    <div class="ni" onclick="nav('m4',this)"><span class="ic">💰</span>M4 — Fixed Income<span class="pm" id="pm-m4"></span></div>
+    <div class="ni" onclick="nav('m5',this)"><span class="ic">⚠️</span>M5 — Credit Risk<span class="pm" id="pm-m5"></span></div>
+    <div class="ni" onclick="nav('m6',this)"><span class="ic">🎯</span>M6 — Electives<span class="pm" id="pm-m6"></span></div>
+    <div class="nl">Practice & Reference</div>
+    <div class="ni" onclick="nav('mock',this)"><span class="ic">🎓</span>Mock Exams</div>
+    <div class="ni" onclick="nav('cheatsheet',this)"><span class="ic">📋</span>Formula Sheet</div>
+    <div class="ni" onclick="nav('notebooklm',this)"><span class="ic">🤖</span>NotebookLM Prompt</div>
+  </div>
+</div>
+<div id="main">
+  <div id="topbar"><h1 id="pt">Dashboard</h1><div class="badge" id="pb">Overview</div></div>
+  <div id="content">
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="tc active">
+<div class="g3" style="margin-bottom:14px">
+<div class="stat"><div class="sv" id="s-done">0</div><div class="sl">Lectures Completed</div><div class="pb"><div class="pf g" id="s-bar" style="width:0%"></div></div></div>
+<div class="stat"><div class="sv" id="s-score">—</div><div class="sl">Best Quiz Score</div><div style="margin-top:7px;font-size:11px;color:var(--muted)">Take a quiz to record score</div></div>
+<div class="stat"><div class="sv">7</div><div class="sl">Modules (incl. Pre-Course)</div><div style="margin-top:7px;font-size:11px;color:var(--muted)">~50 lectures · 5 module exams</div></div>
+</div>
+<div class="g2">
+<div class="card"><div class="ct">🗺️ Learning Journey</div>
+<div class="tl">
+<div class="tl-i"><div class="tl-d gd"></div><div class="tl-t">Pre-Course — Math Foundations</div><div class="tl-s">Calculus · Linear Algebra · Probability · Differential Equations</div></div>
+<div class="tl-i"><div class="tl-d"></div><div class="tl-t">Module 1 — Building Blocks of Quant Finance</div><div class="tl-s">GBM · Ito's Lemma · Binomial Model · Martingales · Girsanov</div></div>
+<div class="tl-i"><div class="tl-d"></div><div class="tl-t">Module 2 — Quantitative Risk & Return</div><div class="tl-s">Markowitz · VaR / CVaR · GARCH · Basel III</div></div>
+<div class="tl-i"><div class="tl-d"></div><div class="tl-t">Module 3 — Equities & Currencies</div><div class="tl-s">Black-Scholes · Greeks · Exotics · Monte Carlo · Local Vol</div></div>
+<div class="tl-i"><div class="tl-d"></div><div class="tl-t">Module 4 — Fixed Income & Commodities</div><div class="tl-s">Duration · Vasicek/CIR · HJM · SABR · LMM · Energy</div></div>
+<div class="tl-i"><div class="tl-d"></div><div class="tl-t">Module 5 — Credit Products & Risk</div><div class="tl-s">Merton · CDS · Intensity Models · CVA/DVA/FVA · CDOs</div></div>
+<div class="tl-i"><div class="tl-d mu"></div><div class="tl-t">Module 6 — Electives & Final Project</div><div class="tl-s">Advanced Portfolio · Heston · Rough Vol · LMM+CVA Project</div></div>
+</div></div>
+<div>
+<div class="card"><div class="ct">💡 Beginner Study Tips</div><div class="cb">
+<div style="margin-bottom:6px">📌 <strong>Do the Pre-Course first.</strong> Ito's Lemma is a stochastic Taylor expansion — if you don't know Taylor series, it won't click.</div>
+<div style="margin-bottom:6px">📌 <strong>Module 1 is the spine.</strong> Every later module references stochastic calculus. Spend extra time here.</div>
+<div style="margin-bottom:6px">📌 <strong>Use Annotated PDFs first</strong>, then attempt the Blank version from memory.</div>
+<div style="margin-bottom:6px">📌 <strong>Every lecture has an Exercises PDF.</strong> Solutions are provided — do them, don't just read them.</div>
+<div>📌 <strong>Quiz ≥ 70% before moving on.</strong> Use the Mock Exam section to test retention.</div>
+</div></div>
+<div class="card"><div class="ct">⏱️ 8-Week Schedule</div><div class="cb">
+<div style="margin-bottom:5px"><strong style="color:var(--gold)">Week 1:</strong> Pre-Course — all 4 Math Primer topics</div>
+<div style="margin-bottom:5px"><strong style="color:var(--gold)">Week 2:</strong> Module 1 — Stochastic Calculus (L1–L9)</div>
+<div style="margin-bottom:5px"><strong style="color:var(--gold)">Week 3:</strong> Module 2 — Portfolio Theory & Risk</div>
+<div style="margin-bottom:5px"><strong style="color:var(--gold)">Weeks 4–5:</strong> Module 3 — Black-Scholes, Exotics, Numerics</div>
+<div style="margin-bottom:5px"><strong style="color:var(--gold)">Week 6:</strong> Module 4 — Fixed Income & Rates</div>
+<div style="margin-bottom:5px"><strong style="color:var(--gold)">Week 7:</strong> Module 5 — Credit Risk</div>
+<div><strong style="color:var(--gold)">Week 8:</strong> M6 + Full Mock Exams + Revision</div>
+</div></div>
+</div>
+</div>
+</div>
+
+<!-- STUDY PLAN -->
+<div id="page-studyplan" class="tc">
+<p style="font-size:12px;color:var(--muted);margin-bottom:14px">Click <span style="color:#ff9090">📄 Lecture</span>, <span style="color:var(--gold)">📝 Exercises</span> or <span style="color:var(--green)">✅ Solutions</span> to open the PDF directly. Check each day when done.</p>
+<div id="sp-container"></div>
+</div>
+
+<!-- TRACKER -->
+<div id="page-tracker" class="tc">
+<p style="font-size:12px;color:var(--muted);margin-bottom:14px">Your master checklist. Check off each lecture as you complete it — progress updates live across the app.</p>
+<div class="g2" style="margin-bottom:14px">
+<div class="stat"><div class="sv" id="tr-done">0</div><div class="sl">Lectures Completed</div><div class="pb"><div class="pf g" id="tr-bar" style="width:0%"></div></div></div>
+<div class="stat"><div class="sv" id="tr-mods">0/7</div><div class="sl">Modules Started</div><div style="font-size:11px;color:var(--muted);margin-top:6px">Check any lecture in a module to start it</div></div>
+</div>
+<div id="trk-container"></div>
+</div>
+
+<!-- PRE-COURSE -->
+<div id="page-pre" class="tc">
+<div class="tbar"><div class="tab active" onclick="stab(event,'pre','concepts')">Concepts</div><div class="tab" onclick="stab(event,'pre','resources')">Resources & PDFs</div></div>
+<div id="pre-concepts" class="tc active">
+<div class="card"><div class="ct"><span class="mt m0">PRE</span>Math Foundations — The Toolkit</div><div class="cb">Everything in the CQF uses these four areas. Weak foundations here will slow you down in every module. One week is enough to build solid footing.</div></div>
+<div class="ch">📍 Calculus</div>
+<div class="ci"><strong>Chain Rule:</strong> d/dx[f(g(x))] = f'(g) · g'(x). Essential for Ito's Lemma (stochastic chain rule). Practice: d/dx[e^{x²}], d/dx[ln(sin x)].</div>
+<div class="ci"><strong>Taylor Expansion:</strong> f(x+h) ≈ f(x) + hf'(x) + ½h²f''(x) + ... Ito's Lemma keeps the second-order term because (dW)² = dt is not negligible. In regular calculus h²→0 so the term drops — not here.</div>
+<div class="ci"><strong>Gaussian integral:</strong> ∫_{-∞}^{∞} e^{-x²/2} dx = √(2π). This is how N(d₁) and N(d₂) in Black-Scholes are computed.</div>
+<div class="ch">📍 Linear Algebra</div>
+<div class="ci"><strong>Matrix multiplication:</strong> Portfolio return E[R_p] = wᵀμ; portfolio variance σ²_p = wᵀΣw. The covariance matrix Σ is symmetric positive semi-definite.</div>
+<div class="ci"><strong>Eigendecomposition:</strong> Σ = QΛQᵀ. In yield curve PCA, the first eigenvector = parallel shift, second = slope, third = curvature. These explain >99% of curve moves.</div>
+<div class="ch">📍 Probability & Statistics</div>
+<div class="ci"><strong>Normal distribution:</strong> N(μ,σ²). CDF = N(x), PDF = n(x) = (1/√2π)e^{-x²/2}. These appear directly in B-S: N(d₁), N(d₂).</div>
+<div class="ci"><strong>Conditional Expectation:</strong> E[X|ℱ_t] is the cornerstone of derivative pricing: V(t) = e^{-rT} E^Q[Payoff | ℱ_t].</div>
+<div class="ci"><strong>Tower Property:</strong> E[E[X|Y]] = E[X]. Used to prove martingale properties and iterated expectations in multi-period models.</div>
+<div class="ch">📍 Differential Equations</div>
+<div class="ci"><strong>ODEs:</strong> dy/dx = ky → y = Ce^{kx}. The mean-reverting ODE dy = κ(θ-y)dt has solution y(t) = θ + (y₀-θ)e^{-κt}. Recognise this in Vasicek expected value.</div>
+<div class="ci"><strong>Heat Equation:</strong> ∂u/∂t = ½σ²∂²u/∂x². The BS PDE transforms into this via x=ln(S). Its solution (Gaussian kernel convolution) gives the Black-Scholes formula.</div>
+</div>
+<div id="pre-resources" class="tc"><div id="pre-lec-list"></div></div>
+</div>
+
+<!-- MODULE 1 -->
+<div id="page-m1" class="tc">
+<div class="tbar"><div class="tab active" onclick="stab(event,'m1','concepts')">Concepts</div><div class="tab" onclick="stab(event,'m1','resources')">Resources & PDFs</div><div class="tab" onclick="stab(event,'m1','quiz')">Mini Quiz</div></div>
+<div id="m1-concepts" class="tc active">
+<div class="card"><div class="ct"><span class="mt m1">M1</span>Building Blocks of Quant Finance — 9 Lectures</div><div class="cb">The mathematical engine. Master Ito's Lemma and change-of-measure here and every other module will feel like a natural extension.</div></div>
+<div class="ch">📍 L1 — Random Behaviour of Assets</div>
+<div class="ci"><strong>Log-returns:</strong> r_t = ln(S_t/S_{t-1}). Additive over time, approximately normal for short Δt. Preferred over simple returns for stochastic modelling.</div>
+<div class="ci"><strong>Wiener Process W(t):</strong> W(0)=0; W(t)-W(s) ~ N(0,t-s); independent increments; continuous paths. The fundamental "noise" driving all diffusion models.</div>
+<div class="ci"><strong>GBM:</strong> <span class="hi">dS = μS dt + σS dW</span>. S stays positive. log(S) is normal → S is lognormal. Solution: S(t) = S₀ exp[(μ-σ²/2)t + σW(t)].</div>
+<div class="fbl">dS = μS dt + σS dW
+S(t) = S₀ · exp[(μ - σ²/2)t + σW(t)]
+E[S(t)] = S₀ eᵘᵗ,  Var[S(t)] = S₀²e^{2μt}(e^{σ²t}-1)</div>
+<div class="ch">📍 L2 — PDEs & Transition Density Functions</div>
+<div class="ci"><strong>Fokker-Planck (forward equation):</strong> ∂p/∂t = -∂(μSp)/∂S + ½∂²(σ²S²p)/∂S². Describes how the pdf of S evolves forward in time.</div>
+<div class="ci"><strong>Kolmogorov backward equation:</strong> Complementary view: given terminal condition, evolve backwards. The BS PDE is of this type.</div>
+<div class="ci"><strong>Heat equation link:</strong> Substitute x=ln(S), τ=T-t into BS PDE → classical heat equation ∂u/∂τ = ½σ²∂²u/∂x² → solution via Gaussian convolution → BS formula.</div>
+<div class="ch">📍 L3-L4 — Ito's Lemma & Stochastic Calculus</div>
+<div class="ci"><strong>Quadratic variation rules (memorise):</strong> (dW)² = dt, dW·dt = 0, (dt)² = 0. These are the heart of stochastic calculus.</div>
+<div class="fbl">Ito's Lemma: if dS = a dt + b dW and f = f(S,t) then
+df = [∂f/∂t + a·∂f/∂S + ½b²·∂²f/∂S²] dt + b·∂f/∂S dW
+                         ↑ Ito correction term (vanishes in ordinary calculus)</div>
+<div class="ci"><strong>Key application:</strong> f = ln(S) under GBM (a=μS, b=σS): d(lnS) = (μ-½σ²)dt + σdW. Integrate → GBM solution. The -½σ² drift correction is the Ito term.</div>
+<div class="ci"><strong>Ito integral:</strong> ∫₀ᵀ f(t)dW(t). Evaluated at left endpoint (non-anticipating). Zero mean: E[∫f dW]=0. Isometry: E[(∫f dW)²] = E[∫f² dt].</div>
+<div class="ch">📍 L5 — Products & Strategies</div>
+<div class="ci"><strong>Call payoff:</strong> max(S_T-K,0). <strong>Put payoff:</strong> max(K-S_T,0). Put-Call Parity (model-free): C - P = S - Ke^{-rT}.</div>
+<div class="ci"><strong>Straddle:</strong> Long C + Long P (same K,T). Profits from large moves either direction — a bet on high realised vol.</div>
+<div class="ci"><strong>Bull spread:</strong> Long call K₁, short call K₂ (K₁&lt;K₂). Capped upside, capped cost. Net premium &lt; outright call.</div>
+<div class="ch">📍 L6 — Binomial Model (CRR)</div>
+<div class="fbl">u = e^{σ√Δt},  d = 1/u = e^{-σ√Δt}
+p* = (e^{rΔt} - d)/(u - d)  [risk-neutral probability]
+V(node) = e^{-rΔt}[p*·V_up + (1-p*)·V_down]</div>
+<div class="ci">As steps → ∞ and Δt → 0, binomial price converges to Black-Scholes. The model is a discrete approximation to GBM.</div>
+<div class="ch">📍 L7-L8 — Martingale Theory</div>
+<div class="ci"><strong>Martingale:</strong> E[M_t | ℱ_s] = M_s ∀s≤t. Brownian motion is a martingale. So is e^{σW(t)-½σ²t} (exponential martingale).</div>
+<div class="ci"><strong>Girsanov's theorem:</strong> Change drift of BM by changing measure. Under ℚ with dℚ/dℙ = exp(-θW_T - ½θ²T): W̃_t = W_t + θt is a ℚ-Brownian motion. Used to go from real-world drift μ to risk-free drift r.</div>
+<div class="fbl">Market price of risk: θ = (μ - r) / σ
+Under ℚ: dS = r·S dt + σ·S dW̃
+Pricing: V(t) = e^{-r(T-t)} · E^Q[Payoff | ℱ_t]</div>
+</div>
+<div id="m1-resources" class="tc"><div id="m1-lec-list"></div></div>
+<div id="m1-quiz" class="tc"><div id="quiz-m1"></div></div>
+</div>
+
+<!-- MODULE 2 -->
+<div id="page-m2" class="tc">
+<div class="tbar"><div class="tab active" onclick="stab(event,'m2','concepts')">Concepts</div><div class="tab" onclick="stab(event,'m2','resources')">Resources & PDFs</div><div class="tab" onclick="stab(event,'m2','quiz')">Mini Quiz</div></div>
+<div id="m2-concepts" class="tc active">
+<div class="card"><div class="ct"><span class="mt m2">M2</span>Quantitative Risk & Return — 7 Lectures</div><div class="cb">Portfolio theory, risk measurement and regulatory frameworks. The practical side of quant finance.</div></div>
+<div class="ch">📍 L1-L2 — Portfolio Theory & Optimisation</div>
+<div class="ci"><strong>Markowitz Mean-Variance:</strong> Rational investors maximise E[R] for given σ or minimise σ for given E[R]. The Efficient Frontier is the set of such optimal portfolios.</div>
+<div class="ci"><strong>Portfolio variance:</strong> σ²_p = wᵀΣw = Σᵢ Σⱼ wᵢwⱼρᵢⱼσᵢσⱼ. Diversification reduces risk when ρ &lt; 1.</div>
+<div class="fbl">Min wᵀΣw  s.t.  wᵀμ=μ*, wᵀ1=1
+Sharpe Ratio = (E[Rₚ] - rᶠ) / σₚ
+CAPM: E[Rᵢ] = rᶠ + βᵢ·(E[Rₘ]-rᶠ),  β = Cov(Rᵢ,Rₘ)/Var(Rₘ)</div>
+<div class="ch">📍 L3-L4 — Basel III & Capital Regulation</div>
+<div class="ci"><strong>Capital ratios:</strong> CET1 ≥ 4.5%, Tier 1 ≥ 6%, Total ≥ 8% of Risk-Weighted Assets. Banks must hold capital buffers against unexpected losses.</div>
+<div class="ci"><strong>Leverage ratio:</strong> Tier 1 / Total Exposure ≥ 3%. A simple backstop that can't be gamed by assigning zero risk weights.</div>
+<div class="ch">📍 L5 — VaR & Expected Shortfall</div>
+<div class="ci"><strong>Parametric VaR:</strong> VaR_α = μ - z_α·σ. At 99%: z≈2.326. At 95%: z≈1.645. Assumes normality — underestimates fat-tail losses.</div>
+<div class="ci"><strong>Expected Shortfall (CVaR):</strong> E[loss | loss > VaR]. Coherent — satisfies sub-additivity (diversification always reduces risk). VaR fails this. Basel IV adopts ES over VaR.</div>
+<div class="fbl">Parametric VaR_α = -μ + z_α·σ  [z_{99%}=2.326, z_{95%}=1.645]
+ES_α = μ - σ·φ(z_α)/(1-α)  [φ = standard normal PDF]</div>
+<div class="ch">📍 L6 — Stylised Facts</div>
+<div class="ci"><strong>Fat tails:</strong> Excess kurtosis > 0. The normal distribution severely underestimates the probability of extreme moves. 5-sigma events happen far more often than once in millions of years.</div>
+<div class="ci"><strong>Volatility clustering:</strong> |r_t| is autocorrelated even when r_t is not. ARCH/GARCH capture this. Explained by time-varying σ.</div>
+<div class="ci"><strong>Negative skew (equities):</strong> Crashes are faster and sharper than rallies. Explains the put skew in options markets.</div>
+<div class="ch">📍 L7 — ARCH/GARCH Models</div>
+<div class="fbl">GARCH(1,1): σ²_t = ω + α·ε²_{t-1} + β·σ²_{t-1}
+  ω = long-run component, α = shock sensitivity, β = vol persistence
+Long-run vol: σ̄² = ω/(1-α-β)  [requires α+β &lt; 1]
+Typical equities: α≈0.09, β≈0.90, α+β≈0.99 (very persistent)</div>
+</div>
+<div id="m2-resources" class="tc"><div id="m2-lec-list"></div></div>
+<div id="m2-quiz" class="tc"><div id="quiz-m2"></div></div>
+</div>
+
+<!-- MODULE 3 -->
+<div id="page-m3" class="tc">
+<div class="tbar"><div class="tab active" onclick="stab(event,'m3','concepts')">Concepts</div><div class="tab" onclick="stab(event,'m3','resources')">Resources & PDFs</div><div class="tab" onclick="stab(event,'m3','quiz')">Mini Quiz</div></div>
+<div id="m3-concepts" class="tc active">
+<div class="card"><div class="ct"><span class="mt m3">M3</span>Equities & Currencies — 12 Lectures</div><div class="cb">The crown jewel. Black-Scholes derivation, Greeks, exotic options, numerical methods, and volatility modelling. Most exam questions draw from this module.</div></div>
+<div class="ch">📍 L1 — Black-Scholes Model</div>
+<div class="ci"><strong>Delta-hedge derivation:</strong> Build Π = V - ΔS. Set Δ = ∂V/∂S to eliminate the dW (random) term → Π is risk-free → dΠ = rΠ dt → BS PDE.</div>
+<div class="fbl">BS PDE: ∂V/∂t + ½σ²S²·∂²V/∂S² + rS·∂V/∂S - rV = 0
+Call: C = S·N(d₁) - K·e^{-rT}·N(d₂)
+d₁ = [ln(S/K)+(r+σ²/2)T]/(σ√T),  d₂ = d₁ - σ√T
+N(d₂) = risk-neutral P(S_T > K),  N(d₁) = call delta</div>
+<div class="ch">📍 L2-L3 — Martingale Approach & Feynman-Kac</div>
+<div class="ci"><strong>Feynman-Kac:</strong> PDE solution ↔ expectation: V(S,t) = e^{-r(T-t)} E^Q[Payoff|S_t]. Use PDE approach for analytical tractability; expectation approach for MC simulation.</div>
+<div class="ci"><strong>Fundamental Theorem:</strong> No-arbitrage ↔ ∃ risk-neutral measure ℚ. Market completeness ↔ ℚ is unique. Under ℚ, discounted prices are martingales.</div>
+<div class="ch">📍 L4 — Volatility</div>
+<div class="ci"><strong>Implied vol surface:</strong> σ_imp(K,T) — the σ that matches market prices. Equity surface shows skew (higher σ for lower K) and term structure. Black-Scholes assumes flat surface.</div>
+<div class="ci"><strong>Dupire local vol:</strong> σ_loc(S,t) = √[2(∂C/∂T + rK∂C/∂K) / (K²∂²C/∂K²)]. Exact calibration to surface. But forward vol dynamics are unrealistic.</div>
+<div class="ch">📍 L5 & L7 — Numerical Methods</div>
+<div class="ci"><strong>Finite differences:</strong> Discretise (S,t) grid. Explicit (forward Euler): fast, conditionally stable. Implicit (backward Euler): stable, needs tridiag solve. Crank-Nicolson: average of both, 2nd-order accurate.</div>
+<div class="ci"><strong>Monte Carlo:</strong> Price = mean discounted payoff over N simulated paths. Error ∝ 1/√N. Antithetic variates halve variance. Control variates exploit known analytical prices.</div>
+<div class="ch">📍 L6 — Exotic Options</div>
+<div class="ci"><strong>Barrier:</strong> Up-and-out call: expires worthless if S reaches H. Up-and-in: activated at H. BS closed-form exists using method of images.</div>
+<div class="ci"><strong>Asian:</strong> Payoff based on average price. Geometric avg → closed form. Arithmetic avg → MC or approximation. Cheaper than vanilla because averaging smooths randomness.</div>
+<div class="ci"><strong>Lookback:</strong> max(S_max-K,0) or max(S_T-S_min,0). Most expensive path-dependent option.</div>
+<div class="ci"><strong>Digital/Binary:</strong> Cash-or-nothing: pays $1 if S_T>K. Price = e^{-rT}N(d₂). Delta = very high near K near expiry (difficult to hedge).</div>
+<div class="ch">📍 L9 — The Greeks</div>
+<div class="fbl">Δ = N(d₁)                    [hedge ratio, ∂C/∂S]
+Γ = N'(d₁)/(Sσ√T)           [rate of delta change, ∂²C/∂S²]
+ν = S·N'(d₁)·√T             [vega, ∂C/∂σ]
+Θ = -SσN'(d₁)/(2√T) - rKe^{-rT}N(d₂)   [time decay]
+ρ = KTe^{-rT}N(d₂)          [interest rate sensitivity]
+BS PDE → Θ + ½σ²S²Γ + rSΔ - rV = 0  (Theta-Gamma tradeoff)</div>
+<div class="ci"><strong>Key insight:</strong> Long gamma = you profit from large moves but pay theta daily. Short gamma = you collect theta but lose on big moves. This is the fundamental options P&amp;L tradeoff.</div>
+</div>
+<div id="m3-resources" class="tc"><div id="m3-lec-list"></div></div>
+<div id="m3-quiz" class="tc"><div id="quiz-m3"></div></div>
+</div>
+
+<!-- MODULE 4 -->
+<div id="page-m4" class="tc">
+<div class="tbar"><div class="tab active" onclick="stab(event,'m4','concepts')">Concepts</div><div class="tab" onclick="stab(event,'m4','resources')">Resources & PDFs</div><div class="tab" onclick="stab(event,'m4','quiz')">Mini Quiz</div></div>
+<div id="m4-concepts" class="tc active">
+<div class="card"><div class="ct"><span class="mt m4">M4</span>Fixed Income & Commodities — 14 Lectures</div><div class="cb">Interest rates are different: they mean-revert, the full yield curve must be modelled, and multiple correlated rates exist. This module covers all major frameworks.</div></div>
+<div class="ch">📍 L1 — Fixed Income Products & Duration</div>
+<div class="ci"><strong>Zero-coupon bond:</strong> P(t,T) = e^{-r(T-t)} under flat rates. General: P(t,T) = E^Q[exp(-∫ₜᵀ r(s)ds) | ℱ_t].</div>
+<div class="ci"><strong>Duration:</strong> Weighted-average time to cash flows. Modified duration D* = -∂P/∂y / P ≈ 5 years for a typical 10yr bond.</div>
+<div class="ci"><strong>Convexity:</strong> C = ∂²P/∂y² / P. Price change: ΔP/P ≈ -D*Δy + ½C(Δy)². Positive convexity benefits long positions (you gain more from rate falls than you lose from rises).</div>
+<div class="fbl">Duration: D = Σ tᵢ·CF_i·e^{-ytᵢ} / P
+ΔP ≈ -D*·P·Δy + ½C·P·(Δy)²
+P(t,T) = A(t,T)·exp(-B(t,T)·r(t))  [affine model bond price]</div>
+<div class="ch">📍 L2 — Short-Rate Models</div>
+<div class="ci"><strong>Vasicek:</strong> dr = κ(θ-r)dt + σdW. Mean-reverting (κ = speed, θ = long-run mean). Affine → closed-form bond prices. Allows negative rates.</div>
+<div class="ci"><strong>CIR:</strong> dr = κ(θ-r)dt + σ√r dW. Prevents negative rates if Feller condition 2κθ > σ² holds. Also affine. Closed-form via non-central chi-squared.</div>
+<div class="ci"><strong>Hull-White:</strong> dr = [θ(t)-κr]dt + σdW. Time-varying θ(t) fits the initial yield curve exactly. Extension of Vasicek with perfect initial-curve calibration.</div>
+<div class="fbl">Vasicek expected rate: E[r(t)] = θ + (r₀-θ)e^{-κt}  → mean-reverts to θ
+Vasicek bond: P = A(t,T)·exp(-B(t,T)·r),  B=(1-e^{-κτ})/κ
+Feller condition (CIR rates > 0): 2κθ > σ²</div>
+<div class="ch">📍 L5 — Heath-Jarrow-Morton (HJM)</div>
+<div class="ci"><strong>HJM framework:</strong> Model the entire forward rate curve f(t,T). Specify σ(t,T) (vol of f) → drift μ(t,T) is determined by no-arbitrage.</div>
+<div class="ci"><strong>HJM drift restriction:</strong> μ(t,T) = σ(t,T) · ∫ₜᵀ σ(t,s)ds. Once you choose the vol structure, the drift is fixed. Vasicek, Hull-White, Ho-Lee are all HJM special cases.</div>
+<div class="fbl">HJM: df(t,T) = μ(t,T)dt + σ(t,T)dW
+No-arb: μ(t,T) = σ(t,T)·∫ₜᵀ σ(t,s)ds
+Ho-Lee special case: σ(t,T) = σ (constant)</div>
+<div class="ch">📍 L7 — SABR Model</div>
+<div class="ci"><strong>SABR:</strong> dF = σFᵝdW₁; dσ = νσdW₂; corr(W₁,W₂)=ρ. Four parameters: β (CEV exponent), ν (vol-of-vol), ρ (correlation), σ₀ (initial vol). Hagan approximation gives closed-form σ_BS(F,K).</div>
+<div class="ci"><strong>Why SABR?</strong> Widely used for interest rate options (caps, swaptions). Naturally generates a vol smile/skew that matches market. Easy to calibrate and interpolate.</div>
+<div class="ch">📍 L8 — LIBOR Market Model (LMM / BGM)</div>
+<div class="ci"><strong>LMM:</strong> Models a set of LIBOR rates {L_k(t)} directly as lognormal under their forward measures. Naturally consistent with Black's formula for caps/floors.</div>
+<div class="ci"><strong>Why LMM?</strong> Observable market rates. Consistent with cap market conventions. The catch: simulation-based only; drift-freezing approximations needed for efficiency.</div>
+<div class="fbl">LMM: dL_k = L_k·σ_k·dW_k^{T_{k+1}}  (under T_{k+1}-forward measure)
+Caplet price (Black's): Cpl = δ_k·P(0,T_{k+1})·[L_k(0)N(d₁)-K·N(d₂)]</div>
+<div class="ch">📍 L10 — Further Monte Carlo (for Rates)</div>
+<div class="ci"><strong>Simulating rates:</strong> Under LMM, simulate each L_k with appropriate drift correction when changing numeraires (the "frozen drift" or "predictor-corrector" approximation).</div>
+<div class="ci"><strong>Quasi-MC:</strong> Replace pseudo-random numbers with low-discrepancy sequences (Sobol, Halton). Convergence improves from O(1/√N) to O((logN)^d/N).</div>
+<div class="ch">📍 L12-L13 — Energy Derivatives</div>
+<div class="ci"><strong>Mean-reverting commodities:</strong> Spot prices: dS = κ(θ-S)dt + σdW (Schwartz model). Energy prices are highly seasonal and mean-reverting unlike equities.</div>
+<div class="ci"><strong>Swing options:</strong> Give the holder the right to take multiple exercise decisions over time (common in gas/power markets). Solved by dynamic programming or Least-Squares MC.</div>
+</div>
+<div id="m4-resources" class="tc"><div id="m4-lec-list"></div></div>
+<div id="m4-quiz" class="tc"><div id="quiz-m4"></div></div>
+</div>
+
+<!-- MODULE 5 -->
+<div id="page-m5" class="tc">
+<div class="tbar"><div class="tab active" onclick="stab(event,'m5','concepts')">Concepts</div><div class="tab" onclick="stab(event,'m5','resources')">Resources & PDFs</div><div class="tab" onclick="stab(event,'m5','quiz')">Mini Quiz</div></div>
+<div id="m5-concepts" class="tc active">
+<div class="card"><div class="ct"><span class="mt m5">M5</span>Credit Products & Risk — 9 Lectures</div><div class="cb">Credit risk became central post-2008. This module covers structural models, credit derivatives, and the valuation adjustments that changed derivative pricing permanently.</div></div>
+<div class="ch">📍 L1 — Structural Models (Merton)</div>
+<div class="ci"><strong>Merton's insight:</strong> Equity = call option on firm assets: E = max(V-D,0) where V = firm value, D = debt. Default at maturity if V &lt; D.</div>
+<div class="ci"><strong>Risk-neutral default probability:</strong> P(default) = N(-d₂) where d₁,d₂ use V,σ_V instead of S,σ_S.</div>
+<div class="ci"><strong>KMV model:</strong> Distance-to-Default = (ln(V/D) + (μ-½σ_V²)T)/(σ_V√T). Commercial application of Merton: widely used for corporate credit scoring.</div>
+<div class="fbl">Merton: E = V·N(d₁) - D·e^{-rT}·N(d₂)  [equity = call on assets]
+P^Q(default) = N(-d₂)
+Distance-to-Default = [ln(V/D) + (μ-½σ²)T] / (σ√T)</div>
+<div class="ch">📍 L2 — Credit Default Swaps (CDS)</div>
+<div class="ci"><strong>CDS mechanics:</strong> Buyer pays periodic spread s. Seller pays (1-R)·Notional on default. Fair spread: PV(default leg) = PV(premium leg).</div>
+<div class="ci"><strong>Bootstrapping:</strong> Extract hazard rates λ(t) from observed CDS spreads at different maturities. Your Module 5 exam assignment (CDS Bootstrapping) covers this exactly.</div>
+<div class="fbl">Survival probability: S(t) = P(τ>t) = exp(-∫₀ᵗ λ(s)ds)
+Quick approximation: s ≈ λ·(1-R)
+CDS spread at 5yr: s = [(1-R)·∫₀⁵ λ(t)·D(t)·S(t)dt] / [∫₀⁵ D(t)·S(t)dt]</div>
+<div class="ch">📍 L3 — Intensity (Reduced-Form) Models</div>
+<div class="ci"><strong>Cox process:</strong> Default arrives as a Poisson process with stochastic intensity λ(t). Even with full information, you can't predict the exact default moment — it's a surprise.</div>
+<div class="ci"><strong>Affine intensity models:</strong> λ follows a CIR process → closed-form survival probabilities. Most tractable class for calibration.</div>
+<div class="ci"><strong>Structural vs reduced-form:</strong> Structural = default predictable from firm value (balance sheet view). Reduced-form = default as surprise arrival (trading/pricing view). Reduced-form dominates in derivatives pricing.</div>
+<div class="ch">📍 L4-L5 — xVA (CVA, DVA, FVA)</div>
+<div class="ci"><strong>CVA:</strong> Price reduction for counterparty default risk. CVA = (1-R)·Σᵢ DF(tᵢ)·EE(tᵢ)·PD(tᵢ₋₁,tᵢ) where EE = Expected Exposure, PD = marginal default prob.</div>
+<div class="ci"><strong>DVA:</strong> Your own default benefit (controversial). When your credit worsens, DVA rises — banks book a P&amp;L gain when their own spreads widen.</div>
+<div class="ci"><strong>FVA:</strong> Cost of funding uncollateralised positions. Debate: Hull &amp; White argue FVA is not a pricing adjustment (shareholder vs. firm perspective).</div>
+<div class="fbl">CVA = (1-R) · Σᵢ DF(tᵢ) · EE(tᵢ) · [S(tᵢ₋₁)-S(tᵢ)]
+Bilateral CVA = CVA - DVA  (net credit adjustment)
+xVA desk manages: CVA + DVA + FVA + KVA (capital) + MVA (margin)</div>
+<div class="ch">📍 L6-L7 — CDOs & Correlation</div>
+<div class="ci"><strong>CDO structure:</strong> Pool of loans/bonds → tranched by loss seniority. Equity tranche absorbs first losses (highest yield, highest risk). Senior tranche absorbs last (lowest yield, highest rating).</div>
+<div class="ci"><strong>Gaussian copula (Li 2000):</strong> Correlate default times via a Gaussian copula with single parameter ρ. Simple but fails to capture tail dependence. Overuse in structured credit contributed to 2008 crisis.</div>
+<div class="ci"><strong>Correlation sensitivity:</strong> Senior tranche: long correlation (defaults spread out → less likely to breach senior attachment). Equity: short correlation (high correlation → all default together).</div>
+<div class="ch">📍 L8-L9 — Statistical Methods & Cointegration</div>
+<div class="ci"><strong>Logistic regression for PD:</strong> P(default) = 1/(1+e^{-βᵀx}). Used to estimate default probability from firm characteristics (leverage, profitability, coverage ratio).</div>
+<div class="ci"><strong>Cointegration:</strong> Two non-stationary series X_t, Y_t are cointegrated if X_t - αY_t is stationary. Used for pairs trading (mean-reversion strategies) and modelling long-run credit spread relationships.</div>
+</div>
+<div id="m5-resources" class="tc"><div id="m5-lec-list"></div></div>
+<div id="m5-quiz" class="tc"><div id="quiz-m5"></div></div>
+</div>
+
+<!-- MODULE 6 -->
+<div id="page-m6" class="tc">
+<div class="card"><div class="ct"><span class="mt m6">M6</span>Electives — Advanced Topics</div><div class="cb">Two electives in your repo. These are graduate-level extensions of M2 and M3.</div></div>
+<div class="ch">📍 Advanced Portfolio Management</div>
+<div class="ci"><strong>Factor Models:</strong> R = α + Σβᵢfᵢ + ε. Fama-French 3 factors: market (Rm-Rf), size (SMB), value (HML). Factor exposure decompose portfolio risk.</div>
+<div class="ci"><strong>Black-Litterman:</strong> Bayesian combination of equilibrium returns (from CAPM) with investor views. Produces more stable, less extreme weights than Markowitz. Key formula: E[R|views] = [(τΣ)^{-1} + PᵀΩ^{-1}P]^{-1}[(τΣ)^{-1}Π + PᵀΩ^{-1}Q].</div>
+<div class="ci"><strong>Risk parity:</strong> Each asset contributes equally to total portfolio risk. In practice: overweights bonds vs. equities. Requires leverage to match equity portfolio returns.</div>
+<div class="ch">📍 Advanced Volatility Modelling</div>
+<div class="ci"><strong>Heston model:</strong> dS=rSdt+√v·S·dW₁; dv=κ(θ-v)dt+ξ√v·dW₂; corr=ρ. Stochastic vol with mean-reversion. Semi-analytic pricing via characteristic function + Fourier inversion.</div>
+<div class="ci"><strong>Variance swap:</strong> Payoff = N·(σ²_realised - K_var). Fair strike K_var = E^Q[σ²_realised] = (2/T)∫₀^∞ (1/K²)C(K)dK — replication by a log-contract. Encodes the entire vol surface.</div>
+<div class="ci"><strong>Rough volatility:</strong> Fractional Brownian motion with Hurst exponent H≈0.1 (&lt;&lt;0.5). Captures the observed roughness of realised vol paths better than classical diffusion models.</div>
+<div id="m6-resources" style="margin-top:14px"><div id="m6-lec-list"></div></div>
+</div>
+
+<!-- MOCK EXAMS -->
+<div id="page-mock" class="tc">
+<div class="tbar">
+<div class="tab active" onclick="smtab(event,'m1mock')">Module 1</div>
+<div class="tab" onclick="smtab(event,'m2mock')">Module 2</div>
+<div class="tab" onclick="smtab(event,'m3mock')">Module 3</div>
+<div class="tab" onclick="smtab(event,'m4mock')">Module 4</div>
+<div class="tab" onclick="smtab(event,'m5mock')">Module 5</div>
+</div>
+<div id="m1mock" class="tc active"><div id="mock-m1"></div></div>
+<div id="m2mock" class="tc"><div id="mock-m2"></div></div>
+<div id="m3mock" class="tc"><div id="mock-m3"></div></div>
+<div id="m4mock" class="tc"><div id="mock-m4"></div></div>
+<div id="m5mock" class="tc"><div id="mock-m5"></div></div>
+</div>
+
+<!-- MINDMAP -->
+<div id="page-mindmap" class="tc">
+<div class="card" style="margin-bottom:10px"><div class="ct">🗺️ CQF Interactive Mind Map</div><div class="cb">Radial overview of the entire curriculum. Hover nodes for details. Click a module node to navigate to it. Use scroll to zoom, drag to pan.</div></div>
+<div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">
+<button class="btn" onclick="mmZoom(1.2)">＋ Zoom In</button>
+<button class="btn" onclick="mmZoom(0.83)">－ Zoom Out</button>
+<button class="btn" onclick="mmReset()">⟳ Reset</button>
+</div>
+<canvas id="mm-cvs"></canvas>
+<div class="mm-leg">
+<div class="mm-li"><div class="mm-ld" style="background:#8b949e"></div>Pre-Course</div>
+<div class="mm-li"><div class="mm-ld" style="background:#58a6ff"></div>M1 Quant Foundations</div>
+<div class="mm-li"><div class="mm-ld" style="background:#3fb950"></div>M2 Risk & Return</div>
+<div class="mm-li"><div class="mm-ld" style="background:#e3b341"></div>M3 Equities & FX</div>
+<div class="mm-li"><div class="mm-ld" style="background:#bc8cff"></div>M4 Fixed Income</div>
+<div class="mm-li"><div class="mm-ld" style="background:#f85149"></div>M5 Credit Risk</div>
+<div class="mm-li"><div class="mm-ld" style="background:#f0883e"></div>M6 Electives</div>
+</div>
+</div>
+
+<!-- FORMULA SHEET -->
+<div id="page-cheatsheet" class="tc">
+<div class="card" style="margin-bottom:14px"><div class="ct">📋 Master Formula Reference</div><div class="cb">All key CQF formulas. Print this page or keep it open during revision.</div></div>
+<div class="g2">
+<div>
+<div class="fs"><div class="ft">🔵 Stochastic Calculus (M1)</div>
+<div class="fr"><div class="fn">GBM SDE</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">dS = μS dt + σS dW</div></div>
+<div class="fr"><div class="fn">GBM Solution</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">S(t)=S₀·exp[(μ-σ²/2)t+σW(t)]</div></div>
+<div class="fr"><div class="fn">Ito's Lemma</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">df=(∂f/∂t+a·∂f/∂S+½b²·∂²f/∂S²)dt+b·∂f/∂S dW</div></div>
+<div class="fr"><div class="fn">Quad. variation</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">(dW)²=dt, dW·dt=0, (dt)²=0</div></div>
+<div class="fr"><div class="fn">Mkt price of risk</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">θ=(μ-r)/σ; under Q: dS=rSdt+σSdW̃</div></div>
+<div class="fr"><div class="fn">CRR Binomial</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">u=e^{σ√Δt}; p*=(e^{rΔt}-d)/(u-d)</div></div>
+</div>
+<div class="fs"><div class="ft">🟢 Portfolio & Risk (M2)</div>
+<div class="fr"><div class="fn">Port. variance</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">σ²_p=wᵀΣw</div></div>
+<div class="fr"><div class="fn">Sharpe Ratio</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">SR=(E[Rₚ]-rᶠ)/σₚ</div></div>
+<div class="fr"><div class="fn">CAPM Beta</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">β=Cov(R,Rₘ)/Var(Rₘ)</div></div>
+<div class="fr"><div class="fn">Param. VaR</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">VaR_α=μ-z_α·σ  [z_{99%}≈2.33]</div></div>
+<div class="fr"><div class="fn">GARCH(1,1)</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">σ²_t=ω+α·ε²_{t-1}+β·σ²_{t-1}</div></div>
+<div class="fr"><div class="fn">Long-run vol</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">σ̄²=ω/(1-α-β)</div></div>
+</div>
+</div>
+<div>
+<div class="fs"><div class="ft">🟡 Black-Scholes (M3)</div>
+<div class="fr"><div class="fn">BS PDE</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">∂V/∂t+½σ²S²∂²V/∂S²+rS∂V/∂S-rV=0</div></div>
+<div class="fr"><div class="fn">Call Price</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">C=SN(d₁)-Ke^{-rT}N(d₂)</div></div>
+<div class="fr"><div class="fn">d₁, d₂</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">d₁=[ln(S/K)+(r+σ²/2)T]/σ√T; d₂=d₁-σ√T</div></div>
+<div class="fr"><div class="fn">Put-Call Parity</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">C-P=S-Ke^{-rT}</div></div>
+<div class="fr"><div class="fn">Delta/Gamma</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">Δ=N(d₁); Γ=N'(d₁)/(Sσ√T)</div></div>
+<div class="fr"><div class="fn">Vega/Theta</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">ν=SN'(d₁)√T; Θ=-SσN'(d₁)/(2√T)-rKe^{-rT}N(d₂)</div></div>
+</div>
+<div class="fs"><div class="ft">🟣 Fixed Income (M4)</div>
+<div class="fr"><div class="fn">Duration</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">D*=-∂P/∂y/P; ΔP≈-D*·P·Δy</div></div>
+<div class="fr"><div class="fn">Vasicek</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">dr=κ(θ-r)dt+σdW</div></div>
+<div class="fr"><div class="fn">CIR</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">dr=κ(θ-r)dt+σ√r dW; Feller: 2κθ>σ²</div></div>
+<div class="fr"><div class="fn">HJM drift</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">μ(t,T)=σ(t,T)·∫ₜᵀσ(t,s)ds</div></div>
+<div class="fr"><div class="fn">Bond price</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">P(t,T)=E^Q[exp(-∫ₜᵀr(s)ds)]</div></div>
+</div>
+<div class="fs"><div class="ft">🔴 Credit (M5)</div>
+<div class="fr"><div class="fn">Survival prob</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">S(t)=exp(-∫₀ᵗλ(s)ds)</div></div>
+<div class="fr"><div class="fn">CDS approx</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">s≈λ·(1-R)</div></div>
+<div class="fr"><div class="fn">CVA</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">CVA=(1-R)·Σ DF(tᵢ)·EE(tᵢ)·PD(tᵢ)</div></div>
+<div class="fr"><div class="fn">Merton default</div><div class="fbl" style="margin:0;flex:1;padding:5px 9px">P^Q(default)=N(-d₂) [firm asset model]</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- NOTEBOOKLM -->
+<div id="page-notebooklm" class="tc">
+<div class="card" style="margin-bottom:12px"><div class="ct">🤖 NotebookLM Master Prompt</div><div class="cb">Upload your CQF lecture PDFs to NotebookLM, then paste this prompt. It instructs the AI to act as a dedicated CQF tutor with rich, structured outputs.</div></div>
+<button class="copybtn" onclick="copyNLM(this)" style="margin-bottom:12px">📋 Copy Prompt</button>
+<div class="nlm" id="nlm-text"></div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+// ── CURRICULUM DATA (with real PDF paths) ──────────────────────────────
+const BASE = 'CQF-1-master/';
+const C = {
+  pre: { title:'Pre-Course — Math', color:'#8b949e', tag:'m0', lectures:[
+    {id:'p1', label:'Calculus Primer', pdf:'Pre-Course/Math Primer/Calculus/CQF_Jan_Maths_Primer_2013_Calculus_Blank.pdf', ex:'Pre-Course/Math Primer/Calculus/CQF_January_2014_Maths_Primer_Calculus_Exercises.pdf', sol:'Pre-Course/Math Primer/Calculus/CQF_January_2014_Maths_Primer_Calculus_Solutions.pdf'},
+    {id:'p2', label:'Linear Algebra Primer', pdf:'Pre-Course/Math Primer/Introduction to Linear Algebra/CQF_Jan_Maths_Primer_2013_Introduction_to_Linear_Algebra_Blank.pdf', ex:'Pre-Course/Math Primer/Introduction to Linear Algebra/CQF_January_2014_Maths_Primer_Linear_Algebra_Exercises.pdf', sol:'Pre-Course/Math Primer/Introduction to Linear Algebra/CQF_January_2014_Maths_Primer_Linear_Algebra_Solutions.pdf'},
+    {id:'p3', label:'Probability & Statistics', pdf:'Pre-Course/Math Primer/Probability and Statistics/CQF_Jan_Maths_Primer_2013_Probability_Blank.pdf', ex:'Pre-Course/Math Primer/Probability and Statistics/CQF_January_2014_Maths_Primer_Probability_and_Statistics_Exercises.pdf', sol:'Pre-Course/Math Primer/Probability and Statistics/CQF_January_2014_Maths_Primer_Probability_and_Statistics_Solutions.pdf'},
+    {id:'p4', label:'Differential Equations', pdf:'Pre-Course/Math Primer/Differential Equations/CQF_Jan_Maths_Primer_2013_Differential_Equations_Blank.pdf', ex:'Pre-Course/Math Primer/Differential Equations/CQF_January_2014_Maths_Primer_Differential_Equations_Exercises.pdf', sol:'Pre-Course/Math Primer/Differential Equations/CQF_January_2014_Maths_Primer_Differential_Equations_Solutions.pdf'},
+    {id:'p5', label:'Pre-Module Test', pdf:'Pre-Course/Pre-module tests/CQF_pre_Test2014_Ran_Zhao.pdf'},
+  ]},
+  m1: { title:'M1 — Building Blocks', color:'#58a6ff', tag:'m1', lectures:[
+    {id:'m1l1', label:'L1: Random Behaviour of Assets', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 1 The Random Behavior of Assets/CQF_Januuary_2016_M1S1_Annotated.pdf', ex:'Module 1 Building Blocks of Quant Finance/Lecture 1 The Random Behavior of Assets/CQF_January_2016_M1S1_Exercises.pdf', wb:'Module 1 Building Blocks of Quant Finance/Lecture 1 The Random Behavior of Assets/CQF_January_2016_M1S1_Whiteboard.pdf'},
+    {id:'m1l2', label:'L2: PDEs & Transition Density', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 2 PDE\'s and Transition Density Functions/CQF_January_2016_M1S2_Annotated.pdf', ex:'Module 1 Building Blocks of Quant Finance/Lecture 2 PDE\'s and Transition Density Functions/CQF_January_2016_M1S2_Exercises.pdf', sol:'Module 1 Building Blocks of Quant Finance/Lecture 2 PDE\'s and Transition Density Functions/CQF_January_2016_M1S2_Solutions.pdf'},
+    {id:'m1l3', label:'L3: Applied Stochastic Calculus 1', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 3 Applied Stochastic Calculus 1/CQF_January_2016_M1S3_Annotated.pdf', ex:'Module 1 Building Blocks of Quant Finance/Lecture 3 Applied Stochastic Calculus 1/CQF_January_2016_M1S3_Exercises.pdf', sol:'Module 1 Building Blocks of Quant Finance/Lecture 3 Applied Stochastic Calculus 1/CQF_January_2016_M1S3_Solutions.pdf'},
+    {id:'m1l4', label:'L4: Applied Stochastic Calculus 2', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 4 Applied Stochastic Calculus 2/CQF_January_2016_M1S4_Blank.pdf', ex:'Module 1 Building Blocks of Quant Finance/Lecture 4 Applied Stochastic Calculus 2/CQF_January_2016_M1S4_Exercises.pdf', sol:'Module 1 Building Blocks of Quant Finance/Lecture 4 Applied Stochastic Calculus 2/CQF_January_2016_M1S4_Solutions.pdf'},
+    {id:'m1l5', label:'L5: Products & Strategies', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 5 Products and Strategies/CQF_January_2016_M1S5_Blank.pdf', wb:'Module 1 Building Blocks of Quant Finance/Lecture 5 Products and Strategies/CQF_January_2016_M1S5_Whiteboard.pdf'},
+    {id:'m1l6', label:'L6: Binomial Model', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 6 Binomial Model/CQF_January_2016_M1S6_Annotated.pdf', ex:'Module 1 Building Blocks of Quant Finance/Lecture 6 Binomial Model/CQF_January_2016_M1S6_Exercises.pdf', sol:'Module 1 Building Blocks of Quant Finance/Lecture 6 Binomial Model/CQF_January_2016_M1S6_SolutionsV2.pdf'},
+    {id:'m1l7', label:'L7: Martingale Theory — Fundamentals', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 7 Martingale Theory - Fundamentals/CQF_June_2015_M1S7_Annotated.pdf', ex:'Module 1 Building Blocks of Quant Finance/Lecture 7 Martingale Theory - Fundamentals/CQF_June_2015_M1S7_Exercises.pdf', sol:'Module 1 Building Blocks of Quant Finance/Lecture 7 Martingale Theory - Fundamentals/CQF_June_2015_M1S7_Solutions.pdf'},
+    {id:'m1l8', label:'L8: Continuous Martingales', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 8 Continuous Martingales/CQF_January_2016_M1S8_Annotated.pdf', wb:'Module 1 Building Blocks of Quant Finance/Lecture 8 Continuous Martingales/CQF_January_2016_M1S8_Whiteboard.pdf'},
+    {id:'m1l9', label:'L9: Module 1 Workshop', pdf:'Module 1 Building Blocks of Quant Finance/Lecture 9 Module 1 Workshop/CQF_January_2016_M1S9_Annotated.pdf', ex:'Module 1 Building Blocks of Quant Finance/Lecture 9 Module 1 Workshop/CQF_January_2016_M1S9_Workshop.pdf'},
+    {id:'m1ex', label:'Module 1 Exam (Jan 2016)', pdf:'Module 1 Building Blocks of Quant Finance/Module 1 Exam Jan 2016.pdf'},
+  ]},
+  m2: { title:'M2 — Risk & Return', color:'#3fb950', tag:'m2', lectures:[
+    {id:'m2l1', label:'L1: Portfolio Management', pdf:'Module 2 Quantitative Risk and Return/Lecture 1 Portfolio Management/CQF_January_2016_M2S1_Annotated.pdf', ex:'Module 2 Quantitative Risk and Return/Lecture 1 Portfolio Management/CQF_January_2016_M2S1_Exercises.pdf', sol:'Module 2 Quantitative Risk and Return/Lecture 1 Portfolio Management/CQF_January_2016_M2S1_Solutions.pdf'},
+    {id:'m2l2', label:'L2: Portfolio Optimisation', pdf:'Module 2 Quantitative Risk and Return/Lecture 2 Fundamentals of Optimization and Application to Portfolio Selection/CQF_January_2016_M2S2_Annotated.pdf', ex:'Module 2 Quantitative Risk and Return/Lecture 2 Fundamentals of Optimization and Application to Portfolio Selection/CQF_January_2016_M2S2_Exercises.pdf', sol:'Module 2 Quantitative Risk and Return/Lecture 2 Fundamentals of Optimization and Application to Portfolio Selection/CQF_January_2016_M2S2_Solutions.pdf'},
+    {id:'m2l3', label:'L3: Risk Regulation & Investment', pdf:'Module 2 Quantitative Risk and Return/Lecture 3 Impact of Risk Regulation on Investment and Trading/CQF_January_2016_M2S3_Blank.pdf'},
+    {id:'m2l4', label:'L4: Basel III', pdf:'Module 2 Quantitative Risk and Return/Lecture 4 Risk Regulation and Basel III/CQF_January_2016_M2S4_Annotated.pdf', wb:'Module 2 Quantitative Risk and Return/Lecture 4 Risk Regulation and Basel III/CQF_January_2016_M2S4_Whiteboard.pdf'},
+    {id:'m2l5', label:'L5: Market Risk Measurement (VaR)', pdf:'Module 2 Quantitative Risk and Return/Lecture 5 Market Risk Measurement Methods/CQF_January_2016_M2S5_Blank.pdf', ex:'Module 2 Quantitative Risk and Return/Lecture 5 Market Risk Measurement Methods/VaR_Exercises.pdf', sol:'Module 2 Quantitative Risk and Return/Lecture 5 Market Risk Measurement Methods/VaR_Solutions.pdf'},
+    {id:'m2l6', label:'L6: Stylised Facts of Asset Returns', pdf:'Module 2 Quantitative Risk and Return/Lecture 6 Asset Returns Key, Empirical Stylised Facts/CQF_January_2016_M2S6_Annotated.pdf'},
+    {id:'m2l7', label:'L7: ARCH/GARCH Volatility Models', pdf:'Module 2 Quantitative Risk and Return/Lecture 7 Volatility Models The ARCH Framework/CQF_January_2016_M2S7_Annotated.pdf'},
+    {id:'m2ex', label:'Module 2 Exam (Jan 2016)', pdf:'Module 2 Quantitative Risk and Return/Module 2 Exam/Exam 2 - JAN 2016.pdf', sol:'Module 2 Quantitative Risk and Return/Module 2 Exam/Module 2 Solution Ran Zhao.pdf'},
+  ]},
+  m3: { title:'M3 — Equities & FX', color:'#e3b341', tag:'m3', lectures:[
+    {id:'m3l1', label:'L1: Black-Scholes Model', pdf:'Module 3 Equities and Currencies/Lecture 1 Black-Scholes Model/CQF_January_2016_M3S1_Annotated.pdf', ex:'Module 3 Equities and Currencies/Lecture 1 Black-Scholes Model/CQF_January_2016_M3S1_Exercises.pdf', sol:'Module 3 Equities and Currencies/Lecture 1 Black-Scholes Model/CQF_January_2016_M3S1_Solutions.pdf'},
+    {id:'m3l2', label:'L2: Martingale Theory Applications', pdf:'Module 3 Equities and Currencies/Lecture 2 Martingale Theory Applications to Option Pricing/CQF_January_2016_M3S2_Annotated.pdf', ex:'Module 3 Equities and Currencies/Lecture 2 Martingale Theory Applications to Option Pricing/CQF_January_2016_M3S2_Exercises.pdf', sol:'Module 3 Equities and Currencies/Lecture 2 Martingale Theory Applications to Option Pricing/CQF_January_2016_M3S2_Solutions.pdf'},
+    {id:'m3l3', label:'L3: Martingales & PDEs — Which, When, Why', pdf:'Module 3 Equities and Currencies/Lecture 3 Martingales and PDEs Which, When and Why/CQF_January_2016_M3S3_Annotated.pdf'},
+    {id:'m3l4', label:'L4: Understanding Volatility', pdf:'Module 3 Equities and Currencies/Lecture 4 Understanding Volatility/CQF_January_2016_M3S4_Annotated.pdf', ex:'Module 3 Equities and Currencies/Lecture 4 Understanding Volatility/CQF_January_2016_M3S4_Exercises.pdf', sol:'Module 3 Equities and Currencies/Lecture 4 Understanding Volatility/CQF_January_2016_M3S4_Solutions.pdf'},
+    {id:'m3l5', label:'L5: Intro to Numerical Methods', pdf:'Module 3 Equities and Currencies/Lecture 5 Intro to Numerical Methods/CQF_January_2016_M3S5_Annotated.pdf'},
+    {id:'m3l6', label:'L6: Exotic Options', pdf:'Module 3 Equities and Currencies/Lecture 6 Exotic Options/CQF_January_2016_M3S6_Annotated.pdf'},
+    {id:'m3l7', label:'L7: Further Numerical Methods', pdf:'Module 3 Equities and Currencies/Lecture 7 Further Numerical Methods/CQF_January_2016_M3S7_Annotated.pdf'},
+    {id:'m3l8', label:'L8: Pre-Quant Derivatives Market', pdf:'Module 3 Equities and Currencies/Lecture 8 Derivatives Market Practice in the Time before Quant Theory/CQF_January_2016_M3S8_Annotated.pdf'},
+    {id:'m3l9', label:'L9: Advanced Greeks', pdf:'Module 3 Equities and Currencies/Lecture 9 Advanced Greeks/CQF_January_2016_M3S9_Annotated.pdf'},
+    {id:'m3l10', label:'L10: Market-Based Valuation (Python)', pdf:'Module 3 Equities and Currencies/Lecture 10 Market- Based Valuation of Equity Index Options using Python/CQF_January_2016_M3S10_Blank.pdf'},
+    {id:'m3l11', label:"L11: Advanced Volatility Modelling", pdf:"Module 3 Equities and Currencies/Lecture 11 'Advanced' Volatility Modelling in Complete Markets/CQF_January_2016_M3S11_Annotated.pdf"},
+    {id:'m3l12', label:'L12: Module 3 Workshop', pdf:'Module 3 Equities and Currencies/Lecture 12 Module 3 Workshop/CQF_January_2016_M3S12_Annotated.pdf'},
+    {id:'m3ex', label:'Module 3 Exam Assignment', pdf:'Module 3 Equities and Currencies/Module 3 Exam/Mod 3 Assignment Jan 2016.pdf', sol:'Module 3 Equities and Currencies/Module 3 Exam/Module 3 Solution Ran Zhao.pdf'},
+  ]},
+  m4: { title:'M4 — Fixed Income', color:'#bc8cff', tag:'m4', lectures:[
+    {id:'m4l1', label:'L1: Fixed Income Products & Analysis', pdf:'Module 4 Fixed Income and Commodities/Lecture 1 Fixed Income Products and Analysis/CQF_January_2016_M4S1_Annotated.pdf', ex:'Module 4 Fixed Income and Commodities/Lecture 1 Fixed Income Products and Analysis/CQF_January_2016_M4S1_Exercises.pdf', sol:'Module 4 Fixed Income and Commodities/Lecture 1 Fixed Income Products and Analysis/CQF_January_2016_M4S1_Solutions.pdf'},
+    {id:'m4l2', label:'L2: Stochastic Interest Rate Modelling', pdf:'Module 4 Fixed Income and Commodities/Lecture 2 Stochastic Interest Rate Modeling/CQF_January_2016_M4S2_Blank.pdf', ex:'Module 4 Fixed Income and Commodities/Lecture 2 Stochastic Interest Rate Modeling/CQF_January_2016_M4S2_Exercises.pdf', sol:'Module 4 Fixed Income and Commodities/Lecture 2 Stochastic Interest Rate Modeling/CQF_January_2016_M4S2_Solutions.pdf'},
+    {id:'m4l3', label:'L3: Calibration & Data Analysis', pdf:'Module 4 Fixed Income and Commodities/Lecture 3 Calibration and Data Analysis/CQF_January_2016_M4S3_Blank.pdf', ex:'Module 4 Fixed Income and Commodities/Lecture 3 Calibration and Data Analysis/CQF_January_2016_M4S3_Exercises.pdf', sol:'Module 4 Fixed Income and Commodities/Lecture 3 Calibration and Data Analysis/CQF_January_2016_M4S3_Solutions.pdf'},
+    {id:'m4l4', label:'L4: Probabilistic Methods for Rates', pdf:'Module 4 Fixed Income and Commodities/Lecture 4 Probabilistic Methods for Interest Rates/CQF_January_2016_M4S4_Annotated.pdf', ex:'Module 4 Fixed Income and Commodities/Lecture 4 Probabilistic Methods for Interest Rates/CQF_January_2016_M4S4_Exercises.pdf', sol:'Module 4 Fixed Income and Commodities/Lecture 4 Probabilistic Methods for Interest Rates/CQF_January_2016_M4S4_Solutions.pdf'},
+    {id:'m4l5', label:'L5: Heath-Jarrow-Morton Model', pdf:'Module 4 Fixed Income and Commodities/Lecture 5 Heath Jarrow and Morton Model/CQF_January_2016_M4S5_Blank.pdf', ex:'Module 4 Fixed Income and Commodities/Lecture 5 Heath Jarrow and Morton Model/CQF_January_2016_M4S5_Exercises.pdf', sol:'Module 4 Fixed Income and Commodities/Lecture 5 Heath Jarrow and Morton Model/CQF_January_2016_M4S5_Solutions.pdf'},
+    {id:'m4l6', label:'L6: Fixed Income Market Practices', pdf:'Module 4 Fixed Income and Commodities/Lecture 6 Fixed Income Market Practices/Lecture2MarketPractices.pdf'},
+    {id:'m4l7', label:'L7: Volatility Smiles & SABR', pdf:'Module 4 Fixed Income and Commodities/Lecture 7 Volatility Smiles and the SABR Model/Lecture4SmileRiskNew.pdf'},
+    {id:'m4l8', label:'L8: LIBOR Market Model', pdf:'Module 4 Fixed Income and Commodities/Lecture 8 The Libor Market Model/CQF_January_2016_M4S8_Annotated.pdf', wb:'Module 4 Fixed Income and Commodities/Lecture 8 The Libor Market Model/CQF_January_2016_M4S8_Whiteboard.pdf'},
+    {id:'m4l10', label:'L10: Further Monte Carlo', pdf:'Module 4 Fixed Income and Commodities/Lecture 10 Further Monte Carlo/CQF_January_2016_M4S10_Annotated.pdf'},
+    {id:'m4l12', label:'L12: Energy Derivatives — Hedging', pdf:'Module 4 Fixed Income and Commodities/Lecture 12 Energy Derivatives (Hedging)/CQF_January_2016_M4S12_Blank.pdf'},
+    {id:'m4l13', label:'L13: Energy Derivatives — Trading', pdf:'Module 4 Fixed Income and Commodities/Lecture 13 Energy Derivatives (Trading)/CQF_January_2016_M4S13_Blank.pdf'},
+    {id:'m4ex', label:'Module 4 Exam (Jan 2016)', pdf:'Module 4 Fixed Income and Commodities/Module 4 Exam/mod 4 exam Jan 16.pdf', sol:'Module 4 Fixed Income and Commodities/Module 4 Exam/mod 4 exam Jan 2016 solns.pdf'},
+  ]},
+  m5: { title:'M5 — Credit Risk', color:'#f85149', tag:'m5', lectures:[
+    {id:'m5l1', label:'L1: Credit Derivatives & Structural Models', pdf:'Module 5 Credit Products and Risk/Lecture 1 Introduction to Credit Derivatives and Structural Models/CQF_January_2016_M5S1_Whiteboard.pdf'},
+    {id:'m5l2', label:'L2: Credit Default Swaps', pdf:'Module 5 Credit Products and Risk/Lecture 2 Credit Default Swaps/Bootstrapping_PENA_Teaching_Note.pdf', ex:'Module 5 Credit Products and Risk/Lecture 2 Credit Default Swaps/Hazard_Rates_PENA_Teaching_Note.pdf'},
+    {id:'m5l3', label:'L3: Intensity Models', pdf:'Module 5 Credit Products and Risk/Lecture 3 Intensity Models/CQF_January_2016_M5S3_Annotated.pdf'},
+    {id:'m5l4', label:'L4: xVA Theory (CVA/DVA/FVA)', pdf:'Module 5 Credit Products and Risk/Lecture 4 X - Valuation Adjustment (CVA, DVA, FVA) Theory/CQF_June_2016_Notes.pdf'},
+    {id:'m5l5', label:'L5: xVA Implementation', pdf:'Module 5 Credit Products and Risk/Lecture 5 X - Valuation Adjustment (CVA, DVA, FVA) Implementation/CQF_January_2016_M5S5_Annotated.pdf'},
+    {id:'m5l6', label:'L6: Collateralised Debt Obligations', pdf:'Module 5 Credit Products and Risk/Lecture 6 Collateralized Debt Obligations/CQF_January_M5S6_Blank.pdf', ex:'Module 5 Credit Products and Risk/Lecture 6 Collateralized Debt Obligations/CQF_January_2016_M5S6_Exercises.pdf', sol:'Module 5 Credit Products and Risk/Lecture 6 Collateralized Debt Obligations/CQF_January_2016_M5S6_Solutions.pdf'},
+    {id:'m5l7', label:'L7: Correlation Sensitivity & State Dependence', pdf:'Module 5 Credit Products and Risk/Lecture 7 Correlation Sensitivity and State Dependence/CQF_January_2016_M5S7_Annotated.pdf'},
+    {id:'m5l8', label:'L8: Statistical Methods for Default Probability', pdf:'Module 5 Credit Products and Risk/Lecture 8 Statistical Methods in Estimating Default Probability/CQF_January_2016_M5S8_Annotated.pdf'},
+    {id:'m5l9', label:'L9: Cointegration & Long-Term Relationships', pdf:'Module 5 Credit Products and Risk/Lecture 9 Co-integration Modeling Long Term Relationships/CQF_January_M5S9_Blank.pdf'},
+    {id:'m5ex', label:'Module 5 Exam Assignment', pdf:'Module 5 Credit Products and Risk/Exam/M5 Assignment - Jan 2016.pdf', sol:'Module 5 Credit Products and Risk/Exam/write-up/Module 5 Solution Ran Zhao.pdf'},
+  ]},
+  m6: { title:'M6 — Electives', color:'#f0883e', tag:'m6', lectures:[
+    {id:'m6l1', label:'Advanced Portfolio Management', pdf:'Module 6 Electives/Advanced Portfolio Management/CQF_Elective_Advanced_Portfolio_Management_Annotated.pdf', wb:'Module 6 Electives/Advanced Portfolio Management/CQF_Elective_Advanced_Portfolio_Management_Whiteboard.pdf'},
+    {id:'m6l2', label:'Advanced Volatility Modelling', pdf:'Module 6 Electives/Advanced Volatility Modeling/CQF_Elective_Advanced_Volatility_Modelling_Annotated.pdf', ex:'Module 6 Electives/Advanced Volatility Modeling/CQF_Elective_Advanced_Volatility_Modelling_Exercises.pdf'},
+  ]},
+};
+
+
+
+// ── STATE ───────────────────────────────────────────────────────────────
+const done = new Set();
+let bestScore = null;
+const TOTAL_LECS = Object.values(C).reduce((s,m)=>s+m.lectures.length,0);
+
+// ── PDF OPENER ──────────────────────────────────────────────────────────
+function openPDF(relPath) {
+  if (!relPath) return;
+  const parts = relPath.split('/').map(encodeURIComponent);
+  window.open(BASE + parts.join('/'));
+}
+
+// ── NAVIGATION ──────────────────────────────────────────────────────────
+const pageMeta = {
+  dashboard:{t:'Dashboard',b:'Overview'},studyplan:{t:'Study Plan',b:'8-Week Track'},
+  tracker:{t:'Progress Tracker',b:'All Lectures'},pre:{t:'Pre-Course',b:'Math Foundations'},
+  m1:{t:'Module 1',b:'Building Blocks of Quant Finance'},m2:{t:'Module 2',b:'Risk & Return'},
+  m3:{t:'Module 3',b:'Equities & Currencies'},m4:{t:'Module 4',b:'Fixed Income & Commodities'},
+  m5:{t:'Module 5',b:'Credit Products & Risk'},m6:{t:'Module 6',b:'Electives'},
+  mock:{t:'Mock Exams',b:'Test Yourself'},mindmap:{t:'Mind Map',b:'Curriculum Overview'},
+  cheatsheet:{t:'Formula Sheet',b:'Quick Reference'},notebooklm:{t:'NotebookLM Prompt',b:'AI Study Companion'},
+};
+function nav(id, el) {
+  document.querySelectorAll('.tc[id^="page-"]').forEach(e=>e.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ni').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  const m=pageMeta[id]||{t:id,b:''};
+  document.getElementById('pt').textContent=m.t;
+  document.getElementById('pb').textContent=m.b;
+  if (id==='mindmap') setTimeout(drawMindmap,50);
+}
+function stab(e, mod, tab) {
+  const pg = document.getElementById('page-'+mod);
+  pg.querySelectorAll('.tbar .tab').forEach(t=>t.classList.remove('active'));
+  pg.querySelectorAll(':scope > .tc, :scope > .tbar ~ .tc').forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(mod+'-'+tab).classList.add('active');
+}
+function smtab(e, id) {
+  const pg = document.getElementById('page-mock');
+  pg.querySelectorAll('.tbar .tab').forEach(t=>t.classList.remove('active'));
+  pg.querySelectorAll(':scope > .tc').forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// ── PROGRESS ────────────────────────────────────────────────────────────
+function refreshProgress() {
+  const n = done.size;
+  const pct = Math.round(n/TOTAL_LECS*100);
+  document.getElementById('sb-fill').style.width=pct+'%';
+  document.getElementById('sb-pct').textContent=pct+'%';
+  document.getElementById('s-done').textContent=n+'/'+TOTAL_LECS;
+  document.getElementById('s-bar').style.width=pct+'%';
+  // tracker stats
+  const td = document.getElementById('tr-done');
+  if(td) { td.textContent=n+'/'+TOTAL_LECS; document.getElementById('tr-bar').style.width=pct+'%'; }
+  const modStarted = Object.keys(C).filter(k=>C[k].lectures.some(l=>done.has(l.id))).length;
+  const tm = document.getElementById('tr-mods');
+  if(tm) tm.textContent=modStarted+'/7';
+  // sidebar module pct
+  Object.keys(C).forEach(k=>{
+    const m=C[k]; const dn=m.lectures.filter(l=>done.has(l.id)).length;
+    const p=Math.round(dn/m.lectures.length*100);
+    const el=document.getElementById('pm-'+k);
+    if(el) el.textContent=p+'%';
+    // update tracker bars
+    const tb=document.getElementById('tbar-'+k);
+    if(tb) { tb.style.width=p+'%'; document.getElementById('tpct-'+k).textContent=p+'%'; }
+  });
+}
+
+// ── TOGGLE LECTURE DONE ──────────────────────────────────────────────────
+function toggleLec(id, ...elIds) {
+  if(done.has(id)) done.delete(id); else done.add(id);
+  elIds.forEach(elId => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.classList.toggle('done', done.has(id));
+    el.textContent = done.has(id) ? '✓' : '';
+  });
+  refreshProgress();
+}
+
+// ── BUILD RESOURCE LIST (used by module pages) ───────────────────────────
+function buildLecList(modKey, containerId) {
+  const m = C[modKey];
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  m.lectures.forEach(lec => {
+    const row = document.createElement('div');
+    row.className = 'lec-row';
+    row.innerHTML = `
+      <div class="lec-top">
+        <span class="lec-num">${lec.id.toUpperCase()}</span>
+        <span class="lec-title">${lec.label}</span>
+        <div class="lec-cb ${done.has(lec.id)?'done':''}" id="lcb-${lec.id}" onclick="toggleLec('${lec.id}','lcb-${lec.id}','tcb-${lec.id}')">${done.has(lec.id)?'✓':''}</div>
+      </div>
+      <div class="lec-btns">
+        ${lec.pdf?`<button class="btn pdf" onclick="openPDF('${lec.pdf.replace(/'/g,"\\'")}')">📄 Lecture</button>`:''}
+        ${lec.ex?`<button class="btn ex" onclick="openPDF('${lec.ex.replace(/'/g,"\\'")}')">📝 Exercises</button>`:''}
+        ${lec.sol?`<button class="btn sol" onclick="openPDF('${lec.sol.replace(/'/g,"\\'")}')">✅ Solutions</button>`:''}
+        ${lec.wb?`<button class="btn wb" onclick="openPDF('${lec.wb.replace(/'/g,"\\'")}')">🖊️ Whiteboard</button>`:''}
+      </div>`;
+    container.appendChild(row);
+  });
+}
+
+// ── BUILD TRACKER ────────────────────────────────────────────────────────
+function buildTracker() {
+  const container = document.getElementById('trk-container');
+  if(!container) return;
+  container.innerHTML='';
+  Object.entries(C).forEach(([k,m])=>{
+    const div=document.createElement('div');
+    div.className='trk-mod';
+    div.innerHTML=`
+      <div class="trk-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="trk-title">${m.title}</span>
+        <div class="trk-bar-wrap"><div class="trk-bar" id="tbar-${k}" style="width:0%"></div></div>
+        <span class="trk-pct" id="tpct-${k}">0%</span>
+      </div>
+      <div class="trk-body">${m.lectures.map(lec=>`
+        <div class="trk-item">
+          <div class="trk-cb ${done.has(lec.id)?'done':''}" id="tcb-${lec.id}" onclick="toggleLec('${lec.id}','tcb-${lec.id}','lcb-${lec.id}')">${done.has(lec.id)?'✓':''}</div>
+          <span class="trk-lbl ${done.has(lec.id)?'done':''}" id="tlbl-${lec.id}">${lec.label}</span>
+          <div class="trk-links">
+            ${lec.pdf?`<button class="btn pdf" onclick="openPDF('${lec.pdf.replace(/'/g,"\\'")}')">📄</button>`:''}
+            ${lec.ex?`<button class="btn ex" onclick="openPDF('${lec.ex.replace(/'/g,"\\'")}')">📝</button>`:''}
+            ${lec.sol?`<button class="btn sol" onclick="openPDF('${lec.sol.replace(/'/g,"\\'")}')">✅</button>`:''}
+          </div>
+        </div>`).join('')}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+// ── BUILD STUDY PLAN ─────────────────────────────────────────────────────
+function buildStudyPlan() {
+  const container = document.getElementById('sp-container');
+  if(!container) return;
+  container.innerHTML='';
+  SP.forEach((week,wi)=>{
+    const div=document.createElement('div');
+    div.className='wp'+(wi===0?' open':'');
+    const chevron=wi===0?'▲':'▼';
+    div.innerHTML=`
+      <div class="wh" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.querySelector('.chv').textContent=this.nextElementSibling.style.display==='block'?'▲':'▼'">
+        <span><strong>${week.week}</strong> — ${week.label}</span><span class="chv">${chevron}</span>
+      </div>
+      <div class="wb2" style="display:${wi===0?'block':'none'}">
+        ${week.days.map((d,di)=>{
+          const dcid=`dc-w${wi}d${di}`;
+          return `<div class="dr">
+            <span class="dl">${d.day}</span>
+            <div class="dt">
+              <div class="mt">${d.task}</div>
+              ${d.res&&d.res.length?`<div class="res">${d.res.map(r=>{
+                const lec=C[r.p]&&C[r.p].lectures.find(l=>l.id===r.l);
+                const path=lec?lec[r.c]:'';
+                return path?`<button class="btn ${r.c}" onclick="openPDF('${path.replace(/'/g,"\\'")}')"><small>${r.t}</small></button>`:'';
+              }).join('')}</div>`:''}
+            </div>
+            <div class="dc ${done.has?'':''}" id="${dcid}" onclick="toggleDay('${dcid}')"></div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+const dayDone=new Set();
+function toggleDay(id) {
+  const el=document.getElementById(id);
+  if(dayDone.has(id)){dayDone.delete(id);el.classList.remove('done');el.textContent='';}
+  else{dayDone.add(id);el.classList.add('done');el.textContent='✓';}
+}
+
+// ── QUIZ ENGINE ──────────────────────────────────────────────────────────
+function buildQuiz(containerId, qs) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  let cur=0, answered=false, sel=null, score=0;
+  function render() {
+    const q=qs[cur];
+    el.innerHTML=`
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+          <span style="font-size:11px;color:var(--muted)">Question ${cur+1} of ${qs.length}</span>
+          <span class="qsc">Score: ${score}/${cur+(answered?1:0)}</span>
+        </div>
+        <div class="qq">${q.q}</div>
+        <div class="qo">${q.opts.map((o,i)=>`<div class="qopt" id="o${i}" onclick="selOpt(${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div>
+        <div class="qexp" id="qexp">${q.exp}</div>
+        <div class="qnav">
+          ${!answered?`<button class="btn pr" onclick="checkA()">Check Answer</button>`:''}
+          ${answered&&cur<qs.length-1?`<button class="btn pr" onclick="nextQ()">Next →</button>`:''}
+          ${answered&&cur===qs.length-1?`<button class="btn pr" onclick="restartQ()">Restart</button>`:''}
+          <span class="qsc" style="margin-left:auto">${answered?(sel===q.ans?'✅ Correct!':'❌ Incorrect'):'Select an answer'}</span>
+        </div>
+      </div>`;
+    if(answered) document.getElementById('qexp').style.display='block';
+  }
+  window.selOpt = i => {
+    if(answered)return; sel=i;
+    document.querySelectorAll(`#${containerId} .qopt`).forEach((o,j)=>{
+      o.style.borderColor=j===i?'var(--accent)':''; o.style.background=j===i?'rgba(88,166,255,.08)':'';
+    });
+  };
+  window.checkA = () => {
+    if(sel===null)return; answered=true;
+    const q=qs[cur]; if(sel===q.ans) score++;
+    document.querySelectorAll(`#${containerId} .qopt`).forEach((o,j)=>{
+      if(j===q.ans){o.classList.add('cor');}
+      else if(j===sel){o.classList.add('wr');}
+    });
+    document.getElementById('qexp').style.display='block';
+    if(score>=(bestScore||0)){bestScore=Math.round(score/qs.length*100); document.getElementById('s-score').textContent=bestScore+'%';}
+    render();
+  };
+  window.nextQ = () => { cur++; answered=false; sel=null; render(); };
+  window.restartQ = () => { cur=0; answered=false; sel=null; score=0; render(); };
+  render();
+}
+
+let mmScale=1, mmOffX=0, mmOffY=0, mmDragging=false, mmLastX=0, mmLastY=0;
+function mmZoom(f){mmScale*=f;drawMindmap();}
+function mmReset(){mmScale=1;mmOffX=0;mmOffY=0;drawMindmap();}
+
+function drawMindmap() {
+  const cvs = document.getElementById('mm-cvs');
+  if (!cvs) return;
+  const dpr = window.devicePixelRatio||1;
+  cvs.width = cvs.offsetWidth*dpr; cvs.height = cvs.offsetHeight*dpr;
+  const ctx = cvs.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const W=cvs.offsetWidth, H=cvs.offsetHeight;
+  const cx=W/2+mmOffX, cy=H/2+mmOffY;
+  const R1=130*mmScale, R2=240*mmScale, R3=340*mmScale;
+  ctx.clearRect(0,0,W,H);
+  // draw grid dots
+  ctx.fillStyle='#1a2332';
+  for(let x=0;x<W;x+=30) for(let y=0;y<H;y+=30) { ctx.beginPath();ctx.arc(x,y,1,0,Math.PI*2);ctx.fill(); }
+
+  MM_DATA.modules.forEach(mod => {
+    const ang = mod.angle * Math.PI/180;
+    const mx = cx + R1*Math.cos(ang), my = cy + R1*Math.sin(ang);
+    // line center→module
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(mx,my);
+    ctx.strokeStyle=mod.color+'55'; ctx.lineWidth=2.5; ctx.stroke();
+    // topic nodes
+    mod.topics.forEach((topic, ti) => {
+      const spread = (mod.topics.length-1)*18;
+      const ta = ang + (ti-(mod.topics.length-1)/2)*0.28;
+      const tx=cx+R2*Math.cos(ang)+(R3-R2)*Math.cos(ta)*0.7+R2*0.3*(Math.cos(ta)-Math.cos(ang));
+      const ty_=cy+R2*Math.sin(ang)+(R3-R2)*Math.sin(ta)*0.7+R2*0.3*(Math.sin(ta)-Math.sin(ang));
+      const nx=cx+R3*Math.cos(ta)*0.88, ny_=cy+R3*Math.sin(ta)*0.88;
+      // line mod→topic
+      ctx.beginPath(); ctx.moveTo(mx,my); ctx.lineTo(nx,ny_);
+      ctx.strokeStyle=mod.color+'33'; ctx.lineWidth=1.2; ctx.stroke();
+      // topic bubble
+      ctx.beginPath(); ctx.arc(nx,ny_,5*mmScale,0,Math.PI*2);
+      ctx.fillStyle=mod.color+'99'; ctx.fill();
+      // topic label
+      ctx.font=`${Math.max(9,10*mmScale)}px Segoe UI, sans-serif`;
+      ctx.fillStyle=mod.color+'ee'; ctx.textAlign='center'; ctx.textBaseline='middle';
+      const labelY = ny_+(Math.sign(Math.sin(ta))||1)*12*mmScale;
+      ctx.fillText(topic, nx, labelY);
+    });
+    // module circle
+    const mr=20*mmScale;
+    ctx.beginPath(); ctx.arc(mx,my,mr,0,Math.PI*2);
+    ctx.fillStyle='#0d1117'; ctx.fill();
+    ctx.strokeStyle=mod.color; ctx.lineWidth=2.5; ctx.stroke();
+    // module label
+    ctx.font=`bold ${Math.max(10,11*mmScale)}px Segoe UI, sans-serif`;
+    ctx.fillStyle=mod.color; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(mod.label, mx, my);
+  });
+  // center node
+  const cr=MM_DATA.center.r*mmScale;
+  const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,cr);
+  grad.addColorStop(0,'#2a1f00'); grad.addColorStop(1,'#1a1200');
+  ctx.beginPath(); ctx.arc(cx,cy,cr,0,Math.PI*2);
+  ctx.fillStyle=grad; ctx.fill();
+  ctx.strokeStyle='#e3b341'; ctx.lineWidth=2.5; ctx.stroke();
+  ctx.font=`bold ${Math.max(12,14*mmScale)}px Segoe UI, sans-serif`;
+  ctx.fillStyle='#e3b341'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('CQF', cx, cy);
+}
+
+// Mindmap pan/zoom
+document.addEventListener('DOMContentLoaded', () => {
+  const cvs = document.getElementById('mm-cvs');
+  if(cvs) {
+    cvs.addEventListener('mousedown', e=>{mmDragging=true;mmLastX=e.clientX;mmLastY=e.clientY;});
+    window.addEventListener('mouseup', ()=>mmDragging=false);
+    window.addEventListener('mousemove', e=>{
+      if(!mmDragging)return;
+      mmOffX+=e.clientX-mmLastX; mmOffY+=e.clientY-mmLastY;
+      mmLastX=e.clientX; mmLastY=e.clientY; drawMindmap();
+    });
+    cvs.addEventListener('wheel', e=>{
+      e.preventDefault(); mmZoom(e.deltaY<0?1.1:0.9);
+    },{passive:false});
+    cvs.addEventListener('click', e=>{
+      const rect=cvs.getBoundingClientRect();
+      const mx=(e.clientX-rect.left), my=(e.clientY-rect.top);
+      const cx=cvs.offsetWidth/2+mmOffX, cy=cvs.offsetHeight/2+mmOffY;
+      const R1=130*mmScale;
+      MM_DATA.modules.forEach(mod=>{
+        const ang=mod.angle*Math.PI/180;
+        const nx=cx+R1*Math.cos(ang), ny_=cy+R1*Math.sin(ang);
+        if(Math.hypot(mx-nx,my-ny_)<25*mmScale) {
+          document.querySelector(`.ni[onclick*="nav('${mod.key}"]`)||document.querySelector(`.ni[onclick*="${mod.key}"]`);
+          const navEl=Array.from(document.querySelectorAll('.ni')).find(n=>n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+mod.key+"'"));
+          if(navEl) navEl.click();
+        }
+      });
+    });
+  }
+});
+
+
+function copyNLM(btn) {
+  navigator.clipboard.writeText(NLM_PROMPT).then(()=>{
+    btn.textContent='✅ Copied!'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='📋 Copy Prompt';btn.classList.remove('ok');},2500);
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+function init() {
+  // Build resource lists for each module
+  buildLecList('pre','pre-lec-list');
+  buildLecList('m1','m1-lec-list');
+  buildLecList('m2','m2-lec-list');
+  buildLecList('m3','m3-lec-list');
+  buildLecList('m4','m4-lec-list');
+  buildLecList('m5','m5-lec-list');
+  buildLecList('m6','m6-lec-list');
+  // Build tracker
+  buildTracker();
+  // Build study plan
+  buildStudyPlan();
+  // Build quizzes (module pages)
+  buildQuiz('quiz-m1',QD.m1);
+  buildQuiz('quiz-m2',QD.m2);
+  buildQuiz('quiz-m3',QD.m3);
+  buildQuiz('quiz-m4',QD.m4);
+  buildQuiz('quiz-m5',QD.m5);
+  // Build mock exams
+  buildQuiz('mock-m1',QD.m1);
+  buildQuiz('mock-m2',QD.m2);
+  buildQuiz('mock-m3',QD.m3);
+  buildQuiz('mock-m4',QD.m4);
+  buildQuiz('mock-m5',QD.m5);
+  // NotebookLM text
+  const nlm = document.getElementById('nlm-text');
+  if(nlm) nlm.textContent=NLM_PROMPT;
+  // Initial progress
+  refreshProgress();
+  // Draw mindmap when visible
+  window.addEventListener('resize', ()=>{ if(document.getElementById('page-mindmap').classList.contains('active')) drawMindmap(); });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</div>
+</body>
+</html>
