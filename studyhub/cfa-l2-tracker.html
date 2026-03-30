@@ -1660,6 +1660,12 @@ function showToast(msg) {
 loadState();
 renderAll();
 restoreSaveIndicator();
+
+// Hide back-nav when embedded inside the CFA L2 Hub iframe
+if (window.self !== window.top) {
+  const nav = document.getElementById('back-nav');
+  if (nav) nav.style.display = 'none';
+}
 </script>
 </body>
 </html>

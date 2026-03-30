@@ -727,7 +727,11 @@ body {
       <span>Downloads</span>
     </div>
 
-
+    <div class="sb-section-label" style="margin-top:12px;">TOOLS</div>
+    <div class="sb-item" onclick="switchView('tracker')">
+      <span class="sb-item-icon">🎯</span>
+      <span>Progress Tracker</span>
+    </div>
 
   </nav>
 
@@ -1105,6 +1109,17 @@ body {
       </div>
     </div>
   </div>
+  <!-- TRACKER VIEW -->
+  <div id="v-tracker" class="view" style="flex-direction:column;overflow:hidden;">
+    <iframe
+      id="tracker-iframe"
+      src="./cfa-l2-tracker.html"
+      style="width:100%;flex:1;border:none;display:block;"
+      allow="same-origin"
+      title="CFA L2 Progress Tracker"
+    ></iframe>
+  </div>
+
 </main>
 
 <script src="./assets/seed_explainers.js?v=4"></script>
@@ -1166,7 +1181,8 @@ function getNavLabel(viewName) {
     dashboard: 'dashboard',
     notes: 'notes',
     explainers: 'explainers',
-    downloads: 'downloads'
+    downloads: 'downloads',
+    tracker: 'tracker'
   };
   return map[viewName] || viewName;
 }
