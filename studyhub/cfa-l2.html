@@ -161,6 +161,26 @@ body {
   color: #a5b4fc;
 }
 
+.sb-tracker-shortcut {
+  border-left-color: rgba(108,92,231,0.4);
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.sb-tracker-shortcut:hover {
+  border-left-color: var(--accent);
+}
+.sb-tracker-badge {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: linear-gradient(135deg,#6c5ce7,#a29bfe);
+  color: white;
+  flex-shrink: 0;
+}
+
 .sb-footer {
   padding: 12px;
   border-top: 1px solid var(--border);
@@ -714,6 +734,11 @@ body {
       <span class="sb-item-icon">📊</span>
       <span>Dashboard</span>
     </div>
+    <div class="sb-item sb-tracker-shortcut" onclick="switchView('tracker')" title="Track your study progress">
+      <span class="sb-item-icon">🎯</span>
+      <span>Progress Tracker</span>
+      <span class="sb-tracker-badge">TRACK</span>
+    </div>
     <div class="sb-item" onclick="switchView('notes')">
       <span class="sb-item-icon">📝</span>
       <span>Notes Navigator</span>
@@ -725,12 +750,6 @@ body {
     <div class="sb-item" onclick="switchView('downloads')">
       <span class="sb-item-icon">📥</span>
       <span>Downloads</span>
-    </div>
-
-    <div class="sb-section-label" style="margin-top:12px;">TOOLS</div>
-    <div class="sb-item" onclick="switchView('tracker')">
-      <span class="sb-item-icon">🎯</span>
-      <span>Progress Tracker</span>
     </div>
 
   </nav>
@@ -871,6 +890,13 @@ body {
         <div>
           <div class="qa-title">Downloads</div>
           <div class="qa-desc">Download notes and explainers for offline study</div>
+        </div>
+      </div>
+      <div class="qa-card qa-tracker-card" onclick="switchView('tracker')" style="border-color:var(--accent);background:linear-gradient(135deg,rgba(108,92,231,0.12),rgba(162,155,254,0.06));">
+        <div class="qa-icon-wrap" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe);">🎯</div>
+        <div>
+          <div class="qa-title" style="color:var(--accent2);">Progress Tracker</div>
+          <div class="qa-desc">Track Videos, Reading, Practice Questions &amp; Revisions across all 10 subjects. Log mock scores &amp; countdown to exam day.</div>
         </div>
       </div>
     </div>
