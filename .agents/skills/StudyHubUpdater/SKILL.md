@@ -179,7 +179,8 @@ if (m) { try { new Function(m[1]); console.log('JS valid'); } catch(e) { console
 FTP_HOST="217.21.90.95"
 FTP_USER="u944949387"
 FTP_PASS="Sphs@05164426082001"
-FTP_NOTES="/domains/amiteshray.com/public_html/studyhub/assets/notes"
+# CRITICAL: always use the full absolute path below — partial paths upload to wrong directory
+FTP_LIVE_ROOT="/domains/amiteshray.com/public_html/studyhub"
 NOTES_DIR="/sessions/determined-nifty-allen/mnt/CFA PREP/_port_repo/studyhub/assets/notes"
 PREFIX="eco"   # change per subject
 
@@ -187,14 +188,15 @@ for f in "$NOTES_DIR/${PREFIX}"-*.jpg; do
   fname=$(basename "$f")
   status=$(curl -s -T "$f" --ftp-ssl --insecure --ftp-pasv \
     -u "$FTP_USER:$FTP_PASS" \
-    "ftp://$FTP_HOST$FTP_NOTES/$fname" -w "%{http_code}" -o /dev/null)
+    "ftp://$FTP_HOST/domains/amiteshray.com/public_html/studyhub/assets/notes/$fname" -w "%{http_code}" -o /dev/null)
   echo "$fname → $status"
 done
 
 # Also upload the PDF itself
 curl -s -T "$NOTES_DIR/<SubjectName>.pdf" --ftp-ssl --insecure --ftp-pasv \
   -u "$FTP_USER:$FTP_PASS" \
-  "ftp://$FTP_HOST$FTP_NOTES/<SubjectName>.pdf" -w "PDF: %{http_code}\n" -o /dev/null
+  "ftp://$FTP_HOST/domains/amiteshray.com/public_html/studyhub/assets/notes/<SubjectName>.pdf" \
+  -w "PDF: %{http_code}\n" -o /dev/null
 
 # Upload updated cfa-l2.html
 curl -s -T "/sessions/determined-nifty-allen/mnt/CFA PREP/_port_repo/studyhub/cfa-l2.html" \
@@ -255,7 +257,17 @@ Supported keys as of last update: `equity`, `fi`, `deriv`, `derivatives`, `econ`
 ### Step 3: Validate, cache-bust, deploy
 1. `node --check _port_repo/studyhub/assets/seed_explainers.js` — fix any errors first
 2. Bump cache-bust in `cfa-l2.html`: `seed_explainers.js?v=X` → `?v=X+1`
-3. FTPS deploy `seed_explainers.js` + `cfa-l2.html`
+3. FTPS deploy — use the **full absolute path** for both files:
+   ```bash
+   curl -s -T "_port_repo/studyhub/assets/seed_explainers.js" --ftp-ssl --insecure --ftp-pasv \
+     -u "u944949387:Sphs@05164426082001" \
+     "ftp://217.21.90.95/domains/amiteshray.com/public_html/studyhub/assets/seed_explainers.js" \
+     -w "seed_explainers: %{http_code}\n" -o /dev/null
+   curl -s -T "_port_repo/studyhub/cfa-l2.html" --ftp-ssl --insecure --ftp-pasv \
+     -u "u944949387:Sphs@05164426082001" \
+     "ftp://217.21.90.95/domains/amiteshray.com/public_html/studyhub/cfa-l2.html" \
+     -w "cfa-l2.html: %{http_code}\n" -o /dev/null
+   ```
 4. Git commit + push via osascript
 
 > **No manual Downloads HTML needed** — explainers auto-appear in the Downloads tab via `initDownloadsView()`, grouped by topic with individual ⬇ download buttons.
