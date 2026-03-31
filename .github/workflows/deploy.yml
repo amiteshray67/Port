@@ -19,12 +19,22 @@ jobs:
           server: 217.21.90.95
           username: u944949387
           password: Sphs@05164426082001
-          server-dir: /public_html/
+          # Correct web root on Hostinger — previous /public_html/ was wrong and deployed to FTP home dir
+          server-dir: /domains/amiteshray.com/public_html/
           protocol: ftps
           port: 21
+          timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
             readme.md
             temp_changes.html
+            # Exclude large PDF notes and JPGs — deployed directly via FTP, too large for CI
+            studyhub/assets/notes/*.pdf
+            studyhub/assets/notes/*.jpg
+            # Exclude seed_explainers.js — 12MB, deployed directly via FTP
+            studyhub/assets/seed_explainers.js
+            # Exclude skill/agent files — not part of website
+            .agents/**
+            .claude/**
