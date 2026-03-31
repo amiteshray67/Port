@@ -2434,13 +2434,22 @@ function initDownloadsView() {
     equity: '📈 Equity Valuation',
     fi: '🏦 Fixed Income',
     deriv: '⚡ Derivatives',
+    derivatives: '⚡ Derivatives',
     econ: '🌐 Economics',
+    eco: '🌐 Economics',
+    economics: '🌐 Economics',
     fsa: '📊 Financial Statement Analysis',
+    fra: '📊 Financial Statement Analysis',
     corp: '🏢 Corporate Finance',
+    corporate: '🏢 Corporate Finance',
     alt: '💎 Alternative Investments',
+    alts: '💎 Alternative Investments',
+    alternatives: '💎 Alternative Investments',
     pm: '🎯 Portfolio Management',
     ethics: '⚖️ Ethics',
-    quant: '📐 Quantitative Methods'
+    quant: '📐 Quantitative Methods',
+    quantitative: '📐 Quantitative Methods',
+    other: '📁 General'
   };
 
   grid.innerHTML = '';
@@ -2474,8 +2483,9 @@ function initDownloadsView() {
       const title = e.title || e.id;
       row.innerHTML = `
         <span style="font-size:12px;">${icon}</span>
-        <span style="font-size:11px;color:var(--text2);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${title}</span>
+        <span style="font-size:11px;color:var(--text2);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer;" onclick="switchView('explainers'); setTimeout(() => expSelectById('${e.id}'), 200);">${title}</span>
         <span style="font-size:9px;color:var(--text3);text-transform:uppercase;background:var(--bg);padding:1px 6px;border-radius:4px;">${e.type || 'img'}</span>
+        <button onclick="event.stopPropagation();downloadSingleExplainer('${e.id}')" style="padding:3px 8px;background:#6c5ce7;color:white;border:none;border-radius:4px;font-size:9px;font-weight:600;cursor:pointer;flex-shrink:0;" title="Download this explainer">⬇</button>
       `;
       row.onclick = () => { switchView('explainers'); setTimeout(() => expSelectById(e.id), 200); };
       list.appendChild(row);
@@ -2515,6 +2525,30 @@ function downloadTopicExplainers(topic) {
       document.body.removeChild(a);
     }
   });
+}
+
+function downloadSingleExplainer(id) {
+  const allExp = [...EXPLAINERS];
+  if (typeof SEED_EXPLAINERS !== 'undefined') {
+    SEED_EXPLAINERS.forEach(se => { if (!allExp.find(e => e.id === se.id)) allExp.push(se); });
+  }
+  const e = allExp.find(x => x.id === id);
+  if (!e || !e.data) return;
+  const fname = (e.title || e.id).replace(/[^a-zA-Z0-9]/g, '_');
+  if (e.type === 'html') {
+    const blob = new Blob([e.data], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fname + '.html';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  } else {
+    const ext = e.ext || 'jpg';
+    const a = document.createElement('a');
+    a.href = 'data:image/' + ext + ';base64,' + e.data;
+    a.download = fname + '.' + ext;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
 }
 
 // Helper to select explainer by ID (used from Downloads view)
