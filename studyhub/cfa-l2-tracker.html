@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 Master Tracker — Amitesh</title>
+<style>
+  :root {
+    --bg: #060d1a;
+    --bg2: #0b1628;
+    --bg3: #0f1e35;
+    --bg4: #162847;
+    --border: #1e3a5f;
+    --border2: #2d5a9e;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #475569;
+    --accent: #6c5ce7;
+    --accent2: #a29bfe;
+    --blue: #0ea5e9;
+    --green: #10b981;
+    --orange: #f97316;
+    --red: #ef4444;
+    --yellow: #eab308;
+    --purple: #8b5cf6;
+    --pink: #ec4899;
+    --teal: #14b8a6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar-header {
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-logo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 4px;
+  }
+
+  .sidebar-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .sidebar-subtitle {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 2px;
+  }
+
+  /* Overall progress in sidebar */
+  .sidebar-overall {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .overall-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  .overall-percent {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent2);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .overall-bar-track {
+    height: 6px;
+    background: var(--bg4);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .overall-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--blue));
+    border-radius: 3px;
+    transition: width .4s ease;
+  }
+
+  .overall-sub {
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  /* Subject nav */
+  .nav-section-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 10px 16px 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all .12s;
+  }
+
+  .nav-item:hover { background: var(--bg3); }
+  .nav-item.active { background: linear-gradient(90deg, #6c5ce718, transparent); border-left-color: var(--accent); }
+
+  .nav-icon { font-size: 13px; flex-shrink: 0; }
+  .nav-name { font-size: 12px; color: var(--text2); flex: 1; }
+  .nav-item.active .nav-name { color: var(--accent2); font-weight: 600; }
+
+  .nav-mini-bar {
+    width: 36px;
+    height: 4px;
+    background: var(--bg4);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .nav-mini-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width .4s;
+  }
+
+  /* Sidebar bottom */
+  .sidebar-bottom {
+    margin-top: auto;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .sidebar-exam-badge {
+    background: linear-gradient(135deg, #ef444420, #f9731620);
+    border: 1px solid #ef444440;
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+
+  .exam-badge-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); }
+  .exam-badge-date { font-size: 15px; font-weight: 800; color: var(--orange); margin: 2px 0; }
+  .exam-badge-days { font-size: 11px; color: var(--text2); }
+
+  /* ── MAIN AREA ── */
+  /* Timeline bar */
+  .timeline-bar {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+  }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .timeline-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .timeline-phases {
+    display: flex;
+    gap: 8px;
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  .phase-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+
+  .timeline-track {
+    position: relative;
+    height: 32px;
+  }
+
+  .timeline-rail {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--bg4);
+    border-radius: 2px;
+  }
+
+  .timeline-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    border-radius: 2px;
+    transition: width .4s ease;
+  }
+
+  .timeline-milestone {
+    position: absolute;
+    top: -2px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .milestone-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--bg2);
+    z-index: 2;
+  }
+
+  .milestone-label {
+    position: absolute;
+    top: 16px;
+    font-size: 9px;
+    font-weight: 700;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
+  .milestone-date {
+    position: absolute;
+    top: 26px;
+    font-size: 8px;
+    color: var(--text3);
+    white-space: nowrap;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
+  /* Phase bands */
+  .timeline-phase-band {
+    position: absolute;
+    top: 10px;
+    height: 12px;
+    border-radius: 2px;
+    opacity: .25;
+  }
+
+  /* ── CONTENT AREA ── */
+  .content-area { padding: 24px 28px; }
+
+  /* Page: Dashboard */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .stat-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); margin-bottom: 4px; }
+  .stat-value { font-size: 24px; font-weight: 800; line-height: 1; }
+  .stat-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
+
+  /* Subject grid (dashboard) */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text2);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .subject-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+
+  .subject-card:hover {
+    border-color: var(--border2);
+    background: var(--bg3);
+    transform: translateY(-1px);
+  }
+
+  .subject-card.complete { border-color: #10b98130; }
+
+  .sc-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .sc-icon { font-size: 20px; flex-shrink: 0; }
+  .sc-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; }
+  .sc-weight { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+  .sc-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .sc-bar-track {
+    flex: 1;
+    height: 5px;
+    background: var(--bg4);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .sc-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width .4s;
+  }
+
+  .sc-pct { font-size: 11px; font-weight: 700; color: var(--text2); min-width: 32px; text-align: right; }
+
+  .sc-tasks {
+    display: flex;
+    gap: 5px;
+  }
+
+  .task-pip {
+    flex: 1;
+    height: 20px;
+    border-radius: 4px;
+    background: var(--bg4);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--text3);
+    font-weight: 700;
+    transition: all .15s;
+    cursor: pointer;
+  }
+
+  .task-pip.done {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .task-pip.videos.done { background: #8b5cf6; border-color: #8b5cf6; }
+  .task-pip.book.done { background: #0ea5e9; border-color: #0ea5e9; }
+  .task-pip.qbank.done { background: #f97316; border-color: #f97316; }
+  .task-pip.rev1.done { background: #eab308; border-color: #eab308; }
+  .task-pip.rev2.done { background: #10b981; border-color: #10b981; }
+
+  /* ── SUBJECT DETAIL PAGE ── */
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .detail-icon { font-size: 36px; }
+  .detail-name { font-size: 22px; font-weight: 800; }
+  .detail-meta { font-size: 12px; color: var(--text3); margin-top: 3px; }
+
+  .detail-back {
+    margin-bottom: 18px;
+    font-size: 12px;
+    color: var(--text3);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    transition: all .1s;
+  }
+
+  .detail-back:hover { border-color: var(--border2); color: var(--text); }
+
+  /* Task cards in detail view */
+  .task-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .task-card {
+    background: var(--bg2);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .15s;
+    user-select: none;
+  }
+
+  .task-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+  .task-card.done {
+    border-color: var(--green);
+    background: linear-gradient(135deg, #10b98115, #10b98105);
+  }
+
+  .task-card.done.videos { border-color: #8b5cf6; background: linear-gradient(135deg, #8b5cf615, #8b5cf605); }
+  .task-card.done.book { border-color: #0ea5e9; background: linear-gradient(135deg, #0ea5e915, #0ea5e905); }
+  .task-card.done.qbank { border-color: #f97316; background: linear-gradient(135deg, #f9731615, #f9731605); }
+  .task-card.done.rev1 { border-color: #eab308; background: linear-gradient(135deg, #eab30815, #eab30805); }
+  .task-card.done.rev2 { border-color: #10b981; background: linear-gradient(135deg, #10b98115, #10b98105); }
+
+  .task-card-icon { font-size: 24px; margin-bottom: 8px; }
+
+  .task-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text2);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .task-card.done .task-card-label { color: var(--text); }
+
+  .task-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    transition: all .15s;
+  }
+
+  .task-card.done .task-check {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .task-card.done.videos .task-check { background: #8b5cf6; border-color: #8b5cf6; }
+  .task-card.done.book .task-check { background: #0ea5e9; border-color: #0ea5e9; }
+  .task-card.done.qbank .task-check { background: #f97316; border-color: #f97316; }
+  .task-card.done.rev1 .task-check { background: #eab308; border-color: #eab308; }
+
+  .task-date {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 4px;
+  }
+
+  /* Notes field */
+  .notes-area {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .notes-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+
+  .notes-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    min-height: 60px;
+  }
+
+  .notes-input::placeholder { color: var(--text3); }
+
+  /* Priority badge */
+  .priority-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .priority-label { font-size: 12px; color: var(--text3); }
+
+  .priority-btn {
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text3);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .1s;
+  }
+
+  .priority-btn.active.high { background: #ef444420; border-color: var(--red); color: var(--red); }
+  .priority-btn.active.medium { background: #f9731620; border-color: var(--orange); color: var(--orange); }
+  .priority-btn.active.low { background: #10b98120; border-color: var(--green); color: var(--green); }
+
+  /* ── MOCKS PAGE ── */
+  .mocks-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .mock-card {
+    background: var(--bg2);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all .15s;
+  }
+
+  .mock-card.active { border-color: var(--border2); }
+  .mock-card.passed { border-color: var(--green); background: linear-gradient(135deg, #10b98110, transparent); }
+  .mock-card.failed { border-color: var(--red); background: linear-gradient(135deg, #ef444410, transparent); }
+
+  .mock-number {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--text3);
+    margin-bottom: 12px;
+  }
+
+  .mock-score-input {
+    width: 100%;
+    background: var(--bg4);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    color: var(--text);
+    font-size: 28px;
+    font-weight: 800;
+    text-align: center;
+    outline: none;
+    margin-bottom: 10px;
+    transition: border-color .1s;
+  }
+
+  .mock-score-input:focus { border-color: var(--border2); }
+  .mock-score-input::placeholder { font-size: 14px; font-weight: 400; color: var(--text3); }
+
+  .mock-pct-label { font-size: 10px; color: var(--text3); text-align: center; margin-bottom: 8px; }
+
+  .mock-date-input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 8px;
+    color: var(--text2);
+    font-size: 11px;
+    outline: none;
+    margin-bottom: 8px;
+  }
+
+  .mock-date-input:focus { border-color: var(--border2); }
+
+  .mock-status {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding: 4px;
+    border-radius: 6px;
+  }
+
+  .mock-status.passed { color: var(--green); background: #10b98115; }
+  .mock-status.failed { color: var(--red); background: #ef444415; }
+  .mock-status.pending { color: var(--text3); }
+
+  .mock-required-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+
+  .mock-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .mock-stat {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  /* ── TIMELINE DETAIL ── */
+  .timeline-detail {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .phase-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-row:last-child { border-bottom: none; }
+
+  .phase-color-bar {
+    width: 4px;
+    height: 44px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .phase-info { flex: 1; }
+  .phase-name { font-size: 13px; font-weight: 700; }
+  .phase-dates { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .phase-progress-bar {
+    width: 120px;
+    height: 6px;
+    background: var(--bg4);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .phase-progress-fill { height: 100%; border-radius: 3px; }
+
+  .phase-subjects { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  /* ── NAV TABS (main top) ── */
+  .main-nav {
+    display: flex;
+    gap: 2px;
+    padding: 12px 28px 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .main-tab {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all .1s;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: -1px;
+  }
+
+  .main-tab:hover { color: var(--text2); background: var(--bg3); }
+  .main-tab.active { color: var(--accent2); border-bottom-color: var(--accent); }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .badge-green { background: #10b98120; color: var(--green); }
+  .badge-blue { background: #0ea5e920; color: var(--blue); }
+  .badge-orange { background: #f9731620; color: var(--orange); }
+  .badge-red { background: #ef444420; color: var(--red); }
+
+  /* ── STUDY PLAN TABLE ── */
+  .plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .plan-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--text3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .plan-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .plan-table tr:hover td { background: var(--bg3); }
+
+  .plan-table tr:last-child td { border-bottom: none; }
+
+  .week-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent2);
+    background: var(--accent)20;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--border); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .subject-grid { grid-template-columns: 1fr; }
+    .task-cards { grid-template-columns: repeat(3, 1fr); }
+    .mocks-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .page.active { animation: fadeIn .2s ease; }
+
+  .confetti-burst {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--bg3);
+    border: 1px solid var(--green);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 13px;
+    color: var(--text);
+    z-index: 1000;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all .3s ease;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Tooltip */
+  [data-tip] { position: relative; }
+  [data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg4);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="back-nav" style="width:100%;background:linear-gradient(135deg,#6c5ce7,#a29bfe);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font-family:'Poppins',sans-serif;flex-shrink:0;z-index:9999;">
+  <a href="https://amiteshray.com/studyhub" style="color:white;text-decoration:none;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">← Back to Study Hub</a>
+  <span style="color:rgba(255,255,255,0.7);font-size:11px;font-weight:500;">Study Hub · CFA L2 Master Tracker</span>
+</div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">CFA Level II</div>
+      <div class="sidebar-title">Master Tracker</div>
+      <div class="sidebar-subtitle">Amitesh Ray · 2025–26</div>
+    </div>
+
+    <div class="sidebar-overall">
+      <div class="overall-label">Overall Progress</div>
+      <div class="overall-percent" id="overall-pct">0%</div>
+      <div class="overall-bar-track">
+        <div class="overall-bar-fill" id="overall-bar" style="width:0%"></div>
+      </div>
+      <div class="overall-sub" id="overall-sub">0 / 50 tasks complete</div>
+    </div>
+
+    <div class="nav-section-label">Subjects</div>
+    <div id="subject-nav"></div>
+
+    <div style="padding:6px 16px 10px">
+      <div class="nav-section-label" style="padding:0 0 6px">Navigation</div>
+      <div class="nav-item" onclick="showMainTab('dashboard')">
+        <span class="nav-icon">📊</span>
+        <span class="nav-name">Dashboard</span>
+      </div>
+      <div class="nav-item" onclick="showMainTab('mocks')">
+        <span class="nav-icon">📝</span>
+        <span class="nav-name">Mock Exams</span>
+      </div>
+      <div class="nav-item" onclick="showMainTab('plan')">
+        <span class="nav-icon">📅</span>
+        <span class="nav-name">Study Plan</span>
+      </div>
+    </div>
+
+    <div class="sidebar-bottom">
+      <!-- Auto-save indicator -->
+      <div id="save-indicator" style="display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;transition:border-color .3s">
+        <span id="save-dot" style="width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0;transition:background .3s"></span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3)" id="save-label">Not saved yet</div>
+          <div style="font-size:9px;color:var(--text3);margin-top:1px" id="save-time"></div>
+        </div>
+        <button onclick="exportProgress()" title="Export backup JSON" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:0" data-tip="Export backup">⬇</button>
+        <button onclick="document.getElementById('import-input').click()" title="Import backup JSON" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:0" data-tip="Import backup">⬆</button>
+        <input type="file" id="import-input" accept=".json" style="display:none" onchange="importProgress(event)">
+      </div>
+      <div class="sidebar-exam-badge">
+        <div class="exam-badge-label">CFA L2 Exam</div>
+        <div class="exam-badge-date">25 Aug 2026</div>
+        <div class="exam-badge-days" id="days-to-exam">— days to go</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- Timeline bar -->
+    <div class="timeline-bar">
+      <div class="timeline-header">
+        <span class="timeline-title">📅 Study Timeline</span>
+        <div class="timeline-phases">
+          <span><span class="phase-dot" style="background:#10b981"></span>Foundation</span>
+          <span><span class="phase-dot" style="background:#0ea5e9"></span>Deep Study</span>
+          <span><span class="phase-dot" style="background:#f97316"></span>Revision</span>
+          <span><span class="phase-dot" style="background:#ef4444"></span>Mocks</span>
+        </div>
+      </div>
+      <div class="timeline-track">
+        <div class="timeline-rail">
+          <!-- Phase bands -->
+          <div class="timeline-phase-band" id="phase-band-1" style="background:#10b981"></div>
+          <div class="timeline-phase-band" id="phase-band-2" style="background:#0ea5e9"></div>
+          <div class="timeline-phase-band" id="phase-band-3" style="background:#f97316"></div>
+          <div class="timeline-phase-band" id="phase-band-4" style="background:#ef4444"></div>
+          <div class="timeline-progress-fill" id="timeline-fill"></div>
+        </div>
+        <!-- Milestones rendered by JS -->
+        <div id="timeline-milestones"></div>
+      </div>
+    </div>
+
+    <!-- Top nav tabs -->
+    <div class="main-nav">
+      <div class="main-tab active" data-tab="dashboard" onclick="showMainTab('dashboard')">📊 Dashboard</div>
+      <div class="main-tab" data-tab="mocks" onclick="showMainTab('mocks')">📝 Mocks</div>
+      <div class="main-tab" data-tab="plan" onclick="showMainTab('plan')">📅 Study Plan</div>
+    </div>
+
+    <div class="content-area">
+
+      <!-- DASHBOARD PAGE -->
+      <div class="page active" id="page-dashboard">
+
+        <div class="stats-row" id="stats-row"></div>
+
+        <div class="section-title">📚 All Subjects</div>
+        <div class="subject-grid" id="subject-grid"></div>
+
+      </div>
+
+      <!-- SUBJECT DETAIL PAGE -->
+      <div class="page" id="page-detail">
+        <div class="detail-back" onclick="showMainTab('dashboard')">← Back to Dashboard</div>
+        <div class="detail-header">
+          <div class="detail-icon" id="detail-icon"></div>
+          <div>
+            <div class="detail-name" id="detail-name"></div>
+            <div class="detail-meta" id="detail-meta"></div>
+          </div>
+        </div>
+
+        <div class="task-cards" id="detail-tasks"></div>
+
+        <div class="priority-row">
+          <span class="priority-label">Priority:</span>
+          <button class="priority-btn high" onclick="setPriority(this,'high')">🔴 High</button>
+          <button class="priority-btn medium" onclick="setPriority(this,'medium')">🟠 Medium</button>
+          <button class="priority-btn low" onclick="setPriority(this,'low')">🟢 Low</button>
+        </div>
+
+        <div class="notes-area">
+          <div class="notes-label">📝 Study Notes</div>
+          <textarea class="notes-input" id="detail-notes" placeholder="Add your notes, weak areas, formulas to remember…" rows="4" oninput="saveNotes()"></textarea>
+        </div>
+      </div>
+
+      <!-- MOCKS PAGE -->
+      <div class="page" id="page-mocks">
+        <div class="mock-stats-row" id="mock-stats-row"></div>
+        <div class="section-title">🎯 Mock Exam Log</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Minimum <strong style="color:var(--orange)">2</strong> mocks required · Target <strong style="color:var(--green)">5</strong> mocks · Pass score ≥ 70%</div>
+        <div class="mocks-grid" id="mocks-grid"></div>
+      </div>
+
+      <!-- STUDY PLAN PAGE -->
+      <div class="page" id="page-plan">
+        <div class="timeline-detail">
+          <div class="section-title" style="margin-bottom:16px">🗓 Phase Breakdown</div>
+          <div id="phase-breakdown"></div>
+        </div>
+
+        <div class="section-title">📋 Weekly Study Plan</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px">
+          <table class="plan-table" id="plan-table"></table>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════
+
+const SUBJECTS = [
+  { id:'quant',  name:'Quantitative Methods',        icon:'📐', weight:5,  color:'#8b5cf6' },
+  { id:'eco',    name:'Economics',                    icon:'🌐', weight:5,  color:'#0ea5e9' },
+  { id:'fsa',    name:'Financial Statement Analysis', icon:'📊', weight:13, color:'#10b981' },
+  { id:'corp',   name:'Corporate Issuers',            icon:'🏢', weight:10, color:'#06b6d4' },
+  { id:'equity', name:'Equity Valuation',             icon:'📈', weight:13, color:'#6c5ce7' },
+  { id:'fi',     name:'Fixed Income',                 icon:'🏦', weight:13, color:'#0ea5e9' },
+  { id:'deriv',  name:'Derivatives',                  icon:'⚡', weight:10, color:'#f59e0b' },
+  { id:'alts',   name:'Alternative Investments',      icon:'💎', weight:10, color:'#ec4899' },
+  { id:'pm',     name:'Portfolio Management',         icon:'🎯', weight:16, color:'#14b8a6' },
+  { id:'ethics', name:'Ethics & Professional Std.',   icon:'⚖️', weight:10, color:'#f97316' },
+];
+
+const TASKS = [
+  { id:'videos', label:'Watch Videos',    short:'VID', icon:'🎬', color:'#8b5cf6' },
+  { id:'book',   label:'Read Book',       short:'BK',  icon:'📚', color:'#0ea5e9' },
+  { id:'qbank',  label:'Inst. Questions', short:'IQ',  icon:'❓', color:'#f97316' },
+  { id:'rev1',   label:'Revision 1',      short:'R1',  icon:'🔄', color:'#eab308' },
+  { id:'rev2',   label:'Revision 2',      short:'R2',  icon:'✅', color:'#10b981' },
+];
+
+// Exam & study milestones
+const EXAM_DATE    = new Date('2026-08-25');
+const SYLLABUS_END = new Date('2026-05-31');
+const START_DATE   = new Date('2026-03-30');
+
+// Study phases
+const PHASES = [
+  { name:'Foundation',  start:new Date('2026-03-30'), end:new Date('2026-04-20'), color:'#10b981', subjects:'Quant · Eco · Ethics' },
+  { name:'Deep Study',  start:new Date('2026-04-21'), end:new Date('2026-05-31'), color:'#0ea5e9', subjects:'FSA · Corp · Equity · FI' },
+  { name:'Revision',    start:new Date('2026-06-01'), end:new Date('2026-07-15'), color:'#f97316', subjects:'Deriv · Alts · PM · All Rev' },
+  { name:'Mock Exams',  start:new Date('2026-07-16'), end:new Date('2026-08-24'), color:'#ef4444', subjects:'5 Full Mocks + Review' },
+];
+
+// State
+let state = {};
+
+function defaultState() {
+  const s = { tasks:{}, notes:{}, priority:{}, mocks:[] };
+  SUBJECTS.forEach(sub => {
+    s.tasks[sub.id] = {};
+    TASKS.forEach(t => { s.tasks[sub.id][t.id] = { done: false, date: null }; });
+    s.notes[sub.id] = '';
+    s.priority[sub.id] = 'medium';
+  });
+  for (let i = 0; i < 5; i++) s.mocks.push({ score: '', date: '', notes: '' });
+  return s;
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('cfa_l2_tracker_v1');
+    if (raw) {
+      state = JSON.parse(raw);
+      // Ensure all keys exist (migration safety)
+      SUBJECTS.forEach(sub => {
+        if (!state.tasks[sub.id]) state.tasks[sub.id] = {};
+        TASKS.forEach(t => {
+          if (!state.tasks[sub.id][t.id]) state.tasks[sub.id][t.id] = { done:false, date:null };
+        });
+        if (!state.notes[sub.id]) state.notes[sub.id] = '';
+        if (!state.priority[sub.id]) state.priority[sub.id] = 'medium';
+      });
+      if (!state.mocks || state.mocks.length < 5) {
+        state.mocks = Array(5).fill(null).map((_,i) => state.mocks?.[i] || { score:'', date:'', notes:'' });
+      }
+    } else {
+      state = defaultState();
+    }
+  } catch(e) {
+    state = defaultState();
+  }
+}
+
+function restoreSaveIndicator() {
+  // Called after renderAll so DOM is ready
+  const dot   = document.getElementById('save-dot');
+  const label = document.getElementById('save-label');
+  const time  = document.getElementById('save-time');
+  if (!dot) return;
+  if (state._lastSaved) {
+    const d = new Date(state._lastSaved);
+    const timeStr = d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    const dateStr = d.toLocaleDateString('en-GB', { day:'numeric', month:'short' });
+    dot.style.background  = '#10b981';
+    label.style.color     = 'var(--text3)';
+    label.textContent     = '✓ Progress saved';
+    time.textContent      = dateStr + ' ' + timeStr;
+  }
+}
+
+let _saveFlashTimer;
+function saveState() {
+  try {
+    localStorage.setItem('cfa_l2_tracker_v1', JSON.stringify(state));
+    state._lastSaved = new Date().toISOString();
+    localStorage.setItem('cfa_l2_tracker_v1', JSON.stringify(state));
+    flashSaveIndicator(true);
+  } catch(e) {
+    flashSaveIndicator(false, 'Save failed — storage full?');
+  }
+}
+
+function flashSaveIndicator(ok, errMsg) {
+  const dot   = document.getElementById('save-dot');
+  const label = document.getElementById('save-label');
+  const time  = document.getElementById('save-time');
+  const box   = document.getElementById('save-indicator');
+  if (!dot) return;
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+
+  if (ok) {
+    dot.style.background   = '#10b981';
+    label.style.color      = '#10b981';
+    label.textContent      = '✓ Auto-saved';
+    box.style.borderColor  = '#10b98150';
+    time.textContent       = timeStr;
+  } else {
+    dot.style.background   = '#ef4444';
+    label.style.color      = '#ef4444';
+    label.textContent      = errMsg || 'Save error';
+    box.style.borderColor  = '#ef444450';
+    time.textContent       = timeStr;
+  }
+
+  clearTimeout(_saveFlashTimer);
+  _saveFlashTimer = setTimeout(() => {
+    dot.style.background  = '#10b981';
+    label.style.color     = 'var(--text3)';
+    label.textContent     = '✓ Progress saved';
+    box.style.borderColor = 'var(--border)';
+  }, 2000);
+}
+
+function exportProgress() {
+  const data = {
+    version: 'cfa_l2_tracker_v1',
+    exportedAt: new Date().toISOString(),
+    state
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'CFA_L2_Progress_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📥 Progress exported as JSON backup');
+}
+
+function importProgress(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.state || !data.state.tasks) throw new Error('Invalid backup file');
+      state = data.state;
+      saveState();
+      renderAll();
+      showToast('✅ Progress restored from backup!');
+    } catch(err) {
+      showToast('❌ Import failed: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ════════════════════════════════════════════════
+// COMPUTED
+// ════════════════════════════════════════════════
+
+function subjectProgress(subId) {
+  const done = TASKS.filter(t => state.tasks[subId]?.[t.id]?.done).length;
+  return { done, total: TASKS.length, pct: Math.round((done / TASKS.length) * 100) };
+}
+
+function overallProgress() {
+  let done = 0, total = SUBJECTS.length * TASKS.length;
+  SUBJECTS.forEach(s => {
+    TASKS.forEach(t => { if (state.tasks[s.id]?.[t.id]?.done) done++; });
+  });
+  return { done, total, pct: Math.round((done / total) * 100) };
+}
+
+function daysUntil(date) {
+  return Math.ceil((date - new Date()) / (1000 * 60 * 60 * 24));
+}
+
+function dateToPos(date, start, end) {
+  const total = end - start;
+  const elapsed = Math.max(0, Math.min(total, date - start));
+  return (elapsed / total) * 100;
+}
+
+function mockStats() {
+  const completed = state.mocks.filter(m => m.score !== '');
+  const scores = completed.map(m => parseFloat(m.score)).filter(s => !isNaN(s));
+  const passed = scores.filter(s => s >= 70).length;
+  const avg = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0) / scores.length) : null;
+  return { completed: completed.length, passed, avg };
+}
+
+// ════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════
+
+let activeSubject = null;
+
+function renderAll() {
+  renderSidebar();
+  renderTimeline();
+  renderStats();
+  renderSubjectGrid();
+  // renderMocks and renderPlan are only rendered on demand when their tabs are active
+  // to avoid destroying live inputs (e.g. mock score being typed)
+}
+
+function renderSidebar() {
+  const overall = overallProgress();
+  document.getElementById('overall-pct').textContent = overall.pct + '%';
+  document.getElementById('overall-bar').style.width = overall.pct + '%';
+  document.getElementById('overall-sub').textContent = `${overall.done} / ${overall.total} tasks complete`;
+
+  const daysExam = daysUntil(EXAM_DATE);
+  document.getElementById('days-to-exam').textContent = `${daysExam} days to go`;
+
+  const nav = document.getElementById('subject-nav');
+  nav.innerHTML = SUBJECTS.map(sub => {
+    const prog = subjectProgress(sub.id);
+    const isActive = activeSubject === sub.id;
+    return `<div class="nav-item ${isActive?'active':''}" onclick="openSubject('${sub.id}')">
+      <span class="nav-icon">${sub.icon}</span>
+      <span class="nav-name">${sub.name}</span>
+      <div class="nav-mini-bar">
+        <div class="nav-mini-fill" style="width:${prog.pct}%;background:${sub.color}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTimeline() {
+  const now = new Date();
+  const totalSpan = EXAM_DATE - START_DATE;
+
+  // Timeline fill (today's position)
+  const todayPct = Math.max(0, Math.min(100, ((now - START_DATE) / totalSpan) * 100));
+  document.getElementById('timeline-fill').style.width = todayPct + '%';
+
+  // Phase bands
+  PHASES.forEach((p, i) => {
+    const band = document.getElementById(`phase-band-${i+1}`);
+    if (!band) return;
+    const left = dateToPos(p.start, START_DATE, EXAM_DATE);
+    const right = dateToPos(p.end, START_DATE, EXAM_DATE);
+    band.style.left = left + '%';
+    band.style.width = (right - left) + '%';
+  });
+
+  // Milestones
+  const milestones = [
+    { date: START_DATE,   label: 'Start',        color: '#10b981' },
+    { date: new Date('2026-04-20'), label:'Phase 1', color:'#10b981' },
+    { date: SYLLABUS_END, label: 'Syllabus ✓',    color: '#0ea5e9' },
+    { date: new Date('2026-07-15'), label:'Rev Done', color:'#f97316' },
+    { date: now,          label: 'Today',         color: '#ffffff' },
+    { date: EXAM_DATE,    label: 'EXAM',          color: '#ef4444' },
+  ];
+
+  const container = document.getElementById('timeline-milestones');
+  container.innerHTML = milestones.map(m => {
+    const pct = dateToPos(m.date, START_DATE, EXAM_DATE);
+    const dateStr = m.date.toLocaleDateString('en-GB', { day:'numeric', month:'short' });
+    return `<div class="timeline-milestone" style="left:${pct}%">
+      <div class="milestone-dot" style="background:${m.color};border-color:var(--bg2)"></div>
+      <div class="milestone-label" style="color:${m.color}">${m.label}</div>
+      <div class="milestone-date">${dateStr}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderStats() {
+  const overall = overallProgress();
+  const ms = mockStats();
+  const daysExam = daysUntil(EXAM_DATE);
+  const daysSyllabus = daysUntil(SYLLABUS_END);
+  const completedSubs = SUBJECTS.filter(s => subjectProgress(s.id).pct === 100).length;
+
+  const row = document.getElementById('stats-row');
+  row.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Overall Progress</div>
+      <div class="stat-value" style="color:var(--accent2)">${overall.pct}%</div>
+      <div class="stat-sub">${overall.done} of ${overall.total} tasks done</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Days to Exam</div>
+      <div class="stat-value" style="color:${daysExam < 60 ? 'var(--red)' : daysExam < 120 ? 'var(--orange)' : 'var(--green)'}">${daysExam}</div>
+      <div class="stat-sub">Aug 25, 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Syllabus Deadline</div>
+      <div class="stat-value" style="color:${daysSyllabus < 0 ? 'var(--red)' : 'var(--blue)'}">${Math.abs(daysSyllabus)}</div>
+      <div class="stat-sub">${daysSyllabus < 0 ? 'days overdue' : 'days left (May 31)'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Mocks Done</div>
+      <div class="stat-value" style="color:${ms.completed >= 2 ? 'var(--green)' : 'var(--orange)'}">${ms.completed} / 5</div>
+      <div class="stat-sub">${ms.avg ? `Avg score: ${ms.avg}%` : 'Min 2 required'}</div>
+    </div>
+  `;
+}
+
+function renderSubjectGrid() {
+  const grid = document.getElementById('subject-grid');
+  grid.innerHTML = SUBJECTS.map(sub => {
+    const prog = subjectProgress(sub.id);
+    const isComplete = prog.pct === 100;
+    const pips = TASKS.map(t => {
+      const done = state.tasks[sub.id]?.[t.id]?.done;
+      return `<div class="task-pip ${t.id} ${done?'done':''}"
+                   onclick="quickToggle(event,'${sub.id}','${t.id}')"
+                   data-tip="${t.label}">${done ? '✓' : t.short}</div>`;
+    }).join('');
+
+    return `<div class="subject-card ${isComplete?'complete':''}" onclick="openSubject('${sub.id}')">
+      <div class="sc-header">
+        <span class="sc-icon">${sub.icon}</span>
+        <div>
+          <div class="sc-name">${sub.name}</div>
+          <div class="sc-weight">Exam weight: ~${sub.weight}%</div>
+        </div>
+        ${isComplete ? '<span class="badge badge-green" style="margin-left:auto">✓ Done</span>' : ''}
+      </div>
+      <div class="sc-progress-row">
+        <div class="sc-bar-track">
+          <div class="sc-bar-fill" style="width:${prog.pct}%;background:${sub.color}"></div>
+        </div>
+        <span class="sc-pct" style="color:${sub.color}">${prog.pct}%</span>
+      </div>
+      <div class="sc-tasks">${pips}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderDetail(subId) {
+  const sub = SUBJECTS.find(s => s.id === subId);
+  if (!sub) return;
+  const prog = subjectProgress(subId);
+
+  document.getElementById('detail-icon').textContent = sub.icon;
+  document.getElementById('detail-name').textContent = sub.name;
+  document.getElementById('detail-meta').textContent = `Exam weight: ~${sub.weight}% · ${prog.done}/${prog.total} tasks complete`;
+
+  const container = document.getElementById('detail-tasks');
+  container.innerHTML = TASKS.map(t => {
+    const taskState = state.tasks[subId]?.[t.id] || { done:false, date:null };
+    const done = taskState.done;
+    const dateStr = taskState.date ? new Date(taskState.date).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'2-digit'}) : '';
+    return `<div class="task-card ${t.id} ${done?'done':''}" onclick="toggleTask('${subId}','${t.id}')">
+      <div class="task-card-icon">${t.icon}</div>
+      <div class="task-card-label">${t.label}</div>
+      <div class="task-check">${done ? '✓' : ''}</div>
+      <div class="task-date">${done ? '✓ ' + dateStr : '—'}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('detail-notes').value = state.notes[subId] || '';
+
+  // Priority buttons
+  document.querySelectorAll('.priority-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.classList.contains(state.priority[subId] || 'medium')) btn.classList.add('active');
+  });
+}
+
+function renderMocks() {
+  // Stats
+  const ms = mockStats();
+  const statsRow = document.getElementById('mock-stats-row');
+  statsRow.innerHTML = `
+    <div class="mock-stat">
+      <div class="stat-label">Completed</div>
+      <div class="stat-value" style="color:${ms.completed>=2?'var(--green)':'var(--orange)'}">${ms.completed}</div>
+      <div class="stat-sub">of 5 mocks</div>
+    </div>
+    <div class="mock-stat">
+      <div class="stat-label">Average Score</div>
+      <div class="stat-value" style="color:${ms.avg===null?'var(--text3)':ms.avg>=70?'var(--green)':'var(--red)'}">${ms.avg !== null ? ms.avg + '%' : '—'}</div>
+      <div class="stat-sub">pass mark: 70%</div>
+    </div>
+    <div class="mock-stat">
+      <div class="stat-label">Pass Rate</div>
+      <div class="stat-value" style="color:${ms.passed===ms.completed&&ms.completed>0?'var(--green)':'var(--orange)'}">${ms.completed ? Math.round((ms.passed/ms.completed)*100)+'%' : '—'}</div>
+      <div class="stat-sub">${ms.passed} passed · ${ms.completed - ms.passed} failed</div>
+    </div>
+  `;
+
+  const grid = document.getElementById('mocks-grid');
+  grid.innerHTML = state.mocks.map((m, i) => {
+    const score = parseFloat(m.score);
+    const isPassed = !isNaN(score) && score >= 70;
+    const isFailed = !isNaN(score) && score < 70;
+    const isRequired = i < 2;
+    const statusClass = isFailed ? 'failed' : isPassed ? 'passed' : '';
+    const statusText = isFailed ? '✗ Below pass mark' : isPassed ? '✓ Passed' : i < state.mocks.filter(x=>x.score!=='').length + 1 ? 'Upcoming' : 'Upcoming';
+
+    return `<div class="mock-card ${statusClass}">
+      <div class="mock-number">
+        Mock ${i+1}
+        ${isRequired ? '<span class="badge badge-orange" style="margin-left:4px">Required</span>' : ''}
+      </div>
+      <input class="mock-score-input" type="number" min="0" max="100"
+             value="${m.score}" placeholder="Score %"
+             oninput="saveMockScore(${i}, this.value)"
+             onchange="saveMockScore(${i}, this.value)" />
+      <div class="mock-pct-label">Enter your percentage score</div>
+      <input class="mock-date-input" type="date" value="${m.date}"
+             onchange="saveMockDate(${i}, this.value)"
+             placeholder="Date taken" />
+      <div class="mock-status ${statusClass || 'pending'}">${!isNaN(score)&&m.score!=='' ? statusText : '— Not taken yet'}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderPlan() {
+  // Phase breakdown
+  const phaseDiv = document.getElementById('phase-breakdown');
+  const now = new Date();
+  const totalDays = (EXAM_DATE - START_DATE) / (1000 * 60 * 60 * 24);
+
+  phaseDiv.innerHTML = PHASES.map(p => {
+    const phaseDays = (p.end - p.start) / (1000 * 60 * 60 * 24);
+    const elapsed = Math.min(phaseDays, Math.max(0, (now - p.start) / (1000 * 60 * 60 * 24)));
+    const pct = Math.round((elapsed / phaseDays) * 100);
+    const status = now > p.end ? 'Completed' : now >= p.start ? 'In Progress' : 'Upcoming';
+    const statusColor = now > p.end ? 'var(--green)' : now >= p.start ? 'var(--blue)' : 'var(--text3)';
+
+    const startStr = p.start.toLocaleDateString('en-GB', {day:'numeric',month:'short'});
+    const endStr = p.end.toLocaleDateString('en-GB', {day:'numeric',month:'short'});
+
+    return `<div class="phase-row">
+      <div class="phase-color-bar" style="background:${p.color}"></div>
+      <div class="phase-info">
+        <div class="phase-name">${p.name}</div>
+        <div class="phase-dates">${startStr} → ${endStr} · ${Math.round(phaseDays)} days</div>
+        <div class="phase-subjects">${p.subjects}</div>
+      </div>
+      <div style="text-align:right;min-width:120px">
+        <div class="phase-progress-bar" style="margin:0 0 6px auto">
+          <div class="phase-progress-fill" style="width:${pct}%;background:${p.color}"></div>
+        </div>
+        <div style="font-size:11px;color:${statusColor};font-weight:700">${status}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Weekly plan table
+  const weeks = generateWeeklyPlan();
+  const table = document.getElementById('plan-table');
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Dates</th>
+        <th>Focus</th>
+        <th>Tasks</th>
+        <th>Phase</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${weeks.map(w => `<tr>
+        <td><span class="week-label">W${w.num}</span></td>
+        <td style="color:var(--text2);font-size:11px">${w.dates}</td>
+        <td style="font-weight:600">${w.focus}</td>
+        <td style="font-size:11px;color:var(--text2)">${w.tasks}</td>
+        <td><span class="badge" style="background:${w.phaseColor}20;color:${w.phaseColor}">${w.phase}</span></td>
+      </tr>`).join('')}
+    </tbody>
+  `;
+}
+
+function generateWeeklyPlan() {
+  return [
+    { num:1, dates:'Mar 30 – Apr 5',  focus:'Quantitative Methods',      tasks:'Videos + Book',          phase:'Foundation', phaseColor:'#10b981' },
+    { num:2, dates:'Apr 6 – Apr 12',  focus:'Economics',                  tasks:'Videos + Book + IQ',     phase:'Foundation', phaseColor:'#10b981' },
+    { num:3, dates:'Apr 13 – Apr 19', focus:'Ethics',                     tasks:'Videos + Book + IQ',     phase:'Foundation', phaseColor:'#10b981' },
+    { num:4, dates:'Apr 20 – Apr 26', focus:'FSA — Part 1',               tasks:'Videos + Book',          phase:'Deep Study', phaseColor:'#0ea5e9' },
+    { num:5, dates:'Apr 27 – May 3',  focus:'FSA — Part 2',               tasks:'Book + Inst. Questions', phase:'Deep Study', phaseColor:'#0ea5e9' },
+    { num:6, dates:'May 4 – May 10',  focus:'Corporate Issuers',          tasks:'Videos + Book + IQ',     phase:'Deep Study', phaseColor:'#0ea5e9' },
+    { num:7, dates:'May 11 – May 17', focus:'Equity Valuation — Part 1',  tasks:'Videos + Book',          phase:'Deep Study', phaseColor:'#0ea5e9' },
+    { num:8, dates:'May 18 – May 24', focus:'Equity Valuation — Part 2',  tasks:'Book + IQ',              phase:'Deep Study', phaseColor:'#0ea5e9' },
+    { num:9, dates:'May 25 – May 31', focus:'Fixed Income',               tasks:'Videos + Book + IQ',     phase:'Deep Study', phaseColor:'#0ea5e9' },
+    // ✅ SYLLABUS COMPLETE BY MAY 31
+    { num:10, dates:'Jun 1 – Jun 7',  focus:'Derivatives',               tasks:'Videos + Book + IQ',     phase:'Revision',   phaseColor:'#f97316' },
+    { num:11, dates:'Jun 8 – Jun 14', focus:'Alt Investments',            tasks:'Videos + Book + IQ',     phase:'Revision',   phaseColor:'#f97316' },
+    { num:12, dates:'Jun 15 – Jun 21',focus:'Portfolio Management',       tasks:'Videos + Book + IQ',     phase:'Revision',   phaseColor:'#f97316' },
+    { num:13, dates:'Jun 22 – Jun 28',focus:'Revision 1 — Quant + Eco',  tasks:'R1 for first 3 topics',  phase:'Revision',   phaseColor:'#f97316' },
+    { num:14, dates:'Jun 29 – Jul 5', focus:'Revision 1 — FSA + Corp',   tasks:'R1 FSA + Corp',          phase:'Revision',   phaseColor:'#f97316' },
+    { num:15, dates:'Jul 6 – Jul 12', focus:'Revision 1 — Equity + FI',  tasks:'R1 Equity + FI',         phase:'Revision',   phaseColor:'#f97316' },
+    { num:16, dates:'Jul 13 – Jul 19',focus:'Revision 2 — All subjects', tasks:'R2 weak areas focus',    phase:'Revision',   phaseColor:'#f97316' },
+    { num:17, dates:'Jul 20 – Jul 26',focus:'Mock 1 + Mock 2',           tasks:'Full mocks + deep review', phase:'Mocks',    phaseColor:'#ef4444' },
+    { num:18, dates:'Jul 27 – Aug 2', focus:'Mock 3 + Review',            tasks:'Mock + targeted revision', phase:'Mocks',   phaseColor:'#ef4444' },
+    { num:19, dates:'Aug 3 – Aug 9',  focus:'Mock 4 + Review',            tasks:'Mock + formula drill',   phase:'Mocks',      phaseColor:'#ef4444' },
+    { num:20, dates:'Aug 10 – Aug 16',focus:'Mock 5 + Final Revision',    tasks:'Final mock + ethics',    phase:'Mocks',      phaseColor:'#ef4444' },
+    { num:21, dates:'Aug 17 – Aug 24',focus:'🔥 Final Sprint',            tasks:'Formulas · Ethics · Rest', phase:'Mocks',   phaseColor:'#ef4444' },
+  ];
+}
+
+// ════════════════════════════════════════════════
+// INTERACTIONS
+// ════════════════════════════════════════════════
+
+function toggleTask(subId, taskId) {
+  const curr = state.tasks[subId][taskId];
+  curr.done = !curr.done;
+  curr.date = curr.done ? new Date().toISOString() : null;
+  saveState();
+  renderAll();
+  renderDetail(subId);
+  if (curr.done) {
+    const task = TASKS.find(t => t.id === taskId);
+    const sub = SUBJECTS.find(s => s.id === subId);
+    showToast(`${task.icon} ${task.label} done for ${sub.name}!`);
+    const prog = subjectProgress(subId);
+    if (prog.pct === 100) showToast(`🎉 ${sub.name} complete!`);
+  }
+}
+
+function quickToggle(event, subId, taskId) {
+  event.stopPropagation();
+  toggleTask(subId, taskId);
+}
+
+function openSubject(subId) {
+  activeSubject = subId;
+  renderSidebar();
+  renderDetail(subId);
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-detail').classList.add('active');
+  document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+}
+
+function saveNotes() {
+  if (!activeSubject) return;
+  state.notes[activeSubject] = document.getElementById('detail-notes').value;
+  saveState();
+}
+
+function setPriority(btn, level) {
+  if (!activeSubject) return;
+  state.priority[activeSubject] = level;
+  saveState();
+  document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  showToast(`Priority set to ${level} for ${SUBJECTS.find(s=>s.id===activeSubject).name}`);
+}
+
+function saveMockScore(idx, val) {
+  state.mocks[idx].score = val;
+  saveState();
+  renderStats();
+  // Update only this card's visual state in-place — no full re-render that would kill input focus
+  const score = parseFloat(val);
+  const isPassed = !isNaN(score) && score >= 70;
+  const isFailed = !isNaN(score) && score < 70 && val !== '';
+  const cards = document.querySelectorAll('.mock-card');
+  if (cards[idx]) {
+    cards[idx].classList.remove('passed', 'failed');
+    if (isPassed) cards[idx].classList.add('passed');
+    else if (isFailed) cards[idx].classList.add('failed');
+    const statusEl = cards[idx].querySelector('.mock-status');
+    if (statusEl) {
+      statusEl.className = 'mock-status ' + (isPassed ? 'passed' : isFailed ? 'failed' : 'pending');
+      statusEl.textContent = isPassed ? '✓ Passed' : isFailed ? '✗ Below pass mark' : '— Not taken yet';
+    }
+  }
+}
+
+function saveMockDate(idx, val) {
+  state.mocks[idx].date = val;
+  saveState();
+}
+
+function showMainTab(tabId) {
+  activeSubject = null;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + tabId).classList.add('active');
+  document.querySelectorAll('.main-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tabId);
+  });
+  renderSidebar();
+  if (tabId === 'mocks') renderMocks();
+  if (tabId === 'plan') renderPlan();
+  if (tabId === 'dashboard') { renderStats(); renderSubjectGrid(); }
+}
+
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+loadState();
+renderAll();
+restoreSaveIndicator();
+
+// Hide back-nav when embedded inside the CFA L2 Hub iframe
+if (window.self !== window.top) {
+  const nav = document.getElementById('back-nav');
+  if (nav) nav.style.display = 'none';
+}
+</script>
+</body>
+</html>

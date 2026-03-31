@@ -161,6 +161,26 @@ body {
   color: #a5b4fc;
 }
 
+.sb-tracker-shortcut {
+  border-left-color: rgba(108,92,231,0.4);
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.sb-tracker-shortcut:hover {
+  border-left-color: var(--accent);
+}
+.sb-tracker-badge {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: linear-gradient(135deg,#6c5ce7,#a29bfe);
+  color: white;
+  flex-shrink: 0;
+}
+
 .sb-footer {
   padding: 12px;
   border-top: 1px solid var(--border);
@@ -714,6 +734,11 @@ body {
       <span class="sb-item-icon">📊</span>
       <span>Dashboard</span>
     </div>
+    <div class="sb-item sb-tracker-shortcut" onclick="switchView('tracker')" title="Track your study progress">
+      <span class="sb-item-icon">🎯</span>
+      <span>Progress Tracker</span>
+      <span class="sb-tracker-badge">TRACK</span>
+    </div>
     <div class="sb-item" onclick="switchView('notes')">
       <span class="sb-item-icon">📝</span>
       <span>Notes Navigator</span>
@@ -726,8 +751,6 @@ body {
       <span class="sb-item-icon">📥</span>
       <span>Downloads</span>
     </div>
-
-
 
   </nav>
 
@@ -869,6 +892,13 @@ body {
           <div class="qa-desc">Download notes and explainers for offline study</div>
         </div>
       </div>
+      <div class="qa-card qa-tracker-card" onclick="switchView('tracker')" style="border-color:var(--accent);background:linear-gradient(135deg,rgba(108,92,231,0.12),rgba(162,155,254,0.06));">
+        <div class="qa-icon-wrap" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe);">🎯</div>
+        <div>
+          <div class="qa-title" style="color:var(--accent2);">Progress Tracker</div>
+          <div class="qa-desc">Track Videos, Reading, Practice Questions &amp; Revisions across all 10 subjects. Log mock scores &amp; countdown to exam day.</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -884,6 +914,10 @@ body {
         <div class="ttab active" onclick="nsFilter('all',this)">All</div>
         <div class="ttab" onclick="nsFilter('equity',this)">📈 Equity</div>
         <div class="ttab" onclick="nsFilter('fi',this)">🏦 Fixed Income</div>
+        <div class="ttab" onclick="nsFilter('econ',this)">🌐 Economics</div>
+        <div class="ttab" onclick="nsFilter('corp',this)">🏢 Corporate</div>
+        <div class="ttab" onclick="nsFilter('deriv',this)">⚡ Derivatives</div>
+        <div class="ttab" onclick="nsFilter('alts',this)">💎 Alternatives</div>
       </div>
     </div>
     <div id="notes-body">
@@ -1006,6 +1040,84 @@ body {
               ⬇ Download FI Notes (PDF file)
             </a>
           </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">📊</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Commodities Notes</div>
+                <div style="font-size:11px;color:var(--text3);">Handwritten notes · PDF</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers commodity markets, futures pricing, roll return, and alternative investment strategies.</p>
+            <a href="./assets/notes/Commodities.pdf" download="Commodities.pdf" style="display:block;text-align:center;text-decoration:none;width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download Commodities Notes (PDF file)
+            </a>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">🏢</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Corporate Issuers Notes</div>
+                <div style="font-size:11px;color:var(--text3);">Handwritten notes · PDF</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers capital structure, dividends, ESG, M&A, and corporate governance frameworks.</p>
+            <a href="./assets/notes/Corp_Final.pdf" download="Corp_Final.pdf" style="display:block;text-align:center;text-decoration:none;width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download Corporate Notes (PDF file)
+            </a>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">📉</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Derivatives Notes</div>
+                <div style="font-size:11px;color:var(--text3);">Handwritten notes · PDF</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers options pricing, swaps, forwards, futures, and hedging strategies for CFA L2.</p>
+            <a href="./assets/notes/Derivatives_Final.pdf" download="Derivatives_Final.pdf" style="display:block;text-align:center;text-decoration:none;width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download Derivatives Notes (PDF file)
+            </a>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">🌍</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Economics Notes</div>
+                <div style="font-size:11px;color:var(--text3);">Handwritten notes · PDF</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers FX markets, parity conditions, macro analysis, and economic growth models.</p>
+            <a href="./assets/notes/Eco_Final.pdf" download="Eco_Final.pdf" style="display:block;text-align:center;text-decoration:none;width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download Economics Notes (PDF file)
+            </a>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">🔮</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Hedge Funds Notes</div>
+                <div style="font-size:11px;color:var(--text3);">Handwritten notes · PDF</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers hedge fund strategies, fee structures, due diligence, and performance evaluation.</p>
+            <a href="./assets/notes/HEDGE_FUNDS.pdf" download="HEDGE_FUNDS.pdf" style="display:block;text-align:center;text-decoration:none;width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download Hedge Funds Notes (PDF file)
+            </a>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:20px;">🏠</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);">Real Estate Notes</div>
+                <div style="font-size:11px;color:var(--text3);">Handwritten notes · PDF</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Covers real estate valuation, REITs, income approach, and private vs public real estate investing.</p>
+            <a href="./assets/notes/REAL_ESTATE.pdf" download="REAL_ESTATE.pdf" style="display:block;text-align:center;text-decoration:none;width:100%;padding:10px;background:#6c5ce7;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#a29bfe'" onmouseout="this.style.background='#6c5ce7'">
+              ⬇ Download Real Estate Notes (PDF file)
+            </a>
+          </div>
         </div>
       </div>
 
@@ -1023,9 +1135,20 @@ body {
       </div>
     </div>
   </div>
+  <!-- TRACKER VIEW -->
+  <div id="v-tracker" class="view" style="flex-direction:column;overflow:hidden;">
+    <iframe
+      id="tracker-iframe"
+      src="./cfa-l2-tracker.html"
+      style="width:100%;flex:1;border:none;display:block;"
+      allow="same-origin"
+      title="CFA L2 Progress Tracker"
+    ></iframe>
+  </div>
+
 </main>
 
-<script src="./assets/seed_explainers.js?v=3"></script>
+<script src="./assets/seed_explainers.js?v=5"></script>
 <script>
 // ════════════════════════════════════════════════════════════════
 // THEME TOGGLE
@@ -1084,7 +1207,8 @@ function getNavLabel(viewName) {
     dashboard: 'dashboard',
     notes: 'notes',
     explainers: 'explainers',
-    downloads: 'downloads'
+    downloads: 'downloads',
+    tracker: 'tracker'
   };
   return map[viewName] || viewName;
 }
@@ -1093,7 +1217,7 @@ function getNavLabel(viewName) {
 // DATA
 // ════════════════════════════════════════════════════════════════
 
-const PAGE_IMAGES = {"equity-01":"./assets/notes/equity-01.jpg","equity-02":"./assets/notes/equity-02.jpg","equity-03":"./assets/notes/equity-03.jpg","equity-04":"./assets/notes/equity-04.jpg","equity-05":"./assets/notes/equity-05.jpg","equity-06":"./assets/notes/equity-06.jpg","equity-07":"./assets/notes/equity-07.jpg","equity-08":"./assets/notes/equity-08.jpg","equity-09":"./assets/notes/equity-09.jpg","equity-10":"./assets/notes/equity-10.jpg","equity-11":"./assets/notes/equity-11.jpg","equity-12":"./assets/notes/equity-12.jpg","equity-13":"./assets/notes/equity-13.jpg","equity-14":"./assets/notes/equity-14.jpg","equity-15":"./assets/notes/equity-15.jpg","equity-16":"./assets/notes/equity-16.jpg","equity-17":"./assets/notes/equity-17.jpg","equity-18":"./assets/notes/equity-18.jpg","equity-19":"./assets/notes/equity-19.jpg","equity-20":"./assets/notes/equity-20.jpg","fi-01":"./assets/notes/fi-01.jpg","fi-02":"./assets/notes/fi-02.jpg","fi-03":"./assets/notes/fi-03.jpg","fi-04":"./assets/notes/fi-04.jpg","fi-05":"./assets/notes/fi-05.jpg","fi-06":"./assets/notes/fi-06.jpg","fi-07":"./assets/notes/fi-07.jpg","fi-08":"./assets/notes/fi-08.jpg","fi-09":"./assets/notes/fi-09.jpg","fi-10":"./assets/notes/fi-10.jpg","fi-11":"./assets/notes/fi-11.jpg","fi-12":"./assets/notes/fi-12.jpg","fi-13":"./assets/notes/fi-13.jpg","fi-14":"./assets/notes/fi-14.jpg","fi-15":"./assets/notes/fi-15.jpg","fi-16":"./assets/notes/fi-16.jpg","fi-17":"./assets/notes/fi-17.jpg","fi-18":"./assets/notes/fi-18.jpg","fi-19":"./assets/notes/fi-19.jpg","fi-20":"./assets/notes/fi-20.jpg","fi-21":"./assets/notes/fi-21.jpg","fi-22":"./assets/notes/fi-22.jpg","fi-23":"./assets/notes/fi-23.jpg","fi-24":"./assets/notes/fi-24.jpg","fi-25":"./assets/notes/fi-25.jpg","fi-26":"./assets/notes/fi-26.jpg","fi-27":"./assets/notes/fi-27.jpg","fi-28":"./assets/notes/fi-28.jpg","fi-29":"./assets/notes/fi-29.jpg","fi-30":"./assets/notes/fi-30.jpg","fi-31":"./assets/notes/fi-31.jpg","fi-32":"./assets/notes/fi-32.jpg","fi-33":"./assets/notes/fi-33.jpg","fi-34":"./assets/notes/fi-34.jpg","fi-35":"./assets/notes/fi-35.jpg","fi-36":"./assets/notes/fi-36.jpg","fi-37":"./assets/notes/fi-37.jpg","fi-38":"./assets/notes/fi-38.jpg","fi-39":"./assets/notes/fi-39.jpg","fi-40":"./assets/notes/fi-40.jpg","fi-41":"./assets/notes/fi-41.jpg"};const INDEX = [
+const PAGE_IMAGES = {"equity-01":"./assets/notes/equity-01.jpg","equity-02":"./assets/notes/equity-02.jpg","equity-03":"./assets/notes/equity-03.jpg","equity-04":"./assets/notes/equity-04.jpg","equity-05":"./assets/notes/equity-05.jpg","equity-06":"./assets/notes/equity-06.jpg","equity-07":"./assets/notes/equity-07.jpg","equity-08":"./assets/notes/equity-08.jpg","equity-09":"./assets/notes/equity-09.jpg","equity-10":"./assets/notes/equity-10.jpg","equity-11":"./assets/notes/equity-11.jpg","equity-12":"./assets/notes/equity-12.jpg","equity-13":"./assets/notes/equity-13.jpg","equity-14":"./assets/notes/equity-14.jpg","equity-15":"./assets/notes/equity-15.jpg","equity-16":"./assets/notes/equity-16.jpg","equity-17":"./assets/notes/equity-17.jpg","equity-18":"./assets/notes/equity-18.jpg","equity-19":"./assets/notes/equity-19.jpg","equity-20":"./assets/notes/equity-20.jpg","fi-01":"./assets/notes/fi-01.jpg","fi-02":"./assets/notes/fi-02.jpg","fi-03":"./assets/notes/fi-03.jpg","fi-04":"./assets/notes/fi-04.jpg","fi-05":"./assets/notes/fi-05.jpg","fi-06":"./assets/notes/fi-06.jpg","fi-07":"./assets/notes/fi-07.jpg","fi-08":"./assets/notes/fi-08.jpg","fi-09":"./assets/notes/fi-09.jpg","fi-10":"./assets/notes/fi-10.jpg","fi-11":"./assets/notes/fi-11.jpg","fi-12":"./assets/notes/fi-12.jpg","fi-13":"./assets/notes/fi-13.jpg","fi-14":"./assets/notes/fi-14.jpg","fi-15":"./assets/notes/fi-15.jpg","fi-16":"./assets/notes/fi-16.jpg","fi-17":"./assets/notes/fi-17.jpg","fi-18":"./assets/notes/fi-18.jpg","fi-19":"./assets/notes/fi-19.jpg","fi-20":"./assets/notes/fi-20.jpg","fi-21":"./assets/notes/fi-21.jpg","fi-22":"./assets/notes/fi-22.jpg","fi-23":"./assets/notes/fi-23.jpg","fi-24":"./assets/notes/fi-24.jpg","fi-25":"./assets/notes/fi-25.jpg","fi-26":"./assets/notes/fi-26.jpg","fi-27":"./assets/notes/fi-27.jpg","fi-28":"./assets/notes/fi-28.jpg","fi-29":"./assets/notes/fi-29.jpg","fi-30":"./assets/notes/fi-30.jpg","fi-31":"./assets/notes/fi-31.jpg","fi-32":"./assets/notes/fi-32.jpg","fi-33":"./assets/notes/fi-33.jpg","fi-34":"./assets/notes/fi-34.jpg","fi-35":"./assets/notes/fi-35.jpg","fi-36":"./assets/notes/fi-36.jpg","fi-37":"./assets/notes/fi-37.jpg","fi-38":"./assets/notes/fi-38.jpg","fi-39":"./assets/notes/fi-39.jpg","fi-40":"./assets/notes/fi-40.jpg","fi-41":"./assets/notes/fi-41.jpg","eco-01":"./assets/notes/eco-01.jpg","eco-02":"./assets/notes/eco-02.jpg","eco-03":"./assets/notes/eco-03.jpg","eco-04":"./assets/notes/eco-04.jpg","eco-05":"./assets/notes/eco-05.jpg","eco-06":"./assets/notes/eco-06.jpg","eco-07":"./assets/notes/eco-07.jpg","eco-08":"./assets/notes/eco-08.jpg","eco-09":"./assets/notes/eco-09.jpg","eco-10":"./assets/notes/eco-10.jpg","eco-11":"./assets/notes/eco-11.jpg","eco-12":"./assets/notes/eco-12.jpg","eco-13":"./assets/notes/eco-13.jpg","eco-14":"./assets/notes/eco-14.jpg","corp-01":"./assets/notes/corp-01.jpg","corp-02":"./assets/notes/corp-02.jpg","corp-03":"./assets/notes/corp-03.jpg","corp-04":"./assets/notes/corp-04.jpg","corp-05":"./assets/notes/corp-05.jpg","corp-06":"./assets/notes/corp-06.jpg","corp-07":"./assets/notes/corp-07.jpg","corp-08":"./assets/notes/corp-08.jpg","corp-09":"./assets/notes/corp-09.jpg","corp-10":"./assets/notes/corp-10.jpg","deriv-01":"./assets/notes/deriv-01.jpg","deriv-02":"./assets/notes/deriv-02.jpg","deriv-03":"./assets/notes/deriv-03.jpg","deriv-04":"./assets/notes/deriv-04.jpg","deriv-05":"./assets/notes/deriv-05.jpg","deriv-06":"./assets/notes/deriv-06.jpg","deriv-07":"./assets/notes/deriv-07.jpg","deriv-08":"./assets/notes/deriv-08.jpg","deriv-09":"./assets/notes/deriv-09.jpg","deriv-10":"./assets/notes/deriv-10.jpg","deriv-11":"./assets/notes/deriv-11.jpg","deriv-12":"./assets/notes/deriv-12.jpg","deriv-13":"./assets/notes/deriv-13.jpg","deriv-14":"./assets/notes/deriv-14.jpg","deriv-15":"./assets/notes/deriv-15.jpg","deriv-16":"./assets/notes/deriv-16.jpg","deriv-17":"./assets/notes/deriv-17.jpg","deriv-18":"./assets/notes/deriv-18.jpg","deriv-19":"./assets/notes/deriv-19.jpg","deriv-20":"./assets/notes/deriv-20.jpg","deriv-21":"./assets/notes/deriv-21.jpg","deriv-22":"./assets/notes/deriv-22.jpg","deriv-23":"./assets/notes/deriv-23.jpg","commodities-01":"./assets/notes/commodities-01.jpg","commodities-02":"./assets/notes/commodities-02.jpg","commodities-03":"./assets/notes/commodities-03.jpg","hf-01":"./assets/notes/hf-01.jpg","hf-02":"./assets/notes/hf-02.jpg","hf-03":"./assets/notes/hf-03.jpg","re-01":"./assets/notes/re-01.jpg","re-02":"./assets/notes/re-02.jpg","re-03":"./assets/notes/re-03.jpg","re-04":"./assets/notes/re-04.jpg","re-05":"./assets/notes/re-05.jpg","re-06":"./assets/notes/re-06.jpg","re-07":"./assets/notes/re-07.jpg"};const INDEX = [
   // ─── EQUITY ───────────────────────────────────────────
   { id:"eq1",  topic:"equity", name:"Intrinsic Value vs Market Value",             icon:"💎", pages:[1],        source:"equity", type:["concept","exam"],
     formula:null,
@@ -1400,6 +1524,197 @@ const PAGE_IMAGES = {"equity-01":"./assets/notes/equity-01.jpg","equity-02":"./a
     formula:"Barbell: short + long ends → higher convexity, same duration\nBullet: one maturity → lower convexity\nLadder: equal across all maturities\nBarbell outperforms in large rate moves; underperforms on twists",
     concept:"Same duration achievable with different structures. Barbell: higher convexity but more KRD mismatch. Bullet: stable curve. Ladder: diversified.",
     examTip:"Barbell has higher convexity (good) but more key rate duration mismatch (risky if curve twists). Choose based on rate view and curve expectation." },
+
+  // ─── ECONOMICS ─────────────────────────────────────────────
+  { id:"ec1", topic:"econ", name:"FX Quotes: Direct, Indirect & Bid/Ask", icon:"💱", pages:[1], source:"eco", type:["concept","formula"],
+    formula:"Direct Quote: Domestic/Foreign (e.g. ₹/$ = 85 → pricing=₹, base=$)\nIndirect Quote: Foreign/Domestic\nBid/Ask Spread = Ask − Bid\nMid Quote = (Bid + Ask)/2\nPips: 4th decimal of quoted price",
+    concept:"Direct quote expresses how much domestic currency per 1 unit of foreign currency. Dealer buys at Bid (lower), sells at Ask (higher). Spread reflects liquidity, time of day, and credit risk.",
+    examTip:"Base currency is the DENOMINATOR. Appreciation in base → rate rises in direct terms. Dealer always earns the spread — they buy low, sell high." },
+
+  { id:"ec2", topic:"econ", name:"Interest Rate Parity: Covered & Uncovered", icon:"🔗", pages:[5], source:"eco", type:["formula","exam"],
+    formula:"Covered IRP: F(A/B) = S(A/B) × [(1+iA)/(1+iB)]^T\nUncovered IRP: E(S(A/B)) = S(A/B) × [(1+iA)/(1+iB)]^T\nForward Premium/Discount ≈ iA − iB\nIf UIRP holds: F(0,T) = E(ST) → Forward Rate Parity",
+    concept:"Covered IRP: lock in forward rate today (risk-free). Uncovered IRP: expect spot to move per interest differential (risky). Both link interest rate differentials to FX rates.",
+    examTip:"CIRP always holds (arbitrage enforced). UIRP rarely holds in practice due to risk premiums and carry trade profits. F > S means A is at forward premium." },
+
+  { id:"ec3", topic:"econ", name:"Forward FX Pricing & Value of Forward Contract", icon:"📅", pages:[2,4], source:"eco", type:["formula","exam"],
+    formula:"Forward Price: F(A/B) = S(A/B) × [(1+iA × m/360)/(1+iB × m/360)]\nValue to Long A at time t: V = (F_t,T − F_0,T) / [1 + (iA × (T−t)/360)]\nDiscounted using PRICING currency rate (A=INR if ₹/$)",
+    concept:"No exchange cost at initiation (V=0). Forward price locks in today's rate for future delivery. Value changes as spot and rates move. Use pricing currency rate to discount the payoff.",
+    examTip:"'Generally weaker currency rate opens the trade' note from your notes. Payoff = ST − F(0,T) for long forward. Always discount using pricing currency." },
+
+  { id:"ec4", topic:"econ", name:"Cross-Rates & Triangular Arbitrage", icon:"🔺", pages:[3], source:"eco", type:["formula","exam"],
+    formula:"A/C = (A/B) × (B/C)\nBid(A/C) = Bid(A/B) × Bid(B/C)\nAsk(A/C) = Ask(A/B) × Ask(B/C)\nArbitrage profit if implied rate ≠ quoted rate",
+    concept:"Cross rate derived by multiplying two currency pairs. Triangular arbitrage: if direct rate at Bank C differs from implied cross rate via Banks A and B, profit by round-tripping. Overlapping Bid/Ask = loss, else = profit.",
+    examTip:"To find cross rate bid: use bid×bid. For ask: use ask×ask. If implied cross ≠ quoted cross → arbitrage exists. Real markets close these gaps in milliseconds via HFT." },
+
+  { id:"ec5", topic:"econ", name:"PPP: Absolute, Relative & Ex-Ante", icon:"🛒", pages:[6], source:"eco", type:["formula","concept"],
+    formula:"Absolute PPP: S(A/B) = CPI_A/CPI_B\nRelative PPP: %ΔS ≈ π_A − π_B\nEx-Ante PPP: E(%ΔS) = E(Inflation_A) − E(Inflation_B)\nFisher Equation: (1+nominal) = (1+real)(1+inflation)",
+    concept:"Absolute PPP: basket of goods same cost everywhere (fails: different consumption patterns). Relative PPP: rate of change linked to inflation differential. Ex-Ante: expected inflation differential predicts expected FX change.",
+    examTip:"PPP fails in reality due to: sovereign risk, capital controls, transaction costs, Balassa-Samuelson Effect (EM countries have higher CPI due to lower productivity in services)." },
+
+  { id:"ec6", topic:"econ", name:"Carry Trade & Crash Risk", icon:"🎰", pages:[7], source:"eco", type:["concept","exam"],
+    formula:"Carry Trade: Borrow @ low-yielding currency, Invest @ high-yielding currency\nProfit = High yield − Low yield − FX depreciation of funding currency\nCrash Risk: Large losses when unwinding → herd behavior amplifies",
+    concept:"Borrows funding currency (e.g. JPY/CHF), invests in high-yield currency. Works best in stable, low-volatility markets. Risk: abrupt unwind (crash risk) with high probability of extreme loss event. Flight-to-safety unwinding worsens loss.",
+    examTip:"Carry trade has negative skewness (high probability small profit, low probability huge loss). Crash risk = clustering of losses, amplified by herding." },
+
+  { id:"ec7", topic:"econ", name:"Balance of Payments (BOP) & FX Rate Mechanisms", icon:"⚖️", pages:[8], source:"eco", type:["concept","exam"],
+    formula:"BOP = Current Account + Capital Account = 0\nCurrent A/C: Exports (IN), Imports (OUT)\nCapital A/C: Borrowing (IN), Investing (OUT)\n3 Mechanisms: Flow/Supply-Demand, Portfolio Balance, Debt Sustainability",
+    concept:"BOP always balances. CA deficit financed by capital inflows. Flow mechanism: ↑E → more exports, ↓imports. Portfolio balance: considers stock of financial assets. Debt sustainability: limits sustainable CA deficit.",
+    examTip:"J-curve effect: currency depreciation initially worsens CA before improving (Marshall-Lerner condition). China: undervalued exchange rate on imports → initial CA improvement." },
+
+  { id:"ec8", topic:"econ", name:"Mundell-Fleming Model", icon:"🔄", pages:[8,9], source:"eco", type:["concept","exam"],
+    formula:"Flexible Rate + High Capital Mobility:\n  Expansionary Monetary → INT↓ → Capital outflow → FX↓ (depreciation)\n  Expansionary Fiscal → Deficit → Bond supply↑ → INT↑ → Capital inflow → FX↑\nFixed Rate: buy/sell FX to maintain peg",
+    concept:"Short-run model. Assumes: (1) inflation constant, (2) short-term horizon. Monetary policy effective under flexible rates with high capital mobility. Fiscal policy effective under fixed rates. Low capital mobility: opposite conclusions.",
+    examTip:"Key matrix to memorize: High Cap. Mobility Flex rate — Monetary: E↓↓; Fiscal: E↑↑. Fixed rate — Monetary: no effect; Fiscal: E unchanged (offset by FX intervention)." },
+
+  { id:"ec9", topic:"econ", name:"Monetary Models & Exchange Rates", icon:"🏛️", pages:[9], source:"eco", type:["concept","exam"],
+    formula:"Pure Monetary Model: Expansionary M → Inflation↑ → FX↓ (PPP)\nDornbusch Overshooting: short-run FX overreacts beyond long-run PPP equilibrium\nPortfolio Balance: long-run; fiscal expansion → debt↑ → risk↑ → FX↓",
+    concept:"Pure Monetary: only monetary policy matters, output constant. Dornbusch: sticky prices cause FX to overshoot, then drift back. Portfolio Balance: extends M-F to long-run with risk premium on govt debt.",
+    examTip:"Overshooting: EM monetary expansion → INT↓ → capital outflow → FX collapses below equilibrium (actual) → PPP inflation depreciation → FX recovers. Long-run = PPP level." },
+
+  { id:"ec10", topic:"econ", name:"Grinold-Kroner Model & ERP", icon:"📈", pages:[10,11,12], source:"eco", type:["formula","exam"],
+    formula:"E(R) = Div/P + i + g − ΔS + Δ(P/E)\n  g = real EPS growth + inflation\n  ΔS = change in shares outstanding (dilution effect, negative)\n  ERP = E(R) − RF\nNote: g ≤ real GDP growth long-run",
+    concept:"Forward-looking model for expected equity returns. Income yield (Div/P) + nominal growth − dilution + repricing. ΔS is usually negative (dilution from new issuances net of buybacks). Repricing (Δ(P/E)) mean-reverts.",
+    examTip:"ΔS is subtracted: net new shares issued is dilutive. ΔS = net buybacks − issuances. GDP bounds g because GDP = aggregate earnings growth long-term. Repricing fluctuates with business cycle." },
+
+  // ─── CORPORATE ISSUERS ─────────────────────────────────────
+  { id:"co1", topic:"corp", name:"Dividend Types & Key Dates", icon:"📅", pages:[1], source:"corp", type:["concept","exam"],
+    formula:"DPS = Rate × FV\nDPR = DPS/EPS = Total Div/Total Earnings\nDiv Yield = D₁/P₀\nEx-Div Date = Record Date − T+1 (settlement)\nCum-div: buyer gets dividend. Ex-div: seller keeps it.",
+    concept:"Regular dividend: stable, recurring. Special/Irregular: one-off, don't extrapolate in projections. Liquidating Dividend: Return of Capital (reduce equity). Declaration → Record → Ex-Div → Payment.",
+    examTip:"Settlement is T+1, so ex-dividend date is one business day before record date. Price drops by roughly DPS on ex-div date. Liquidating div reduces RE in books." },
+
+  { id:"co2", topic:"corp", name:"Stock Dividends, Stock Splits & DRIPs", icon:"✂️", pages:[2], source:"corp", type:["concept","exam"],
+    formula:"10% Stock Div: RE→Share Capital. Shares↑10%, EPS↓, Price↓\n2:1 Split: Shares×2, Price/2, BVPS/2, EPS↓\nReverse Split: Shares/2, Price×2\nDRIP: dividends reinvested to buy shares (avoids transaction costs + float cost)",
+    concept:"Stock dividend: transfers RE to Share Capital. % ownership unchanged. Ratios (P/E, P/B) unaffected; EPS and DPS change. Stock splits increase liquidity. DRIP: investors reinvest dividends automatically.",
+    examTip:"After stock split/dividend: EPS and DPS change, but P/E, P/B, D/E are SAME. Reverse split: increases price, same total market cap. DRIP avoids flotation cost but pays taxes on reinvested div." },
+
+  { id:"co3", topic:"corp", name:"Dividend Theories & Policies", icon:"🧪", pages:[4], source:"corp", type:["concept","exam"],
+    formula:"MM Dividend Irrelevance: V₀ unaffected by div policy (no taxes, no trans. costs)\nBird in Hand: Investors prefer dividends now (lower perceived risk)\nTax Aversion: Cap gains tax < Div tax → prefer low dividends\nStable Policy: D₁ = D₀ × (1+growth); DPR fluctuates\nTarget Payment Adj: D₁ = D₀ + [(EPS × Target DPR − D₀) × (1/N)]",
+    concept:"MM: all clienteles can replicate desired div by buy/sell → irrelevant. Bird in Hand: certainty premium. Tax Aversion: practical in markets where div tax > cap gains. Residual model: volatile dividends but only DPR is constant.",
+    examTip:"Constant DPR → volatile absolute dividend (earnings volatile). Stable policy → non-constant div BUT overall stable parameter. Target adjustment model: N = number of years to adjust; more N = smoother." },
+
+  { id:"co4", topic:"corp", name:"Share Repurchase vs Cash Dividends", icon:"🔄", pages:[3], source:"corp", type:["concept","exam"],
+    formula:"EPS↑ after repurchase if: Earnings Yield (E/P) > Kd(1−t)\nBVPS: recalculate with lower shares\nFCFE Coverage Ratio = FCFE/(Div + Share Repurchase)\n>1: Sustainable | <1: Unsustainable\nMethods: Open Market, Fixed Price Tender, Dutch Auction, Direct Negotiation",
+    concept:"Repurchase advantages over dividend: tax benefit, flexibility, price support signal, avoids dividend cut, reduces ESOP dilution. ROE: operating profit unchanged but equity decreases → ROE↑ without adding debt.",
+    examTip:"Dutch Auction: company specifies range, shareholders tender at prices they're willing to sell; all shares repurchased at single clearing price. EPS calculation: use buyback price, not current market price." },
+
+  { id:"co5", topic:"corp", name:"Taxes on Dividends", icon:"🏛️", pages:[3,4], source:"corp", type:["concept","exam"],
+    formula:"Double Tax: Corporate tax @ 35% on profits, then Personal tax @ 30% on dividends\nSplit Rate: Lower corp tax on distributed profits (e.g. 20% dist vs 35% retained)\nImputation Tax: Investors get credit for corp tax paid → no double taxation\nEffective Tax = Individual shareholder tax rate",
+    concept:"Imputation system: most investor-friendly. Split rate: incentivises distribution. Classical/Double tax: most punitive for shareholders. Effective tax rate under imputation = individual shareholder rate (company tax credited).",
+    examTip:"Imputation: No double taxation. Under split rate, DPR↑ since distributed earnings taxed lower. Under double tax: payout disadvantaged → lower DPR preferred (tax aversion applies)." },
+
+  { id:"co6", topic:"corp", name:"WACC & Cost of Capital Components", icon:"⚙️", pages:[5,7,8], source:"corp", type:["formula","exam"],
+    formula:"WACC = We·Ke + Wp·Kp + Wd·Kd(1−t)\nKe (CAPM) = RF + β(Rm−RF)\nKe (Build-Up) = RF + ERP + IP + SCRP\nKe (Bond Yield+RP) = YTM + Risk Premium\nKd: YTM of existing debt (or interpolated from similar bonds)\nRIIL: PV(lease pmts) + PV(residual) = FV(leased asset) + lessor initial direct cost",
+    concept:"WACC uses market value weights and marginal cost. Ke is required return to equity investors. Kd(1−t) reflects tax shield on interest. Kp for preferred shares. Rate Implicit in Lease (RIIL) = IRR back-calculated.",
+    examTip:"If data ↓ (observable), use IBR (Incremental Borrowing Rate = rate on new secured loan, same term). T-Bill = true RF (short-term). T-Bond includes maturity risk premium. TIPS = real RF." },
+
+  { id:"co7", topic:"corp", name:"Country Risk Premium & International CAPM", icon:"🌍", pages:[6,9], source:"corp", type:["formula","exam"],
+    formula:"Ke (Emerging) = RF + (Rm−RF)β + CRP×β\nCRP = Sovereign Yield Spread × (σ_equity/σ_bond)\nGlobal CAPM: Re = RF + (Rm−RF)β (global market index)\nInternational CAPM: Re = RF + (Rm−RF)β + (RC−RF)βC\nExpanded CAPM: Re = RF + β_peer·ERP + IP + SP + SCRP",
+    concept:"Country Risk Premium compensates for additional risk in emerging markets. λ (exposure) scales CRP by company's sensitivity to local economy. CRP × σ_equity/σ_bond adjusts sovereign spread for equity volatility relative to bonds.",
+    examTip:"Sovereign Yield Spread = YTM(EM govt bond) − YTM(developed benchmark). Multiply by σ_equity/σ_bond (>1 usually) to scale up since equities are more volatile than sovereign bonds." },
+
+  { id:"co8", topic:"corp", name:"Corporate Transactions: M&A & Valuation", icon:"🤝", pages:[8,9], source:"corp", type:["concept","exam"],
+    formula:"Takeover Premium = (Deal Price − Unaffected Price)/Unaffected Price\nUnaffected Price ≈ last 7-day VWAP before announcement\nComparable Value + Takeover Premium = Takeover Price\nIncentive to Accept = (P₁ − P₀)/P₀\nValuation: Comparable Company (P/E, EV/EBITDA) | Comparable Transaction | Premium Paid Analysis",
+    concept:"Investment (Equity, JV, Acquisition), Divestment (Sale, Spinoff), Restructuring (Cost, B/S, Reorganisation). Comparable company: apply peer multiples. Comparable transaction: includes control premium. Premium paid analysis: historical control premiums.",
+    examTip:"Comparable Transaction multiples are HIGHER than comparable company because they include the takeover premium. Use sum-of-parts for conglomerates. Soft catalyst event: pre-announcement = more volatile." },
+
+  // ─── DERIVATIVES ─────────────────────────────────────────────
+  { id:"dv1", topic:"deriv", name:"Forward Pricing Formula", icon:"📐", pages:[1], source:"deriv", type:["formula","exam"],
+    formula:"F = [S₀ + PV(Storage) − PV(Benefit)] × (1+RF)^T\n   = S₀(1+RF)^T + FV(Storage) − FV(Benefit)\nMRR: Market Reference Rate (replaced LIBOR)\nSOFR: Secured Overnight Financing Rate\nAmount: + → compound; − → discount",
+    concept:"Forward price set so no-arbitrage: FV of spot + storage costs − convenience yield. No exchange at initiation (zero cost). Value at initiation = 0. Storage costs increase forward price; convenience yields (benefits) decrease it.",
+    examTip:"For equity forwards: benefit = FV(dividends). For bond forwards: benefit = FV(coupons). For FX forwards: benefit = foreign interest rate. Always compound storage, discount benefits." },
+
+  { id:"dv2", topic:"deriv", name:"FRA — Forward Rate Agreement", icon:"📋", pages:[2], source:"deriv", type:["formula","exam"],
+    formula:"FRA Payoff (Long) = [(MktRate − ContractedRate) × m/12 × NP] / [1 + (MktRate × m/12)]\nAlways CASH SETTLED\n3×9 FRA: agreement today, starts in 3m, ends in 9m (6m underlying)\nSynthetic FRA: Borrow long-term + Lend short-term (or BL = 'Borrow Long')",
+    concept:"FRA locks in a borrowing/lending rate. Long FRA = borrower (profits if rates rise). Short FRA = lender (profits if rates fall). Payoff discounted back to settlement date (beginning of loan period). Same payoff as FRA⁺ but opposite sign for FRA⁻.",
+    examTip:"The PV discounting at settlement uses the MARKET rate, not the contracted rate. Synthetic FRA: Borrow 9m, Lend 3m = creates a 3×9 FRA. Always cash settled — no physical delivery." },
+
+  { id:"dv3", topic:"deriv", name:"Value of Forward Contract Mid-Life", icon:"💰", pages:[3], source:"deriv", type:["formula","exam"],
+    formula:"V_forward (to Long A) = (F_t,T − F_0,T) / (1+RF)^(T−t)\nWhere F_t,T = new forward price at time t\nF_0,T = original contracted forward price\nDiscount using pricing currency rate (A=INR if ₹/$)",
+    concept:"At initiation V=0. As time passes and spot/rates change, forward has value. Long A profits if F_t,T > F_0,T. To exit: take opposing position at new forward price, net = difference discounted to today.",
+    examTip:"Exit strategy: A⁻ enters B⁺ at current forward price. Net payoff = (F_t,T − F_0,T) received at expiry, discounted to today using pricing currency rate." },
+
+  { id:"dv4", topic:"deriv", name:"Bond Futures & QFP (Quoted Futures Price)", icon:"🏦", pages:[4], source:"deriv", type:["formula","exam"],
+    formula:"QFP = [Full Price(1+RF)^T − FV_m(coupons) − AI] × (1/CF)\nActual futures price: (QFP × CF) + AI\nCTD Bond = bond with MINIMUM [(Full Price paid by long) − (Full Price gained by short)]\nCTD: generally longest duration, lowest coupon bond",
+    concept:"Treasury bond futures: seller delivers cheapest bond (CTD). QFP adjusted by Conversion Factor (CF). Actual payment = QFP × CF + Accrued Interest. CTD minimizes delivery cost for short position.",
+    examTip:"CTD bond = minimum (B − QFP × CF + AI) across deliverable bonds. If RF ↑ → longer duration bonds become CTD. The SHORT picks what to deliver — they choose cheapest option." },
+
+  { id:"dv5", topic:"deriv", name:"Interest Rate Swaps — Pricing & Valuation", icon:"🔄", pages:[5,6], source:"deriv", type:["formula","exam"],
+    formula:"SFR = (1 − d_L) / Σd\n  d_L = last discount factor, Σd = sum of all discount factors\nV_swap(Payer) = V_Floating − V_Fixed\nV_swap(Receiver) = V_Fixed − V_Floating\nAt initiation: V_swap = 0 (V_Fixed = V_Floating = Par)",
+    concept:"Fixed-rate payer = short fixed-rate bond + long floating-rate bond. Receiver = opposite. V_Floating always = Par on reset dates. V_Fixed = PV of fixed coupon bond. Basis swap: exchanges different floating rates (e.g. SOFR vs MRR).",
+    examTip:"SFR formula: x = (1−d_last)/Σd. Example: 4 quarterly resets → x×[d(1)+d(2)+d(3)+d(4)] + x+1×d(4) = 1 → solve for x. 360 days convention for MRR-based swaps." },
+
+  { id:"dv6", topic:"deriv", name:"Currency Swap", icon:"🌐", pages:[7,8], source:"deriv", type:["formula","exam"],
+    formula:"V_swap(Tesla) = V_$bond − V_¥bond\nV_swap(Honda) = V_¥bond − V_$bond\nPrincipal IS exchanged at initiation and maturity (unlike interest rate swaps)\nAbsolute advantage in borrowing drives swap motivation",
+    concept:"Currency swap: exchange principal and interest in different currencies. Each party borrows where they have relative advantage and swaps. Used to reduce borrowing cost via comparative advantage. Interest payments in opposite currencies.",
+    examTip:"Principal actually exchanged in currency swaps (unlike IRS). Honda has advantage in ¥, Tesla in $. They swap: net savings = spread differential (1.5% saving in example). V_swap = difference in PV of the two bond legs." },
+
+  { id:"dv7", topic:"deriv", name:"Equity Swap", icon:"📊", pages:[9], source:"deriv", type:["formula","exam"],
+    formula:"V_swap = V_S&P − V_Fixed Bond\nEquity to Fixed: Exchange equity return for fixed rate\nEquity to Floating: Exchange equity for MRR+spread\nIndex to Index: Exchange two equity index returns\nV_swap(t) = PV(Equity leg) − PV(Fixed leg)",
+    concept:"Equity swap: receive equity return (e.g. Kotak/Nifty), pay fixed or floating rate. Used for portfolio rebalancing without actual trading (tax efficiency). Notional principal not exchanged. Value changes as equity price moves.",
+    examTip:"Equity leg value = (Current Index/Previous Index) × NP − this fluctuates. Fixed leg = PV of fixed payments (bond-like). V_swap at reset = 0. Use to switch exposure between markets (e.g. NIFTY vs S&P)." },
+
+  { id:"dv8", topic:"deriv", name:"Binomial Option Model & Hedge Ratio", icon:"🌳", pages:[10,11,12,13], source:"deriv", type:["formula","exam"],
+    formula:"U = e^(σ√T), D = 1/U\nHedge Ratio (h) = (Cu − Cd)/(Su − Sd)\nCall value: C = h×S₀ − PV(h×Sd − Cd)\nPut value: Replicating Portfolio → Short h shares + invest PV(h×Su + Pu)\nRisk-neutral prob: π = (1+RF − D)/(U − D)",
+    concept:"Binomial: build 1-step tree, replicate option with stock + bond. Hedge ratio = Δ (delta) for options. Replicating portfolio: buy hedge ratio shares + borrow (call) or short shares + lend (put). Single-step can be extended to multi-step.",
+    examTip:"Arbitrage: If C_mkt > C_no-arb → sell call, buy replicating portfolio. If C_mkt < C_no-arb → buy call, sell replicating portfolio. Same logic for puts. Multi-step = more accurate, accounts for path dependence." },
+
+  // ─── COMMODITIES (Alternative Investments) ──────────────────
+  { id:"cm1", topic:"alts", name:"Commodity Types & Price Drivers", icon:"🛢️", pages:[1], source:"commodities", type:["concept","exam"],
+    formula:"Commodity Sectors:\n  Energy: Crude Oil, Natural Gas\n  Industrial Metals: tied to GDP, political, environmental\n  Livestock: weather, disease, slaughter price\n  Precious Metals: safe haven, inflation hedge\n  Softs: cotton, coffee, sugar, cocoa (disease risk)\n  Grains: annual cycle, floods, droughts, disease",
+    concept:"Each commodity sector has unique price drivers. Crude: strategic reserves, economic cycles, geopolitical risk, refined products (gasoline, heating oil, jet fuel), seasonality. Industrial metals tied to GDP growth. Natural gas: processing costs, transportation.",
+    examTip:"Factors affecting ALL commodities: Announcements, Component Analysis (forecast demand for derived products), Timing Issues (D/S, seasonality), Macro factors. Crude oil has highest geopolitical sensitivity." },
+
+  { id:"cm2", topic:"alts", name:"Futures Pricing: Contango & Backwardation", icon:"📉", pages:[1,2], source:"commodities", type:["formula","exam"],
+    formula:"F = S + Int + Ft − Benefit (Net Cost of Carry)\nBasis = S − F → 0 at maturity\nF > S → Net CoC +ve → CONTANGO → -ve yield\nF < S → Net CoC -ve → BACKWARDATION → +ve yield\nCalendar Spread: C^(t+B) = r^t × s^t",
+    concept:"Contango: futures premium over spot (storage costs dominate). Backwardation: futures discount to spot (convenience yield dominates). Normal Contango: too many consumers. Normal Backwardation: too many producers (Hedging Pressure Hypothesis).",
+    examTip:"Contango → negative roll yield (rolling into more expensive futures). Backwardation → positive roll yield (rolling into cheaper futures). Key exam trap: Normal Contango ≠ Contango (Normal = expectation, actual = basis)." },
+
+  { id:"cm3", topic:"alts", name:"Total Commodity Return & Roll Yield", icon:"💹", pages:[2], source:"commodities", type:["formula","exam"],
+    formula:"Total Return = Collateral Return + Price Return + Roll Return\n  Collateral Return: T-bill return (futures fully collateralised)\n  Price Return: (Current − Previous Price)/Previous Price\n  Roll Return: (Old F⁻ − New F⁺)/Old F⁺\n  Roll Return: +ve in Backwardation, −ve in Contango",
+    concept:"Collateral return = T-bill yield (futures require margin, margin earns T-bill rate). Price return = spot price change. Roll return = cost/gain from rolling expiring futures to next contract. Number of contracts = Desired Exposure/Futures price.",
+    examTip:"Roll return formula: (old futures price − new futures price)/old futures price. In backwardation: new F is CHEAPER → positive roll. In contango: new F is MORE EXPENSIVE → negative roll. This is a major return driver." },
+
+  { id:"cm4", topic:"alts", name:"Commodity Theories & Swaps", icon:"🔬", pages:[3], source:"commodities", type:["concept","exam"],
+    formula:"Insurance Theory: Producers hedge → F < E(ST) → Normal Backwardation\nHedging Pressure Hypothesis: Producers hedge → normal backwardation; Consumers hedge → normal contango\nTheory of Storage: +ve Net CoC → Contango; −ve Net CoC → Backwardation\nTotal Return Swap: Buyer gets commodity return; pays fixed rate\nBasis Swap: Exchange correlated commodity (e.g. crude for jet fuel hedge)",
+    concept:"Insurance Theory: farmers/producers sell futures to lock in price → futures price discounted from expected spot. Theory of Storage: inventory holders earn convenience yield. Basis Swap: used when exact commodity futures not available (e.g. jet fuel → crude).",
+    examTip:"Criticism of Hedging Pressure: PAC can speculate as well; hedging pressure not observable. Volatility Swap: Buyer pays fixed volatility, receives realised volatility. Rebalancing effect: mean-reverting markets → rebalancing adds value." },
+
+  // ─── HEDGE FUNDS (Alternative Investments) ──────────────────
+  { id:"hf1", topic:"alts", name:"Hedge Fund Performance: Alpha & Sortino Ratio", icon:"📊", pages:[1], source:"hf", type:["concept","exam"],
+    formula:"Alpha = E(R) − Re (vertical distance from SML)\nAbove SML: α > 0 (undervalued/outperforming)\nBelow SML: α < 0 (overperforming market expectations not met)\nSortino Ratio = (Rp − RF) / Downside Deviation\nConditional Model: R_HF = α + β₁F₁ + β₂F₂ + ... + (D)βₖFₖ + εᵢ",
+    concept:"Sharpe penalises for upside AND downside volatility. For HF with positive skewness, Sortino is better (only downside deviation). Conditional model: dummy variable (D) for normal vs stressed market — betas differ across regimes. Major problem: multicollinearity.",
+    examTip:"Use Sortino for hedge funds because Sharpe unfairly penalises managers for positive volatility. Conditional model's dummy variable captures regime changes. Limitation: multicollinearity in factor models." },
+
+  { id:"hf2", topic:"alts", name:"Hedge Fund Strategies: Equity & Event-Driven", icon:"⚡", pages:[2], source:"hf", type:["concept","exam"],
+    formula:"① Long/Short: Long undervalued S⁺, Short overvalued S⁻ → Beta-neutral\n② Dedicated Short Bias: Short overpriced → higher vol, lower expected return\n③ Equity Market Neutral: Weighted Beta = 0 → near-zero market exposure (alpha only)\n④ Soft Catalyst Event: invest BEFORE announcement (more volatile)\n   Hard Catalyst: invest AFTER announcement (less volatile)\n⑤ M&A Arbitrage: Long target, Short acquirer → if success: earn premium",
+    concept:"Long/Short: 40–60% net long in general. EMN: discretionary (intuition) or quantitative (set of rules). Subtypes: Pairs Trading, Stub Trading (subsidiary vs parent), Multi-class. Event Risk: probability of anticipated outcome.",
+    examTip:"M&A arb: higher Sharpe ratios. Dedicated short bias: 0 or negative correlation → diversification benefit but cap expected returns. EMN subtypes on exam: Pairs trading = 2 similar stocks (divergence arbitrage)." },
+
+  { id:"hf3", topic:"alts", name:"Hedge Fund Strategies: Relative Value & Specialist", icon:"🔮", pages:[3], source:"hf", type:["concept","exam"],
+    formula:"⑤ Distressed Securities: low liquidity, restructuring, low leverage\n⑥ Fixed Income Arb: long undervalued, short overvalued + leverage\n   Carry Trade subtype: short low-yield, long high-yield securities\n⑦ Convertible Bond Arb: Long bond (SB⁺) + Short 2 shares (delta hedge)\n⑧ Global Macro: Top-Down, identify global trend early\n⑨ Managed Futures: TSM (momentum) vs CSM (momentum + asset class)\n⑩ Volatility/Specialist: trading VIX, OTC options, variance swaps",
+    concept:"Fixed Income Arb earns spread: high leverage → domino margin call risk. Convertible Bond Arb: exploits implied volatility mispricing. Best in normal market conditions. Global Macro: most directional of all strategies. Specialist/Reinsurance: uncorrelated diversification.",
+    examTip:"Managed futures: TSM = Time Series Momentum; CSM = Cross-Sectional Momentum (adds asset class cross). Crowding into VIX futures = limitation (mean reversal crowded trade). Convertible bond: requires liquidity, modest volatility." },
+
+  // ─── REAL ESTATE (Alternative Investments) ──────────────────
+  { id:"re1", topic:"alts", name:"Real Estate: Structure & Classification", icon:"🏠", pages:[1], source:"re", type:["concept","exam"],
+    formula:"Debt side: Private(Mortgage, Const Loan, Mezz), Public(MBS-R/C, Covered Bonds, Mortgage REIT/ETF)\nEquity side: Private(Direct/Indirect via JV, Partnership, RE Fund, Non-traded REIT)\n            Public(Construction, Op, Dev, Public REIT, UCITS/MF/ETF)\nREIT: Invest Trust, 90% income distributed\nREOC: Operating Company, income taxable, fewer restrictions",
+    concept:"4 quadrants: Private Debt, Private Equity, Public Debt, Public Equity. REITs: tax-exempt at corporate level (dividend pass-through). REOCs: more flexibility in capital allocation, no distribution requirement. MBS: residential (R) or commercial (C).",
+    examTip:"Key distinction: REIT must distribute ≥90% income → exempt from double taxation. REOC = operating company → company income taxable. Mezzanine debt = higher risk, higher return (subordinated to mortgage). Public equity = more liquid." },
+
+  { id:"re2", topic:"alts", name:"Real Estate Financials: NOI, DSCR, LTV", icon:"💰", pages:[2,3], source:"re", type:["formula","exam"],
+    formula:"NOI = Gross Potential Rental Income − Vacancy/Collection Loss − Operating Expenses\nDSCR = NOI / Debt Service (Principal + Interest)\nLTV = Loan / Appraised Value\nMax Debt = Min(DSCR limit, LTV limit)\nEquity Dividend Rate = (NOI − Debt Service) / Equity [Cash-on-Cash Return]",
+    concept:"NOI analogous to EBIT (no interest or income tax). DSCR: lenders typically require ≥1.3. LTV: typically ≤80%. Equity Dividend Rate = first-year pre-tax cash return on equity (does NOT include capital appreciation). Depreciation included in tax calculations, NOT in equity dividend.",
+    examTip:"In tax calculations: INCLUDE depreciation (reduces taxable income). In Equity Dividend Rate: DO NOT include depreciation. Equity only refers to building value (NOT land). After-tax return = [NOI − Int − Depr] × (1 − tax rate) + principal repayment." },
+
+  { id:"re3", topic:"alts", name:"Real Estate Valuation Approaches", icon:"📐", pages:[5], source:"re", type:["formula","exam"],
+    formula:"Income Approach: Value = NOI₁/(Re − g) [Cap Rate = NOI/Value]\nSales Comparison: Adjust comparable sales for Dept, Location, Condition, Sale Date\nCost Approach: Cost of Land + (Construction − Depreciation − Obsolescence)\nIRR: NPV = 0 → solve for discount rate\nIncome Approach PV = NOI₁/(1+Re) + NOI₂/(1+Re)² + ... + (NOI_n+TV_n)/(1+Re)^n",
+    concept:"Income approach: best for income-producing properties. Cap rate = Re − g (like Gordon Growth). Sales comparison: heterogeneous properties make exact matches hard. Cost approach: new construction or insurance purposes. Use average of 3 methods; find discrepancies.",
+    examTip:"Sales comparison: adjust UP if comparable is inferior, adjust DOWN if comparable is superior. Cap rate: property value = NOI/cap rate. Rising cap rates → falling values (like rising yields on bonds)." },
+
+  { id:"re4", topic:"alts", name:"Real Estate Cycle & Portfolio Characteristics", icon:"🔄", pages:[4,6,7], source:"re", type:["concept","exam"],
+    formula:"Real Estate Cycle: Recovery→Expansion→Recession→Trough\nRecovery: Low credit, uncertain, new construction starts\nExpansion: Wages↑, credit↑, new construction↑, Int↑, NOI↑, LTV↓\nRecession: Credit tightening, price↓, occupancy↓, Int↓, NOI↓, DSCR↓, LTV↑\nPortfolio Benefits: Current Income, Capital Appreciation, Inflation Hedge, Diversification, Tax Benefits",
+    concept:"RE provides inflation hedge: rents indexed to inflation (similar to TIPS). Capital appreciation: illiquid and heterogeneous → unpredictable. Tax: depreciation reduces taxable income → capital gain deferred. Overhang (holding period > lease term) → rollover risk.",
+    examTip:"During recession: LTV rises (prices fall but loan stays fixed) → covenant breach risk. RE as inflation hedge works if leases are variable-rate or have escalation clauses. REIT exempt from double taxation." },
 ]
 
 const GROUPS = [
@@ -1425,6 +1740,39 @@ const GROUPS = [
       { label:"Term Structure",        ids:["fi22","fi23","fi29","fi38","fi41"] },
       { label:"Credit Analysis",       ids:["fi21","fi36","fi37","fi39","fi40"] },
     ]
+  },
+  { id:"econ", label:"Economics", icon:"🌐", color:"#0ea5e9",
+    subtopics:[
+      { label:"FX Markets",            ids:["ec1","ec2","ec3","ec4"] },
+      { label:"Parity Conditions",     ids:["ec5","ec6"] },
+      { label:"BOP & Policy Models",   ids:["ec7","ec8","ec9"] },
+      { label:"Equity Return Models",  ids:["ec10"] },
+    ]
+  },
+  { id:"corp", label:"Corporate Issuers", icon:"🏢", color:"#10b981",
+    subtopics:[
+      { label:"Dividends & Policy",    ids:["co1","co2","co3"] },
+      { label:"Share Repurchases",     ids:["co4","co5"] },
+      { label:"Cost of Capital",       ids:["co6","co7"] },
+      { label:"Corporate Actions",     ids:["co8"] },
+    ]
+  },
+  { id:"deriv", label:"Derivatives", icon:"⚡", color:"#ec4899",
+    subtopics:[
+      { label:"Forward Pricing",       ids:["dv1","dv2","dv3"] },
+      { label:"Bond Futures",          ids:["dv4"] },
+      { label:"Swaps",                 ids:["dv5","dv6","dv7"] },
+      { label:"Options",               ids:["dv8"] },
+    ]
+  },
+  { id:"alts", label:"Alternative Investments", icon:"💎", color:"#14b8a6",
+    subtopics:[
+      { label:"Commodities",           ids:["cm1","cm2","cm3","cm4"] },
+      { label:"Hedge Fund Performance",ids:["hf1"] },
+      { label:"Hedge Fund Strategies", ids:["hf2","hf3"] },
+      { label:"Real Estate Structure", ids:["re1","re2"] },
+      { label:"RE Valuation & Cycle",  ids:["re3","re4"] },
+    ]
   }
 ]
 
@@ -1443,8 +1791,14 @@ const EXP_TOPICS = [
   {id:"ethics",label:"Ethics & Standards",   icon:"⚖️", color:"#dc2626", folder:"ethics"},
 ];
 const SOURCES = {
-  equity: { label: "Equity Notes" },
-  fi:     { label: "Fixed Income Notes" }
+  equity:      { label: "Equity Notes" },
+  fi:          { label: "Fixed Income Notes" },
+  eco:         { label: "Economics Notes" },
+  corp:        { label: "Corporate Issuers Notes" },
+  deriv:       { label: "Derivatives Notes" },
+  commodities: { label: "Commodities Notes" },
+  hf:          { label: "Hedge Funds Notes" },
+  re:          { label: "Real Estate Notes" }
 };
 const CONCEPTS = INDEX; // alias for notes navigator
 
@@ -1483,7 +1837,7 @@ function buildNsIndex(){
         it.className="idx-item"+(nsActiveId===c.id?" active":"");
         it.id="nsit-"+c.id;
         it.onclick=()=>nsSelect(c.id);
-        const pgLabel=c.pages.length>1?`p.${c.pages[0]}–${c.pages[c.pages.length-1]}`:`p.${c.pages[0]}`;
+        const pgLabel=c.pages.length===0?"PDF":c.pages.length>1?`p.${c.pages[0]}–${c.pages[c.pages.length-1]}`:`p.${c.pages[0]}`;
         it.innerHTML=`<span class="idx-item-icon">${c.icon}</span><span class="idx-item-name">${c.name}</span><span class="idx-item-page">${pgLabel}</span>`;
         itemsDiv.appendChild(it);
       });
@@ -1535,7 +1889,17 @@ function nsShowPage(c){
   const img=document.getElementById("page-img");
   const empty=document.getElementById("viewer-empty");
   const src=nsPages[nsPageIdx];
-  if(!src){img.style.display="none";empty.style.display="flex";return;}
+  if(!src){
+    img.style.display="none";empty.style.display="flex";
+    if(concept && concept.pages.length===0){
+      document.getElementById("viewer-title").textContent=concept.icon+" "+concept.name;
+      const srcEl=document.getElementById("viewer-src");
+      srcEl.style.display="inline";
+      srcEl.textContent=(SOURCES[concept.source]?SOURCES[concept.source].label:"Notes")+" · Download PDF ↓";
+      empty.innerHTML=`<div class="empty-icon">📄</div><div class="empty-title">${concept.name}</div><div class="empty-sub">No scanned page for this card — view the full notes PDF in the Downloads tab</div>`;
+    }
+    return;
+  }
   img.src=src;
   img.style.display="block";
   empty.style.display="none";
