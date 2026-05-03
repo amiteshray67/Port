@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 Daily Revision Glossary — Amitesh</title>
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface2: #1c2333; --surface3: #21262d;
+  --border: #30363d; --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff;
+  --green: #3fb950; --yellow: #d29922; --red: #f85149; --purple: #bc8cff;
+  --orange: #f0883e;
+  --quant: #1565c0; --eco: #0288d1; --fsa: #00838f; --corp: #2e7d32;
+  --equity: #558b2f; --fi: #f57f17; --deriv: #e65100; --alts: #6a1b9a;
+  --pm: #1a237e; --ethics: #37474f;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+
+/* NAV */
+.nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
+.nav-left { display: flex; align-items: center; gap: 16px; }
+.nav-brand { font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; }
+.nav-brand span { color: var(--accent); }
+.back-btn { color: var(--muted); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+.back-btn:hover { color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: var(--muted); }
+.streak-badge { background: var(--yellow); color: #000; padding: 2px 10px; border-radius: 12px; font-weight: 700; font-size: 0.8rem; }
+
+/* HERO */
+.hero { padding: 28px 20px 16px; max-width: 1100px; margin: 0 auto; }
+.hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+.hero p { color: var(--muted); font-size: 0.9rem; }
+
+/* DAY PICKER */
+.day-picker-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; }
+.cycle-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.day-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.day-btn {
+  width: 44px; height: 44px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--muted); cursor: pointer; font-size: 0.85rem;
+  font-weight: 600; transition: all .15s; position: relative; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+}
+.day-btn:hover { border-color: var(--accent); color: var(--text); }
+.day-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+.day-btn.reviewed::after { content: '✓'; position: absolute; top: 2px; right: 4px; font-size: 0.6rem; color: var(--green); }
+.day-btn .day-num { font-size: 0.9rem; font-weight: 700; }
+.day-btn .day-sub { font-size: 0.55rem; text-transform: uppercase; opacity: .7; }
+
+/* PROGRESS BAR */
+.progress-section { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; }
+.progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.progress-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width .3s; }
+.progress-label { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+
+/* FILTER BAR */
+.filter-bar { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font-size: 0.8rem; transition: all .15s; }
+.filter-btn:hover { border-color: var(--accent); color: var(--text); }
+.filter-btn.active { background: var(--surface2); color: var(--text); border-color: var(--accent); }
+.filter-btn.weak-btn.active { background: #f85149; color: #fff; border-color: #f85149; }
+.filter-count { background: var(--surface3); color: var(--muted); padding: 2px 6px; border-radius: 8px; font-size: 0.7rem; margin-left: 4px; }
+
+/* CARDS GRID */
+.cards-grid { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+/* FLIP CARD */
+.flip-card { perspective: 1000px; height: 200px; cursor: pointer; }
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-inner { position: relative; width: 100%; height: 100%; transition: transform .4s; transform-style: preserve-3d; }
+.flip-front, .flip-back { position: absolute; inset: 0; border-radius: 12px; border: 1px solid var(--border); backface-visibility: hidden; padding: 18px; }
+.flip-front { background: var(--surface); display: flex; flex-direction: column; justify-content: space-between; }
+.flip-back { background: var(--surface2); transform: rotateY(180deg); overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+
+/* Front face */
+.term-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.term-name { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
+.topic-badge { font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 10px; white-space: nowrap; text-transform: uppercase; letter-spacing: .5px; flex-shrink: 0; color: #fff; }
+.term-hint { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-top: 6px; }
+.flip-hint { font-size: 0.72rem; color: var(--muted); margin-top: auto; }
+.confidence-row { display: flex; gap: 6px; margin-top: 8px; }
+.conf-btn { flex: 1; padding: 5px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface3); cursor: pointer; font-size: 0.7rem; font-weight: 600; transition: all .15s; }
+.conf-btn.c1 { border-color: #f85149; color: #f85149; }
+.conf-btn.c1.active { background: #f85149; color: #fff; }
+.conf-btn.c2 { border-color: #d29922; color: #d29922; }
+.conf-btn.c2.active { background: #d29922; color: #000; }
+.conf-btn.c3 { border-color: #3fb950; color: #3fb950; }
+.conf-btn.c3.active { background: #3fb950; color: #000; }
+
+/* Back face */
+.back-summary { font-size: 0.82rem; line-height: 1.5; color: var(--text); }
+.formula-box { background: var(--surface3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-family: 'Courier New', monospace; font-size: 0.78rem; color: #f0883e; white-space: pre-wrap; }
+.back-actions { display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap; }
+.explore-link { font-size: 0.72rem; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); color: var(--accent); text-decoration: none; background: var(--surface); transition: all .15s; }
+.explore-link:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+/* SVG DIAGRAM */
+.mini-diagram { width: 100%; height: 70px; margin: 4px 0; }
+.mini-diagram svg { width: 100%; height: 100%; }
+
+/* CYCLE TRACKER */
+.cycle-tracker { max-width: 1100px; margin: 0 auto; padding: 0 20px 20px; }
+.cycle-title { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.cycle-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.cycle-pip { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--muted); position: relative; transition: all .2s; }
+.cycle-pip.done { border-color: var(--green); background: var(--green); color: #000; }
+.cycle-pip.today { border-color: var(--accent); color: var(--accent); }
+
+/* EMPTY STATE */
+.empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+.empty h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 200; display: none; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; }
+.modal-close { float: right; cursor: pointer; color: var(--muted); font-size: 1.2rem; }
+.modal h2 { font-size: 1.2rem; margin-bottom: 16px; }
+.modal-body { font-size: 0.9rem; line-height: 1.6; }
+.modal-formula { background: var(--surface3); padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; color: var(--orange); margin: 12px 0; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <a href="../studyhub/" class="back-btn">← StudyHub</a>
+    <span style="color:var(--border)">|</span>
+    <span class="nav-brand">CFA L2 <span>Glossary</span></span>
+  </div>
+  <div class="nav-right">
+    <span id="streakBadge" class="streak-badge" style="display:none">🔥 <span id="streakCount">0</span> day streak</span>
+    <span id="cycleInfo" style="font-size:0.8rem; color:var(--muted)"></span>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Daily Revision Glossary</h1>
+  <p id="heroSub">Loading today's deck…</p>
+</div>
+
+<!-- 15-day cycle tracker -->
+<div class="cycle-tracker">
+  <div class="cycle-title">15-Day Cycle Progress</div>
+  <div class="cycle-row" id="cyclePips"></div>
+</div>
+
+<!-- Day picker -->
+<div class="day-picker-wrap">
+  <div class="cycle-label">Jump to day</div>
+  <div class="day-grid" id="dayGrid"></div>
+</div>
+
+<!-- Today's progress -->
+<div class="progress-section">
+  <div class="progress-row">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 0 reviewed</div>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All Terms <span class="filter-count" id="countAll">0</span></button>
+  <button class="filter-btn weak-btn" data-filter="weak" onclick="setFilter('weak',this)">🔴 Needs Review <span class="filter-count" id="countWeak">0</span></button>
+  <button class="filter-btn" data-filter="unseen" onclick="setFilter('unseen',this)">⬜ Unseen <span class="filter-count" id="countUnseen">0</span></button>
+  <button class="filter-btn" data-filter="known" onclick="setFilter('known',this)">✅ Known <span class="filter-count" id="countKnown">0</span></button>
+  <button class="filter-btn" style="margin-left:auto; border-color: var(--accent); color: var(--accent);" onclick="openWeakAll()">All Weak Terms (All Days)</button>
+</div>
+
+<!-- Cards -->
+<div class="cards-grid" id="cardsGrid"></div>
+
+<!-- Modal for deep explore -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <span class="modal-close" onclick="closeModal()">✕</span>
+    <h2 id="modalTitle"></h2>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// GLOSSARY DATA — 15 daily decks, ~30 terms each
+// ============================================================
+const DECKS = [
+
+// ─────────────────────────────────────────────────────────────
+// DAY 1 — Quantitative Methods: Regression & Machine Learning
+// ─────────────────────────────────────────────────────────────
+{ day: 1, label: 'Quant I', topics: ['Quant'] },
+// terms injected below via TERMS array
+
+// DAY 2 — Quant: Time Series + Econ: FX
+{ day: 2, label: 'Quant II / Econ I', topics: ['Quant','Econ'] },
+// DAY 3 — Economics: Trade, Growth, Business Cycles
+{ day: 3, label: 'Econ II', topics: ['Econ'] },
+// DAY 4 — FSA: Intercorporate & Pensions
+{ day: 4, label: 'FSA I', topics: ['FSA'] },
+// DAY 5 — FSA: Multinational, Quality of Earnings
+{ day: 5, label: 'FSA II', topics: ['FSA'] },
+// DAY 6 — Corporate: Capital Structure & Dividends
+{ day: 6, label: 'Corp I', topics: ['Corp'] },
+// DAY 7 — Corporate: M&A, ESG, Governance
+{ day: 7, label: 'Corp II', topics: ['Corp'] },
+// DAY 8 — Equity: DDM & FCF Valuation
+{ day: 8, label: 'Equity I', topics: ['Equity'] },
+// DAY 9 — Equity: Residual Income & Market-Based
+{ day: 9, label: 'Equity II', topics: ['Equity'] },
+// DAY 10 — Fixed Income: Term Structure & Duration
+{ day: 10, label: 'FI I', topics: ['FI'] },
+// DAY 11 — Fixed Income: Credit, MBS, CDS
+{ day: 11, label: 'FI II', topics: ['FI'] },
+// DAY 12 — Derivatives: Options & Pricing
+{ day: 12, label: 'Deriv I', topics: ['Deriv'] },
+// DAY 13 — Derivatives: Swaps/Forwards + Alts: RE/PE
+{ day: 13, label: 'Deriv II / Alts I', topics: ['Deriv','Alts'] },
+// DAY 14 — Alts: Hedge Funds, Commodities + PM: Factors
+{ day: 14, label: 'Alts II / PM I', topics: ['Alts','PM'] },
+// DAY 15 — PM: Active Mgmt, LDI + Ethics
+{ day: 15, label: 'PM II / Ethics', topics: ['PM','Ethics'] },
+];
+
+const TOPIC_COLORS = {
+  Quant:'#1565c0', Econ:'#0288d1', FSA:'#00838f', Corp:'#2e7d32',
+  Equity:'#558b2f', FI:'#f57f17', Deriv:'#e65100', Alts:'#6a1b9a',
+  PM:'#1a237e', Ethics:'#37474f'
+};
+
+// ─────────────────────────────────────────────────────────────
+// MASTER TERMS LIST
+// Each term: { id, day, topic, name, hint, summary, formula, diagram, explore }
+// explore: { library: {id, page}, explainer: string, qbank: topicKey }
+// ─────────────────────────────────────────────────────────────
+const TERMS = [
+
+// ============ DAY 1: QUANT — REGRESSION ============
+{id:'q1_1',day:1,topic:'Quant',name:'Multiple Regression',hint:'More predictors, same OLS logic',
+summary:'Estimates the relationship between a dependent variable and two or more independent variables using OLS. Key assumption: CLRM conditions (linearity, homoskedasticity, no multicollinearity, no autocorrelation, normality of errors).',
+formula:'Y = b₀ + b₁X₁ + b₂X₂ + … + bₙXₙ + ε',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_2',day:1,topic:'Quant',name:'F-Statistic',hint:'Test entire regression significance',
+summary:'Tests whether at least one independent variable explains variation in Y. If F > F-critical, the regression is jointly significant. F = (RSS/k) / (SSE/(n−k−1)).',
+formula:'F = (MSR) / (MSE)  where MSR = RSS/k, MSE = SSE/(n−k−1)',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_3',day:1,topic:'Quant',name:'R² vs Adjusted R²',hint:'Adding variables always raises R²',
+summary:'R² measures variance explained; adding ANY variable increases it. Adjusted R² penalises for extra variables. Use Adj. R² to compare models with different numbers of predictors.',
+formula:'Adj. R² = 1 − [(1−R²)(n−1)/(n−k−1)]',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_4',day:1,topic:'Quant',name:'Heteroskedasticity',hint:'Non-constant error variance',
+summary:'When error variance changes across observations, OLS standard errors are biased (usually underestimated), inflating t-stats. Detect with Breusch-Pagan test. Fix with White\'s robust SEs or GLS.',
+formula:'BP test: regress ε² on X variables; nR² ~ χ²(k)',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_5',day:1,topic:'Quant',name:'Serial Correlation',hint:'Errors correlated over time',
+summary:'Autocorrelation in residuals violates CLRM. Positive serial correlation is common in financial time series. Detected with Durbin-Watson (DW ≈ 2 means no autocorrelation). Causes underestimated SEs and inflated t-stats.',
+formula:'DW ≈ 2(1 − r̂)  where r̂ = corr(εₜ, εₜ₋₁)',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_6',day:1,topic:'Quant',name:'Multicollinearity',hint:'Independent variables correlated',
+summary:'High correlation among predictors inflates SEs of individual coefficients (t-stats low, F-stat high). Signs: significant F but insignificant t-stats, unexpected signs on coefficients. Detect via VIF > 5 (or 10). Fix: drop a variable or get more data.',
+formula:'VIF = 1 / (1 − Rj²)',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_7',day:1,topic:'Quant',name:'Dummy Variables',hint:'Encoding categorical data',
+summary:'Binary (0/1) variable for categorical attributes. With k categories, use k−1 dummies to avoid the dummy variable trap (perfect multicollinearity). Dummy coefficients measure the effect relative to the omitted (base) category.',
+formula:'Intercept shift: ΔY = coefficient on dummy × 1',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_8',day:1,topic:'Quant',name:'Supervised ML — LASSO/Ridge',hint:'Regularisation prevents overfitting',
+summary:'LASSO (L1) adds λΣ|βᵢ| penalty — can shrink coefficients to exactly zero (feature selection). Ridge (L2) adds λΣβᵢ² — shrinks but doesn\'t zero out. Elastic Net combines both. Used for high-dimension financial datasets.',
+formula:'LASSO: min[Σ(Y−Ŷ)² + λΣ|β|]  |  Ridge: min[Σ(Y−Ŷ)² + λΣβ²]',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_9',day:1,topic:'Quant',name:'K-Fold Cross-Validation',hint:'Avoid overfitting in ML',
+summary:'Split data into k equal folds; train on k−1, validate on 1, rotate k times. Average the validation error. Produces unbiased estimate of out-of-sample performance. Preferred over simple train/test split for small datasets.',
+formula:'CV Error = (1/k) Σᵢ MSEᵢ',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_10',day:1,topic:'Quant',name:'ROC / AUC',hint:'Classifier performance metric',
+summary:'ROC curve plots True Positive Rate vs False Positive Rate at all threshold settings. AUC = area under ROC (0.5 = random, 1.0 = perfect). Used to evaluate binary classifiers (e.g., credit default models). CFA focus: understand interpretation.',
+formula:'AUC: ∫ROC  |  TPR = TP/(TP+FN), FPR = FP/(FP+TN)',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_11',day:1,topic:'Quant',name:'Random Forest',hint:'Ensemble of decision trees',
+summary:'Trains many decision trees on bootstrapped samples with random feature subsets, then averages predictions (bagging + feature randomness). Reduces overfitting vs single trees. Feature importance from mean decrease in impurity. CFA: bagging vs boosting distinction.',
+formula:'Final prediction = average(T₁, T₂, …, Tₙ) individual trees',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q1_12',day:1,topic:'Quant',name:'Gradient Boosting',hint:'Sequential tree-building',
+summary:'Builds trees sequentially where each tree corrects errors of the prior. Gradient descent in function space. More powerful than Random Forest but prone to overfitting without careful tuning (learning rate, max depth). XGBoost is a popular implementation.',
+formula:'Fₘ(x) = Fₘ₋₁(x) + η · hₘ(x)  [η = learning rate]',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+// ============ DAY 2: QUANT — TIME SERIES ============
+{id:'q2_1',day:2,topic:'Quant',name:'AR(p) Model',hint:'Autoregressive — uses own lags',
+summary:'AR(1): Yₜ = b₀ + b₁Yₜ₋₁ + εₜ. Covariance stationary if |b₁| < 1 (mean-reverting). If b₁ = 1 → unit root (random walk, non-stationary). Test with Dickey-Fuller. First-difference to achieve stationarity.',
+formula:'AR(1): Yₜ = b₀ + b₁Yₜ₋₁ + εₜ  |  Mean = b₀/(1−b₁)',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q2_2',day:2,topic:'Quant',name:'Unit Root & Cointegration',hint:'Non-stationary series can share trend',
+summary:'A unit root (random walk) makes regression spurious. Two non-stationary series are cointegrated if a linear combination is stationary — implies long-run equilibrium. Test: Engle-Granger. If cointegrated, use Error Correction Model (ECM).',
+formula:'Dickey-Fuller: ΔYₜ = b₀ + γYₜ₋₁ + εₜ  (H₀: γ = 0)',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+{id:'q2_3',day:2,topic:'Quant',name:'ARCH Model',hint:'Volatility clustering in finance',
+summary:'Autoregressive Conditional Heteroskedasticity: today\'s variance depends on past squared residuals. Captures volatility clustering seen in equity/FX markets. GARCH(1,1) adds lagged variance term. Detected with ARCH-LM test on regression residuals.',
+formula:'ARCH(1): σₜ² = a₀ + a₁εₜ₋₁²  |  GARCH(1,1): σₜ² = a₀ + a₁εₜ₋₁² + βσₜ₋₁²',
+explore:{library:{id:'vol1-quant',page:1},qbank:'quant'}},
+
+// ============ DAY 2: ECON — FX ============
+{id:'e2_1',day:2,topic:'Econ',name:'Covered Interest Rate Parity',hint:'No arbitrage with forward hedge',
+summary:'With a forward hedge, after-hedging returns in all currencies must be equal. Links forward exchange rates to spot rates and interest rate differentials. Holds in practice because arbitrageurs enforce it through covered interest arbitrage.',
+formula:'F/S = (1 + r_d) / (1 + r_f)  →  F = S × (1+r_d)/(1+r_f)',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e2_2',day:2,topic:'Econ',name:'Uncovered Interest Rate Parity',hint:'Expected exchange rate change = rate diff',
+summary:'UIP says expected currency depreciation equals the interest rate differential. Unlike CIP, no forward contract — relies on expectations. Empirically weak (forward premium puzzle) but used for long-run FX forecasting.',
+formula:'E(ΔS)/S ≈ r_d − r_f  →  higher rate currency expected to depreciate',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e2_3',day:2,topic:'Econ',name:'Purchasing Power Parity',hint:'Same good, same price globally',
+summary:'Absolute PPP: price level equalization. Relative PPP: exchange rate change = inflation differential. PPP holds long-run; deviations persist short-run. Used to assess currency misvaluation and long-run FX forecasting.',
+formula:'Relative PPP: %ΔS ≈ π_d − π_f',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e2_4',day:2,topic:'Econ',name:'FX Carry Trade',hint:'Borrow low-rate, invest high-rate',
+summary:'Borrow in low-interest-rate currency, invest in high-interest-rate currency, pocket the differential. Risk: sudden reversal when high-rate currency depreciates (crash risk). Works when UIP fails in the short run.',
+formula:'Profit ≈ (r_high − r_low) − ΔS  [collapses if currency reverses]',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e2_5',day:2,topic:'Econ',name:'Mundell-Fleming Trilemma',hint:'Can\'t have all three: fixed rate + open capital + monetary autonomy',
+summary:'A country cannot simultaneously have: (1) fixed exchange rate, (2) free capital mobility, and (3) independent monetary policy. Must give up one. Most developed economies choose (2)+(3) and float. China historically chose (1)+(3) with capital controls.',
+formula:'[Fixed rate] + [Free capital] + [Monetary policy] — pick 2',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+// ============ DAY 3: ECONOMICS ============
+{id:'e3_1',day:3,topic:'Econ',name:'Balance of Payments',hint:'CA + FA + Capital Account = 0',
+summary:'BOP has three accounts: Current Account (trade in goods/services, income transfers), Capital Account (small: debt forgiveness), Financial Account (FDI, portfolio flows, reserves). A CA deficit must be financed by FA surplus.',
+formula:'CA + KA + FA = 0  (ex-reserve changes)',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e3_2',day:3,topic:'Econ',name:'Marshall-Lerner Condition',hint:'Devaluation improves CA if elasticities sum > 1',
+summary:'Currency depreciation improves the trade balance only if the sum of export and import price elasticities exceeds 1. Short-run: J-curve worsens first (contracts are fixed). Long-run: MLC likely satisfied as quantities adjust.',
+formula:'|εₓ| + |εₘ| > 1  →  depreciation improves CA',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e3_3',day:3,topic:'Econ',name:'Absolute vs Comparative Advantage',hint:'Trade based on opportunity cost',
+summary:'Absolute advantage: produce more with same inputs. Comparative advantage: lower opportunity cost. Even if one country is absolutely better at everything, both benefit from specialising in comparative advantage and trading.',
+formula:'Opportunity cost ratio drives comparative advantage, not absolute productivity',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e3_4',day:3,topic:'Econ',name:'Neoclassical Growth Theory',hint:'Solow model — diminishing returns to capital',
+summary:'Output = f(K, L, Technology). Capital accumulation subject to diminishing returns → steady-state growth equals technological progress rate. Countries converge if same fundamentals. Policy implication: only technology drives long-run per-capita growth.',
+formula:'Δy/y = ΔA/A + α(ΔK/K) + (1−α)(ΔL/L)  [growth accounting]',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e3_5',day:3,topic:'Econ',name:'Endogenous Growth Theory',hint:'R&D and human capital drive sustained growth',
+summary:'Unlike Solow, knowledge and human capital have no diminishing returns. Investment in R&D, education, and institutions generates sustained growth endogenously. Government investment in these areas can permanently raise growth.',
+formula:'AK model: Y = AK  (no diminishing returns, A = total productivity)',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e3_6',day:3,topic:'Econ',name:'Business Cycle Phases',hint:'Know what turns up/down first',
+summary:'Expansion → Peak → Contraction → Trough → Recovery. Leading indicators turn before GDP (e.g., equity prices, building permits, yield curve). Coincident indicators move with GDP. Lagging indicators follow (e.g., unemployment rate, CPI).',
+formula:'Yield curve inversion historically precedes recessions by 6–18 months',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+{id:'e3_7',day:3,topic:'Econ',name:'Fiscal Multiplier',hint:'Government spending ripples through economy',
+summary:'An increase in government spending increases GDP by more than the initial spending (multiplier effect via consumer spending). Size depends on marginal propensity to consume. Crowding out (higher interest rates) can reduce it. Important for business cycle analysis.',
+formula:'Multiplier = 1/(1 − MPC)  [closed economy, no taxes]',
+explore:{library:{id:'vol2-eco',page:1},qbank:'eco'}},
+
+// ============ DAY 4: FSA — INTERCORPORATE & PENSIONS ============
+{id:'f4_1',day:4,topic:'FSA',name:'Equity Method',hint:'20-50% ownership, significant influence',
+summary:'Investor records investment at cost, then adjusts for proportional share of associate\'s net income (increases) and dividends received (decreases). Income statement: share of associate earnings. No consolidation, no line-by-line.',
+formula:'Investment = Cost + Share of NI − Dividends received',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f4_2',day:4,topic:'FSA',name:'Acquisition Method (IFRS9/GAAP)',hint:'Control = 100% consolidation',
+summary:'When control (>50%) is acquired, 100% of subsidiary assets/liabilities are consolidated at fair value. Goodwill = Purchase price − Fair value of net assets. Minority interest recorded in equity. All intercompany transactions eliminated.',
+formula:'Goodwill = Acquisition price − FV of net identifiable assets',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f4_3',day:4,topic:'FSA',name:'Goodwill — IFRS vs GAAP',hint:'Impairment-only model (no amortisation)',
+summary:'GAAP: Full goodwill (100% of acquiree including minority). IFRS: allows partial goodwill (proportional to parent\'s share). Both: annual impairment test (no amortisation). GAAP impairment is one-step (compare carrying to fair value). IFRS two-step check.',
+formula:'Impairment = Carrying value − Recoverable amount (IFRS) or Fair value (GAAP)',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f4_4',day:4,topic:'FSA',name:'Defined Benefit Pension',hint:'Employer bears investment risk',
+summary:'Employer promises specific retirement benefit. Balance sheet: Funded status = Plan assets − PBO. Periodic pension cost (GAAP = net pension cost; IFRS = service cost + net interest; remeasurements go to OCI).',
+formula:'Funded status = FV Plan Assets − PBO  [negative = underfunded]',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f4_5',day:4,topic:'FSA',name:'Periodic Pension Cost Components',hint:'Service, Interest, Expected Return, Amortisation',
+summary:'GAAP: Service Cost + Interest Cost − Expected Return on Assets ± Amortisation of prior service costs and actuarial gains/losses. IFRS: Service Cost on P&L; net interest on P&L (using discount rate × net funded status); all remeasurements to OCI immediately.',
+formula:'GAAP Net Pension Cost = SC + IC − EROA ± amortised items',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f4_6',day:4,topic:'FSA',name:'PBO vs ABO',hint:'PBO uses future salary; ABO uses current',
+summary:'Projected Benefit Obligation (PBO) estimates future benefits using expected future salary — used under IFRS and GAAP for balance sheet. Accumulated Benefit Obligation (ABO) uses current salary — always ≤ PBO. ABO used for minimum liability floor under old GAAP.',
+formula:'PBO > ABO (when future salary > current salary)',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f4_7',day:4,topic:'FSA',name:'Variable Interest Entity (VIE)',hint:'Off-balance-sheet consolidation trigger',
+summary:'GAAP: Consolidate entities where you absorb expected losses or receive benefits (not just voting interest). Primary beneficiary = the party that consolidates the VIE. SPVs, securitisation vehicles often are VIEs. Prevents off-balance-sheet manipulation.',
+formula:'Consolidate if: absorbs majority of VIE losses/returns regardless of voting %',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+// ============ DAY 5: FSA — MULTINATIONAL & QUALITY ============
+{id:'f5_1',day:5,topic:'FSA',name:'Current Rate Method',hint:'Foreign sub with local functional currency',
+summary:'Used when subsidiary\'s functional currency ≠ parent\'s presentation currency. Assets/liabilities translated at current rate; revenues/expenses at average rate; equity at historical rate. Translation gain/loss goes to CTA in Other Comprehensive Income (not P&L).',
+formula:'Translation G/L → CTA (Equity), not income statement',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f5_2',day:5,topic:'FSA',name:'Temporal Method',hint:'Foreign sub with parent functional currency',
+summary:'Used when functional currency = parent\'s. Monetary assets/liabilities at current rate; non-monetary at historical rate; revenues at average rate. Remeasurement gain/loss goes directly to income statement — higher earnings volatility.',
+formula:'Remeasurement G/L → Income Statement (volatile)',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f5_3',day:5,topic:'FSA',name:'Revenue Recognition Manipulation',hint:'Accruals vs cash — key quality signal',
+summary:'Analysts look for: channel stuffing, bill-and-hold arrangements, premature recognition, round-tripping. Compare revenue growth vs receivables growth (divergence is a red flag). Check DSO trend.',
+formula:'DSO = Receivables / (Revenue/365)  [rising DSO = aggressive recognition]',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f5_4',day:5,topic:'FSA',name:'Beneish M-Score',hint:'Earnings manipulation probability model',
+summary:'8-variable model to flag earnings manipulation. Key variables: Days Sales Receivables Index, Gross Margin Index, Asset Quality Index, Sales Growth Index, Accruals. M-Score > −1.78 signals possible manipulation. Used as a forensic accounting screen.',
+formula:'M-Score > −1.78 → likely manipulator (approx threshold)',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f5_5',day:5,topic:'FSA',name:'Accruals Ratio',hint:'Cash vs accrual earnings quality',
+summary:'Balance-sheet based: (NOA_end − NOA_begin) / avg(NOA). Cash-flow based: (NI − CFO − CFI) / avg(NOA). High accruals ratio = low earnings quality (earnings driven by accruals not cash). Sloan Anomaly: high-accrual firms subsequently underperform.',
+formula:'Accruals = NI − (CFO + CFI)  |  Ratio = Accruals / Avg NOA',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+{id:'f5_6',day:5,topic:'FSA',name:'LIFO vs FIFO — Impact Analysis',hint:'Rising prices: LIFO lowers profit but raises cash',
+summary:'Rising prices: LIFO → higher COGS → lower gross profit → lower taxes → higher cash flow. FIFO → lower COGS → higher profit, higher tax, lower cash. LIFO liquidation occurs when units sold > purchased, drawing down old low-cost inventory.',
+formula:'LIFO Reserve = FIFO Inventory − LIFO Inventory  [converts between methods]',
+explore:{library:{id:'vol3-fsa',page:1},qbank:'fsa'}},
+
+// ============ DAY 6: CORPORATE — CAPITAL STRUCTURE & DIVIDENDS ============
+{id:'c6_1',day:6,topic:'Corp',name:'Modigliani-Miller (No Tax)',hint:'Capital structure irrelevant without taxes',
+summary:'MM Proposition I: Without taxes, firm value is independent of capital structure (debt vs equity mix doesn\'t matter). Proposition II: Cost of equity rises with leverage to exactly offset the cheaper cost of debt. WACC remains constant.',
+formula:'MM I (no tax): Vlevered = Vunlevered  |  MM II: Re = R₀ + (R₀−Rd)(D/E)',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c6_2',day:6,topic:'Corp',name:'MM with Corporate Taxes',hint:'Debt tax shield adds value',
+summary:'Interest is tax-deductible → debt creates a tax shield (T×D). MM with taxes: levered firm value = unlevered value + PV(tax shield). Optimal capital structure → all debt. In practice, financial distress costs offset tax shield.',
+formula:'V_L = V_U + T_c × D  [PV of tax shield = T_c × D for permanent debt]',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c6_3',day:6,topic:'Corp',name:'Trade-off Theory',hint:'Optimal leverage balances tax shield vs distress',
+summary:'Firms trade off the tax benefit of debt against expected costs of financial distress (direct: legal/admin costs; indirect: lost customers, suppliers, talent). Optimal D/E maximises firm value at the margin. Predicts a target leverage ratio.',
+formula:'V* = V_U + PV(Tax Shield) − PV(Distress Costs)',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c6_4',day:6,topic:'Corp',name:'Pecking Order Theory',hint:'Firms prefer internal financing first',
+summary:'Information asymmetry makes external financing costly (signals negative information). Firms prefer: retained earnings → debt → equity (last resort). No optimal capital structure — leverage is result of financing needs over time.',
+formula:'Priority: Internal funds > Debt > Equity',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c6_5',day:6,topic:'Corp',name:'Dividend Irrelevance',hint:'MM: dividends don\'t affect firm value',
+summary:'Under MM assumptions (no taxes, no transaction costs, rational investors), dividend policy doesn\'t affect firm value. Investors can create homemade dividends by selling shares. In practice: signalling, clientele effects, and taxes matter.',
+formula:'P₀ = (D₁ + P₁) / (1+r)  [value unaffected by D₁ vs retaining]',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c6_6',day:6,topic:'Corp',name:'Share Buybacks',hint:'Alternative to dividends — tax-efficient',
+summary:'In a world without taxes, buybacks and dividends are equivalent. With taxes (dividends taxed at income rate, buybacks at capital gains rate), buybacks are often preferred. Buybacks can also signal undervaluation and increase EPS mechanically.',
+formula:'EPS after buyback = NI / (Shares_before − Shares_repurchased)',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c6_7',day:6,topic:'Corp',name:'WACC',hint:'Hurdle rate for capital budgeting',
+summary:'Weighted average cost of capital = weighted average of after-tax cost of debt and cost of equity. Used as discount rate for projects with similar risk to firm. Increases with more debt if distress costs outweigh tax shield benefit.',
+formula:'WACC = (E/V)×Re + (D/V)×Rd×(1−Tc)',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+// ============ DAY 7: CORPORATE — M&A, ESG, GOVERNANCE ============
+{id:'c7_1',day:7,topic:'Corp',name:'Synergies in M&A',hint:'1+1=3 in mergers',
+summary:'Revenue synergies: cross-selling, pricing power. Cost synergies: economies of scale, redundancy elimination. Financial synergies: lower WACC, unused debt capacity. Most value destruction in M&A comes from overpaying (winner\'s curse).',
+formula:'Synergy = V(AB) − [V(A) + V(B)]  |  Gain to target = Premium paid',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c7_2',day:7,topic:'Corp',name:'Accretion/Dilution Analysis',hint:'EPS impact of an acquisition',
+summary:'If acquisition P/E < acquirer P/E → EPS accretive. If acquisition P/E > acquirer P/E → EPS dilutive. ALL-cash deals: always test vs WACC. Stock deals: depends on relative P/Es. Note: EPS accretion ≠ value creation.',
+formula:'Post-deal EPS = Combined NI / (Acquirer shares + New shares issued)',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c7_3',day:7,topic:'Corp',name:'Hostile Takeover Defenses',hint:'Poison pills, staggered boards, white knights',
+summary:'Pre-offer defenses: poison pill (rights plan — makes acquisition prohibitively expensive), staggered board (hard to replace all directors quickly), supermajority voting. Post-offer defenses: white knight (friendly bidder), leveraged recapitalization, litigation.',
+formula:'Poison pill: target issues shares at discount to existing holders if acquirer > threshold %',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c7_4',day:7,topic:'Corp',name:'ESG Integration in Analysis',hint:'Material ESG factors affect valuation',
+summary:'Environmental (climate risk, water), Social (labour, supply chain), Governance (board independence, executive pay, related-party transactions). ESG integration: adjusting revenue forecasts, discount rates, or terminal values based on ESG risk/opportunity.',
+formula:'No single formula — ESG adjusts DCF inputs: g, WACC, or terminal value',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c7_5',day:7,topic:'Corp',name:'Agency Conflicts — Shareholders vs Bondholders',hint:'Debt overhang and asset substitution',
+summary:'Asset substitution: levered firms take riskier projects (gains to equity, losses to bonds). Underinvestment / debt overhang: firms with large debt may forgo +NPV projects (gains go to bondholders). Solved via protective covenants.',
+formula:'Covenant violations signal distress; restrict dividends, capex, new debt',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+{id:'c7_6',day:7,topic:'Corp',name:'Board Independence',hint:'Key governance metric',
+summary:'Majority of independent directors improves monitoring. Key independence issues: former CEO on board, inter-locked boards, related-party transactions. Analysts examine: director qualifications, tenure, meeting attendance, equity ownership.',
+formula:'Score board quality: % independent + separation of CEO/Chair + committee independence',
+explore:{library:{id:'vol4-corp',page:1},qbank:'corp'}},
+
+// ============ DAY 8: EQUITY — DDM & FCF ============
+{id:'eq8_1',day:8,topic:'Equity',name:'Gordon Growth Model (GGM)',hint:'Constant-growth DDM',
+summary:'Values a stock as the PV of dividends growing at constant rate g forever. Only applicable when g < r. Sensitive to g assumption near r. Used for mature, stable dividend-paying companies.',
+formula:'P₀ = D₁ / (r − g)  where g = ROE × b (sustainable growth)',
+explore:{library:{id:'vol5-equity',page:1},explainer:'equity_valuation_ddm',qbank:'equity'}},
+
+{id:'eq8_2',day:8,topic:'Equity',name:'H-Model',hint:'Two-phase DDM with linearly declining growth',
+summary:'Combines high initial growth that declines linearly to stable growth. More realistic than simple two-stage DDM. P₀ = [D₀(1+gL)/(r−gL)] + [D₀·H·(gS−gL)/(r−gL)] where H = half-life of high-growth period.',
+formula:'P₀ = D₀(1+gL)/(r−gL) + D₀·H·(gS−gL)/(r−gL)',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq8_3',day:8,topic:'Equity',name:'FCFF vs FCFE',hint:'Firm-level vs equity-level free cash flow',
+summary:'FCFF (Free Cash Flow to Firm): available to all providers of capital (debt + equity). Discounted at WACC. FCFE (Free Cash Flow to Equity): available to equity holders after debt service. Discounted at required equity return r_e.',
+formula:'FCFF = NI + NCC + Int(1−t) − FCInv − WCInv\nFCFE = FCFF − Int(1−t) + Net Borrowing',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq8_4',day:8,topic:'Equity',name:'FCFE from CFO',hint:'Quick FCFE calculation',
+summary:'From cash flow statement: FCFE = CFO − FCInv + Net Borrowing. This is faster than building from NI. FCInv = Capital Expenditures − Proceeds from asset sales. Net borrowing = new debt issued − debt repaid.',
+formula:'FCFE = CFO − FCInv + Net Borrowing',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq8_5',day:8,topic:'Equity',name:'Normalised EPS / Earnings',hint:'Adjust for cycle before valuing',
+summary:'Use through-the-cycle normalised earnings for valuation (not peak or trough). Methods: historical average EPS, or average ROE × current BVPS. Avoids P/E distortion at cyclical peaks (low P/E when earnings at peak = value trap).',
+formula:'Normalised EPS = Avg. ROE × Current Book Value per Share',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq8_6',day:8,topic:'Equity',name:'Justified P/E',hint:'What P/E is warranted by fundamentals',
+summary:'Leading P/E justified by DDM: P/E = (1−b)/(r−g) where b = plowback ratio. Trailing P/E = leading P/E × (1+g). Higher justified P/E when: higher ROE, lower r, higher growth. Used to judge if current market P/E is rich or cheap.',
+formula:'Justified Leading P/E = (1−b)/(r−g)  |  Trailing = Leading×(1+g)',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq8_7',day:8,topic:'Equity',name:'EV/EBITDA',hint:'Capital structure neutral valuation',
+summary:'Enterprise value to EBITDA removes the effect of leverage and depreciation policy differences. EV = Market Cap + Debt + Minority Interest + Preferred − Cash. Useful for capital-intensive and highly leveraged companies. Compared to peers and historical.',
+formula:'EV = Mkt Cap + Debt + MI + Preferred − Cash  |  Multiple = EV/EBITDA',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+// ============ DAY 9: EQUITY — RESIDUAL INCOME & MARKET-BASED ============
+{id:'eq9_1',day:9,topic:'Equity',name:'Residual Income',hint:'Economic profit above equity cost',
+summary:'RI = NI − (r_e × BVPS_t-1). Positive RI creates value above book. RI model: P₀ = B₀ + PV of future RI. Advantage: uses accounting data, works when dividends/FCF are unpredictable. Weakness: relies on clean surplus relationship.',
+formula:'RI_t = EPS_t − r_e × B_{t-1}  |  P₀ = B₀ + Σ RI_t/(1+r)^t',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq9_2',day:9,topic:'Equity',name:'Economic Value Added (EVA)',hint:'Company-level residual income',
+summary:'EVA = NOPAT − WACC × Invested Capital. Positive EVA = true economic profit. NOPAT = EBIT(1-t) adjusted for accounting distortions (capitalise R&D, add back LIFO reserve changes, etc.). Used for managerial performance evaluation.',
+formula:'EVA = NOPAT − (WACC × IC)  |  NOPAT = EBIT × (1−T)',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq9_3',day:9,topic:'Equity',name:'P/B Ratio',hint:'Premium to book value',
+summary:'P/B = Market Price / Book Value per Share. Justified P/B = (ROE − g)/(r − g). High P/B justified when ROE > r (firm earns above cost of capital). P/B useful for financial firms where assets are marked to market.',
+formula:'Justified P/B = (ROE − g)/(r − g)',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq9_4',day:9,topic:'Equity',name:'P/S Ratio',hint:'Revenue-based — works even when earnings negative',
+summary:'P/S = Price / Sales per share. Useful when earnings are negative (growth companies). Not affected by earnings management. Weakness: doesn\'t reflect profitability differences. Justified P/S = (NI margin × Payout × (1+g)) / (r−g).',
+formula:'P/S = P/E × NI margin  |  Justified P/S = PM × P/E_justified',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq9_5',day:9,topic:'Equity',name:'NAVPS for Real Estate Funds',hint:'NAV per share for REITs and REOCs',
+summary:'NAVPS = (NOI/cap rate − other liabilities + non-real estate assets) / shares. Premium/discount to NAV signals market valuation vs private market value. REIT NAVPS analysis starts with estimating stabilised NOI.',
+formula:'NAVPS = (NOI₁/Cap Rate − Debt + Other Assets) / Shares',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+{id:'eq9_6',day:9,topic:'Equity',name:'Discount for Lack of Control (DLOC)',hint:'Minority interest discount',
+summary:'Private company shares lack control → discounted vs controlling interest value. DLOC = 1 − 1/(1+control premium). DLOM (Lack of Marketability) = additional discount for illiquidity. Stack discounts: apply DLOC first, then DLOM.',
+formula:'DLOC = 1 − 1/(1+CRP)  |  Total discount = 1−(1−DLOC)×(1−DLOM)',
+explore:{library:{id:'vol5-equity',page:1},qbank:'equity'}},
+
+// ============ DAY 10: FIXED INCOME — TERM STRUCTURE & DURATION ============
+{id:'fi10_1',day:10,topic:'FI',name:'Spot Rates vs Forward Rates',hint:'Bootstrapping the yield curve',
+summary:'Spot rate = YTM of a zero-coupon bond. Forward rate = implied rate for a future period. (1+z₂)² = (1+z₁)(1+f₁₂). Forward rates can be locked in with FRAs. Key: forward rates are market expectations of future spot rates under pure expectations theory.',
+formula:'(1+z_n)^n = (1+z_m)^m × (1+f(m,n-m))^(n-m)',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi10_2',day:10,topic:'FI',name:'Theories of Term Structure',hint:'Why yield curve slopes up or down',
+summary:'Pure Expectations: forward rates = expected future spot rates (no risk premium). Liquidity Preference: upward-biased because investors demand term premium. Market Segmentation: supply/demand in each maturity segment sets rates independently. Preferred Habitat: investors venture from preferred maturities for sufficient premium.',
+formula:'Liquidity premium: f(m,n) = E[r] + LP  [explains upward-sloping normal curve]',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi10_3',day:10,topic:'FI',name:'Duration (Modified & Effective)',hint:'Price sensitivity to rate changes',
+summary:'Modified Duration = Macaulay Duration / (1 + y/m). Effective Duration accounts for cash flow changes (callable bonds, MBS). %ΔP ≈ −MD × Δy. For bonds with embedded options, use Effective Duration (OAS framework).',
+formula:'%ΔP ≈ −MD × Δy + ½ × Convexity × (Δy)²',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi10_4',day:10,topic:'FI',name:'Convexity',hint:'Duration understates price gain, overstates loss',
+summary:'Convexity measures the curvature of the price-yield relationship. Positive convexity is desirable: price rises more than duration predicts for rate decreases; price falls less than duration predicts for rate increases. Higher coupon/longer maturity = higher duration; callable bonds have negative convexity.',
+formula:'ΔP/P ≈ −D×Δy + (1/2)×C×(Δy)²  |  C = (P+ + P− − 2P₀)/(P₀×Δy²)',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi10_5',day:10,topic:'FI',name:'Key Rate Duration',hint:'Sensitivity to specific maturity point',
+summary:'KRD measures price sensitivity to a change at a single maturity on the yield curve (all other points unchanged). Sum of all KRDs ≈ Effective Duration. Used for yield curve positioning — identifies which maturity bucket drives price risk.',
+formula:'Sum of KRDs = Effective Duration  |  Portfolio KRD = Σ wᵢ × KRDᵢ',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi10_6',day:10,topic:'FI',name:'Riding the Yield Curve',hint:'Roll down for excess return',
+summary:'If the yield curve is upward-sloping and unchanged, a bond with time to maturity will see its yield decrease as it rolls down the curve → price appreciation. Total return = coupon + roll-down return + duration × yield change.',
+formula:'Roll return = (P_end − P_begin using shorter maturity at same curve) / P_begin',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+// ============ DAY 11: FIXED INCOME — CREDIT, MBS, CDS ============
+{id:'fi11_1',day:11,topic:'FI',name:'Credit Spread',hint:'Yield premium over risk-free',
+summary:'Credit spread = yield of risky bond − risk-free (Treasury) yield. Components: expected loss + risk premium. Z-spread: constant spread over the entire spot curve. OAS: Z-spread minus option value (removes option distortion for callable/putable bonds).',
+formula:'Z-spread: P = Σ CF_t/(1+zₜ+ZS)^t  |  OAS = Z-spread − Option Value',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi11_2',day:11,topic:'FI',name:'CDS (Credit Default Swap)',hint:'Insurance on corporate default',
+summary:'Protection buyer pays periodic premium (CDS spread) to protection seller. If reference entity defaults, seller pays par − recovery. CDS spread approximates credit spread. Used for: hedging credit risk, expressing views on credit quality without owning bonds.',
+formula:'CDS Spread ≈ (1 − Recovery Rate) × Default Probability  [per period]',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi11_3',day:11,topic:'FI',name:'MBS Prepayment Risk',hint:'Extension and contraction risk',
+summary:'Mortgages can be prepaid when interest rates fall (refinancing) → investor receives par early, reinvests at lower rates (contraction risk). When rates rise, prepayments slow → duration extends (extension risk). PSA model standardises prepayment speed.',
+formula:'WAL shortens when rates fall (prepayments accelerate); WAL extends when rates rise',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi11_4',day:11,topic:'FI',name:'CMO Tranches',hint:'Redirecting prepayment risk',
+summary:'Collateralised Mortgage Obligation tranches sequentially absorb prepayments. PAC (Planned Amortisation Class): most stable; supported by Companion tranches that absorb prepayment variability. TAC: one-sided PAC. IO and PO strips isolate interest/principal cash flows.',
+formula:'PAC effective duration more stable; Companion tranche absorbs prepayment volatility',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi11_5',day:11,topic:'FI',name:'Structural Credit Model',hint:'Merton model — equity as call option',
+summary:'Equity is a call option on firm assets with strike = face value of debt. Default occurs when asset value < debt at maturity. Firm assets follow geometric Brownian motion. Distance-to-default = (Ln(V/K) + (μ − σ²/2)T) / (σ√T).',
+formula:'Equity = max(V−K, 0)  |  Debt = V − Equity  [Merton model]',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+{id:'fi11_6',day:11,topic:'FI',name:'Reduced-Form Credit Model',hint:'Default as a Poisson process',
+summary:'Models default as a random event with intensity λ (hazard rate). Does not model firm assets directly. Calibrated to market credit spreads. More flexible for illiquid or complex credits. Credit spread ≈ λ × (1 − Recovery Rate).',
+formula:'Credit Spread ≈ λ × LGD  [LGD = 1 − Recovery Rate]',
+explore:{library:{id:'vol6-fi',page:1},qbank:'fi'}},
+
+// ============ DAY 12: DERIVATIVES — OPTIONS & PRICING ============
+{id:'d12_1',day:12,topic:'Deriv',name:'Put-Call Parity',hint:'Arbitrage link between calls and puts',
+summary:'C + PV(X) = P + S. A protective put (stock + put) = covered call + cash. Links call and put prices; allows pricing one from the other. Violation → arbitrage. Used to create synthetic instruments.',
+formula:'C + PV(X) = P + S₀  |  C − P = S₀ − PV(X)',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d12_2',day:12,topic:'Deriv',name:'Black-Scholes-Merton',hint:'Option pricing from 5 inputs',
+summary:'Prices European options on non-dividend-paying stocks. Assumes log-normal returns, constant volatility, no dividends, continuous trading. Inputs: S, X, r, σ, T. Delta = N(d₁) for calls. Vega measures sensitivity to σ (IV).',
+formula:'C = S₀N(d₁) − Xe^{-rT}N(d₂)  |  d₁ = [ln(S/X)+(r+σ²/2)T]/(σ√T)',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d12_3',day:12,topic:'Deriv',name:'Option Greeks',hint:'Sensitivities to model inputs',
+summary:'Delta (Δ): rate of change with underlying price (0-1 for calls, -1-0 for puts). Gamma (Γ): rate of change of delta. Theta (Θ): time decay (negative for long options). Vega (ν): sensitivity to implied volatility. Rho (ρ): sensitivity to interest rate.',
+formula:'Δ_call = N(d₁)  |  Γ = N\'(d₁)/(Sσ√T)  |  Θ < 0 for long options',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d12_4',day:12,topic:'Deriv',name:'Binomial Option Pricing',hint:'Risk-neutral probability approach',
+summary:'Build a tree of up/down moves. Risk-neutral probability p = (1+r−d)/(u−d). Value backward through the tree. Useful for American options (early exercise check at each node). Converges to BSM as steps increase.',
+formula:'p = (1+r−d)/(u−d)  |  C = [p×C_u + (1−p)×C_d]/(1+r)',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d12_5',day:12,topic:'Deriv',name:'Implied Volatility & Vol Smile',hint:'Market\'s priced-in volatility',
+summary:'IV = σ implied by option price using BSM. Vol smile: IV varies by strike (not constant as BSM assumes). Equity: vol skew (put strikes have higher IV → crash insurance demand). FX: symmetric smile. IV > historical vol = options rich.',
+formula:'IV derived by solving BSM backwards from market price for σ',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d12_6',day:12,topic:'Deriv',name:'Interest Rate Caps & Floors',hint:'Options on LIBOR/SOFR rates',
+summary:'Cap = series of caplets (European calls on LIBOR). Floor = series of floorlets (puts). Cap protects floating rate borrower (limits maximum rate). Floor protects floating rate lender (limits minimum rate). Collar = buy cap + sell floor.',
+formula:'Collar cost = Cap premium − Floor premium  [zero-cost collar: premiums equal]',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+// ============ DAY 13: DERIVATIVES: SWAPS/FORWARDS + ALTS: RE/PE ============
+{id:'d13_1',day:13,topic:'Deriv',name:'Interest Rate Swap Valuation',hint:'Value = PV of fixed − PV of floating',
+summary:'At inception, swap value = 0. Subsequently, value = PV(remaining fixed payments) − PV(remaining floating payments). Fixed payer benefits when rates rise. Floating payer benefits when rates fall. Equivalent to long/short bond positions.',
+formula:'V_fixed_payer = Σ PV(floating CF) − Σ PV(fixed CF)',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d13_2',day:13,topic:'Deriv',name:'Currency Swap',hint:'Exchange principal + payments in two currencies',
+summary:'Exchange notional principal in two currencies at inception, periodic interest payments in respective currencies, re-exchange principal at maturity. Used for foreign currency financing. Combines FX + IR risk management.',
+formula:'Value = [PV of foreign currency leg × spot rate] − PV of domestic leg',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d13_3',day:13,topic:'Deriv',name:'Forward Rate Agreement (FRA)',hint:'Lock in a future interest rate',
+summary:'OTC derivative fixing a future borrowing/lending rate. Long FRA benefits if market rate rises above agreed rate. Settlement at beginning of loan period (discounted). Used by corporations to hedge floating rate exposure.',
+formula:'Settlement = (L − F) × (D/360) × NP / [1 + L × (D/360)]',
+explore:{library:{id:'vol7-deriv',page:1},qbank:'deriv'}},
+
+{id:'d13_4',day:13,topic:'Alts',name:'Real Estate Cap Rate',hint:'NOI yield on property value',
+summary:'Cap Rate = NOI / Property Value. Higher cap rate = higher yield (lower value for given NOI). Varies by location, property type, tenant quality. Cap rate compression (falling) drives property appreciation. DSCR = NOI / Debt Service (must exceed 1.0x for debt coverage).',
+formula:'Value = NOI / Cap Rate  |  DSCR = NOI / Annual Debt Service',
+explore:{library:{id:'vol8-alts',page:1},qbank:'alts'}},
+
+{id:'d13_5',day:13,topic:'Alts',name:'Private Equity IRR & MOIC',hint:'Key PE return metrics',
+summary:'IRR: annualised return considering timing of cash flows. MOIC (Multiple on Invested Capital) = Total distributions / Total invested. Gross vs net: net deducts management fees and carried interest. J-curve: PE funds show early losses before value creation.',
+formula:'MOIC = Total Distributions / Total Capital Invested  |  IRR: Σ CF/(1+IRR)^t = 0',
+explore:{library:{id:'vol8-alts',page:1},qbank:'alts'}},
+
+{id:'d13_6',day:13,topic:'Alts',name:'LBO Structure',hint:'Debt-driven buyout amplifies returns',
+summary:'Leveraged buyout uses debt (60-80% financing) to acquire a company. Returns amplified via leverage. Value creation: EBITDA growth, multiple expansion, debt paydown. Key metrics: entry/exit multiples, debt paydown, EBITDA growth. Management incentivised via equity stake.',
+formula:'Equity return = (Exit EV − Exit Debt) / Entry Equity  [amplified by leverage]',
+explore:{library:{id:'vol8-alts',page:1},qbank:'alts'}},
+
+// ============ DAY 14: ALTS + PM FACTORS ============
+{id:'a14_1',day:14,topic:'Alts',name:'Hedge Fund Strategies',hint:'Know the risk of each strategy',
+summary:'Long/Short Equity: stock selection, net long/short. Event Driven (M&A arbitrage, distressed). Global Macro: top-down, currencies, rates. CTA/Managed Futures: trend-following. Market Neutral: zero beta, pure alpha. Fee structure: 2-and-20.',
+formula:'Manager alpha = fund return − β × market return − management fee',
+explore:{library:{id:'vol8-alts',page:1},qbank:'alts'}},
+
+{id:'a14_2',day:14,topic:'Alts',name:'Commodity Futures Return',hint:'Spot + roll + collateral yield',
+summary:'Total return on commodity futures = spot return + roll return + collateral yield. Roll return: positive in backwardation (futures below spot), negative in contango (futures above spot). Roll return drives most of the variation in commodity futures returns.',
+formula:'Total = Spot ΔP + Roll Return + Collateral Return\nRoll Return > 0 when market in backwardation',
+explore:{library:{id:'vol8-alts',page:1},qbank:'alts'}},
+
+{id:'a14_3',day:14,topic:'Alts',name:'Calmar & Sortino Ratios',hint:'Risk-adjusted returns for alts',
+summary:'Sortino Ratio = (Return − MAR) / Downside Deviation. Uses only downside volatility (better for skewed alt returns). Calmar Ratio = Annualised Return / Max Drawdown. Better than Sharpe for strategies with non-normal returns (hedge funds, PE).',
+formula:'Sortino = (R_p − MAR) / σ_downside  |  Calmar = R_annual / |Max Drawdown|',
+explore:{library:{id:'vol8-alts',page:1},qbank:'alts'}},
+
+{id:'p14_1',day:14,topic:'PM',name:'Multifactor Models',hint:'Fama-French and beyond',
+summary:'Capital Asset Pricing Model (CAPM) uses only market beta. Fama-French 3-factor adds SMB (small minus big) and HML (high minus low book-to-market). Carhart 4-factor adds momentum. These factors explain cross-sectional return differences.',
+formula:'E(R) = Rf + β_mkt×(Rm−Rf) + β_SMB×SMB + β_HML×HML + β_MOM×MOM',
+explore:{library:{id:'vol9-pm',page:1},qbank:'pm'}},
+
+{id:'p14_2',day:14,topic:'PM',name:'Alpha & Information Ratio',hint:'Active manager skill measurement',
+summary:'Alpha = actual return − expected return from factor exposures. Information Ratio = Alpha / Tracking Error. High IR = consistent outperformance per unit of active risk. Fundamental Law: IR ≈ IC × √BR (IC = information coefficient, BR = breadth).',
+formula:'IR = α / σ_tracking  |  Fundamental Law: IR = IC × √N',
+explore:{library:{id:'vol9-pm',page:1},qbank:'pm'}},
+
+{id:'p14_3',day:14,topic:'PM',name:'Smart Beta / Factor Investing',hint:'Rules-based systematic factor exposure',
+summary:'Systematic strategies harvesting factor premiums: Value, Size, Momentum, Quality, Low Volatility, Carry. Smart beta ETFs offer cheaper access than active funds. Factor timing: cyclical (value/size do better post-recession), defensive (low vol in late cycle).',
+formula:'Factor exposure: β_factor = cov(R_portfolio, R_factor) / var(R_factor)',
+explore:{library:{id:'vol9-pm',page:1},qbank:'pm'}},
+
+// ============ DAY 15: PM (ACTIVE, LDI) + ETHICS ============
+{id:'p15_1',day:15,topic:'PM',name:'Liability-Driven Investing',hint:'Match asset duration to liabilities',
+summary:'Strategy that structures the asset portfolio to match the interest rate sensitivity of liabilities (pension, insurance). Dollar Duration = Duration × Portfolio Value. Goal: immunise surplus from interest rate changes. Cash flow matching is the extreme form.',
+formula:'Duration gap = D_assets − (L/A)×D_liabilities  [target: zero]',
+explore:{library:{id:'vol9-pm',page:1},qbank:'pm'}},
+
+{id:'p15_2',day:15,topic:'PM',name:'Immunisation Strategy',hint:'Lock in target return over horizon',
+summary:'Portfolio immunised against rate changes if: initial PV of assets = PV of liabilities, duration of assets = duration of liabilities, and dispersion of assets ≥ dispersion of liabilities. Rebalancing required as time passes and rates move.',
+formula:'Target PV = PV_assets  |  D_assets = D_liabilities  |  Convexity_a ≥ Convexity_L',
+explore:{library:{id:'vol9-pm',page:1},qbank:'pm'}},
+
+{id:'p15_3',day:15,topic:'PM',name:'Global Portfolio Overlay',hint:'Currency and TAA management',
+summary:'Tactical Asset Allocation (TAA) overlays shift exposure without changing underlying holdings (via futures/swaps). Currency overlay manages FX risk separate from equity/bond decisions. Active currency = significant source of alpha in global portfolios.',
+formula:'Currency alpha = Local asset return − Return in reporting currency',
+explore:{library:{id:'vol9-pm',page:1},qbank:'pm'}},
+
+{id:'e15_1',day:15,topic:'Ethics',name:'CFA Standards — Loyalty & Prudence',hint:'Client interests first',
+summary:'Standard III(A): Loyalty, Prudence, and Care. Place client interests above employer and own interests. Act with prudence: reasonable care, skill, diligence. Soft dollar arrangements must benefit the client. Voting rights must be exercised in clients\' interests.',
+formula:'Client interests > Employer interests > Personal interests',
+explore:{library:{id:'vol10-ethics',page:1},qbank:'ethics'}},
+
+{id:'e15_2',day:15,topic:'Ethics',name:'Material Non-Public Information',hint:'Mosaic theory vs insider trading',
+summary:'Standard II(A): Do not trade or cause others to trade on MNPI. Mosaic theory: combining public info + non-material non-public info = OK. Analyst must have "firewall" from investment banking. Primary source: the company; secondary (analyst): may be OK if from public research.',
+formula:'MNPI = Information: not public + material (would affect investment decision) + obtained improperly',
+explore:{library:{id:'vol10-ethics',page:1},qbank:'ethics'}},
+
+{id:'e15_3',day:15,topic:'Ethics',name:'GIPS Standards',hint:'Fair presentation of performance',
+summary:'Global Investment Performance Standards ensure full and fair disclosure of investment returns. Required: firm-wide compliance, all fee-paying discretionary portfolios in composites, 10-year performance record (or since inception). TWRR required. Compliant firms disclose GIPS status.',
+formula:'TWRR = [(1+R₁)(1+R₂)…(1+Rₙ)] − 1  [eliminates cash flow timing effects]',
+explore:{library:{id:'vol10-ethics',page:1},qbank:'ethics'}},
+
+{id:'e15_4',day:15,topic:'Ethics',name:'Conflicts of Interest — Disclosure',hint:'Transparency is the key principle',
+summary:'Standard VI(A): Disclose all actual and potential conflicts. Compensation arrangements, board memberships, ownership stakes, analyst coverage. Referral fees must be disclosed. Priority of Transactions: clients first, then employer, then personal accounts.',
+formula:'Order: Client → Employer → Personal  |  Front-running = always prohibited',
+explore:{library:{id:'vol10-ethics',page:1},qbank:'ethics'}},
+
+{id:'e15_5',day:15,topic:'Ethics',name:'Research Objectivity Standards',hint:'Independence of analyst recommendations',
+summary:'Analysts must not be influenced by investment banking, corporate issuers, or management when making recommendations. Quiet period around IPO/follow-on. Rating system must be consistent with meaning. Analysts cannot own securities they cover (or must disclose).',
+formula:'Independence requires: separate reporting, no banking override of ratings',
+explore:{library:{id:'vol10-ethics',page:1},qbank:'ethics'}},
+
+];
+
+// ============================================================
+// APP STATE
+// ============================================================
+let TODAY_DAY = null;
+let CURRENT_DAY = null;
+let CURRENT_FILTER = 'all';
+let CONFIDENCE = {}; // { termId: 1|2|3 }
+let REVIEWED_DAYS = new Set();
+let STREAK = 0;
+
+// ── IndexedDB ────────────────────────────────────────────────
+const DB_NAME = 'cfa-glossary', DB_VER = 1;
+let db;
+function openDB() {
+  return new Promise((res, rej) => {
+    const req = indexedDB.open(DB_NAME, DB_VER);
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains('confidence')) d.createObjectStore('confidence');
+      if (!d.objectStoreNames.contains('meta')) d.createObjectStore('meta');
+    };
+    req.onsuccess = e => { db = e.target.result; res(); };
+    req.onerror = e => rej(e);
+  });
+}
+function dbGet(store, key) {
+  return new Promise(res => {
+    const tx = db.transaction(store, 'readonly');
+    const req = tx.objectStore(store).get(key);
+    req.onsuccess = () => res(req.result);
+    req.onerror = () => res(undefined);
+  });
+}
+function dbSet(store, key, val) {
+  return new Promise(res => {
+    const tx = db.transaction(store, 'readwrite');
+    tx.objectStore(store).put(val, key);
+    tx.oncomplete = res;
+  });
+}
+function dbGetAll(store) {
+  return new Promise(res => {
+    const tx = db.transaction(store, 'readonly');
+    const all = {};
+    const req = tx.objectStore(store).openCursor();
+    req.onsuccess = e => {
+      const c = e.target.result;
+      if (c) { all[c.key] = c.value; c.continue(); }
+      else res(all);
+    };
+    req.onerror = () => res({});
+  });
+}
+
+// ── Day Calculation ─────────────────────────────────────────
+function getTodayDay() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now - start;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+  return (dayOfYear % 15) + 1;
+}
+
+// ── Init ────────────────────────────────────────────────────
+async function init() {
+  await openDB();
+  CONFIDENCE = await dbGetAll('confidence');
+  const meta = await dbGet('meta', 'app') || {};
+  REVIEWED_DAYS = new Set(meta.reviewedDays || []);
+  STREAK = meta.streak || 0;
+
+  const lastDate = meta.lastDate;
+  const todayStr = new Date().toISOString().split('T')[0];
+  TODAY_DAY = getTodayDay();
+  CURRENT_DAY = TODAY_DAY;
+
+  // Streak logic
+  if (lastDate !== todayStr) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yStr = yesterday.toISOString().split('T')[0];
+    if (lastDate === yStr) { /* continuation, keep streak */ }
+    else if (lastDate) { STREAK = 0; }
+  }
+
+  buildCyclePips();
+  buildDayGrid();
+  renderDay(TODAY_DAY);
+  updateStreak();
+}
+
+// ── UI Builders ─────────────────────────────────────────────
+function buildCyclePips() {
+  const container = document.getElementById('cyclePips');
+  container.innerHTML = '';
+  for (let d = 1; d <= 15; d++) {
+    const pip = document.createElement('div');
+    pip.className = 'cycle-pip' + (d === TODAY_DAY ? ' today' : '') + (REVIEWED_DAYS.has(d) ? ' done' : '');
+    pip.textContent = d;
+    pip.title = `Day ${d}: ${DECKS[d-1].label}`;
+    pip.onclick = () => { CURRENT_DAY = d; buildDayGrid(); renderDay(d); };
+    container.appendChild(pip);
+  }
+}
+
+function buildDayGrid() {
+  const grid = document.getElementById('dayGrid');
+  grid.innerHTML = '';
+  for (let d = 1; d <= 15; d++) {
+    const btn = document.createElement('button');
+    btn.className = 'day-btn' + (d === CURRENT_DAY ? ' active' : '') + (REVIEWED_DAYS.has(d) ? ' reviewed' : '');
+    btn.innerHTML = `<span class="day-num">${d}</span><span class="day-sub">${DECKS[d-1].label.split('/')[0].trim()}</span>`;
+    btn.onclick = () => { CURRENT_DAY = d; buildDayGrid(); renderDay(d); };
+    grid.appendChild(btn);
+  }
+}
+
+function renderDay(day) {
+  const terms = TERMS.filter(t => t.day === day);
+  document.getElementById('heroSub').textContent = `Day ${day} of 15 — ${DECKS[day-1].label} — ${terms.length} terms`;
+
+  updateCounts(terms);
+  renderCards(terms);
+  updateProgress(terms);
+
+  // Mark as viewed
+  REVIEWED_DAYS.add(day);
+  saveMeta();
+  buildCyclePips();
+  buildDayGrid();
+}
+
+function updateCounts(terms) {
+  let all = terms.length, weak = 0, unseen = 0, known = 0;
+  terms.forEach(t => {
+    const c = CONFIDENCE[t.id] || 0;
+    if (c === 0) unseen++;
+    else if (c <= 2) weak++;
+    else known++;
+  });
+  document.getElementById('countAll').textContent = all;
+  document.getElementById('countWeak').textContent = weak;
+  document.getElementById('countUnseen').textContent = unseen;
+  document.getElementById('countKnown').textContent = known;
+}
+
+function updateProgress(terms) {
+  const total = terms.length;
+  const rated = terms.filter(t => CONFIDENCE[t.id] > 0).length;
+  const pct = total ? (rated / total * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${rated} / ${total} reviewed`;
+}
+
+function renderCards(allTerms) {
+  const grid = document.getElementById('cardsGrid');
+  let terms = allTerms;
+  if (CURRENT_FILTER === 'weak') terms = allTerms.filter(t => { const c = CONFIDENCE[t.id]||0; return c > 0 && c <= 2; });
+  else if (CURRENT_FILTER === 'unseen') terms = allTerms.filter(t => !(CONFIDENCE[t.id] > 0));
+  else if (CURRENT_FILTER === 'known') terms = allTerms.filter(t => CONFIDENCE[t.id] === 3);
+
+  if (terms.length === 0) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><h3>No terms match this filter.</h3><p>Try a different filter above.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = '';
+  terms.forEach(t => grid.appendChild(buildCard(t)));
+}
+
+function buildCard(t) {
+  const wrap = document.createElement('div');
+  wrap.className = 'flip-card';
+  wrap.id = 'card-' + t.id;
+  const c = CONFIDENCE[t.id] || 0;
+  const color = TOPIC_COLORS[t.topic] || '#555';
+
+  wrap.innerHTML = `
+  <div class="flip-inner">
+    <div class="flip-front">
+      <div>
+        <div class="term-header">
+          <div class="term-name">${t.name}</div>
+          <span class="topic-badge" style="background:${color}">${t.topic}</span>
+        </div>
+        <div class="term-hint">${t.hint}</div>
+      </div>
+      <div>
+        <div class="flip-hint">👆 Tap to reveal definition</div>
+        <div class="confidence-row">
+          <button class="conf-btn c1${c===1?' active':''}" onclick="setConf(event,'${t.id}',1)">🔴 Weak</button>
+          <button class="conf-btn c2${c===2?' active':''}" onclick="setConf(event,'${t.id}',2)">🟡 OK</button>
+          <button class="conf-btn c3${c===3?' active':''}" onclick="setConf(event,'${t.id}',3)">🟢 Got it</button>
+        </div>
+      </div>
+    </div>
+    <div class="flip-back" onclick="flipCard('${t.id}')">
+      <div class="term-header" style="margin-bottom:4px">
+        <div class="term-name" style="font-size:.9rem">${t.name}</div>
+        <span class="topic-badge" style="background:${color};font-size:.6rem">${t.topic}</span>
+      </div>
+      <div class="back-summary">${t.summary}</div>
+      ${t.formula ? `<div class="formula-box">${t.formula}</div>` : ''}
+      <div class="back-actions">
+        ${t.explore.library ? `<a class="explore-link" href="../library/?book=${t.explore.library.id}" target="_blank">📚 Open in Library</a>` : ''}
+        ${t.explore.qbank ? `<a class="explore-link" href="../qbank/?topic=${t.explore.qbank}" target="_blank">📝 Practice Questions</a>` : ''}
+        <button class="explore-link" onclick="openDeep(event,'${t.id}')" style="cursor:pointer;border:none">🔍 Deep Dive</button>
+      </div>
+    </div>
+  </div>`;
+
+  wrap.querySelector('.flip-front').onclick = (e) => {
+    if (!e.target.classList.contains('conf-btn')) flipCard(t.id);
+  };
+  return wrap;
+}
+
+function flipCard(id) {
+  const card = document.getElementById('card-' + id);
+  if (card) card.classList.toggle('flipped');
+}
+
+function setConf(e, id, val) {
+  e.stopPropagation();
+  CONFIDENCE[id] = val;
+  dbSet('confidence', id, val);
+  const terms = TERMS.filter(t => t.day === CURRENT_DAY);
+  updateCounts(terms);
+  updateProgress(terms);
+  // Update button states on the card
+  const card = document.getElementById('card-' + id);
+  if (card) {
+    card.querySelectorAll('.conf-btn').forEach((b, i) => {
+      b.classList.toggle('active', i + 1 === val);
+    });
+  }
+}
+
+function setFilter(f, btn) {
+  CURRENT_FILTER = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const terms = TERMS.filter(t => t.day === CURRENT_DAY);
+  renderCards(terms);
+}
+
+function openWeakAll() {
+  // Show all weak terms across all 15 days
+  const weakTerms = TERMS.filter(t => { const c = CONFIDENCE[t.id]||0; return c > 0 && c <= 2; });
+  if (weakTerms.length === 0) {
+    alert('No weak terms yet! Rate some terms as 🔴 Weak or 🟡 OK first.');
+    return;
+  }
+  document.getElementById('heroSub').textContent = `All Weak Terms — ${weakTerms.length} terms across all days`;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  const grid = document.getElementById('cardsGrid');
+  grid.innerHTML = '';
+  weakTerms.forEach(t => grid.appendChild(buildCard(t)));
+}
+
+function updateStreak() {
+  const badge = document.getElementById('streakBadge');
+  if (STREAK > 0) {
+    badge.style.display = '';
+    document.getElementById('streakCount').textContent = STREAK;
+  } else {
+    badge.style.display = 'none';
+  }
+  document.getElementById('cycleInfo').textContent = `${REVIEWED_DAYS.size}/15 days reviewed this cycle`;
+}
+
+function openDeep(e, id) {
+  e.stopPropagation();
+  const t = TERMS.find(x => x.id === id);
+  if (!t) return;
+  document.getElementById('modalTitle').textContent = t.name;
+  document.getElementById('modalBody').innerHTML = `
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:12px">
+      Topic: <strong style="color:var(--text)">${t.topic}</strong> &nbsp;|&nbsp; Day ${t.day}: ${DECKS[t.day-1].label}
+    </p>
+    <p style="margin-bottom:12px">${t.summary}</p>
+    ${t.formula ? `<div class="modal-formula">${t.formula}</div>` : ''}
+    <p style="font-size:.85rem;color:var(--muted);margin-top:12px">Explore further:</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      ${t.explore.library ? `<a href="../library/?book=${t.explore.library.id}" target="_blank" style="color:var(--accent);font-size:.85rem">📚 Open in PDF Library</a>` : ''}
+      ${t.explore.qbank ? `<a href="../qbank/?topic=${t.explore.qbank}" target="_blank" style="color:var(--accent);font-size:.85rem">📝 Practice Q&A</a>` : ''}
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+async function saveMeta() {
+  const todayStr = new Date().toISOString().split('T')[0];
+  const meta = await dbGet('meta', 'app') || {};
+  const lastDate = meta.lastDate;
+  if (lastDate !== todayStr) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if (lastDate === yesterday.toISOString().split('T')[0]) STREAK++;
+    else if (!lastDate) STREAK = 1;
+    else STREAK = 1;
+  }
+  await dbSet('meta', 'app', {
+    reviewedDays: [...REVIEWED_DAYS],
+    streak: STREAK,
+    lastDate: todayStr,
+  });
+  updateStreak();
+}
+
+// Start
+init();
+</script>
+</body>
+</html>
