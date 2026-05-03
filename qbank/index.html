@@ -521,15 +521,58 @@ let MOCK_TOPICS = new Set(['all']);
 let DB;
 async function openDB() {
   return new Promise((res, rej) => {
-    const req = indexedDB.open('cfa-qbank', 1);
+    const req = indexedDB.open('cfa-qbank', 2);
     req.onupgradeneeded = e => {
       const db = e.target.result;
       if (!db.objectStoreNames.contains('progress'))
         db.createObjectStore('progress', {keyPath: 'id'});
+      if (!db.objectStoreNames.contains('mock-history'))
+        db.createObjectStore('mock-history', {keyPath: 'ts'});
+      if (!db.objectStoreNames.contains('meta'))
+        db.createObjectStore('meta', {keyPath: 'key'});
     };
     req.onsuccess = e => { DB = e.target.result; res(DB); };
     req.onerror   = () => rej();
   });
+}
+async function dbGetStore(store, k) {
+  return new Promise((res, rej) => {
+    const req = DB.transaction(store,'readonly').objectStore(store).get(k);
+    req.onsuccess = () => res(req.result);
+    req.onerror   = () => rej();
+  });
+}
+async function dbPutStore(store, v) {
+  return new Promise((res, rej) => {
+    const req = DB.transaction(store,'readwrite').objectStore(store).put(v);
+    req.onsuccess = () => res();
+    req.onerror   = () => rej();
+  });
+}
+async function dbGetAllStore(store) {
+  return new Promise((res, rej) => {
+    const req = DB.transaction(store,'readonly').objectStore(store).getAll();
+    req.onsuccess = () => res(req.result || []);
+    req.onerror   = () => rej();
+  });
+}
+async function saveMockResult(result) {
+  await dbPutStore('mock-history', result);
+}
+async function getMockHistory() {
+  return await dbGetAllStore('mock-history');
+}
+async function updateStreak() {
+  const today = new Date().toISOString().slice(0,10);
+  const meta = await dbGetStore('meta','streak') || {key:'streak', current:0, longest:0, lastDate:''};
+  const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if (meta.lastDate === today) return meta; // already counted today
+  if (meta.lastDate === yesterday) meta.current += 1;
+  else meta.current = 1;
+  meta.longest = Math.max(meta.longest, meta.current);
+  meta.lastDate = today;
+  await dbPutStore('meta', meta);
+  return meta;
 }
 async function dbGet(k) {
   return new Promise((res, rej) => {
@@ -560,9 +603,15 @@ async function init() {
   await openDB();
   const saved = await dbGetAll();
   saved.forEach(p => { PRACTICE.answers[p.id] = p; });
+  const streak = await updateStreak();
+  STREAK = streak;
+  MOCK_HISTORY = await getMockHistory();
   renderDashboard();
   renderPracticeList();
 }
+
+let STREAK = {current:0, longest:0};
+let MOCK_HISTORY = [];
 
 // ─────────────────────────────────────────────────────────
 //  VIEWS
@@ -586,13 +635,43 @@ function renderDashboard() {
   const correct  = Object.values(PRACTICE.answers).filter(a => a.correct).length;
   const pct      = answered > 0 ? Math.round(correct / answered * 100) : 0;
 
+  const lastMock = MOCK_HISTORY.length > 0 ? MOCK_HISTORY[MOCK_HISTORY.length-1] : null;
   document.getElementById('dash-stats').innerHTML = `
     <div class="stat-card"><div class="sc-val">${total}</div><div class="sc-label">Total Questions</div></div>
     <div class="stat-card"><div class="sc-val">${answered}</div><div class="sc-label">Attempted</div></div>
     <div class="stat-card"><div class="sc-val" style="color:var(--green)">${correct}</div><div class="sc-label">Correct</div></div>
     <div class="stat-card"><div class="sc-val" style="color:${pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--orange)' : 'var(--red)'}">${pct}%</div><div class="sc-label">Accuracy</div></div>
     <div class="stat-card"><div class="sc-val">${total - answered}</div><div class="sc-label">Remaining</div></div>
+    <div class="stat-card" title="Daily study streak"><div class="sc-val" style="color:#f59e0b;">🔥 ${STREAK.current}</div><div class="sc-label">Day Streak</div></div>
+    <div class="stat-card" title="Longest streak"><div class="sc-val" style="color:var(--muted);">${STREAK.longest}</div><div class="sc-label">Best Streak</div></div>
+    <div class="stat-card" title="Mock exams taken"><div class="sc-val" style="color:#a78bfa;">${MOCK_HISTORY.length}</div><div class="sc-label">Mocks Taken</div></div>
+    ${lastMock ? `<div class="stat-card" title="Last mock score"><div class="sc-val" style="color:${lastMock.score>=70?'var(--green)':lastMock.score>=50?'var(--orange)':'var(--red)'}">${lastMock.score}%</div><div class="sc-label">Last Mock</div></div>` : ''}
   `;
+
+  // Mock history mini-chart (last 5 mocks)
+  let mockHistEl = document.getElementById('mock-history-strip');
+  if (!mockHistEl) {
+    const parent = document.getElementById('dash-stats').parentNode;
+    mockHistEl = document.createElement('div');
+    mockHistEl.id = 'mock-history-strip';
+    mockHistEl.style.cssText = 'margin-bottom:24px;';
+    parent.insertBefore(mockHistEl, document.getElementById('topic-grid'));
+  }
+  if (MOCK_HISTORY.length > 0) {
+    const recent = [...MOCK_HISTORY].sort((a,b)=>a.ts-b.ts).slice(-5);
+    mockHistEl.innerHTML = `
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">📊 Mock Exam History (last ${recent.length})</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        ${recent.map(m=>`
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;min-width:100px;">
+            <div style="font-size:20px;font-weight:800;color:${m.score>=70?'var(--green)':m.score>=50?'var(--orange)':'var(--red)'};">${m.score}%</div>
+            <div style="font-size:11px;color:var(--muted);">${m.correct}/${m.total} · ${m.date}</div>
+            <div style="font-size:11px;color:var(--dim);">${formatTime(m.timeTaken)}</div>
+          </div>`).join('')}
+      </div>`;
+  } else {
+    mockHistEl.innerHTML = '';
+  }
 
   const grid = document.getElementById('topic-grid');
   grid.innerHTML = '';
@@ -946,9 +1025,28 @@ function confirmEndExam() {
   document.getElementById('overlay').classList.remove('hidden');
 }
 
-function endExam() {
+async function endExam() {
   clearInterval(EXAM.timerInterval);
   EXAM.endTime = Date.now();
+  const total = EXAM.questions.length;
+  const correct = EXAM.questions.filter((q,i) => EXAM.answers[i] === q.answer).length;
+  const topicBreakdown = {};
+  for (const [key] of Object.entries(TOPICS)) {
+    const tqs = EXAM.questions.map((q,i)=>({q,i})).filter(({q})=>q.topic===key);
+    if (!tqs.length) continue;
+    const cor = tqs.filter(({q,i})=>EXAM.answers[i]===q.answer).length;
+    topicBreakdown[key] = {correct:cor, total:tqs.length, pct:Math.round(cor/tqs.length*100)};
+  }
+  const result = {
+    ts: EXAM.startTime,
+    date: new Date(EXAM.startTime).toISOString().slice(0,10),
+    score: Math.round(correct/total*100),
+    correct, total,
+    timeTaken: EXAM.endTime - EXAM.startTime,
+    topicBreakdown
+  };
+  await saveMockResult(result);
+  MOCK_HISTORY.push(result);
   showResults();
 }
 

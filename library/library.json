@@ -1,7 +1,8 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "updated": "2026-05-04",
   "pdfs_base": "./pdfs/",
+  "pdfs_base_local": "computer:///sessions/determined-nifty-allen/mnt/CFA L2_0/",
   "books": [
     {
       "id": "vol1-quant",
@@ -212,6 +213,516 @@
       "tags": ["formulas", "reference", "all topics"],
       "largeFile": false,
       "indexed": false
+    },
+    {
+      "id": "kaplan-quant",
+      "file": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/1. Quantitative Methods/",
+      "title": "Kaplan QBank — Quantitative Methods",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "quant",
+      "topicColor": "#1565c0",
+      "icon": "📚",
+      "description": "Readings 1–4: Multiple Regression, Time-Series, Machine Learning, Big Data. Full Q+A.",
+      "tags": ["kaplan", "qbank", "quant", "regression", "machine learning"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Reading 1 — Multiple Regression", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/1. Quantitative Methods/Reading 1 Multiple Regression - Answers.pdf"},
+        {"label": "Reading 2 — Time-Series Analysis", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/1. Quantitative Methods/Reading 2 Time-Series Analysis - Answers.pdf"},
+        {"label": "Reading 3 — Machine Learning", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/1. Quantitative Methods/Reading 3 Machine Learning - Answers.pdf"},
+        {"label": "Reading 4 — Big Data Projects", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/1. Quantitative Methods/Reading 4 Big Data Projects - Answers.pdf"}
+      ]
+    },
+    {
+      "id": "kaplan-eco",
+      "file": "",
+      "title": "Kaplan QBank — Economics",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "eco",
+      "topicColor": "#0288d1",
+      "icon": "📚",
+      "description": "Full Q+A for Economics: FX, Currency Exchange Rates, Growth Models.",
+      "tags": ["kaplan", "qbank", "economics", "forex", "growth"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Economics Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/2. Economics/"}
+      ]
+    },
+    {
+      "id": "kaplan-fsa",
+      "file": "",
+      "title": "Kaplan QBank — Financial Statement Analysis",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "fsa",
+      "topicColor": "#00838f",
+      "icon": "📚",
+      "description": "Full Q+A for FSA: Intercorporate Investments, Pensions, Multinational Ops.",
+      "tags": ["kaplan", "qbank", "fsa", "pensions", "intercorporate"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — FSA Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/3. Financial Statement Analysis/"}
+      ]
+    },
+    {
+      "id": "kaplan-corp",
+      "file": "",
+      "title": "Kaplan QBank — Corporate Issuers",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "corp",
+      "topicColor": "#2e7d32",
+      "icon": "📚",
+      "description": "Full Q+A for Corporate Issuers: Capital Structure, Dividends, M&A.",
+      "tags": ["kaplan", "qbank", "corporate", "capital structure", "m&a"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Corporate Issuers Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/4. Corporate Issuers/"}
+      ]
+    },
+    {
+      "id": "kaplan-equity",
+      "file": "",
+      "title": "Kaplan QBank — Equity Valuation",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "equity",
+      "topicColor": "#558b2f",
+      "icon": "📚",
+      "description": "Full Q+A for Equity Valuation: DDM, FCFE, Residual Income, Market Multiples.",
+      "tags": ["kaplan", "qbank", "equity", "ddm", "fcfe", "valuation"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Equity Valuation Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/5. Equity Valuation/"}
+      ]
+    },
+    {
+      "id": "kaplan-fi",
+      "file": "",
+      "title": "Kaplan QBank — Fixed Income",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "fi",
+      "topicColor": "#f57f17",
+      "icon": "📚",
+      "description": "Full Q+A for Fixed Income: Term Structure, Credit, MBS, CDS, Strategies.",
+      "tags": ["kaplan", "qbank", "fixed income", "bonds", "mbs", "duration"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Fixed Income Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/6. Fixed Income/"}
+      ]
+    },
+    {
+      "id": "kaplan-deriv",
+      "file": "",
+      "title": "Kaplan QBank — Derivatives",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "deriv",
+      "topicColor": "#e65100",
+      "icon": "📚",
+      "description": "Full Q+A for Derivatives: Options, Swaps, Forwards, Futures, Greeks.",
+      "tags": ["kaplan", "qbank", "derivatives", "options", "swaps", "greeks"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Derivatives Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/7. Derivatives/"}
+      ]
+    },
+    {
+      "id": "kaplan-alts",
+      "file": "",
+      "title": "Kaplan QBank — Alternative Investments",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "alts",
+      "topicColor": "#6a1b9a",
+      "icon": "📚",
+      "description": "Full Q+A for Alts: Real Estate, Private Equity, Hedge Funds, Commodities.",
+      "tags": ["kaplan", "qbank", "alternatives", "private equity", "real estate"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Alternative Investments Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/8. Alternative Investments/"}
+      ]
+    },
+    {
+      "id": "kaplan-pm",
+      "file": "",
+      "title": "Kaplan QBank — Portfolio Management",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "pm",
+      "topicColor": "#1a237e",
+      "icon": "📚",
+      "description": "Full Q+A for PM: Factor Models, Alpha Strategies, LDI, Risk Management.",
+      "tags": ["kaplan", "qbank", "portfolio management", "factor models", "ldi"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Portfolio Management Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/9. Portfolio Management/"}
+      ]
+    },
+    {
+      "id": "kaplan-ethics",
+      "file": "",
+      "title": "Kaplan QBank — Ethics & Professional Standards",
+      "series": "Kaplan Schweser 2025",
+      "volume": null,
+      "topic": "ethics",
+      "topicColor": "#37474f",
+      "icon": "📚",
+      "description": "Full Q+A for Ethics: CFA Standards I–VII, GIPS, Research Objectivity.",
+      "tags": ["kaplan", "qbank", "ethics", "standards", "gips"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Readings — Ethics Q+A", "path": "3. KAPLAN QBANK 2025/Q AND A IN SAME FILE/10. Ethical and Professional Standards/"}
+      ]
+    },
+    {
+      "id": "ethics-200",
+      "file": "",
+      "title": "Ethics 200 MCQs",
+      "series": "Supplementary 2025",
+      "volume": null,
+      "topic": "ethics",
+      "topicColor": "#37474f",
+      "icon": "🧠",
+      "description": "200 multiple-choice ethics questions covering all CFA Standards in depth.",
+      "tags": ["ethics", "mcq", "standards", "practice"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Ethics 200 MCQs", "path": "3A. ETHICS 200 MCQs/ETHICS 200.pdf"}
+      ]
+    },
+    {
+      "id": "uw-quant",
+      "file": "",
+      "title": "UW QBank — Quantitative Methods",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "quant",
+      "topicColor": "#1565c0",
+      "icon": "📖",
+      "description": "UW question bank for Quant — includes Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "quant"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": []
+    },
+    {
+      "id": "uw-eco",
+      "file": "",
+      "title": "UW QBank — Economics",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "eco",
+      "topicColor": "#0288d1",
+      "icon": "📖",
+      "description": "UW question bank for Economics — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "economics"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Economics Questions", "path": "5. UW QBANK/Economics.pdf"},
+        {"label": "Economics Answer Key", "path": "5. UW QBANK/Economics Answer Key.pdf"}
+      ]
+    },
+    {
+      "id": "uw-fsa",
+      "file": "",
+      "title": "UW QBank — Financial Statement Analysis",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "fsa",
+      "topicColor": "#00838f",
+      "icon": "📖",
+      "description": "UW question bank for FSA — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "fsa"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": []
+    },
+    {
+      "id": "uw-corp",
+      "file": "",
+      "title": "UW QBank — Corporate Issuers",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "corp",
+      "topicColor": "#2e7d32",
+      "icon": "📖",
+      "description": "UW question bank for Corporate Issuers — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "corporate"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Corporate Issuers Questions", "path": "5. UW QBANK/Corporate Issuers.pdf"},
+        {"label": "Corporate Issuers Answer Key", "path": "5. UW QBANK/Corporate Issuers Answer Key.pdf"}
+      ]
+    },
+    {
+      "id": "uw-equity",
+      "file": "",
+      "title": "UW QBank — Equity Valuation",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "equity",
+      "topicColor": "#558b2f",
+      "icon": "📖",
+      "description": "UW question bank for Equity Valuation — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "equity", "valuation"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Equity Questions", "path": "5. UW QBANK/Equity - question sheet.pdf"},
+        {"label": "Equity Answer Key", "path": "5. UW QBANK/Equity Answer Key.pdf"}
+      ]
+    },
+    {
+      "id": "uw-fi",
+      "file": "",
+      "title": "UW QBank — Fixed Income",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "fi",
+      "topicColor": "#f57f17",
+      "icon": "📖",
+      "description": "UW question bank for Fixed Income — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "fixed income"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": []
+    },
+    {
+      "id": "uw-deriv",
+      "file": "",
+      "title": "UW QBank — Derivatives",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "deriv",
+      "topicColor": "#e65100",
+      "icon": "📖",
+      "description": "UW question bank for Derivatives — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "derivatives"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Derivatives Questions", "path": "5. UW QBANK/Derivatives - Question Sheet.pdf"},
+        {"label": "Derivatives Answer Key", "path": "5. UW QBANK/Derivatives Answer Key.pdf"}
+      ]
+    },
+    {
+      "id": "uw-alts",
+      "file": "",
+      "title": "UW QBank — Alternative Investments",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "alts",
+      "topicColor": "#6a1b9a",
+      "icon": "📖",
+      "description": "UW question bank for Alternative Investments — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "alternatives"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Alternative Investments Questions", "path": "5. UW QBANK/Alternative Investment - question sheet.pdf"},
+        {"label": "Alternative Investments Answer Key", "path": "5. UW QBANK/Alternative Investment Answer Key.pdf"}
+      ]
+    },
+    {
+      "id": "uw-pm",
+      "file": "",
+      "title": "UW QBank — Portfolio Management",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "pm",
+      "topicColor": "#1a237e",
+      "icon": "📖",
+      "description": "UW question bank for Portfolio Management — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "portfolio management"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": []
+    },
+    {
+      "id": "uw-ethics",
+      "file": "",
+      "title": "UW QBank — Ethics",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "ethics",
+      "topicColor": "#37474f",
+      "icon": "📖",
+      "description": "UW question bank for Ethics — Q sheet + Answer Key.",
+      "tags": ["uw", "qbank", "ethics"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": []
+    },
+    {
+      "id": "cfa-premium-mock",
+      "file": "",
+      "title": "CFA Premium Mock Exams (Mocks 1–3)",
+      "series": "CFA Program 2025",
+      "volume": null,
+      "topic": "all",
+      "topicColor": "#b71c1c",
+      "icon": "🎯",
+      "description": "Official CFA Program LII mock exams — 3 full mocks, 2 sessions each. Most representative of actual exam.",
+      "tags": ["mock", "cfa official", "practice exam", "all topics"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Combined Mock Exams PDF", "path": "9. CFA PREMIUM MOCKS/CFA Program LII Combined Mock Exams.pdf"},
+        {"label": "Mock 1 — Session 1", "path": "9. CFA PREMIUM MOCKS/Mock 1 Session 1.pdf"},
+        {"label": "Mock 1 — Session 2", "path": "9. CFA PREMIUM MOCKS/Mock 1 Session 2.pdf"},
+        {"label": "Mock 2 — Session 1", "path": "9. CFA PREMIUM MOCKS/Mock 2 Session 1.pdf"},
+        {"label": "Mock 2 — Session 2", "path": "9. CFA PREMIUM MOCKS/Mock 2 Session 2.pdf"},
+        {"label": "Mock 3 — Session 1", "path": "9. CFA PREMIUM MOCKS/Mock 3 Session 1.pdf"},
+        {"label": "Mock 3 — Session 2", "path": "9. CFA PREMIUM MOCKS/Mock 3 Session 2.pdf"}
+      ]
+    },
+    {
+      "id": "uw-mocks",
+      "file": "",
+      "title": "UW Finance Mock Exams (Mocks 1–2)",
+      "series": "UW Finance 2025",
+      "volume": null,
+      "topic": "all",
+      "topicColor": "#4a148c",
+      "icon": "📝",
+      "description": "UW Finance full mock exams — 2 full mocks with answer keys.",
+      "tags": ["mock", "uw", "practice exam", "all topics"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "UW Mock 1 — Questions", "path": "7. UW MOCKS/Mock 1/"},
+        {"label": "UW Mock 2 — Questions", "path": "7. UW MOCKS/Mock 2/"}
+      ]
+    },
+    {
+      "id": "extra-full-mocks",
+      "file": "",
+      "title": "Extra Full Syllabus Mocks (V1–V2, AM/PM)",
+      "series": "Supplementary 2025",
+      "volume": null,
+      "topic": "all",
+      "topicColor": "#880e4f",
+      "icon": "📋",
+      "description": "Additional full-syllabus mock exams — 2 volumes, Exam 1 & 2, AM & PM sessions each.",
+      "tags": ["mock", "full syllabus", "practice exam", "all topics"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "V1 — Exam 1 AM", "path": "10. EXTRA FULL SYLLABUS MOCK/V1/"},
+        {"label": "V2 — Exam 1 AM", "path": "10. EXTRA FULL SYLLABUS MOCK/V2/"}
+      ]
+    },
+    {
+      "id": "extra-subjectwise-mocks",
+      "file": "",
+      "title": "Extra Subject-wise Mocks",
+      "series": "Supplementary 2025",
+      "volume": null,
+      "topic": "all",
+      "topicColor": "#004d40",
+      "icon": "🎯",
+      "description": "Subject-specific mock papers for all 10 CFA L2 topic areas.",
+      "tags": ["mock", "subject-wise", "topic mocks", "all topics"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "All Subject-wise Mocks", "path": "11. EXTRA SUBJECTWISE MOCKS/"}
+      ]
+    },
+    {
+      "id": "l2-simplesheet",
+      "file": "",
+      "title": "L2 Simple Summary Sheet",
+      "series": "Supplementary 2025",
+      "volume": null,
+      "topic": "all",
+      "topicColor": "#006064",
+      "icon": "📐",
+      "description": "Simplified summary of all L2 topics — great for last-minute revision.",
+      "tags": ["summary", "cheatsheet", "revision", "all topics"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "L2 Simple Sheet", "path": "12. SUMMARIES AND FORMULAE/L2 simplesheet.pdf"}
+      ]
+    },
+    {
+      "id": "formula-sheet-2025",
+      "file": "",
+      "title": "CFA L2 Formula Sheet 2025",
+      "series": "Supplementary 2025",
+      "volume": null,
+      "topic": "all",
+      "topicColor": "#b71c1c",
+      "icon": "📐",
+      "description": "Comprehensive formula reference for all CFA L2 2025 topics.",
+      "tags": ["formulas", "reference", "all topics", "2025"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Formula Sheet 2025", "path": "12. SUMMARIES AND FORMULAE/formulasheet-2025.pdf"}
+      ]
+    },
+    {
+      "id": "summary-ratios",
+      "file": "",
+      "title": "Summary Ratios Sheet",
+      "series": "Supplementary 2025",
+      "volume": null,
+      "topic": "fsa",
+      "topicColor": "#00838f",
+      "icon": "📊",
+      "description": "All key financial ratios for FSA and equity analysis — quick reference.",
+      "tags": ["ratios", "fsa", "financial analysis", "reference"],
+      "largeFile": false,
+      "indexed": false,
+      "localFile": true,
+      "localFiles": [
+        {"label": "Summary Ratios", "path": "12. SUMMARIES AND FORMULAE/summary ratios.pdf"}
+      ]
     }
   ]
 }
