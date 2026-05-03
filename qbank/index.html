@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 Q&A Practice Bank — Amitesh</title>
+<script src="./qbank.js"></script>
+<style>
+/* ── VARIABLES & RESET ─────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;--surface:#1e2330;--surface2:#252c3f;--border:#2d3650;
+  --text:#e2e8f0;--muted:#94a3b8;--dim:#64748b;
+  --blue:#42a5f5;--blue-d:#1565c0;
+  --green:#66bb6a;--green-d:#2e7d32;
+  --orange:#ffa726;--purple:#ab47bc;--red:#ef5350;
+  --yellow:#ffd54f;
+  font-family:'Segoe UI',system-ui,sans-serif;
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text)}
+button{cursor:pointer;border:none;background:none;color:var(--text);font-family:inherit}
+input,select,textarea{font-family:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.hidden{display:none!important}
+pre{white-space:pre-wrap;font-family:inherit}
+
+/* ── TOPIC COLORS ─────────────────────────────────────── */
+.tc-quant{color:#42a5f5;border-color:#1565c0}
+.tc-eco{color:#4fc3f7;border-color:#0277bd}
+.tc-fsa{color:#4dd0e1;border-color:#00838f}
+.tc-corp{color:#81c784;border-color:#2e7d32}
+.tc-equity{color:#aed581;border-color:#558b2f}
+.tc-fi{color:#ffb74d;border-color:#e65100}
+.tc-deriv{color:#ff8a65;border-color:#bf360c}
+.tc-alts{color:#ce93d8;border-color:#6a1b9a}
+.tc-pm{color:#9fa8da;border-color:#283593}
+.tc-ethics{color:#b0bec5;border-color:#37474f}
+.bg-quant{background:rgba(21,101,192,0.15)}
+.bg-eco{background:rgba(2,119,189,0.15)}
+.bg-fsa{background:rgba(0,131,143,0.15)}
+.bg-corp{background:rgba(46,125,50,0.15)}
+.bg-equity{background:rgba(85,139,47,0.15)}
+.bg-fi{background:rgba(230,81,0,0.15)}
+.bg-deriv{background:rgba(191,54,12,0.15)}
+.bg-alts{background:rgba(106,27,154,0.15)}
+.bg-pm{background:rgba(40,53,147,0.15)}
+.bg-ethics{background:rgba(55,71,79,0.15)}
+
+/* ── NAV ────────────────────────────────────────────────── */
+#nav{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 20px;height:52px;display:flex;align-items:center;gap:16px;
+  position:sticky;top:0;z-index:100;
+}
+.nav-logo{font-size:16px;font-weight:800;color:var(--text)}
+.nav-logo span{color:var(--green)}
+.nav-tab{
+  padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;
+  color:var(--muted);cursor:pointer;transition:all 0.2s;
+}
+.nav-tab:hover{background:var(--surface2);color:var(--text)}
+.nav-tab.active{background:rgba(102,187,106,0.15);color:var(--green)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:all 0.2s}
+.nav-back:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ── VIEWS ──────────────────────────────────────────────── */
+.view{padding:24px 20px;max-width:1200px;margin:0 auto}
+
+/* ── HOME / DASHBOARD ───────────────────────────────────── */
+.dash-header{margin-bottom:28px}
+.dash-title{font-size:26px;font-weight:800;margin-bottom:6px}
+.dash-sub{font-size:14px;color:var(--muted)}
+.dash-stats{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:16px 20px;flex:1;min-width:140px;
+}
+.stat-card .sc-val{font-size:28px;font-weight:800;color:var(--text)}
+.stat-card .sc-label{font-size:12px;color:var(--muted)}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:28px}
+.topic-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:18px;cursor:pointer;transition:all 0.2s;
+}
+.topic-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+.tc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.tc-name{font-size:14px;font-weight:700;line-height:1.3}
+.tc-icon{font-size:22px}
+.tc-meta{font-size:11px;color:var(--dim);margin-bottom:10px}
+.tc-progress{height:4px;background:var(--border);border-radius:2px;margin-bottom:8px}
+.tc-progress-fill{height:100%;border-radius:2px;transition:width 0.5s ease}
+.tc-counts{display:flex;gap:12px;font-size:11px;color:var(--muted)}
+.tc-counts span{display:flex;align-items:center;gap:4px}
+.mock-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
+.mock-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.mock-desc{font-size:13px;color:var(--muted);margin-bottom:16px}
+.mock-options{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.mock-opt-group{display:flex;flex-direction:column;gap:6px}
+.mock-opt-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--dim)}
+.mock-config{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.mock-tag{
+  padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;
+  border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all 0.2s;
+}
+.mock-tag:hover,.mock-tag.active{background:var(--green);border-color:var(--green);color:#fff}
+.btn{
+  padding:10px 22px;border-radius:10px;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all 0.2s;border:1px solid var(--border);
+}
+.btn-primary{background:var(--green-d);border-color:var(--green-d);color:#fff}
+.btn-primary:hover{background:var(--green);border-color:var(--green)}
+.btn-secondary{background:var(--surface2);color:var(--muted)}
+.btn-secondary:hover{border-color:var(--blue);color:var(--text)}
+.btn-danger{background:rgba(239,83,80,0.15);border-color:var(--red);color:var(--red)}
+.btn-danger:hover{background:var(--red);color:#fff}
+
+/* ── PRACTICE VIEW ──────────────────────────────────────── */
+#practice-header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:12px 20px;display:flex;align-items:center;gap:16px;
+}
+.ph-topic{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:4px 12px;border-radius:20px;border:1px solid}
+.ph-progress{flex:1;max-width:300px}
+.ph-prog-bar{height:4px;background:var(--border);border-radius:2px;margin-top:4px}
+.ph-prog-fill{height:100%;background:var(--green);border-radius:2px;transition:width 0.3s}
+.ph-label{font-size:11px;color:var(--muted)}
+.ph-filter{margin-left:auto;display:flex;gap:8px;align-items:center}
+
+.practice-body{
+  display:grid;grid-template-columns:1fr 440px;gap:0;
+  height:calc(100vh - 52px - 52px);overflow:hidden;
+}
+.q-list{overflow-y:auto;border-right:1px solid var(--border);padding:16px}
+.q-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;
+}
+.q-item:hover{border-color:var(--blue)}
+.q-item.active{border-color:var(--green);background:rgba(102,187,106,0.05)}
+.q-item.answered-correct{border-color:var(--green)}
+.q-item.answered-wrong{border-color:var(--red)}
+.q-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--dim);margin-bottom:6px}
+.q-preview{font-size:13px;color:var(--text);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.q-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.q-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:var(--surface2);color:var(--muted)}
+.q-diff-easy{color:var(--green)}
+.q-diff-medium{color:var(--orange)}
+.q-diff-hard{color:var(--red)}
+
+/* Question Panel */
+.q-panel{overflow-y:auto;padding:24px;background:var(--bg)}
+.vignette-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:18px;margin-bottom:20px;font-size:13px;color:var(--muted);line-height:1.7;
+}
+.vignette-box table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px}
+.vignette-box td,.vignette-box th{padding:6px 10px;border:1px solid var(--border);text-align:left}
+.vignette-box th{background:var(--surface2);font-weight:700}
+.q-text{font-size:15px;font-weight:600;line-height:1.6;margin-bottom:20px;color:var(--text)}
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.opt{
+  display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);cursor:pointer;
+  transition:all 0.2s;font-size:13px;line-height:1.5;
+}
+.opt:hover{border-color:var(--blue);background:rgba(66,165,245,0.05)}
+.opt.selected{border-color:var(--blue);background:rgba(66,165,245,0.1)}
+.opt.correct{border-color:var(--green);background:rgba(102,187,106,0.15);pointer-events:none}
+.opt.wrong{border-color:var(--red);background:rgba(239,83,80,0.15);pointer-events:none}
+.opt.other-correct{border-color:var(--green);background:rgba(102,187,106,0.08);pointer-events:none}
+.opt-letter{
+  width:24px;height:24px;border-radius:50%;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;
+  flex-shrink:0;color:var(--muted);margin-top:1px;
+}
+.opt.correct .opt-letter{background:var(--green);color:#fff}
+.opt.wrong .opt-letter{background:var(--red);color:#fff}
+.opt.other-correct .opt-letter{background:rgba(102,187,106,0.5);color:#fff}
+
+/* Solution Panel */
+.solution-panel{
+  margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;
+}
+.sol-header{
+  padding:14px 18px;background:var(--surface2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.sol-verdict{
+  display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;
+}
+.sol-body{padding:18px;font-size:13px;color:var(--muted);line-height:1.8}
+.sol-body strong{color:var(--text)}
+.sol-tags{padding:12px 18px;border-top:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap}
+.sol-tag{font-size:10px;padding:3px 10px;border-radius:10px;background:var(--surface2);color:var(--dim)}
+
+/* Q nav buttons */
+.q-nav{display:flex;gap:10px;margin-top:20px;justify-content:space-between;align-items:center}
+
+/* ── MOCK EXAM ───────────────────────────────────────────── */
+#exam-header{
+  background:#0a0e1a;border-bottom:2px solid var(--red);
+  padding:12px 20px;display:flex;align-items:center;gap:20px;
+  position:sticky;top:0;z-index:100;
+}
+.exam-title{font-size:14px;font-weight:800;color:var(--text)}
+.exam-timer{
+  font-size:18px;font-weight:800;font-family:'Courier New',monospace;
+  color:var(--yellow);padding:4px 14px;background:rgba(0,0,0,0.3);border-radius:8px;
+}
+.exam-timer.warning{color:var(--orange)}
+.exam-timer.critical{color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.exam-progress-wrap{flex:1;max-width:300px}
+.exam-progress-bar{height:6px;background:var(--border);border-radius:3px;margin-top:4px}
+.exam-progress-fill{height:100%;background:var(--yellow);border-radius:3px;transition:width 0.3s}
+
+.exam-body{
+  display:grid;grid-template-columns:200px 1fr;gap:0;
+  height:calc(100vh - 52px - 52px);overflow:hidden;
+}
+.exam-qmap{
+  overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);
+  padding:12px;
+}
+.exam-q-dot{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:6px;font-size:11px;font-weight:700;
+  margin:2px;cursor:pointer;border:1px solid var(--border);background:var(--surface2);
+  color:var(--muted);transition:all 0.15s;
+}
+.exam-q-dot:hover{border-color:var(--blue)}
+.exam-q-dot.current{border-color:var(--blue);background:rgba(66,165,245,0.2);color:var(--blue)}
+.exam-q-dot.answered{border-color:var(--green-d);background:rgba(46,125,50,0.2);color:var(--green)}
+.exam-q-dot.flagged{border-color:var(--orange);background:rgba(230,81,0,0.15);color:var(--orange)}
+.exam-main{overflow-y:auto;padding:24px}
+.exam-q-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.exam-q-num{font-size:13px;font-weight:700;color:var(--muted)}
+.flag-btn{
+  padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);
+  transition:all 0.2s;
+}
+.flag-btn:hover,.flag-btn.flagged{border-color:var(--orange);color:var(--orange)}
+.exam-nav{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:12px 20px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;bottom:0;
+}
+
+/* Results */
+.results-view{padding:32px 20px;max-width:800px;margin:0 auto}
+.result-hero{
+  background:linear-gradient(135deg,#0d1b3e,var(--surface));
+  border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;margin-bottom:28px;
+}
+.result-score{font-size:64px;font-weight:900;line-height:1}
+.result-grade{font-size:16px;font-weight:700;margin-top:8px;margin-bottom:4px}
+.result-meta{font-size:13px;color:var(--muted)}
+.result-breakdown{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:28px}
+.rb-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px}
+.rb-topic{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--dim);margin-bottom:6px}
+.rb-score{font-size:20px;font-weight:800;color:var(--text)}
+.rb-bar{height:4px;background:var(--border);border-radius:2px;margin-top:6px}
+.rb-fill{height:100%;border-radius:2px}
+.review-q{
+  background:var(--surface);border-radius:12px;padding:18px;margin-bottom:12px;
+  border-left:4px solid;
+}
+.review-q.correct{border-color:var(--green)}
+.review-q.wrong{border-color:var(--red)}
+.review-q-q{font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.5}
+.review-q-ans{display:flex;gap:20px;font-size:12px;margin-bottom:8px}
+.review-q-sol{
+  font-size:12px;color:var(--dim);line-height:1.6;margin-top:8px;
+  background:var(--surface2);border-radius:8px;padding:12px;
+}
+.review-q-sol strong{color:var(--muted)}
+
+/* ── MODALS ────────────────────────────────────────────── */
+#overlay{
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.7);
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:28px;width:480px;max-width:90vw;
+}
+.modal-title{font-size:18px;font-weight:800;margin-bottom:16px}
+.modal-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.modal-label{font-size:12px;font-weight:700;color:var(--muted);min-width:80px}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+/* ── TOAST ─────────────────────────────────────────────── */
+#toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);
+  background:var(--surface2);border:1px solid var(--border);border-radius:10px;
+  padding:10px 20px;font-size:13px;z-index:1000;
+  opacity:0;transition:all 0.3s;pointer-events:none;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div id="nav">
+  <div class="nav-logo">CFA L2 <span>QBank</span></div>
+  <button class="nav-tab active" id="nav-home" onclick="showView('home')">🏠 Dashboard</button>
+  <button class="nav-tab" id="nav-practice" onclick="showView('practice')">📚 Practice</button>
+  <button class="nav-tab" id="nav-mock" onclick="showView('mock')">📝 Mock Exam</button>
+  <div class="nav-right">
+    <a href="../studyhub/" class="nav-back">← StudyHub</a>
+  </div>
+</div>
+
+<!-- ══ HOME / DASHBOARD ══════════════════════════════════ -->
+<div id="view-home" class="view">
+  <div class="dash-header">
+    <div class="dash-title">CFA L2 Practice Q&A Bank</div>
+    <div class="dash-sub">200+ questions across all 10 topics — institute-style vignettes, calculations, and conceptual application</div>
+  </div>
+
+  <div class="dash-stats" id="dash-stats"></div>
+
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:12px">Practice by Topic</div>
+  <div class="topic-grid" id="topic-grid"></div>
+
+  <div class="mock-section">
+    <div class="mock-title">📝 Generate a Practice Mock</div>
+    <div class="mock-desc">Replicate the CFA L2 exam environment — timed, vignette-format, shuffled. Full solution review when done.</div>
+    <div class="mock-config" id="mock-topic-filter">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--dim);width:100%;margin-bottom:4px">Topics to include:</div>
+      <button class="mock-tag active" data-t="all" onclick="toggleMockTopic(this,'all')">All Topics</button>
+      <button class="mock-tag" data-t="quant" onclick="toggleMockTopic(this,'quant')">📊 Quant</button>
+      <button class="mock-tag" data-t="eco" onclick="toggleMockTopic(this,'eco')">🌍 Economics</button>
+      <button class="mock-tag" data-t="fsa" onclick="toggleMockTopic(this,'fsa')">📋 FSA</button>
+      <button class="mock-tag" data-t="corp" onclick="toggleMockTopic(this,'corp')">🏢 Corporate</button>
+      <button class="mock-tag" data-t="equity" onclick="toggleMockTopic(this,'equity')">📈 Equity</button>
+      <button class="mock-tag" data-t="fi" onclick="toggleMockTopic(this,'fi')">📉 FI</button>
+      <button class="mock-tag" data-t="deriv" onclick="toggleMockTopic(this,'deriv')">🔄 Derivatives</button>
+      <button class="mock-tag" data-t="alts" onclick="toggleMockTopic(this,'alts')">🏦 Alts</button>
+      <button class="mock-tag" data-t="pm" onclick="toggleMockTopic(this,'pm')">⚖️ PM</button>
+      <button class="mock-tag" data-t="ethics" onclick="toggleMockTopic(this,'ethics')">🔏 Ethics</button>
+    </div>
+    <div class="mock-row" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:16px">
+      <label style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px">
+        Questions:
+        <select id="mock-count" style="width:80px">
+          <option value="10">10</option>
+          <option value="22" selected>22</option>
+          <option value="44">44</option>
+          <option value="88">88 (Full)</option>
+        </select>
+      </label>
+      <label style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px">
+        Time:
+        <select id="mock-time">
+          <option value="0">Untimed</option>
+          <option value="20" selected>20 min (Quick)</option>
+          <option value="45">45 min</option>
+          <option value="90">90 min</option>
+          <option value="180">180 min (Full)</option>
+        </select>
+      </label>
+      <label style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="mock-shuffle" checked> Shuffle questions
+      </label>
+    </div>
+    <button class="btn btn-primary" onclick="startMock()">Start Mock Exam →</button>
+  </div>
+</div>
+
+<!-- ══ PRACTICE VIEW ══════════════════════════════════════ -->
+<div id="view-practice" class="hidden">
+  <div id="practice-header">
+    <span class="ph-topic" id="ph-topic-badge" style="color:var(--green);border-color:var(--green-d)">All Topics</span>
+    <div class="ph-progress">
+      <div class="ph-label" id="ph-progress-label">0 / 0 answered</div>
+      <div class="ph-prog-bar"><div class="ph-prog-fill" id="ph-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="ph-filter">
+      <label style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px">
+        Filter:
+        <select id="prac-topic-filter" onchange="filterPractice(this.value)" style="font-size:12px">
+          <option value="all">All Topics</option>
+          <option value="quant">Quantitative Methods</option>
+          <option value="eco">Economics</option>
+          <option value="fsa">FSA</option>
+          <option value="corp">Corporate Issuers</option>
+          <option value="equity">Equity Valuation</option>
+          <option value="fi">Fixed Income</option>
+          <option value="deriv">Derivatives</option>
+          <option value="alts">Alternative Investments</option>
+          <option value="pm">Portfolio Management</option>
+          <option value="ethics">Ethics</option>
+        </select>
+      </label>
+      <label style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-left:12px">
+        <input type="checkbox" id="prac-show-unanswered" onchange="filterPractice(null)"> Unanswered only
+      </label>
+      <button class="btn btn-secondary" style="margin-left:8px;padding:6px 12px;font-size:11px" onclick="resetPracticeProgress()">Reset progress</button>
+    </div>
+  </div>
+  <div class="practice-body">
+    <div class="q-list" id="q-list"></div>
+    <div class="q-panel" id="q-panel">
+      <div style="text-align:center;padding:80px 20px;color:var(--dim);font-size:14px">
+        👈 Select a question from the list
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MOCK EXAM ════════════════════════════════════════════ -->
+<div id="view-mock" class="hidden" style="padding:0">
+  <div id="exam-header">
+    <div class="exam-title">CFA L2 — Mock Exam</div>
+    <div class="exam-timer" id="exam-timer">--:--</div>
+    <div class="exam-progress-wrap">
+      <div class="ph-label" id="exam-q-count" style="color:var(--muted);font-size:11px"></div>
+      <div class="exam-progress-bar"><div class="exam-progress-fill" id="exam-prog-fill"></div></div>
+    </div>
+    <button class="btn btn-danger" style="margin-left:auto" onclick="confirmEndExam()">End Exam</button>
+  </div>
+  <div class="exam-body">
+    <div class="exam-qmap" id="exam-qmap"></div>
+    <div class="exam-main" id="exam-main">
+      <div style="text-align:center;padding:60px;color:var(--dim)">Loading exam…</div>
+    </div>
+  </div>
+  <div class="exam-nav">
+    <button class="btn btn-secondary" id="exam-prev" onclick="examGoto(EXAM.current-1)">← Previous</button>
+    <button class="btn btn-secondary" id="exam-flag" onclick="examFlag()">🚩 Flag for Review</button>
+    <button class="btn btn-secondary" id="exam-next" onclick="examGoto(EXAM.current+1)">Next →</button>
+  </div>
+</div>
+
+<!-- ══ RESULTS ══════════════════════════════════════════════ -->
+<div id="view-results" class="hidden">
+  <div class="results-view">
+    <div class="result-hero">
+      <div class="result-score" id="res-score"></div>
+      <div class="result-grade" id="res-grade"></div>
+      <div class="result-meta" id="res-meta"></div>
+    </div>
+    <div class="result-breakdown" id="result-breakdown"></div>
+    <div style="margin-bottom:16px;display:flex;gap:12px;align-items:center">
+      <div style="font-size:14px;font-weight:700">Question Review</div>
+      <label style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px">
+        <input type="checkbox" id="review-wrong-only" onchange="renderReview()"> Wrong only
+      </label>
+    </div>
+    <div id="review-list"></div>
+    <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="startMock()">Take Another Mock</button>
+      <button class="btn btn-secondary" onclick="showView('home')">← Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- OVERLAY for confirmations -->
+<div id="overlay" class="hidden">
+  <div class="modal-box">
+    <div class="modal-title" id="overlay-title"></div>
+    <div id="overlay-body" style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6"></div>
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="hideOverlay()">Cancel</button>
+      <button class="btn btn-danger" id="overlay-confirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────────────────
+//  TOPIC CONFIG
+// ─────────────────────────────────────────────────────────
+const TOPICS = {
+  quant:  {label:'Quantitative Methods', icon:'📊', color:'#1565c0'},
+  eco:    {label:'Economics',            icon:'🌍', color:'#0277bd'},
+  fsa:    {label:'Financial Statement Analysis', icon:'📋', color:'#00838f'},
+  corp:   {label:'Corporate Issuers',    icon:'🏢', color:'#2e7d32'},
+  equity: {label:'Equity Valuation',     icon:'📈', color:'#558b2f'},
+  fi:     {label:'Fixed Income',         icon:'📉', color:'#e65100'},
+  deriv:  {label:'Derivatives',          icon:'🔄', color:'#bf360c'},
+  alts:   {label:'Alt. Investments',     icon:'🏦', color:'#6a1b9a'},
+  pm:     {label:'Portfolio Management', icon:'⚖️', color:'#283593'},
+  ethics: {label:'Ethics & Standards',   icon:'🔏', color:'#37474f'},
+};
+
+// ─────────────────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────────────────
+let PRACTICE = {
+  topic: 'all',
+  currentQ: null,
+  answers: {}, // id → {selected, correct}
+};
+
+let EXAM = {
+  questions: [],
+  answers: {}, // index → selected option
+  flags: new Set(),
+  current: 0,
+  startTime: null,
+  endTime: null,
+  timeLimit: 0, // ms, 0 = untimed
+  timerInterval: null,
+};
+
+let MOCK_TOPICS = new Set(['all']);
+
+// ─────────────────────────────────────────────────────────
+//  IndexedDB
+// ─────────────────────────────────────────────────────────
+let DB;
+async function openDB() {
+  return new Promise((res, rej) => {
+    const req = indexedDB.open('cfa-qbank', 1);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('progress'))
+        db.createObjectStore('progress', {keyPath: 'id'});
+    };
+    req.onsuccess = e => { DB = e.target.result; res(DB); };
+    req.onerror   = () => rej();
+  });
+}
+async function dbGet(k) {
+  return new Promise((res, rej) => {
+    const req = DB.transaction('progress','readonly').objectStore('progress').get(k);
+    req.onsuccess = () => res(req.result);
+    req.onerror   = () => rej();
+  });
+}
+async function dbPut(v) {
+  return new Promise((res, rej) => {
+    const req = DB.transaction('progress','readwrite').objectStore('progress').put(v);
+    req.onsuccess = () => res();
+    req.onerror   = () => rej();
+  });
+}
+async function dbGetAll() {
+  return new Promise((res, rej) => {
+    const req = DB.transaction('progress','readonly').objectStore('progress').getAll();
+    req.onsuccess = () => res(req.result || []);
+    req.onerror   = () => rej();
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────────────────
+async function init() {
+  await openDB();
+  const saved = await dbGetAll();
+  saved.forEach(p => { PRACTICE.answers[p.id] = p; });
+  renderDashboard();
+  renderPracticeList();
+}
+
+// ─────────────────────────────────────────────────────────
+//  VIEWS
+// ─────────────────────────────────────────────────────────
+function showView(v) {
+  ['home','practice','mock','results'].forEach(x => {
+    document.getElementById('view-'+x).classList.toggle('hidden', x !== v);
+    const nb = document.getElementById('nav-'+x);
+    if (nb) nb.classList.toggle('active', x === v);
+  });
+  if (v === 'home') renderDashboard();
+  if (v === 'practice') renderPracticeList();
+}
+
+// ─────────────────────────────────────────────────────────
+//  DASHBOARD
+// ─────────────────────────────────────────────────────────
+function renderDashboard() {
+  const total = QBANK.length;
+  const answered = Object.keys(PRACTICE.answers).length;
+  const correct  = Object.values(PRACTICE.answers).filter(a => a.correct).length;
+  const pct      = answered > 0 ? Math.round(correct / answered * 100) : 0;
+
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="sc-val">${total}</div><div class="sc-label">Total Questions</div></div>
+    <div class="stat-card"><div class="sc-val">${answered}</div><div class="sc-label">Attempted</div></div>
+    <div class="stat-card"><div class="sc-val" style="color:var(--green)">${correct}</div><div class="sc-label">Correct</div></div>
+    <div class="stat-card"><div class="sc-val" style="color:${pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--orange)' : 'var(--red)'}">${pct}%</div><div class="sc-label">Accuracy</div></div>
+    <div class="stat-card"><div class="sc-val">${total - answered}</div><div class="sc-label">Remaining</div></div>
+  `;
+
+  const grid = document.getElementById('topic-grid');
+  grid.innerHTML = '';
+  for (const [key, cfg] of Object.entries(TOPICS)) {
+    const qs = QBANK.filter(q => q.topic === key);
+    const ans = qs.filter(q => PRACTICE.answers[q.id]);
+    const cor = ans.filter(q => PRACTICE.answers[q.id]?.correct);
+    const pct = ans.length > 0 ? Math.round(cor.length / ans.length * 100) : 0;
+    const progPct = qs.length > 0 ? Math.round(ans.length / qs.length * 100) : 0;
+
+    const card = document.createElement('div');
+    card.className = 'topic-card';
+    card.onclick = () => { filterPractice(key); showView('practice'); };
+    card.innerHTML = `
+      <div class="tc-header">
+        <div class="tc-name tc-${key}">${cfg.label}</div>
+        <div class="tc-icon">${cfg.icon}</div>
+      </div>
+      <div class="tc-meta">${qs.length} questions · ${ans.length} attempted</div>
+      <div class="tc-progress">
+        <div class="tc-progress-fill" style="width:${progPct}%;background:${cfg.color}"></div>
+      </div>
+      <div class="tc-counts">
+        <span style="color:var(--green)">✅ ${cor.length} correct</span>
+        <span style="color:${pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--orange)' : 'var(--red)'}">
+          ${ans.length > 0 ? pct + '% accuracy' : 'Not started'}
+        </span>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  PRACTICE
+// ─────────────────────────────────────────────────────────
+function filterPractice(topic) {
+  if (topic !== null) {
+    PRACTICE.topic = topic;
+    const sel = document.getElementById('prac-topic-filter');
+    if (sel) sel.value = topic;
+  }
+  renderPracticeList();
+}
+
+function renderPracticeList() {
+  const topic    = PRACTICE.topic;
+  const unansOnly = document.getElementById('prac-show-unanswered')?.checked;
+  let qs = topic === 'all' ? [...QBANK] : QBANK.filter(q => q.topic === topic);
+  if (unansOnly) qs = qs.filter(q => !PRACTICE.answers[q.id]);
+
+  const badge = document.getElementById('ph-topic-badge');
+  if (badge) {
+    badge.textContent = topic === 'all' ? 'All Topics' : (TOPICS[topic]?.label || topic);
+    badge.style.color = topic === 'all' ? 'var(--green)' : TOPICS[topic]?.color + 'dd' || 'var(--text)';
+  }
+
+  const answered = qs.filter(q => PRACTICE.answers[q.id]).length;
+  document.getElementById('ph-progress-label').textContent = `${answered} / ${qs.length} answered`;
+  document.getElementById('ph-prog-fill').style.width = qs.length > 0 ? (answered/qs.length*100)+'%' : '0%';
+
+  const list = document.getElementById('q-list');
+  list.innerHTML = '';
+  qs.forEach((q, i) => {
+    const ans = PRACTICE.answers[q.id];
+    const item = document.createElement('div');
+    item.className = `q-item${PRACTICE.currentQ?.id === q.id ? ' active' : ''}${ans ? (ans.correct ? ' answered-correct' : ' answered-wrong') : ''}`;
+    item.onclick = () => showQuestion(q, list.children[i]);
+    item.innerHTML = `
+      <div class="q-num">
+        ${TOPICS[q.topic]?.icon || ''} ${TOPICS[q.topic]?.label || q.topic}
+        · <span class="q-diff-${q.difficulty}">${q.difficulty.toUpperCase()}</span>
+        · ${q.type === 'calc' ? '🔢 Calc' : q.type === 'vignette' ? '📖 Vignette' : '💡 Concept'}
+        ${ans ? (ans.correct ? ' · ✅' : ' · ❌') : ''}
+      </div>
+      <div class="q-preview">${q.question}</div>
+      <div class="q-meta">
+        ${q.tags.slice(0,3).map(t => `<span class="q-tag">${t}</span>`).join('')}
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function showQuestion(q, itemEl) {
+  PRACTICE.currentQ = q;
+  // Update active state in list
+  document.querySelectorAll('.q-item').forEach(el => el.classList.remove('active'));
+  if (itemEl) itemEl.classList.add('active');
+
+  const panel = document.getElementById('q-panel');
+  const ans   = PRACTICE.answers[q.id];
+
+  panel.innerHTML = `
+    ${q.vignette ? `
+      <div class="vignette-box">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:8px">📖 Vignette</div>
+        ${renderMarkdown(q.vignette)}
+      </div>
+    ` : ''}
+    <div class="q-text">${q.question}</div>
+    <div class="options" id="options-${q.id}">
+      ${['A','B','C'].map(letter => `
+        <div class="opt${ans ? getAnswerClass(q, letter, ans.selected) : ''}" onclick="selectOption('${q.id}','${letter}')" data-letter="${letter}">
+          <div class="opt-letter">${letter}</div>
+          <div>${q.options[letter]}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div id="solution-${q.id}">
+      ${ans ? renderSolution(q, ans) : ''}
+    </div>
+    <div class="q-nav">
+      <button class="btn btn-secondary" onclick="navigateQ(-1)">← Prev</button>
+      <button class="btn btn-secondary" onclick="navigateQ(1)">Next →</button>
+    </div>
+  `;
+}
+
+function getAnswerClass(q, letter, selected) {
+  if (letter === q.answer) return ' correct';
+  if (letter === selected && selected !== q.answer) return ' wrong';
+  return ' other-correct';
+}
+
+function renderSolution(q, ans) {
+  return `
+    <div class="solution-panel">
+      <div class="sol-header">
+        <div class="sol-verdict">
+          ${ans.correct ? '✅ <span style="color:var(--green)">Correct!</span>' : `❌ <span style="color:var(--red)">Incorrect.</span> Correct: <span style="color:var(--green)">Option ${q.answer}</span>`}
+        </div>
+      </div>
+      <div class="sol-body">${renderMarkdown(q.solution)}</div>
+      <div class="sol-tags">
+        ${q.tags.map(t => `<span class="sol-tag">${t}</span>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+async function selectOption(qId, letter) {
+  const q = QBANK.find(x => x.id === qId);
+  if (!q || PRACTICE.answers[qId]) return; // already answered
+
+  const correct = letter === q.answer;
+  const ans = {id: qId, selected: letter, correct};
+  PRACTICE.answers[qId] = ans;
+  await dbPut(ans);
+
+  // Update options display
+  document.querySelectorAll(`#options-${qId} .opt`).forEach(el => {
+    const l = el.dataset.letter;
+    el.className = 'opt ' + getAnswerClass(q, l, letter).trim();
+  });
+
+  // Show solution
+  document.getElementById(`solution-${qId}`).innerHTML = renderSolution(q, ans);
+
+  // Update list item
+  renderPracticeList();
+  showToast(correct ? '✅ Correct!' : `❌ Incorrect — correct answer: ${q.answer}`);
+}
+
+function navigateQ(dir) {
+  const topic = PRACTICE.topic;
+  const unansOnly = document.getElementById('prac-show-unanswered')?.checked;
+  let qs = topic === 'all' ? [...QBANK] : QBANK.filter(q => q.topic === topic);
+  if (unansOnly) qs = qs.filter(q => !PRACTICE.answers[q.id]);
+  const idx = qs.findIndex(q => q.id === PRACTICE.currentQ?.id);
+  const next = qs[idx + dir];
+  if (next) showQuestion(next, null);
+}
+
+async function resetPracticeProgress() {
+  if (!confirm('Reset all practice progress? This cannot be undone.')) return;
+  const tx = DB.transaction('progress', 'readwrite');
+  tx.objectStore('progress').clear();
+  PRACTICE.answers = {};
+  renderPracticeList();
+  renderDashboard();
+  showToast('Progress reset');
+}
+
+// ─────────────────────────────────────────────────────────
+//  MOCK EXAM
+// ─────────────────────────────────────────────────────────
+function toggleMockTopic(btn, t) {
+  if (t === 'all') {
+    MOCK_TOPICS = new Set(['all']);
+    document.querySelectorAll('#mock-topic-filter .mock-tag').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  } else {
+    MOCK_TOPICS.delete('all');
+    document.querySelector('[data-t="all"]').classList.remove('active');
+    if (MOCK_TOPICS.has(t)) {
+      MOCK_TOPICS.delete(t);
+      btn.classList.remove('active');
+    } else {
+      MOCK_TOPICS.add(t);
+      btn.classList.add('active');
+    }
+    if (MOCK_TOPICS.size === 0) {
+      MOCK_TOPICS.add('all');
+      document.querySelector('[data-t="all"]').classList.add('active');
+    }
+  }
+}
+
+function startMock() {
+  const count   = parseInt(document.getElementById('mock-count')?.value || '22');
+  const timeMins = parseInt(document.getElementById('mock-time')?.value || '20');
+  const shuffle  = document.getElementById('mock-shuffle')?.checked !== false;
+
+  // Select questions
+  let pool = MOCK_TOPICS.has('all') ? [...QBANK] : QBANK.filter(q => MOCK_TOPICS.has(q.topic));
+  if (shuffle) pool = shuffleArray(pool);
+  const selected = pool.slice(0, Math.min(count, pool.length));
+
+  EXAM = {
+    questions: selected,
+    answers: {},
+    flags: new Set(),
+    current: 0,
+    startTime: Date.now(),
+    endTime: null,
+    timeLimit: timeMins > 0 ? timeMins * 60 * 1000 : 0,
+    timerInterval: null,
+  };
+
+  showView('mock');
+  // hide mock nav buttons in view
+  document.getElementById('nav-mock').classList.add('active');
+  document.getElementById('nav-home').classList.remove('active');
+  document.getElementById('nav-practice').classList.remove('active');
+
+  renderExamQMap();
+  examGoto(0);
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(EXAM.timerInterval);
+  if (!EXAM.timeLimit) {
+    document.getElementById('exam-timer').textContent = '∞';
+    return;
+  }
+  updateTimer();
+  EXAM.timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+  const elapsed = Date.now() - EXAM.startTime;
+  const remaining = Math.max(0, EXAM.timeLimit - elapsed);
+  const mins = Math.floor(remaining / 60000);
+  const secs = Math.floor((remaining % 60000) / 1000);
+  const display = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+  const el = document.getElementById('exam-timer');
+  if (el) {
+    el.textContent = display;
+    el.className = 'exam-timer';
+    if (remaining < 300000) el.classList.add('warning');
+    if (remaining < 60000) el.classList.add('critical');
+    if (remaining === 0) { clearInterval(EXAM.timerInterval); endExam(); }
+  }
+}
+
+function renderExamQMap() {
+  const map = document.getElementById('exam-qmap');
+  if (!map) return;
+  map.innerHTML = '';
+  EXAM.questions.forEach((q, i) => {
+    const dot = document.createElement('div');
+    dot.className = `exam-q-dot${i === EXAM.current ? ' current' : ''}${EXAM.answers[i] !== undefined ? ' answered' : ''}${EXAM.flags.has(i) ? ' flagged' : ''}`;
+    dot.textContent = i + 1;
+    dot.id = `edot-${i}`;
+    dot.onclick = () => examGoto(i);
+    map.appendChild(dot);
+  });
+  const count = document.getElementById('exam-q-count');
+  if (count) count.textContent = `${Object.keys(EXAM.answers).length} / ${EXAM.questions.length} answered`;
+  const fill = document.getElementById('exam-prog-fill');
+  if (fill) fill.style.width = (Object.keys(EXAM.answers).length / EXAM.questions.length * 100) + '%';
+}
+
+function examGoto(idx) {
+  if (idx < 0 || idx >= EXAM.questions.length) return;
+  EXAM.current = idx;
+
+  // Update dot states
+  document.querySelectorAll('.exam-q-dot').forEach(d => d.classList.remove('current'));
+  const cd = document.getElementById(`edot-${idx}`);
+  if (cd) { cd.classList.add('current'); cd.scrollIntoView({block:'nearest'}); }
+
+  const q   = EXAM.questions[idx];
+  const sel = EXAM.answers[idx];
+
+  document.getElementById('exam-main').innerHTML = `
+    <div class="exam-q-header">
+      <div class="exam-q-num">Question ${idx+1} of ${EXAM.questions.length} · ${TOPICS[q.topic]?.icon} ${q.topicLabel}</div>
+      <button class="flag-btn${EXAM.flags.has(idx) ? ' flagged' : ''}" id="flag-btn" onclick="examFlag()">
+        🚩 ${EXAM.flags.has(idx) ? 'Flagged' : 'Flag for Review'}
+      </button>
+    </div>
+    ${q.vignette ? `
+      <div class="vignette-box">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:8px">📖 Vignette</div>
+        ${renderMarkdown(q.vignette)}
+      </div>
+    ` : ''}
+    <div class="q-text">${q.question}</div>
+    <div class="options" id="exam-options">
+      ${['A','B','C'].map(letter => `
+        <div class="opt${sel === letter ? ' selected' : ''}" onclick="examSelect(${idx},'${letter}')" data-letter="${letter}">
+          <div class="opt-letter">${letter}</div>
+          <div>${q.options[letter]}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('exam-prev').disabled = idx === 0;
+  document.getElementById('exam-next').textContent = idx === EXAM.questions.length-1 ? 'End Exam →' : 'Next →';
+  document.getElementById('exam-next').onclick = idx === EXAM.questions.length-1 ? () => confirmEndExam() : () => examGoto(idx+1);
+}
+
+function examSelect(idx, letter) {
+  EXAM.answers[idx] = letter;
+  document.querySelectorAll('#exam-options .opt').forEach(el => {
+    el.classList.toggle('selected', el.dataset.letter === letter);
+  });
+  renderExamQMap();
+}
+
+function examFlag() {
+  const idx = EXAM.current;
+  if (EXAM.flags.has(idx)) EXAM.flags.delete(idx);
+  else EXAM.flags.add(idx);
+  renderExamQMap();
+  examGoto(idx); // re-render to update flag button
+}
+
+function confirmEndExam() {
+  const unanswered = EXAM.questions.length - Object.keys(EXAM.answers).length;
+  document.getElementById('overlay-title').textContent = 'End Exam?';
+  document.getElementById('overlay-body').innerHTML =
+    unanswered > 0
+    ? `You have <strong style="color:var(--orange)">${unanswered} unanswered question${unanswered>1?'s':''}</strong>. Are you sure you want to end the exam?`
+    : 'All questions answered. Submit and see your results?';
+  document.getElementById('overlay-confirm').onclick = () => { hideOverlay(); endExam(); };
+  document.getElementById('overlay').classList.remove('hidden');
+}
+
+function endExam() {
+  clearInterval(EXAM.timerInterval);
+  EXAM.endTime = Date.now();
+  showResults();
+}
+
+// ─────────────────────────────────────────────────────────
+//  RESULTS
+// ─────────────────────────────────────────────────────────
+function showResults() {
+  const qs     = EXAM.questions;
+  const total  = qs.length;
+  const answered = Object.keys(EXAM.answers).length;
+  const correct  = qs.filter((q,i) => EXAM.answers[i] === q.answer).length;
+  const pct    = Math.round(correct / total * 100);
+  const timeTaken = EXAM.endTime - EXAM.startTime;
+
+  // Score
+  const scoreEl = document.getElementById('res-score');
+  scoreEl.textContent = pct + '%';
+  scoreEl.style.color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
+
+  document.getElementById('res-grade').textContent =
+    pct >= 75 ? '🏆 Excellent — CFA Pass Range' :
+    pct >= 65 ? '✅ Good — Close to Pass Range' :
+    pct >= 50 ? '⚠️ Borderline — More Practice Needed' :
+    '❌ Below Average — Review the Topic Areas';
+
+  document.getElementById('res-meta').textContent =
+    `${correct}/${total} correct · ${answered} answered · ${formatTime(timeTaken)} taken`;
+
+  // Topic breakdown
+  const breakdown = document.getElementById('result-breakdown');
+  breakdown.innerHTML = '';
+  for (const [key, cfg] of Object.entries(TOPICS)) {
+    const topicQs = qs.map((q,i) => ({q,i})).filter(({q}) => q.topic === key);
+    if (!topicQs.length) continue;
+    const cor = topicQs.filter(({q,i}) => EXAM.answers[i] === q.answer).length;
+    const topicPct = Math.round(cor / topicQs.length * 100);
+    const card = document.createElement('div');
+    card.className = 'rb-card';
+    card.innerHTML = `
+      <div class="rb-topic">${cfg.icon} ${cfg.label}</div>
+      <div class="rb-score" style="color:${topicPct >= 70 ? 'var(--green)' : topicPct >= 50 ? 'var(--orange)' : 'var(--red)'}">
+        ${cor}/${topicQs.length} · ${topicPct}%
+      </div>
+      <div class="rb-bar">
+        <div class="rb-fill" style="width:${topicPct}%;background:${topicPct >= 70 ? 'var(--green)' : topicPct >= 50 ? 'var(--orange)' : 'var(--red)'}"></div>
+      </div>
+    `;
+    breakdown.appendChild(card);
+  }
+
+  renderReview();
+  showView('results');
+}
+
+function renderReview() {
+  const wrongOnly = document.getElementById('review-wrong-only')?.checked;
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  EXAM.questions.forEach((q, i) => {
+    const sel = EXAM.answers[i];
+    const correct = sel === q.answer;
+    if (wrongOnly && correct) return;
+    const card = document.createElement('div');
+    card.className = `review-q ${correct ? 'correct' : 'wrong'}`;
+    card.innerHTML = `
+      <div class="q-num">${TOPICS[q.topic]?.icon} ${q.topicLabel} · Q${i+1}</div>
+      <div class="review-q-q">${q.question}</div>
+      <div class="review-q-ans">
+        <span>Your answer: <strong style="color:${correct ? 'var(--green)' : 'var(--red)'}">${sel || 'Not answered'}</strong></span>
+        <span>Correct: <strong style="color:var(--green)">${q.answer}</strong></span>
+      </div>
+      <div class="review-q-sol">${renderMarkdown(q.solution).substring(0, 500)}${q.solution.length > 500 ? '…' : ''}</div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+//  UTILITIES
+// ─────────────────────────────────────────────────────────
+function renderMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:12px">$1</code>')
+    .replace(/\n\n/g, '</p><p style="margin-top:8px">')
+    .replace(/\n/g, '<br>')
+    .replace(/^## (.+)$/gm, '<strong style="font-size:14px;color:var(--text);display:block;margin:10px 0 4px">$1</strong>')
+    .replace(/^# (.+)$/gm, '<strong style="font-size:16px;color:var(--text);display:block;margin:12px 0 6px">$1</strong>');
+}
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function formatTime(ms) {
+  const mins = Math.floor(ms / 60000);
+  const secs = Math.floor((ms % 60000) / 1000);
+  return `${mins}m ${secs}s`;
+}
+
+function hideOverlay() {
+  document.getElementById('overlay').classList.add('hidden');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ─────────────────────────────────────────────────────────
+//  BOOT
+// ─────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

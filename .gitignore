@@ -26,3 +26,7 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# CFA Library PDFs — uploaded via FTP, not committed (large + copyrighted)
+library/pdfs/*.pdf
+library/pdfs/*.PDF

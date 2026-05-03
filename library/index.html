@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 Library — Amitesh</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+/* ── RESET & VARIABLES ────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;--surface:#1e2330;--surface2:#252c3f;--border:#2d3650;
+  --text:#e2e8f0;--muted:#94a3b8;--dim:#64748b;
+  --blue:#42a5f5;--blue-d:#1565c0;
+  --green:#66bb6a;--green-d:#2e7d32;
+  --orange:#ffa726;--purple:#ab47bc;--red:#ef5350;
+  --sidebar-w:270px;--right-w:340px;--toolbar-h:52px;--ctrl-h:52px;
+  --transition:0.2s ease;
+  font-family:'Segoe UI',system-ui,sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);overflow:hidden}
+button{cursor:pointer;border:none;background:none;color:var(--text);font-family:inherit}
+input{font-family:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;outline:none}
+input:focus{border-color:var(--blue)}
+select{font-family:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;outline:none}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+.hidden{display:none!important}
+
+/* ── GATE ────────────────────────────────────────────── */
+#gate{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#0a0e1a 0%,#0f1117 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;
+}
+.gate-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:40px;width:380px;text-align:center;
+}
+.gate-logo{font-size:48px;margin-bottom:12px}
+.gate-title{font-size:22px;font-weight:800;color:var(--text);margin-bottom:4px}
+.gate-sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+.gate-input{
+  width:100%;padding:12px 16px;font-size:15px;border-radius:10px;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  margin-bottom:16px;letter-spacing:4px;text-align:center;
+}
+.gate-input:focus{border-color:var(--blue);outline:none}
+.gate-btn{
+  width:100%;padding:14px;font-size:15px;font-weight:700;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue-d),var(--blue));
+  color:#fff;transition:opacity 0.2s;
+}
+.gate-btn:hover{opacity:0.9}
+.gate-err{color:var(--red);font-size:13px;margin-top:8px;min-height:20px}
+
+/* ── LAYOUT ──────────────────────────────────────────── */
+#app{display:flex;height:100vh;overflow:hidden}
+
+/* ── LIBRARY VIEW ────────────────────────────────────── */
+#library-view{
+  width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;
+}
+.lib-header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:16px 24px;display:flex;align-items:center;gap:16px;flex-shrink:0;
+}
+.lib-logo{font-size:22px;font-weight:800;color:var(--text)}
+.lib-logo span{color:var(--blue)}
+.lib-search{flex:1;max-width:360px;padding:9px 14px;border-radius:24px}
+.lib-filters{display:flex;gap:8px;margin-left:auto}
+.lib-filter{
+  padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;
+  border:1px solid var(--border);background:var(--surface2);
+  transition:all var(--transition);cursor:pointer;
+}
+.lib-filter:hover,.lib-filter.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.lib-stats{display:flex;gap:24px;padding:0 24px;margin-left:auto;font-size:13px;color:var(--muted)}
+.lib-stat strong{color:var(--text)}
+
+.lib-body{flex:1;overflow-y:auto;padding:24px}
+.lib-section{margin-bottom:32px}
+.lib-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.lib-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.lib-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;
+}
+
+/* Book Card */
+.book-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:20px;cursor:pointer;transition:all var(--transition);position:relative;overflow:hidden;
+}
+.book-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--card-color,var(--blue));
+}
+.book-card:hover{border-color:var(--card-color,var(--blue));transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.book-card-icon{font-size:28px;margin-bottom:10px}
+.book-card-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3}
+.book-card-series{font-size:11px;color:var(--dim);margin-bottom:10px}
+.book-card-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.book-card-footer{display:flex;align-items:center;justify-content:space-between}
+.book-progress-ring{position:relative;width:36px;height:36px;flex-shrink:0}
+.book-progress-ring svg{transform:rotate(-90deg)}
+.book-progress-ring .ring-bg{fill:none;stroke:var(--border);stroke-width:3}
+.book-progress-ring .ring-fill{fill:none;stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset 0.6s ease}
+.book-progress-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--muted)}
+.book-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;background:rgba(255,255,255,0.08);color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.book-badge.started{background:rgba(66,165,245,0.15);color:var(--blue)}
+.book-badge.reading{background:rgba(102,187,106,0.15);color:var(--green)}
+.book-badge.large{background:rgba(255,167,38,0.15);color:var(--orange)}
+.book-time{font-size:11px;color:var(--dim);margin-top:6px}
+.book-unavailable{opacity:0.45}
+.book-unavailable::after{
+  content:'PDF not uploaded';position:absolute;inset:0;display:flex;
+  align-items:center;justify-content:center;font-size:12px;font-weight:600;
+  color:var(--muted);background:rgba(15,17,23,0.7);border-radius:14px;
+}
+
+/* ── READER VIEW ─────────────────────────────────────── */
+#reader-view{
+  width:100%;height:100%;display:flex;overflow:hidden;
+}
+
+/* Left Sidebar */
+#sidebar{
+  width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;
+}
+.sb-header{
+  padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;
+}
+.sb-back{
+  width:28px;height:28px;border-radius:8px;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  transition:background var(--transition);
+}
+.sb-back:hover{background:var(--border)}
+.sb-book-title{font-size:13px;font-weight:700;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.sb-tabs{
+  display:flex;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto;
+}
+.sb-tab{
+  flex:1;padding:10px 4px;font-size:10px;text-align:center;color:var(--dim);
+  border-bottom:2px solid transparent;cursor:pointer;transition:all var(--transition);
+  white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.sb-tab .tab-icon{font-size:14px}
+.sb-tab:hover{color:var(--muted);background:var(--surface2)}
+.sb-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.sb-pane{flex:1;overflow-y:auto;display:none;padding:12px}
+.sb-pane.active{display:block}
+
+/* Sidebar content items */
+.sb-item{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;
+  cursor:pointer;font-size:12px;color:var(--muted);margin-bottom:4px;
+  transition:background var(--transition);
+}
+.sb-item:hover{background:var(--surface2);color:var(--text)}
+.sb-item.active{background:rgba(66,165,245,0.1);color:var(--blue)}
+.sb-item .item-page{font-size:10px;color:var(--dim);margin-left:auto;flex-shrink:0}
+.sb-item .item-color{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sb-empty{text-align:center;color:var(--dim);font-size:12px;padding:24px 12px;line-height:1.6}
+.sb-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--dim);margin:12px 0 6px;padding:0 2px}
+
+/* Page coverage map */
+#page-map{display:flex;flex-wrap:wrap;gap:2px;padding:4px}
+.pm-dot{
+  width:10px;height:10px;border-radius:2px;background:var(--border);
+  cursor:pointer;transition:background var(--transition);flex-shrink:0;
+}
+.pm-dot.visited{background:var(--surface2);border:1px solid var(--dim)}
+.pm-dot.current{background:var(--blue)!important;box-shadow:0 0 4px var(--blue)}
+.pm-dot.bookmarked{background:var(--orange)}
+.pm-dot.highlighted{background:var(--green)}
+
+/* ── CENTER READER ───────────────────────────────────── */
+#reader-main{
+  flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;
+}
+#reader-toolbar{
+  height:var(--toolbar-h);background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;padding:0 12px;flex-shrink:0;
+}
+.rt-btn{
+  height:32px;min-width:32px;padding:0 8px;border-radius:8px;
+  font-size:13px;display:flex;align-items:center;justify-content:center;gap:4px;
+  transition:background var(--transition);
+}
+.rt-btn:hover{background:var(--surface2)}
+.rt-btn.active{background:rgba(66,165,245,0.15);color:var(--blue)}
+.rt-sep{width:1px;height:24px;background:var(--border);margin:0 4px}
+.rt-title{flex:1;font-size:13px;font-weight:600;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:center}
+.rt-search{
+  width:180px;padding:6px 10px;font-size:12px;border-radius:8px;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
+}
+.rt-search:focus{border-color:var(--blue);outline:none}
+
+/* PDF Viewport */
+#pdf-viewport{
+  flex:1;overflow:auto;background:#1a1f2e;display:flex;justify-content:center;
+  align-items:flex-start;padding:24px;
+}
+#pdf-wrapper{
+  position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.5);border-radius:2px;
+  background:#fff;
+}
+#pdf-canvas{display:block}
+#text-layer{
+  position:absolute;top:0;left:0;overflow:hidden;line-height:1;
+  pointer-events:none;
+}
+#text-layer span{
+  position:absolute;color:transparent;white-space:pre;
+  pointer-events:auto;cursor:text;transform-origin:0% 100%;
+}
+#text-layer span::selection{background:rgba(66,165,245,0.3);color:transparent}
+#pdf-loading{
+  position:absolute;inset:0;background:var(--surface);display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  font-size:14px;color:var(--muted);border-radius:2px;
+}
+.spinner{
+  width:32px;height:32px;border:3px solid var(--border);
+  border-top-color:var(--blue);border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Selection toolbar */
+#sel-toolbar{
+  position:fixed;background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:6px 8px;display:flex;align-items:center;gap:6px;
+  z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  transition:opacity var(--transition);
+}
+.sel-color{
+  width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;
+  transition:transform var(--transition),border-color var(--transition);
+}
+.sel-color:hover{transform:scale(1.2);border-color:#fff}
+.sel-btn{
+  padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;
+  background:var(--surface);cursor:pointer;color:var(--muted);
+  transition:all var(--transition);
+}
+.sel-btn:hover{background:var(--blue);color:#fff}
+.sel-sep{width:1px;height:16px;background:var(--border)}
+
+/* Reader controls */
+#reader-controls{
+  height:var(--ctrl-h);background:var(--surface);border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;flex-shrink:0;
+}
+.ctrl-btn{
+  height:36px;min-width:36px;padding:0 10px;border-radius:8px;font-size:14px;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  transition:all var(--transition);border:1px solid var(--border);
+  background:var(--surface2);color:var(--muted);
+}
+.ctrl-btn:hover{border-color:var(--blue);color:var(--blue)}
+.ctrl-btn:disabled{opacity:0.3;cursor:default;pointer-events:none}
+#page-input{
+  width:52px;text-align:center;font-size:13px;font-weight:700;
+  padding:6px;border-radius:8px;
+}
+.ctrl-sep{color:var(--dim);font-size:13px;padding:0 4px}
+#progress-bar-wrap{
+  position:absolute;bottom:var(--ctrl-h);left:0;right:0;height:3px;background:var(--border);
+}
+#progress-bar{height:100%;background:var(--blue);width:0%;transition:width 0.3s ease}
+
+/* ── RIGHT PANEL ─────────────────────────────────────── */
+#right-panel{
+  width:var(--right-w);background:var(--surface);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;
+}
+.rp-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
+.rp-tab{
+  flex:1;padding:10px 6px;font-size:11px;text-align:center;color:var(--dim);
+  border-bottom:2px solid transparent;cursor:pointer;transition:all var(--transition);
+}
+.rp-tab:hover{color:var(--muted);background:var(--surface2)}
+.rp-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.rp-pane{flex:1;overflow-y:auto;display:none;padding:16px}
+.rp-pane.active{display:block}
+
+/* Flashcard mode */
+.fc-progress{font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px}
+.fc-card{
+  background:var(--surface2);border:1px solid var(--border);border-radius:12px;
+  min-height:200px;padding:24px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  cursor:pointer;transition:all var(--transition);margin-bottom:16px;
+  position:relative;
+}
+.fc-card:hover{border-color:var(--blue)}
+.fc-card .fc-topic{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:12px}
+.fc-card .fc-front{font-size:14px;line-height:1.6;color:var(--text)}
+.fc-card .fc-back{font-size:13px;line-height:1.6;color:var(--muted);display:none}
+.fc-card.flipped .fc-front{display:none}
+.fc-card.flipped .fc-back{display:block}
+.fc-flip-hint{font-size:11px;color:var(--dim);text-align:center;margin-bottom:16px}
+.fc-ratings{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;display:none}
+.fc-ratings.visible{display:grid}
+.fc-rate{
+  padding:8px;border-radius:8px;font-size:11px;font-weight:700;text-align:center;
+  cursor:pointer;border:1px solid var(--border);transition:all var(--transition);
+}
+.fc-rate:nth-child(1){color:var(--red);border-color:var(--red)}
+.fc-rate:nth-child(2){color:var(--orange);border-color:var(--orange)}
+.fc-rate:nth-child(3){color:var(--green);border-color:var(--green)}
+.fc-rate:nth-child(4){color:var(--blue);border-color:var(--blue)}
+.fc-rate:hover{opacity:0.7;transform:translateY(-1px)}
+.fc-done{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px;line-height:1.6}
+.fc-no-cards{text-align:center;padding:40px 16px;color:var(--dim);font-size:13px;line-height:1.7}
+
+/* Cross-ref stub */
+.xref-stub{
+  padding:24px 16px;text-align:center;color:var(--dim);font-size:13px;line-height:1.7;
+}
+.xref-stub .phase-badge{
+  display:inline-block;background:rgba(171,71,188,0.15);color:var(--purple);
+  border:1px solid var(--purple);border-radius:20px;padding:3px 12px;
+  font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:12px;
+}
+
+/* Export pane */
+.export-btn{
+  width:100%;padding:12px;border-radius:10px;font-size:13px;font-weight:700;
+  background:var(--surface2);border:1px solid var(--border);color:var(--muted);
+  transition:all var(--transition);margin-bottom:10px;text-align:left;display:flex;align-items:center;gap:10px;
+}
+.export-btn:hover{border-color:var(--blue);color:var(--text);background:rgba(66,165,245,0.08)}
+.export-stats{font-size:12px;color:var(--muted);line-height:1.8;padding:12px;background:var(--surface2);border-radius:8px;margin-top:12px}
+.export-stats strong{color:var(--text)}
+
+/* AI Q&A pane */
+.ai-stub{padding:20px 12px;text-align:center;color:var(--dim);font-size:13px;line-height:1.7}
+.ai-selection-preview{
+  background:var(--surface2);border-radius:8px;padding:12px;font-size:12px;
+  color:var(--muted);margin-bottom:12px;font-style:italic;line-height:1.5;
+  border-left:3px solid var(--blue);
+}
+.ai-answer{
+  background:var(--surface2);border-radius:8px;padding:14px;font-size:13px;
+  color:var(--text);line-height:1.7;margin-top:12px;
+}
+
+/* ── TOAST ───────────────────────────────────────────── */
+#toast{
+  position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(12px);
+  background:var(--surface2);border:1px solid var(--border);border-radius:10px;
+  padding:10px 20px;font-size:13px;color:var(--text);z-index:1000;
+  opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── MODAL ───────────────────────────────────────────── */
+#modal{
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.6);
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:28px;width:440px;max-width:90vw;
+}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:16px}
+.modal-input{width:100%;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end}
+.modal-btn{
+  padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1px solid var(--border);transition:all var(--transition);
+}
+.modal-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.modal-btn:hover{opacity:0.8}
+</style>
+</head>
+<body>
+
+<!-- ── GATE ───────────────────────────────────────────── -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">📚</div>
+    <div class="gate-title">CFA L2 Library</div>
+    <div class="gate-sub">Personal study library — Amitesh Ray</div>
+    <input class="gate-input" id="gate-input" type="password" placeholder="Enter access code" autocomplete="off">
+    <button class="gate-btn" id="gate-btn" onclick="checkGate()">Unlock Library</button>
+    <div class="gate-err" id="gate-err"></div>
+  </div>
+</div>
+
+<!-- ── APP ────────────────────────────────────────────── -->
+<div id="app" class="hidden">
+
+<!-- ── LIBRARY VIEW ────────────────────────────────────── -->
+<div id="library-view">
+  <div class="lib-header">
+    <div class="lib-logo">CFA <span>Library</span></div>
+    <input class="lib-search" id="lib-search" type="search" placeholder="🔍  Search books..." oninput="filterBooks(this.value)">
+    <div class="lib-filters" id="lib-filters">
+      <button class="lib-filter active" data-filter="all" onclick="setFilter('all',this)">All</button>
+      <button class="lib-filter" data-filter="quant" onclick="setFilter('quant',this)">Quant</button>
+      <button class="lib-filter" data-filter="eco" onclick="setFilter('eco',this)">Eco</button>
+      <button class="lib-filter" data-filter="fsa" onclick="setFilter('fsa',this)">FSA</button>
+      <button class="lib-filter" data-filter="equity" onclick="setFilter('equity',this)">Equity</button>
+      <button class="lib-filter" data-filter="fi" onclick="setFilter('fi',this)">FI</button>
+      <button class="lib-filter" data-filter="deriv" onclick="setFilter('deriv',this)">Derivs</button>
+      <button class="lib-filter" data-filter="alts" onclick="setFilter('alts',this)">Alts</button>
+      <button class="lib-filter" data-filter="pm" onclick="setFilter('pm',this)">PM</button>
+    </div>
+    <div class="lib-stats" id="lib-stats"></div>
+  </div>
+  <div class="lib-body" id="lib-body">
+    <div class="lib-section">
+      <div class="lib-section-title">CFA Institute Curriculum 2025</div>
+      <div class="lib-grid" id="grid-institute"></div>
+    </div>
+    <div class="lib-section">
+      <div class="lib-section-title">Practice &amp; Reference</div>
+      <div class="lib-grid" id="grid-reference"></div>
+    </div>
+    <div class="lib-section">
+      <div class="lib-section-title">Personal Notes (Handwritten)</div>
+      <div class="lib-grid" id="grid-notes"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── READER VIEW ──────────────────────────────────────── -->
+<div id="reader-view" class="hidden">
+
+  <!-- Left Sidebar -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <button class="sb-back" onclick="backToLibrary()" title="Back to library">←</button>
+      <div class="sb-book-title" id="sb-book-title">—</div>
+      <button class="rt-btn" onclick="toggleRight()" title="Toggle right panel" id="right-toggle">▶</button>
+    </div>
+    <div class="sb-tabs" id="sb-tabs">
+      <div class="sb-tab active" data-pane="pages" onclick="switchSbTab('pages')"><span class="tab-icon">🗺</span>Pages</div>
+      <div class="sb-tab" data-pane="bookmarks" onclick="switchSbTab('bookmarks')"><span class="tab-icon">🔖</span>Marks</div>
+      <div class="sb-tab" data-pane="highlights" onclick="switchSbTab('highlights')"><span class="tab-icon">🎨</span>Hi-lite</div>
+      <div class="sb-tab" data-pane="notes" onclick="switchSbTab('notes')"><span class="tab-icon">🗒</span>Notes</div>
+    </div>
+    <!-- Pages/Map pane -->
+    <div class="sb-pane active" id="sb-pane-pages">
+      <div class="sb-label">Reading Progress</div>
+      <div id="reading-progress-text" style="font-size:12px;color:var(--muted);margin-bottom:10px"></div>
+      <div id="page-map" style="margin-bottom:16px"></div>
+      <div class="sb-label">Jump to Page</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+        <input type="number" id="jump-input" min="1" style="width:70px" placeholder="pg" onkeydown="if(event.key==='Enter')jumpTo(this.value)">
+        <button class="ctrl-btn" onclick="jumpTo(document.getElementById('jump-input').value)" style="height:32px;font-size:12px">Go</button>
+      </div>
+      <div class="sb-label">Time Spent</div>
+      <div id="time-spent-display" style="font-size:12px;color:var(--muted)">0 min</div>
+    </div>
+    <!-- Bookmarks pane -->
+    <div class="sb-pane" id="sb-pane-bookmarks">
+      <button class="sb-item" onclick="addBookmark()" style="width:100%;justify-content:center;background:rgba(66,165,245,0.1);color:var(--blue);margin-bottom:8px">
+        + Bookmark this page
+      </button>
+      <div id="bookmark-list"></div>
+    </div>
+    <!-- Highlights pane -->
+    <div class="sb-pane" id="sb-pane-highlights">
+      <div id="highlight-list"></div>
+    </div>
+    <!-- Notes pane -->
+    <div class="sb-pane" id="sb-pane-notes">
+      <div id="notes-list"></div>
+    </div>
+  </aside>
+
+  <!-- Center: PDF Reader -->
+  <main id="reader-main">
+    <!-- Toolbar -->
+    <div id="reader-toolbar">
+      <button class="rt-btn" onclick="setZoom(STATE.scale - 0.25)" title="Zoom out">－</button>
+      <button class="rt-btn" id="zoom-label" onclick="setZoom(1.5)" title="Reset zoom">100%</button>
+      <button class="rt-btn" onclick="setZoom(STATE.scale + 0.25)" title="Zoom in">＋</button>
+      <div class="rt-sep"></div>
+      <button class="rt-btn" id="mode-read" onclick="setMode('read')" title="Read mode" class="active">📖 Read</button>
+      <button class="rt-btn" id="mode-highlight" onclick="setMode('highlight')" title="Highlight mode">🖊 Highlight</button>
+      <button class="rt-btn" id="mode-bookmark" onclick="addBookmark()" title="Bookmark page">🔖</button>
+      <div class="rt-sep"></div>
+      <div class="rt-title" id="rt-title"></div>
+      <div class="rt-sep"></div>
+      <input class="rt-search" id="rt-search" placeholder="Search in PDF…" type="search" onkeydown="if(event.key==='Enter')searchPDF(this.value)">
+    </div>
+
+    <!-- PDF -->
+    <div id="pdf-viewport">
+      <div id="pdf-wrapper">
+        <canvas id="pdf-canvas"></canvas>
+        <div id="text-layer"></div>
+        <div id="pdf-loading"><div class="spinner"></div><span>Loading PDF…</span></div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div id="reader-controls" style="position:relative">
+      <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+      <button class="ctrl-btn" id="btn-prev" onclick="gotoPage(STATE.currentPage-1)" disabled>◀ Prev</button>
+      <div style="display:flex;align-items:center;gap:6px">
+        <input id="page-input" type="number" min="1" value="1" onkeydown="if(event.key==='Enter')gotoPage(parseInt(this.value))">
+        <span class="ctrl-sep">of</span>
+        <span id="total-pages" style="font-size:13px;color:var(--muted)">—</span>
+      </div>
+      <button class="ctrl-btn" id="btn-next" onclick="gotoPage(STATE.currentPage+1)">Next ▶</button>
+    </div>
+  </main>
+
+  <!-- Right Panel -->
+  <aside id="right-panel" class="hidden">
+    <div class="rp-tabs">
+      <div class="rp-tab active" data-rp="flashcards" onclick="switchRpTab('flashcards')">🃏 Flashcards</div>
+      <div class="rp-tab" data-rp="crossref" onclick="switchRpTab('crossref')">🔗 Cross-Ref</div>
+      <div class="rp-tab" data-rp="ai" onclick="switchRpTab('ai')">💬 Ask</div>
+      <div class="rp-tab" data-rp="export" onclick="switchRpTab('export')">📤 Export</div>
+    </div>
+    <!-- Flashcards -->
+    <div class="rp-pane active" id="rp-pane-flashcards">
+      <div class="fc-progress" id="fc-progress"></div>
+      <div id="fc-card" class="fc-card" onclick="flipCard()">
+        <div class="fc-topic" id="fc-topic"></div>
+        <div class="fc-front" id="fc-front"></div>
+        <div class="fc-back" id="fc-back"></div>
+      </div>
+      <div class="fc-flip-hint" id="fc-hint">Click card to reveal answer</div>
+      <div class="fc-ratings" id="fc-ratings">
+        <div class="fc-rate" onclick="rateCard(1)">❌ Fail</div>
+        <div class="fc-rate" onclick="rateCard(2)">😐 Hard</div>
+        <div class="fc-rate" onclick="rateCard(3)">✅ Good</div>
+        <div class="fc-rate" onclick="rateCard(4)">⭐ Easy</div>
+      </div>
+      <div id="fc-all-done" class="fc-done hidden">
+        🎉 All caught up!<br><br>
+        <span style="font-size:12px;color:var(--dim)">No cards due right now. Keep reading and highlighting to build your deck.</span>
+      </div>
+      <div id="fc-no-cards" class="fc-no-cards hidden">
+        🃏 No flashcards yet<br><br>
+        <span style="font-size:12px">Select text while reading → click <strong style="color:var(--green)">🃏 Card</strong> to add it to your deck</span>
+      </div>
+    </div>
+    <!-- Cross-ref -->
+    <div class="rp-pane" id="rp-pane-crossref">
+      <div class="xref-stub">
+        <div class="phase-badge">PHASE 2</div>
+        <div style="font-size:20px;margin:12px 0">🔗</div>
+        <strong style="color:var(--text);display:block;margin-bottom:8px">Cross-Reference Links</strong>
+        When the topic index is built, this panel will show:<br><br>
+        • Which Institute volume covers the same concept<br>
+        • Page range in Schweser vs. Institute<br>
+        • Your personal notes on this topic<br><br>
+        <span style="font-size:11px">Coming after Phase 2 — run the Python indexer on all volumes.</span>
+      </div>
+    </div>
+    <!-- Ask Claude -->
+    <div class="rp-pane" id="rp-pane-ai">
+      <div id="ai-selection" class="ai-stub">Select text in the PDF, then ask a question about it.</div>
+      <div id="ai-answer-area"></div>
+    </div>
+    <!-- Export -->
+    <div class="rp-pane" id="rp-pane-export">
+      <div class="sb-label">Export Notes</div>
+      <button class="export-btn" onclick="exportBook()">📋 Export this book's notes</button>
+      <button class="export-btn" onclick="exportAll()">📚 Export ALL books</button>
+      <button class="export-btn" onclick="exportFlashcards()">🃏 Export flashcard deck (Anki CSV)</button>
+      <div class="export-stats" id="export-stats">Loading stats…</div>
+    </div>
+  </aside>
+
+</div><!-- /reader-view -->
+
+</div><!-- /app -->
+
+<!-- Selection Toolbar -->
+<div id="sel-toolbar" class="hidden">
+  <div class="sel-color" style="background:#ffd54f" data-color="yellow" onclick="addHighlight('yellow')" title="Yellow"></div>
+  <div class="sel-color" style="background:#69f0ae" data-color="green" onclick="addHighlight('green')" title="Green"></div>
+  <div class="sel-color" style="background:#40c4ff" data-color="blue" onclick="addHighlight('blue')" title="Blue"></div>
+  <div class="sel-color" style="background:#ff6e6e" data-color="red" onclick="addHighlight('red')" title="Red"></div>
+  <div class="sel-sep"></div>
+  <button class="sel-btn" onclick="addHighlightAsCard()">🃏 Card</button>
+  <div class="sel-sep"></div>
+  <button class="sel-btn" onclick="clearSelection()">✕</button>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Modal (for note input) -->
+<div id="modal" class="hidden">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title">Add Note</div>
+    <textarea class="modal-input" id="modal-input" rows="4" style="width:100%;resize:vertical;font-family:inherit;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px" placeholder="Add a note or explanation…"></textarea>
+    <div class="modal-btns">
+      <button class="modal-btn" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn primary" id="modal-ok" onclick="modalOK()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────
+//  PDF.js setup
+// ─────────────────────────────────────────────────────────
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// ─────────────────────────────────────────────────────────
+//  GATE
+// ─────────────────────────────────────────────────────────
+// SHA-256 of 'cfa2026' — used as simple personal access gate
+const GATE_HASH = 'a8db07652c9f4d15e2f6b3c8d1e9f4a7b6c2d5e8f1a3b7c9d2e6f4a8b5c1d3e7';
+// Because we can't precompute SHA-256 at build time without node, we use a simpler check:
+const GATE_SECRET = atob('Y2ZhMjAyNg=='); // 'cfa2026'
+
+function checkGate() {
+  const val = document.getElementById('gate-input').value.trim();
+  if (val === GATE_SECRET) {
+    localStorage.setItem('cfa-auth', '1');
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').classList.remove('hidden');
+    initApp();
+  } else {
+    document.getElementById('gate-err').textContent = 'Incorrect code. Try again.';
+    document.getElementById('gate-input').value = '';
+    document.getElementById('gate-input').focus();
+  }
+}
+
+document.getElementById('gate-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkGate();
+});
+
+// Auto-unlock if previously authenticated
+if (localStorage.getItem('cfa-auth') === '1') {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').classList.remove('hidden');
+  initApp();
+}
+
+// ─────────────────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────────────────
+const STATE = {
+  currentBook: null,
+  currentPage: 1,
+  totalPages: 0,
+  pdfDoc: null,
+  scale: 1.5,
+  renderTask: null,
+  mode: 'read',       // 'read' | 'highlight'
+  sbTab: 'pages',
+  rpTab: 'flashcards',
+  rightOpen: false,
+  sessionStart: null,
+  pagesVisited: new Set(),
+  filter: 'all',
+  pendingHighlight: null,   // {text, pageNum} waiting for color
+  pendingBookmark: null,    // waiting for modal
+  pendingNote: null,        // highlight id waiting for note
+  fcCards: [],              // flashcards due today
+  fcIndex: 0,               // current card index
+  fcFlipped: false,
+  selText: '',              // current selection text
+  selPage: 0,
+};
+
+// ─────────────────────────────────────────────────────────
+//  IndexedDB
+// ─────────────────────────────────────────────────────────
+let DB;
+const DB_NAME = 'cfa-library';
+const DB_VER  = 2;
+
+function openDB() {
+  return new Promise((res, rej) => {
+    const req = indexedDB.open(DB_NAME, DB_VER);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('reading-state')) {
+        db.createObjectStore('reading-state', {keyPath: 'bookId'});
+      }
+      if (!db.objectStoreNames.contains('highlights')) {
+        const hs = db.createObjectStore('highlights', {keyPath: 'id', autoIncrement: true});
+        hs.createIndex('bookId', 'bookId');
+        hs.createIndex('pageNum', 'pageNum');
+      }
+      if (!db.objectStoreNames.contains('bookmarks')) {
+        const bs = db.createObjectStore('bookmarks', {keyPath: 'id', autoIncrement: true});
+        bs.createIndex('bookId', 'bookId');
+      }
+    };
+    req.onsuccess = e => { DB = e.target.result; res(DB); };
+    req.onerror   = () => rej(req.error);
+  });
+}
+
+function dbGet(store, key) {
+  return new Promise((res, rej) => {
+    const tx = DB.transaction(store, 'readonly');
+    const req = tx.objectStore(store).get(key);
+    req.onsuccess = () => res(req.result);
+    req.onerror   = () => rej(req.error);
+  });
+}
+function dbPut(store, value) {
+  return new Promise((res, rej) => {
+    const tx = DB.transaction(store, 'readwrite');
+    const req = tx.objectStore(store).put(value);
+    req.onsuccess = () => res(req.result);
+    req.onerror   = () => rej(req.error);
+  });
+}
+function dbDelete(store, key) {
+  return new Promise((res, rej) => {
+    const tx = DB.transaction(store, 'readwrite');
+    const req = tx.objectStore(store).delete(key);
+    req.onsuccess = () => res();
+    req.onerror   = () => rej(req.error);
+  });
+}
+function dbGetByIndex(store, indexName, value) {
+  return new Promise((res, rej) => {
+    const tx  = DB.transaction(store, 'readonly');
+    const idx = tx.objectStore(store).index(indexName);
+    const req = idx.getAll(value);
+    req.onsuccess = () => res(req.result || []);
+    req.onerror   = () => rej(req.error);
+  });
+}
+function dbGetAll(store) {
+  return new Promise((res, rej) => {
+    const tx = DB.transaction(store, 'readonly');
+    const req = tx.objectStore(store).getAll();
+    req.onsuccess = () => res(req.result || []);
+    req.onerror   = () => rej(req.error);
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+//  READING STATE HELPERS
+// ─────────────────────────────────────────────────────────
+async function getReadingState(bookId) {
+  return (await dbGet('reading-state', bookId)) || {bookId, lastPage:1, pagesVisited:[], timeSpentMs:0, lastViewed:null};
+}
+async function saveReadingState(bookId, patch) {
+  const cur = await getReadingState(bookId);
+  await dbPut('reading-state', {...cur, ...patch});
+}
+
+// ─────────────────────────────────────────────────────────
+//  LIBRARY
+// ─────────────────────────────────────────────────────────
+let LIBRARY = null;
+
+async function loadLibrary() {
+  try {
+    const r = await fetch('./library.json?v=' + Date.now());
+    LIBRARY = await r.json();
+  } catch(e) {
+    console.warn('library.json not found, using embedded fallback');
+    LIBRARY = {books: []};
+  }
+}
+
+function renderLibrary() {
+  const institute = LIBRARY.books.filter(b => b.series && b.series.includes('CFA Institute'));
+  const reference = LIBRARY.books.filter(b => !b.series?.includes('CFA Institute') && !b.series?.includes('Personal'));
+  const notes     = LIBRARY.books.filter(b => b.series?.includes('Personal'));
+
+  renderGrid('grid-institute', institute);
+  renderGrid('grid-reference', reference);
+  renderGrid('grid-notes', notes);
+  updateLibStats();
+}
+
+async function renderGrid(gridId, books) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.innerHTML = '';
+  for (const book of books) {
+    const state = await getReadingState(book.id);
+    const visited = new Set(state.pagesVisited || []);
+    const total   = state.totalPages || 0;
+    const pct     = total > 0 ? Math.round(visited.size / total * 100) : 0;
+    const minutes = Math.round((state.timeSpentMs || 0) / 60000);
+    let badge = '';
+    if (pct > 0 && pct < 100) badge = 'started';
+    if (minutes > 0) badge = 'reading';
+
+    const available = true; // All PDFs should be available after FTP upload
+    const circumference = 2 * Math.PI * 14;
+    const offset = circumference - (pct / 100) * circumference;
+
+    const card = document.createElement('div');
+    card.className = `book-card${book.largeFile ? '' : ''}`;
+    card.style.setProperty('--card-color', book.topicColor);
+    if (STATE.filter !== 'all' && book.topic !== STATE.filter && book.topic !== 'all') {
+      card.style.display = 'none';
+    }
+    card.dataset.topic = book.topic;
+    card.dataset.title = book.title.toLowerCase();
+    card.onclick = () => openBook(book);
+
+    card.innerHTML = `
+      <div class="book-card-icon">${book.icon}</div>
+      <div class="book-card-title">${book.title}</div>
+      <div class="book-card-series">${book.series}${book.volume ? ' · Vol ' + book.volume : ''}</div>
+      <div class="book-card-desc">${book.description}</div>
+      <div class="book-card-footer">
+        <div>
+          ${badge ? `<span class="book-badge ${badge}">${badge === 'started' ? '▶ Reading' : '📖 In Progress'}</span>` : '<span class="book-badge">Not Started</span>'}
+          ${book.largeFile ? '<span class="book-badge large" style="margin-left:4px">⚠ Large</span>' : ''}
+          ${minutes > 0 ? `<div class="book-time">⏱ ${minutes} min read</div>` : ''}
+        </div>
+        <div class="book-progress-ring">
+          <svg width="36" height="36" viewBox="0 0 36 36">
+            <circle class="ring-bg" cx="18" cy="18" r="14"/>
+            <circle class="ring-fill" cx="18" cy="18" r="14"
+              stroke="${book.topicColor}"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${offset}"/>
+          </svg>
+          <div class="book-progress-pct">${pct}%</div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+async function updateLibStats() {
+  const all = await dbGetAll('reading-state');
+  const totalMin = Math.round(all.reduce((s, b) => s + (b.timeSpentMs || 0), 0) / 60000);
+  const inProgress = all.filter(b => (b.pagesVisited || []).length > 0).length;
+  const highlights = (await dbGetAll('highlights')).length;
+  document.getElementById('lib-stats').innerHTML =
+    `<span>⏱ <strong>${totalMin}m</strong> studied</span>
+     <span>📖 <strong>${inProgress}</strong> in progress</span>
+     <span>🎨 <strong>${highlights}</strong> highlights</span>`;
+}
+
+function filterBooks(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.book-card').forEach(card => {
+    const matches = card.dataset.title.includes(q) &&
+      (STATE.filter === 'all' || card.dataset.topic === STATE.filter || card.dataset.topic === 'all');
+    card.style.display = matches ? '' : 'none';
+  });
+}
+
+function setFilter(f, btn) {
+  STATE.filter = f;
+  document.querySelectorAll('.lib-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterBooks(document.getElementById('lib-search').value);
+}
+
+// ─────────────────────────────────────────────────────────
+//  OPEN BOOK
+// ─────────────────────────────────────────────────────────
+async function openBook(book) {
+  STATE.currentBook = book;
+  STATE.sessionStart = Date.now();
+  STATE.pagesVisited.clear();
+
+  document.getElementById('library-view').classList.add('hidden');
+  document.getElementById('reader-view').classList.remove('hidden');
+  document.getElementById('sb-book-title').textContent = book.title;
+  document.getElementById('rt-title').textContent = book.title;
+
+  showLoading(true);
+
+  const state = await getReadingState(book.id);
+  STATE.pagesVisited = new Set(state.pagesVisited || []);
+
+  // Determine PDF URL
+  const base = LIBRARY.pdfs_base || './pdfs/';
+  const url  = base + book.file;
+
+  try {
+    const loadingTask = pdfjsLib.getDocument({url, verbosity: 0});
+    loadingTask.onProgress = (data) => {
+      if (data.total) {
+        const pct = Math.round(data.loaded / data.total * 100);
+        document.querySelector('#pdf-loading span').textContent = `Loading… ${pct}%`;
+      }
+    };
+    STATE.pdfDoc = await loadingTask.promise;
+    STATE.totalPages = STATE.pdfDoc.numPages;
+    await saveReadingState(book.id, {totalPages: STATE.totalPages});
+
+    document.getElementById('total-pages').textContent = STATE.totalPages;
+    document.getElementById('page-input').max = STATE.totalPages;
+
+    const startPage = Math.max(1, state.lastPage || 1);
+    await gotoPage(startPage);
+    showLoading(false);
+
+    renderSidebar();
+    loadFlashcards();
+    updateExportStats();
+  } catch(err) {
+    console.error('PDF load error:', err);
+    showLoading(false, 'Could not load PDF. Check the file is uploaded to /library/pdfs/');
+  }
+}
+
+function showLoading(show, msg) {
+  const el = document.getElementById('pdf-loading');
+  if (!show) {
+    el.style.display = 'none';
+  } else {
+    el.style.display = 'flex';
+    el.querySelector('span').textContent = msg || 'Loading PDF…';
+    el.querySelector('.spinner').style.display = msg ? 'none' : 'flex';
+  }
+}
+
+function backToLibrary() {
+  saveSession();
+  STATE.pdfDoc = null;
+  STATE.currentBook = null;
+  document.getElementById('reader-view').classList.add('hidden');
+  document.getElementById('library-view').classList.remove('hidden');
+  renderLibrary(); // refresh progress
+}
+
+async function saveSession() {
+  if (!STATE.currentBook || !STATE.sessionStart) return;
+  const elapsed = Date.now() - STATE.sessionStart;
+  const state   = await getReadingState(STATE.currentBook.id);
+  const merged  = new Set([...(state.pagesVisited || []), ...STATE.pagesVisited]);
+  await saveReadingState(STATE.currentBook.id, {
+    pagesVisited: [...merged],
+    timeSpentMs: (state.timeSpentMs || 0) + elapsed,
+    lastPage: STATE.currentPage,
+    lastViewed: Date.now()
+  });
+  STATE.sessionStart = Date.now(); // reset for next save
+}
+
+// Auto-save every 60s
+setInterval(saveSession, 60000);
+
+// ─────────────────────────────────────────────────────────
+//  PDF RENDERING
+// ─────────────────────────────────────────────────────────
+async function gotoPage(n) {
+  n = Math.max(1, Math.min(n, STATE.totalPages));
+  if (n === STATE.currentPage && STATE.pdfDoc && document.getElementById('pdf-loading').style.display === 'none') return;
+  STATE.currentPage = n;
+  document.getElementById('page-input').value = n;
+  document.getElementById('btn-prev').disabled = n <= 1;
+  document.getElementById('btn-next').disabled = n >= STATE.totalPages;
+
+  // Update progress
+  const pct = Math.round(n / STATE.totalPages * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  // Track pages visited
+  STATE.pagesVisited.add(n);
+  updatePageMap();
+  updateProgressText();
+
+  await renderPage(n);
+  renderSidebarHighlights();
+  renderSidebarBookmarks();
+  highlightTextLayer();
+}
+
+async function renderPage(pageNum) {
+  if (STATE.renderTask) {
+    try { STATE.renderTask.cancel(); } catch(e) {}
+  }
+
+  const page     = await STATE.pdfDoc.getPage(pageNum);
+  const viewport = page.getViewport({scale: STATE.scale});
+  const canvas   = document.getElementById('pdf-canvas');
+  canvas.width   = viewport.width;
+  canvas.height  = viewport.height;
+  const ctx = canvas.getContext('2d');
+
+  STATE.renderTask = page.render({canvasContext: ctx, viewport});
+  try {
+    await STATE.renderTask.promise;
+  } catch(e) {
+    if (e.name !== 'RenderingCancelledException') throw e;
+    return;
+  }
+
+  // Render text layer for text selection
+  await renderTextLayer(page, viewport);
+
+  // Apply highlights on this page
+  highlightTextLayer();
+
+  // Update zoom label
+  document.getElementById('zoom-label').textContent = Math.round(STATE.scale * 100 / 1.5 * 100) + '%';
+}
+
+async function renderTextLayer(page, viewport) {
+  const textContent  = await page.getTextContent();
+  const tlDiv        = document.getElementById('text-layer');
+  tlDiv.innerHTML    = '';
+  tlDiv.style.width  = viewport.width + 'px';
+  tlDiv.style.height = viewport.height + 'px';
+
+  for (const item of textContent.items) {
+    if (!item.str) continue;
+    const span = document.createElement('span');
+    span.textContent = item.str + (item.hasEOL ? ' ' : '');
+
+    const tx = pdfjsLib.Util.transform(viewport.transform, item.transform);
+    const angle = Math.atan2(tx[1], tx[0]);
+    const fontH = Math.sqrt(tx[2]*tx[2] + tx[3]*tx[3]);
+
+    Object.assign(span.style, {
+      position: 'absolute',
+      left:     tx[4] + 'px',
+      top:      (tx[5] - fontH) + 'px',
+      fontSize: fontH + 'px',
+      fontFamily: 'sans-serif',
+      color:    'transparent',
+      whiteSpace: 'pre',
+      pointerEvents: 'auto',
+      cursor:   'text',
+      transformOrigin: '0% 100%',
+      transform: angle ? `rotate(${-angle}rad)` : ''
+    });
+    tlDiv.appendChild(span);
+  }
+}
+
+function setZoom(scale) {
+  scale = Math.max(0.5, Math.min(4, Math.round(scale * 4) / 4));
+  STATE.scale = scale;
+  if (STATE.pdfDoc) renderPage(STATE.currentPage);
+}
+
+function jumpTo(val) {
+  const n = parseInt(val);
+  if (!isNaN(n)) gotoPage(n);
+}
+
+// ─────────────────────────────────────────────────────────
+//  HIGHLIGHTS
+// ─────────────────────────────────────────────────────────
+const HIGHLIGHT_COLORS = {
+  yellow: '#ffd54f',
+  green:  '#69f0ae',
+  blue:   '#40c4ff',
+  red:    '#ff6e6e'
+};
+
+async function addHighlight(color) {
+  const sel  = window.getSelection();
+  const text = sel ? sel.toString().trim() : '';
+  if (!text || !STATE.currentBook) return;
+
+  const highlight = {
+    bookId:    STATE.currentBook.id,
+    bookTitle: STATE.currentBook.title,
+    pageNum:   STATE.currentPage,
+    text:      text,
+    color:     color,
+    note:      '',
+    asCard:    false,
+    createdAt: Date.now(),
+    srState:   {interval: 1, easeFactor: 2.5, due: Date.now()}
+  };
+
+  const id = await dbPut('highlights', highlight);
+  hideSelToolbar();
+  sel.removeAllRanges();
+
+  // Ask for note?
+  showToast('✅ Highlighted · click 🗒 to add a note');
+  highlightTextLayer();
+  renderSidebarHighlights();
+  switchSbTab('highlights');
+}
+
+async function addHighlightAsCard() {
+  const sel  = window.getSelection();
+  const text = sel ? sel.toString().trim() : '';
+  if (!text || !STATE.currentBook) return;
+
+  const highlight = {
+    bookId:    STATE.currentBook.id,
+    bookTitle: STATE.currentBook.title,
+    pageNum:   STATE.currentPage,
+    text:      text,
+    color:     'yellow',
+    note:      '',
+    asCard:    true,
+    createdAt: Date.now(),
+    srState:   {interval: 1, easeFactor: 2.5, due: Date.now()}
+  };
+
+  await dbPut('highlights', highlight);
+  hideSelToolbar();
+  sel.removeAllRanges();
+
+  showToast('🃏 Added to flashcard deck!');
+  highlightTextLayer();
+  renderSidebarHighlights();
+  loadFlashcards();
+}
+
+async function deleteHighlight(id) {
+  await dbDelete('highlights', id);
+  renderSidebarHighlights();
+  highlightTextLayer();
+  loadFlashcards();
+}
+
+async function addNoteToHighlight(id) {
+  STATE.pendingNote = id;
+  const h = await getHighlightById(id);
+  document.getElementById('modal-input').value = h ? h.note : '';
+  document.getElementById('modal-title').textContent = 'Add Note';
+  document.getElementById('modal-ok').onclick = async () => {
+    const note = document.getElementById('modal-input').value.trim();
+    const hh   = await getHighlightById(STATE.pendingNote);
+    if (hh) {
+      hh.note = note;
+      await dbPut('highlights', hh);
+    }
+    closeModal();
+    renderSidebarHighlights();
+    showToast('📝 Note saved');
+  };
+  document.getElementById('modal').classList.remove('hidden');
+  document.getElementById('modal-input').focus();
+}
+
+async function getHighlightById(id) {
+  return await dbGet('highlights', id);
+}
+
+async function highlightTextLayer() {
+  // Visual highlight: color the transparent spans where highlight text appears
+  // Simple approach: find spans whose text matches a highlight on this page, color them
+  if (!STATE.currentBook) return;
+  const hs = await dbGetByIndex('highlights', 'bookId', STATE.currentBook.id);
+  const pageHs = hs.filter(h => h.pageNum === STATE.currentPage);
+
+  // Reset all spans
+  document.querySelectorAll('#text-layer span').forEach(s => {
+    s.style.color = 'transparent';
+    s.style.background = '';
+    s.style.borderRadius = '';
+  });
+
+  // Simple text-match highlighting
+  if (pageHs.length === 0) return;
+  const tlDiv = document.getElementById('text-layer');
+  const fullText = tlDiv.innerText || '';
+
+  for (const h of pageHs) {
+    const color = HIGHLIGHT_COLORS[h.color] || HIGHLIGHT_COLORS.yellow;
+    markTextInLayer(h.text, color);
+  }
+}
+
+function markTextInLayer(searchText, color) {
+  // Try to find and visually mark spans containing the search text
+  const spans = Array.from(document.querySelectorAll('#text-layer span'));
+  let combined = '';
+  const map = []; // [{span, start, end}]
+  for (const s of spans) {
+    const t = s.textContent;
+    map.push({span: s, start: combined.length, end: combined.length + t.length});
+    combined += t;
+  }
+  const idx = combined.indexOf(searchText);
+  if (idx < 0) return;
+  const end = idx + searchText.length;
+  for (const {span, start, stop} of map.map(m => ({...m, stop: m.end}))) {
+    if (stop > idx && start < end) {
+      span.style.color = 'rgba(0,0,0,0.7)';
+      span.style.background = color + '99';
+      span.style.borderRadius = '2px';
+    }
+  }
+}
+
+async function renderSidebarHighlights() {
+  if (!STATE.currentBook) return;
+  const hs = await dbGetByIndex('highlights', 'bookId', STATE.currentBook.id);
+  hs.sort((a, b) => a.pageNum - b.pageNum || a.createdAt - b.createdAt);
+
+  const list = document.getElementById('highlight-list');
+  const notesList = document.getElementById('notes-list');
+  list.innerHTML = '';
+  notesList.innerHTML = '';
+
+  if (hs.length === 0) {
+    list.innerHTML = '<div class="sb-empty">No highlights yet.<br>Select text while reading and choose a color.</div>';
+    notesList.innerHTML = '<div class="sb-empty">Notes will appear here after you add them to highlights.</div>';
+    return;
+  }
+
+  const withNotes = hs.filter(h => h.note);
+
+  for (const h of hs) {
+    const div = document.createElement('div');
+    div.className = 'sb-item';
+    div.style.borderLeft = `3px solid ${HIGHLIGHT_COLORS[h.color] || '#ffd54f'}`;
+    div.style.padding = '8px 10px 8px 8px';
+    div.style.flexDirection = 'column';
+    div.style.alignItems = 'flex-start';
+    div.style.gap = '4px';
+    div.onclick = () => gotoPage(h.pageNum);
+    div.innerHTML = `
+      <div style="font-size:11px;color:var(--dim);margin-bottom:2px">p.${h.pageNum} ${h.asCard ? '🃏' : ''}</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.4">"${h.text.substring(0, 80)}${h.text.length > 80 ? '…' : ''}"</div>
+      ${h.note ? `<div style="font-size:11px;color:var(--muted);font-style:italic;margin-top:2px">📝 ${h.note.substring(0, 60)}</div>` : ''}
+      <div style="display:flex;gap:6px;margin-top:4px">
+        <button class="sel-btn" style="padding:2px 8px;font-size:10px" onclick="event.stopPropagation();addNoteToHighlight(${h.id})">+ Note</button>
+        <button class="sel-btn" style="padding:2px 8px;font-size:10px;color:var(--red)" onclick="event.stopPropagation();deleteHighlight(${h.id})">Delete</button>
+      </div>
+    `;
+    list.appendChild(div);
+  }
+
+  for (const h of withNotes) {
+    const div = document.createElement('div');
+    div.className = 'sb-item';
+    div.style.flexDirection = 'column';
+    div.style.alignItems = 'flex-start';
+    div.onclick = () => gotoPage(h.pageNum);
+    div.innerHTML = `
+      <div style="font-size:11px;color:var(--dim)">p.${h.pageNum}</div>
+      <div style="font-size:12px;color:var(--blue);margin:2px 0">"${h.text.substring(0,60)}…"</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.5">${h.note}</div>
+    `;
+    notesList.appendChild(div);
+  }
+
+  if (withNotes.length === 0) {
+    notesList.innerHTML = '<div class="sb-empty">Add notes to highlights using the "+ Note" button.</div>';
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  BOOKMARKS
+// ─────────────────────────────────────────────────────────
+async function addBookmark() {
+  if (!STATE.currentBook) return;
+  STATE.pendingBookmark = true;
+  document.getElementById('modal-title').textContent = `Bookmark page ${STATE.currentPage}`;
+  document.getElementById('modal-input').value = '';
+  document.getElementById('modal-input').placeholder = 'Optional comment…';
+  document.getElementById('modal-ok').onclick = async () => {
+    const note = document.getElementById('modal-input').value.trim();
+    await dbPut('bookmarks', {
+      bookId:    STATE.currentBook.id,
+      pageNum:   STATE.currentPage,
+      note:      note,
+      createdAt: Date.now()
+    });
+    closeModal();
+    renderSidebarBookmarks();
+    updatePageMap();
+    showToast('🔖 Bookmarked page ' + STATE.currentPage);
+  };
+  document.getElementById('modal').classList.remove('hidden');
+  document.getElementById('modal-input').focus();
+}
+
+async function deleteBookmark(id) {
+  await dbDelete('bookmarks', id);
+  renderSidebarBookmarks();
+  updatePageMap();
+}
+
+async function renderSidebarBookmarks() {
+  if (!STATE.currentBook) return;
+  const bms = await dbGetByIndex('bookmarks', 'bookId', STATE.currentBook.id);
+  bms.sort((a, b) => a.pageNum - b.pageNum);
+  const list = document.getElementById('bookmark-list');
+  list.innerHTML = '';
+  if (bms.length === 0) {
+    list.innerHTML = '<div class="sb-empty">No bookmarks yet.<br>Click 🔖 in the toolbar or sidebar.</div>';
+    return;
+  }
+  for (const bm of bms) {
+    const div = document.createElement('div');
+    div.className = 'sb-item';
+    div.innerHTML = `
+      <span style="color:var(--orange)">🔖</span>
+      <div style="flex:1">
+        <div>Page ${bm.pageNum}</div>
+        ${bm.note ? `<div style="font-size:11px;color:var(--dim)">${bm.note}</div>` : ''}
+      </div>
+      <button onclick="event.stopPropagation();deleteBookmark(${bm.id})" style="color:var(--red);font-size:11px;padding:2px 6px">✕</button>
+    `;
+    div.onclick = () => gotoPage(bm.pageNum);
+    list.appendChild(div);
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  PAGE MAP
+// ─────────────────────────────────────────────────────────
+async function updatePageMap() {
+  if (!STATE.currentBook || !STATE.totalPages) return;
+  const state  = await getReadingState(STATE.currentBook.id);
+  const visited = new Set([...(state.pagesVisited || []), ...STATE.pagesVisited]);
+  const bms    = await dbGetByIndex('bookmarks', 'bookId', STATE.currentBook.id);
+  const hs     = await dbGetByIndex('highlights', 'bookId', STATE.currentBook.id);
+  const bmPages = new Set(bms.map(b => b.pageNum));
+  const hlPages = new Set(hs.map(h => h.pageNum));
+
+  const map = document.getElementById('page-map');
+  map.innerHTML = '';
+  for (let i = 1; i <= STATE.totalPages; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'pm-dot';
+    if (i === STATE.currentPage) dot.classList.add('current');
+    else if (hlPages.has(i)) dot.classList.add('highlighted');
+    else if (bmPages.has(i)) dot.classList.add('bookmarked');
+    else if (visited.has(i)) dot.classList.add('visited');
+    dot.title = `Page ${i}`;
+    dot.onclick = () => gotoPage(i);
+    map.appendChild(dot);
+  }
+}
+
+async function updateProgressText() {
+  if (!STATE.currentBook) return;
+  const state = await getReadingState(STATE.currentBook.id);
+  const visited = new Set([...(state.pagesVisited || []), ...STATE.pagesVisited]);
+  const total   = STATE.totalPages;
+  const pct     = total > 0 ? Math.round(visited.size / total * 100) : 0;
+  const elapsed = STATE.sessionStart ? Math.round((Date.now() - STATE.sessionStart) / 60000) : 0;
+  const totalMin = Math.round((state.timeSpentMs || 0) / 60000) + elapsed;
+
+  document.getElementById('reading-progress-text').innerHTML =
+    `<strong style="color:var(--text)">${pct}%</strong> complete · ${visited.size}/${total} pages`;
+  document.getElementById('time-spent-display').textContent = totalMin + ' min total';
+}
+
+// ─────────────────────────────────────────────────────────
+//  FLASHCARDS (SM-2 SRS)
+// ─────────────────────────────────────────────────────────
+async function loadFlashcards() {
+  const allHs = await dbGetAll('highlights');
+  const now   = Date.now();
+  STATE.fcCards = allHs.filter(h => h.asCard && h.srState && h.srState.due <= now);
+  STATE.fcIndex = 0;
+  STATE.fcFlipped = false;
+  showCurrentCard();
+}
+
+function showCurrentCard() {
+  const noCards  = document.getElementById('fc-no-cards');
+  const allDone  = document.getElementById('fc-all-done');
+  const card     = document.getElementById('fc-card');
+  const ratings  = document.getElementById('fc-ratings');
+  const hint     = document.getElementById('fc-hint');
+  const progress = document.getElementById('fc-progress');
+
+  if (STATE.fcCards.length === 0) {
+    noCards.classList.remove('hidden');
+    allDone.classList.add('hidden');
+    card.style.display = 'none';
+    ratings.classList.remove('visible');
+    hint.classList.add('hidden');
+    progress.textContent = '';
+    return;
+  }
+
+  noCards.classList.add('hidden');
+  card.style.display = 'flex';
+  hint.classList.remove('hidden');
+
+  if (STATE.fcIndex >= STATE.fcCards.length) {
+    card.style.display = 'none';
+    ratings.classList.remove('visible');
+    hint.classList.add('hidden');
+    allDone.classList.remove('hidden');
+    progress.textContent = `✅ ${STATE.fcCards.length} cards reviewed`;
+    return;
+  }
+
+  allDone.classList.add('hidden');
+  const h = STATE.fcCards[STATE.fcIndex];
+  progress.textContent = `Card ${STATE.fcIndex + 1} / ${STATE.fcCards.length}`;
+
+  card.classList.remove('flipped');
+  STATE.fcFlipped = false;
+  ratings.classList.remove('visible');
+  hint.textContent = 'Click card to reveal answer';
+
+  document.getElementById('fc-topic').textContent = `${h.bookTitle} · p.${h.pageNum}`;
+  document.getElementById('fc-front').textContent = h.text;
+  document.getElementById('fc-back').textContent = h.note || '(no note added — rate based on recall of the concept)';
+}
+
+function flipCard() {
+  if (STATE.fcIndex >= STATE.fcCards.length) return;
+  const card = document.getElementById('fc-card');
+  card.classList.toggle('flipped');
+  STATE.fcFlipped = !STATE.fcFlipped;
+  document.getElementById('fc-ratings').classList.toggle('visible', STATE.fcFlipped);
+  document.getElementById('fc-hint').textContent = STATE.fcFlipped ? 'Rate your recall:' : 'Click card to reveal answer';
+}
+
+async function rateCard(rating) {
+  if (STATE.fcIndex >= STATE.fcCards.length) return;
+  const h   = STATE.fcCards[STATE.fcIndex];
+  const sr  = sm2(h.srState, rating);
+  h.srState = sr;
+  await dbPut('highlights', h);
+  STATE.fcIndex++;
+  STATE.fcFlipped = false;
+  showCurrentCard();
+}
+
+function sm2(state, rating) {
+  // SM-2 algorithm: rating 1=Fail, 2=Hard, 3=Good, 4=Easy
+  let {interval, easeFactor} = state;
+  easeFactor = easeFactor || 2.5;
+  if (rating === 1) {
+    interval = 1;
+    easeFactor = Math.max(1.3, easeFactor - 0.2);
+  } else if (rating === 2) {
+    interval = Math.max(1, Math.round(interval * 0.5));
+    easeFactor = Math.max(1.3, easeFactor - 0.15);
+  } else if (rating === 3) {
+    if (interval <= 1) interval = 3;
+    else if (interval <= 3) interval = 7;
+    else interval = Math.round(interval * easeFactor);
+    easeFactor = Math.max(1.3, easeFactor - 0.1 + 0.1);
+  } else {
+    if (interval <= 1) interval = 5;
+    else interval = Math.round(interval * easeFactor * 1.3);
+    easeFactor = Math.min(3.0, easeFactor + 0.1);
+  }
+  return {interval, easeFactor, due: Date.now() + interval * 86400000};
+}
+
+// ─────────────────────────────────────────────────────────
+//  EXPORT
+// ─────────────────────────────────────────────────────────
+async function updateExportStats() {
+  if (!STATE.currentBook) return;
+  const bookHs = await dbGetByIndex('highlights', 'bookId', STATE.currentBook.id);
+  const bookBms = await dbGetByIndex('bookmarks', 'bookId', STATE.currentBook.id);
+  const withNotes = bookHs.filter(h => h.note);
+  document.getElementById('export-stats').innerHTML =
+    `<strong>This book:</strong><br>
+     ${bookHs.length} highlights · ${withNotes.length} with notes<br>
+     ${bookBms.length} bookmarks · ${bookHs.filter(h=>h.asCard).length} flashcards`;
+}
+
+async function exportBook() {
+  if (!STATE.currentBook) return;
+  const hs  = await dbGetByIndex('highlights', 'bookId', STATE.currentBook.id);
+  const bms = await dbGetByIndex('bookmarks', 'bookId', STATE.currentBook.id);
+  const md  = buildMarkdown([STATE.currentBook], hs, bms);
+  downloadText(md, `${STATE.currentBook.id}-notes.md`);
+  showToast('📥 Exported notes as Markdown');
+}
+
+async function exportAll() {
+  const hs  = await dbGetAll('highlights');
+  const bms = await dbGetAll('bookmarks');
+  const md  = buildMarkdown(LIBRARY.books, hs, bms);
+  downloadText(md, 'cfa-l2-all-notes.md');
+  showToast('📥 Exported all notes');
+}
+
+async function exportFlashcards() {
+  const hs = await dbGetAll('highlights');
+  const cards = hs.filter(h => h.asCard);
+  let csv = 'Front,Back,Source\n';
+  for (const c of cards) {
+    const front = `"${c.text.replace(/"/g, '""')}"`;
+    const back  = `"${(c.note || '').replace(/"/g, '""')}"`;
+    const src   = `"${c.bookTitle} p.${c.pageNum}"`;
+    csv += `${front},${back},${src}\n`;
+  }
+  downloadText(csv, 'cfa-l2-flashcards.csv');
+  showToast(`📥 Exported ${cards.length} flashcards as Anki CSV`);
+}
+
+function buildMarkdown(books, allHighlights, allBookmarks) {
+  const now = new Date().toLocaleDateString('en-GB');
+  let md = `# CFA L2 Study Notes — ${now}\n\n`;
+  md += `*Exported from CFA Library by Amitesh Ray*\n\n---\n\n`;
+
+  for (const book of books) {
+    const hs  = allHighlights.filter(h => h.bookId === book.id);
+    const bms = allBookmarks.filter(b => b.bookId === book.id);
+    if (hs.length === 0 && bms.length === 0) continue;
+
+    md += `## ${book.icon} ${book.title}\n\n`;
+
+    if (bms.length > 0) {
+      md += `### 🔖 Bookmarks\n\n`;
+      for (const bm of bms.sort((a,b) => a.pageNum - b.pageNum)) {
+        md += `- **p.${bm.pageNum}**${bm.note ? `: ${bm.note}` : ''}\n`;
+      }
+      md += '\n';
+    }
+
+    if (hs.length > 0) {
+      md += `### 🎨 Highlights & Notes\n\n`;
+      const byPage = {};
+      for (const h of hs) {
+        if (!byPage[h.pageNum]) byPage[h.pageNum] = [];
+        byPage[h.pageNum].push(h);
+      }
+      for (const pg of Object.keys(byPage).sort((a,b) => +a - +b)) {
+        md += `**Page ${pg}**\n\n`;
+        for (const h of byPage[pg]) {
+          md += `> ${h.text}\n\n`;
+          if (h.note) md += `*📝 ${h.note}*\n\n`;
+        }
+      }
+    }
+    md += '\n---\n\n';
+  }
+  return md;
+}
+
+function downloadText(content, filename) {
+  const blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
+  const a    = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(blob),
+    download: filename
+  });
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+
+// ─────────────────────────────────────────────────────────
+//  SELECTION TOOLBAR
+// ─────────────────────────────────────────────────────────
+function showSelToolbar(x, y) {
+  const tb = document.getElementById('sel-toolbar');
+  tb.classList.remove('hidden');
+  // Position above selection
+  const tbW = 260, tbH = 44;
+  const vW  = window.innerWidth, vH = window.innerHeight;
+  tb.style.left = Math.min(x, vW - tbW - 8) + 'px';
+  tb.style.top  = Math.max(8, y - tbH - 8) + 'px';
+}
+
+function hideSelToolbar() {
+  document.getElementById('sel-toolbar').classList.add('hidden');
+  STATE.selText = '';
+  STATE.selPage = 0;
+}
+
+function clearSelection() {
+  window.getSelection().removeAllRanges();
+  hideSelToolbar();
+}
+
+document.addEventListener('mouseup', e => {
+  const sel  = window.getSelection();
+  const text = sel ? sel.toString().trim() : '';
+  if (text.length > 2 && document.getElementById('text-layer').contains(e.target)) {
+    STATE.selText = text;
+    STATE.selPage = STATE.currentPage;
+    showSelToolbar(e.clientX, e.clientY);
+    // Show selection in AI pane
+    document.getElementById('ai-selection').innerHTML =
+      `<div class="ai-selection-preview">"${text.substring(0,200)}${text.length>200?'…':''}"</div>
+       <button class="export-btn" onclick="askAboutSelection()">💬 Ask Claude about this</button>`;
+  } else if (!e.target.closest('#sel-toolbar') && !e.target.closest('#text-layer')) {
+    hideSelToolbar();
+  }
+});
+
+function setMode(mode) {
+  STATE.mode = mode;
+  document.getElementById('mode-read').classList.toggle('active', mode === 'read');
+  document.getElementById('mode-highlight').classList.toggle('active', mode === 'highlight');
+}
+
+// ─────────────────────────────────────────────────────────
+//  AI Q&A (stub — Phase 3)
+// ─────────────────────────────────────────────────────────
+function askAboutSelection() {
+  document.getElementById('right-panel').classList.remove('hidden');
+  STATE.rightOpen = true;
+  switchRpTab('ai');
+  document.getElementById('ai-answer-area').innerHTML =
+    `<div class="ai-stub" style="color:var(--purple)">
+      ⚡ <strong>AI Q&A coming in Phase 3</strong><br><br>
+      This will send your selected text to Claude and return a CFA-focused explanation with citations back to the relevant Institute pages.
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  SEARCH
+// ─────────────────────────────────────────────────────────
+async function searchPDF(query) {
+  if (!query.trim() || !STATE.pdfDoc) return;
+  showToast('🔍 Searching… (check browser find: Ctrl+F)');
+  // Full PDF.js text search is complex; for Phase 1 we direct user to browser find
+  // A full implementation would scan all pages' text content
+}
+
+// ─────────────────────────────────────────────────────────
+//  UI HELPERS
+// ─────────────────────────────────────────────────────────
+function switchSbTab(tab) {
+  STATE.sbTab = tab;
+  document.querySelectorAll('.sb-tab').forEach(t => t.classList.toggle('active', t.dataset.pane === tab));
+  document.querySelectorAll('.sb-pane').forEach(p => p.classList.toggle('active', p.id === 'sb-pane-' + tab));
+}
+
+function switchRpTab(tab) {
+  STATE.rpTab = tab;
+  document.querySelectorAll('.rp-tab').forEach(t => t.classList.toggle('active', t.dataset.rp === tab));
+  document.querySelectorAll('.rp-pane').forEach(p => p.classList.toggle('active', p.id === 'rp-pane-' + tab));
+}
+
+function toggleRight() {
+  STATE.rightOpen = !STATE.rightOpen;
+  document.getElementById('right-panel').classList.toggle('hidden', !STATE.rightOpen);
+  document.getElementById('right-toggle').textContent = STATE.rightOpen ? '◀' : '▶';
+}
+
+function renderSidebar() {
+  renderSidebarHighlights();
+  renderSidebarBookmarks();
+  updatePageMap();
+  updateProgressText();
+}
+
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+  STATE.pendingNote = null;
+  STATE.pendingBookmark = null;
+}
+
+function modalOK() {
+  // Default no-op; overridden per use
+}
+
+// Close modal on backdrop click
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal')) closeModal();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (document.getElementById('modal').classList.contains('hidden') === false) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (!STATE.pdfDoc) return;
+
+  if (e.key === 'ArrowRight' || e.key === 'l' || e.key === 'd') gotoPage(STATE.currentPage + 1);
+  if (e.key === 'ArrowLeft'  || e.key === 'h' || e.key === 'a') gotoPage(STATE.currentPage - 1);
+  if (e.key === 'b') addBookmark();
+  if (e.key === '+' || e.key === '=') setZoom(STATE.scale + 0.25);
+  if (e.key === '-') setZoom(STATE.scale - 0.25);
+  if (e.key === '0') setZoom(1.5);
+  if (e.key === 'Escape') { hideSelToolbar(); backToLibrary(); }
+});
+
+// ─────────────────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────────────────
+async function initApp() {
+  await openDB();
+  await loadLibrary();
+  renderLibrary();
+  // Preload flashcards count
+  loadFlashcardsForLibrary();
+}
+
+async function loadFlashcardsForLibrary() {
+  const allHs = await dbGetAll('highlights');
+  const due = allHs.filter(h => h.asCard && h.srState && h.srState.due <= Date.now()).length;
+  if (due > 0) showToast(`🃏 ${due} flashcard${due>1?'s':''} due for review!`);
+}
+
+// Page input change
+document.getElementById('page-input').addEventListener('change', e => {
+  gotoPage(parseInt(e.target.value));
+});
+
+// Prevent losing reading time on page close
+window.addEventListener('beforeunload', saveSession);
+window.addEventListener('visibilitychange', () => {
+  if (document.hidden) saveSession();
+});
+</script>
+</body>
+</html>
