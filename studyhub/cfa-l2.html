@@ -752,6 +752,20 @@ body {
       <span>Downloads</span>
     </div>
 
+    <div class="sb-section-label">TOOLS</div>
+    <div class="sb-item" onclick="switchView('library')">
+      <span class="sb-item-icon">📚</span>
+      <span>Library</span>
+    </div>
+    <div class="sb-item" onclick="switchView('qbank')">
+      <span class="sb-item-icon">🧠</span>
+      <span>Q-Bank</span>
+    </div>
+    <div class="sb-item" onclick="switchView('glossary')">
+      <span class="sb-item-icon">📖</span>
+      <span>Glossary</span>
+    </div>
+
   </nav>
 
   <div class="sb-footer">
@@ -871,25 +885,46 @@ body {
     </div>
 
     <div class="quick-actions">
+      <div class="qa-card" onclick="switchView('library')">
+        <div class="qa-icon-wrap">📚</div>
+        <div>
+          <div class="qa-title">Library</div>
+          <div class="qa-desc">43 resources — CFA Institute volumes, Kaplan, UW, mocks, formula sheets & notes</div>
+        </div>
+      </div>
+      <div class="qa-card" onclick="switchView('qbank')">
+        <div class="qa-icon-wrap">🧠</div>
+        <div>
+          <div class="qa-title">Q-Bank</div>
+          <div class="qa-desc">238 practice questions across all 10 topics with timed mocks & streak tracking</div>
+        </div>
+      </div>
+      <div class="qa-card" onclick="switchView('glossary')">
+        <div class="qa-icon-wrap">📖</div>
+        <div>
+          <div class="qa-title">Glossary</div>
+          <div class="qa-desc">104 CFA terms with 15-day rotating flashcard revision decks</div>
+        </div>
+      </div>
       <div class="qa-card" onclick="switchView('notes')">
         <div class="qa-icon-wrap">📝</div>
         <div>
-          <div class="qa-title">Browse Notes</div>
-          <div class="qa-desc">Explore 61 indexed note pages from handwritten study materials</div>
+          <div class="qa-title">Notes Navigator</div>
+          <div class="qa-desc">Browse 61 indexed note pages from handwritten study materials</div>
         </div>
       </div>
       <div class="qa-card" onclick="switchView('explainers')">
         <div class="qa-icon-wrap">🎨</div>
         <div>
-          <div class="qa-title">View Explainers</div>
-          <div class="qa-desc">AI-generated visual guides and detailed HTML explanations</div>
+          <div class="qa-title">Explainers</div>
+          <div class="qa-desc">AI-generated visual guides and interactive HTML explanations</div>
         </div>
       </div>
       <div class="qa-card" onclick="switchView('downloads')">
         <div class="qa-icon-wrap">📥</div>
         <div>
           <div class="qa-title">Downloads</div>
-          <div class="qa-desc">Download notes and explainers for offline study</div>
+          <div class="qa-desc">Download notes and formula sheets for offline study</div>
         </div>
       </div>
       <div class="qa-card qa-tracker-card" onclick="switchView('tracker')" style="border-color:var(--accent);background:linear-gradient(135deg,rgba(108,92,231,0.12),rgba(162,155,254,0.06));">
@@ -1168,6 +1203,39 @@ body {
       </div>
     </div>
   </div>
+  <!-- LIBRARY VIEW -->
+  <div id="v-library" class="view" style="flex-direction:column;overflow:hidden;">
+    <iframe
+      id="library-iframe"
+      src="../library/index.html"
+      style="width:100%;flex:1;border:none;display:block;"
+      allow="same-origin"
+      title="CFA L2 Library"
+    ></iframe>
+  </div>
+
+  <!-- QBANK VIEW -->
+  <div id="v-qbank" class="view" style="flex-direction:column;overflow:hidden;">
+    <iframe
+      id="qbank-iframe"
+      src="../qbank/index.html"
+      style="width:100%;flex:1;border:none;display:block;"
+      allow="same-origin"
+      title="CFA L2 Q-Bank"
+    ></iframe>
+  </div>
+
+  <!-- GLOSSARY VIEW -->
+  <div id="v-glossary" class="view" style="flex-direction:column;overflow:hidden;">
+    <iframe
+      id="glossary-iframe"
+      src="../glossary/index.html"
+      style="width:100%;flex:1;border:none;display:block;"
+      allow="same-origin"
+      title="CFA L2 Glossary"
+    ></iframe>
+  </div>
+
   <!-- TRACKER VIEW -->
   <div id="v-tracker" class="view" style="flex-direction:column;overflow:hidden;">
     <iframe
@@ -1241,7 +1309,10 @@ function getNavLabel(viewName) {
     notes: 'notes',
     explainers: 'explainers',
     downloads: 'downloads',
-    tracker: 'tracker'
+    tracker: 'tracker',
+    library: 'library',
+    qbank: 'q-bank',
+    glossary: 'glossary'
   };
   return map[viewName] || viewName;
 }
