@@ -372,10 +372,67 @@ pre{white-space:pre-wrap;font-family:inherit}
     </div>
     <button class="btn btn-primary" onclick="startMock()">Start Mock Exam →</button>
   </div>
+
+  <!-- PDF Mock Exams Section -->
+  <div class="mock-section" style="margin-top:0">
+    <div class="mock-title">🎯 PDF Mock Exams — Open &amp; Print</div>
+    <div class="mock-desc">Full-length mock exams from CFA Program, Kaplan, and UW Finance. Click to open any PDF directly from your local folder.</div>
+    <div id="pdf-mocks-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:14px;">
+      <!-- CFA Premium Mocks -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#ef4444;margin-bottom:8px">🔴 CFA Program Official</div>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/9.%20CFA%20PREMIUM%20MOCKS/Mock%201%20Session%201.pdf" target="_blank" style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='var(--border)'"><span>📄</span><span style="flex:1">Mock 1 – Session 1</span><span style="color:var(--dim);font-size:10px">↗</span></a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/9.%20CFA%20PREMIUM%20MOCKS/Mock%201%20Session%202.pdf" target="_blank" style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='var(--border)'"><span>📄</span><span style="flex:1">Mock 1 – Session 2</span><span style="color:var(--dim);font-size:10px">↗</span></a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/9.%20CFA%20PREMIUM%20MOCKS/Mock%202%20Session%201.pdf" target="_blank" style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='var(--border)'"><span>📄</span><span style="flex:1">Mock 2 – Session 1</span><span style="color:var(--dim);font-size:10px">↗</span></a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/9.%20CFA%20PREMIUM%20MOCKS/Mock%202%20Session%202.pdf" target="_blank" style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='var(--border)'"><span>📄</span><span style="flex:1">Mock 2 – Session 2</span><span style="color:var(--dim);font-size:10px">↗</span></a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/9.%20CFA%20PREMIUM%20MOCKS/Mock%203%20Session%201.pdf" target="_blank" style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='var(--border)'"><span>📄</span><span style="flex:1">Mock 3 – Session 1</span><span style="color:var(--dim);font-size:10px">↗</span></a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/9.%20CFA%20PREMIUM%20MOCKS/Mock%203%20Session%202.pdf" target="_blank" style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='var(--border)'"><span>📄</span><span style="flex:1">Mock 3 – Session 2</span><span style="color:var(--dim);font-size:10px">↗</span></a>
+      </div>
+      <!-- UW Mocks -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#f59e0b;margin-bottom:8px">🟡 UW Finance Mocks</div>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/7.%20UW%20MOCKS/Mock%201/" target="_blank"
+          style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;"
+          onmouseover="this.style.borderColor='#f59e0b'" onmouseout="this.style.borderColor='var(--border)'">
+          <span>📁</span><span style="flex:1">UW Mock 1 (Folder)</span><span style="color:var(--dim);font-size:10px">↗</span>
+        </a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/7.%20UW%20MOCKS/Mock%202/" target="_blank"
+          style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;"
+          onmouseover="this.style.borderColor='#f59e0b'" onmouseout="this.style.borderColor='var(--border)'">
+          <span>📁</span><span style="flex:1">UW Mock 2 (Folder)</span><span style="color:var(--dim);font-size:10px">↗</span>
+        </a>
+      </div>
+      <!-- Extra Full Mocks -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8b5cf6;margin-bottom:8px">🟣 Extra Full Syllabus Mocks</div>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/10.%20EXTRA%20FULL%20SYLLABUS%20MOCK/V1/" target="_blank"
+          style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;"
+          onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='var(--border)'">
+          <span>📁</span><span style="flex:1">V1 — Exam 1 &amp; 2 AM/PM</span><span style="color:var(--dim);font-size:10px">↗</span>
+        </a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/10.%20EXTRA%20FULL%20SYLLABUS%20MOCK/V2/" target="_blank"
+          style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;"
+          onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='var(--border)'">
+          <span>📁</span><span style="flex:1">V2 — Exam 1 &amp; 2 AM/PM</span><span style="color:var(--dim);font-size:10px">↗</span>
+        </a>
+        <a href="computer:///sessions/determined-nifty-allen/mnt/CFA%20L2_0/11.%20EXTRA%20SUBJECTWISE%20MOCKS/" target="_blank"
+          style="display:flex;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text);font-size:12px;transition:border-color .2s;"
+          onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='var(--border)'">
+          <span>📁</span><span style="flex:1">Subject-wise Mocks (10 topics)</span><span style="color:var(--dim);font-size:10px">↗</span>
+        </a>
+      </div>
+      <!-- 300Hours Mock -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#22c55e;margin-bottom:8px">🟢 300Hours Free Mock</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Available in the Library → Practice &amp; Reference section</div>
+        <button class="btn btn-secondary" style="font-size:11px;padding:6px 12px;width:100%;" onclick="window.open('../library/','_blank')">Open Library ↗</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ══ PRACTICE VIEW ══════════════════════════════════════ -->
-<div id="view-practice" class="hidden">
+<div id="view-practice" class="view hidden">
   <div id="practice-header">
     <span class="ph-topic" id="ph-topic-badge" style="color:var(--green);border-color:var(--green-d)">All Topics</span>
     <div class="ph-progress">
@@ -440,7 +497,7 @@ pre{white-space:pre-wrap;font-family:inherit}
 </div>
 
 <!-- ══ RESULTS ══════════════════════════════════════════════ -->
-<div id="view-results" class="hidden">
+<div id="view-results" class="view hidden">
   <div class="results-view">
     <div class="result-hero">
       <div class="result-score" id="res-score"></div>
@@ -831,8 +888,23 @@ async function selectOption(qId, letter) {
   // Show solution
   document.getElementById(`solution-${qId}`).innerHTML = renderSolution(q, ans);
 
-  // Update list item
-  renderPracticeList();
+  // Update only the specific list item (avoid full re-render for perf)
+  const listEl = document.querySelector(`#q-list .q-item.active`);
+  if (listEl) {
+    listEl.classList.remove('answered-correct','answered-wrong');
+    listEl.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+    const numEl = listEl.querySelector('.q-num');
+    if (numEl && !numEl.textContent.includes('✅') && !numEl.textContent.includes('❌')) {
+      numEl.innerHTML += correct ? ' · ✅' : ' · ❌';
+    }
+  }
+  // Update progress bar
+  const answered = Object.keys(PRACTICE.answers).length;
+  const total = (PRACTICE.topic === 'all' ? QBANK : QBANK.filter(q => q.topic === PRACTICE.topic)).length;
+  const progEl = document.getElementById('ph-prog-fill');
+  if (progEl) progEl.style.width = total > 0 ? (answered/total*100)+'%' : '0%';
+  const labelEl = document.getElementById('ph-progress-label');
+  if (labelEl) labelEl.textContent = `${answered} / ${total} answered`;
   showToast(correct ? '✅ Correct!' : `❌ Incorrect — correct answer: ${q.answer}`);
 }
 

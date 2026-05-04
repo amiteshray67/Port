@@ -384,19 +384,8 @@ select{font-family:inherit;color:var(--text);background:var(--surface2);border:1
 <body>
 
 <!-- ── GATE ───────────────────────────────────────────── -->
-<div id="gate">
-  <div class="gate-card">
-    <div class="gate-logo">📚</div>
-    <div class="gate-title">CFA L2 Library</div>
-    <div class="gate-sub">Personal study library — Amitesh Ray</div>
-    <input class="gate-input" id="gate-input" type="password" placeholder="Enter access code" autocomplete="off">
-    <button class="gate-btn" id="gate-btn" onclick="checkGate()">Unlock Library</button>
-    <div class="gate-err" id="gate-err"></div>
-  </div>
-</div>
-
 <!-- ── APP ────────────────────────────────────────────── -->
-<div id="app" class="hidden">
+<div id="app">
 
 <!-- ── LIBRARY VIEW ────────────────────────────────────── -->
 <div id="library-view">
@@ -418,15 +407,27 @@ select{font-family:inherit;color:var(--text);background:var(--surface2);border:1
   </div>
   <div class="lib-body" id="lib-body">
     <div class="lib-section">
-      <div class="lib-section-title">CFA Institute Curriculum 2025</div>
+      <div class="lib-section-title">📘 CFA Institute Curriculum 2025</div>
       <div class="lib-grid" id="grid-institute"></div>
     </div>
     <div class="lib-section">
-      <div class="lib-section-title">Practice &amp; Reference</div>
-      <div class="lib-grid" id="grid-reference"></div>
+      <div class="lib-section-title">📚 Kaplan Schweser QBank 2025 — Topic-wise Q+A</div>
+      <div class="lib-grid" id="grid-kaplan"></div>
     </div>
     <div class="lib-section">
-      <div class="lib-section-title">Personal Notes (Handwritten)</div>
+      <div class="lib-section-title">📖 UW Finance QBank 2025</div>
+      <div class="lib-grid" id="grid-uw"></div>
+    </div>
+    <div class="lib-section">
+      <div class="lib-section-title">🎯 Mock Exams</div>
+      <div class="lib-grid" id="grid-mocks"></div>
+    </div>
+    <div class="lib-section">
+      <div class="lib-section-title">📐 Formula &amp; Summary Sheets</div>
+      <div class="lib-grid" id="grid-formula"></div>
+    </div>
+    <div class="lib-section">
+      <div class="lib-section-title">✏️ Personal Notes (Handwritten)</div>
       <div class="lib-grid" id="grid-notes"></div>
     </div>
   </div>
@@ -615,38 +616,8 @@ select{font-family:inherit;color:var(--text);background:var(--surface2);border:1
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// ─────────────────────────────────────────────────────────
-//  GATE
-// ─────────────────────────────────────────────────────────
-// SHA-256 of 'cfa2026' — used as simple personal access gate
-const GATE_HASH = 'a8db07652c9f4d15e2f6b3c8d1e9f4a7b6c2d5e8f1a3b7c9d2e6f4a8b5c1d3e7';
-// Because we can't precompute SHA-256 at build time without node, we use a simpler check:
-const GATE_SECRET = atob('Y2ZhMjAyNg=='); // 'cfa2026'
-
-function checkGate() {
-  const val = document.getElementById('gate-input').value.trim();
-  if (val === GATE_SECRET) {
-    localStorage.setItem('cfa-auth', '1');
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('app').classList.remove('hidden');
-    initApp();
-  } else {
-    document.getElementById('gate-err').textContent = 'Incorrect code. Try again.';
-    document.getElementById('gate-input').value = '';
-    document.getElementById('gate-input').focus();
-  }
-}
-
-document.getElementById('gate-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') checkGate();
-});
-
-// Auto-unlock if previously authenticated
-if (localStorage.getItem('cfa-auth') === '1') {
-  document.getElementById('gate').style.display = 'none';
-  document.getElementById('app').classList.remove('hidden');
-  initApp();
-}
+// Library is open access — no password required
+// Auto-initialise on load
 
 // ─────────────────────────────────────────────────────────
 //  STATE
@@ -774,12 +745,18 @@ async function loadLibrary() {
 }
 
 function renderLibrary() {
-  const institute = LIBRARY.books.filter(b => b.series && b.series.includes('CFA Institute'));
-  const reference = LIBRARY.books.filter(b => !b.series?.includes('CFA Institute') && !b.series?.includes('Personal'));
+  const institute = LIBRARY.books.filter(b => b.series?.includes('CFA Institute'));
+  const kaplan    = LIBRARY.books.filter(b => b.series?.includes('Kaplan'));
+  const uw        = LIBRARY.books.filter(b => b.series?.includes('UW'));
+  const mocks     = LIBRARY.books.filter(b => !b.series?.includes('Kaplan') && !b.series?.includes('UW') && !b.series?.includes('CFA Institute') && !b.series?.includes('Personal') && !b.series?.includes('Noesis') && !b.series?.includes('Reference') && (b.tags?.includes('mock') || b.series?.includes('CFA Program')));
+  const formula   = LIBRARY.books.filter(b => (b.series?.includes('Noesis') || b.series?.includes('Reference') || b.series?.includes('Supplementary')) && !b.tags?.includes('mock') && !b.tags?.includes('qbank'));
   const notes     = LIBRARY.books.filter(b => b.series?.includes('Personal'));
 
   renderGrid('grid-institute', institute);
-  renderGrid('grid-reference', reference);
+  renderGrid('grid-kaplan', kaplan);
+  renderGrid('grid-uw', uw);
+  renderGrid('grid-mocks', mocks);
+  renderGrid('grid-formula', formula);
   renderGrid('grid-notes', notes);
   updateLibStats();
 }
@@ -890,50 +867,47 @@ async function openBook(book) {
     showLoading(false);
     const localBase = LIBRARY.pdfs_base_local || '';
     const files = book.localFiles || [];
-    const container = document.getElementById('pdf-canvas-container') || document.getElementById('reader-view');
 
-    // Replace PDF canvas area with a local-file card
-    let existing = document.getElementById('local-file-panel');
-    if (existing) existing.remove();
+    // Hide PDF reader elements, show local panel
+    document.getElementById('reader-toolbar').style.display = 'none';
+    document.getElementById('reader-controls').style.display = 'none';
+    document.getElementById('pdf-viewport').style.display = 'none';
 
-    const panel = document.createElement('div');
-    panel.id = 'local-file-panel';
-    panel.style.cssText = `padding:32px;max-width:720px;margin:0 auto;`;
+    // Show or create local-file overlay in reader-main
+    let panel = document.getElementById('local-file-panel');
+    if (!panel) {
+      panel = document.createElement('div');
+      panel.id = 'local-file-panel';
+      document.getElementById('reader-main').appendChild(panel);
+    }
+    panel.style.cssText = 'flex:1;overflow-y:auto;padding:32px;display:block;';
     panel.innerHTML = `
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:28px;">
-        <div style="font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:6px;">${book.icon} ${book.title}</div>
-        <div style="color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:20px;">${book.series} · Local File${files.length > 1 ? 's' : ''}</div>
-        <div style="color:rgba(255,255,255,0.7);margin-bottom:24px;font-size:0.95rem;">${book.description}</div>
+      <div style="max-width:680px;margin:0 auto;">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:4px;">${book.icon} ${book.title}</div>
+        <div style="color:var(--dim);font-size:0.82rem;margin-bottom:18px;">${book.series} · ${files.length} file${files.length !== 1 ? 's' : ''}</div>
+        <div style="color:var(--muted);margin-bottom:24px;font-size:0.9rem;line-height:1.6;">${book.description}</div>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          ${files.length === 0 ? '<p style="color:rgba(255,255,255,0.4);font-style:italic;">No files linked yet.</p>' :
-            files.map(f => `
-              <a href="${localBase}${encodeURIComponent(f.path).replace(/%2F/g,'/')}"
-                 target="_blank"
-                 style="display:flex;align-items:center;gap:12px;padding:14px 18px;
-                        background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
-                        border-radius:10px;text-decoration:none;color:#fff;
-                        transition:background 0.2s;"
-                 onmouseover="this.style.background='rgba(255,255,255,0.14)'"
-                 onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-                <span style="font-size:1.3rem;">📄</span>
-                <span style="flex:1;font-size:0.9rem;">${f.label}</span>
-                <span style="color:rgba(255,255,255,0.4);font-size:0.75rem;">Open ↗</span>
-              </a>`).join('')}
+          ${files.length === 0
+            ? '<p style="color:var(--dim);font-style:italic;text-align:center;padding:20px;">No files linked yet.</p>'
+            : files.map(f => {
+                const encodedPath = f.path.split('/').map(p => encodeURIComponent(p)).join('/');
+                return `<a href="${localBase}${encodedPath}" target="_blank"
+                  style="display:flex;align-items:center;gap:12px;padding:14px 18px;
+                         background:var(--surface);border:1px solid var(--border);
+                         border-radius:10px;text-decoration:none;color:var(--text);
+                         transition:border-color 0.2s,background 0.2s;"
+                  onmouseover="this.style.borderColor='var(--blue)';this.style.background='var(--surface2)'"
+                  onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+                  <span style="font-size:1.4rem;">📄</span>
+                  <span style="flex:1;font-size:0.9rem;font-weight:500;">${f.label}</span>
+                  <span style="color:var(--blue);font-size:0.78rem;font-weight:600;">Open ↗</span>
+                </a>`;
+              }).join('')}
         </div>
-        <div style="margin-top:20px;padding:12px 16px;background:rgba(255,200,0,0.08);border:1px solid rgba(255,200,0,0.2);border-radius:8px;color:rgba(255,200,0,0.8);font-size:0.8rem;">
-          💡 These files are stored locally on your computer. Click any file to open it in the Cowork viewer.
+        <div style="margin-top:24px;padding:12px 16px;background:rgba(255,200,0,0.07);border:1px solid rgba(255,200,0,0.2);border-radius:8px;color:#f59e0b;font-size:0.8rem;">
+          💡 These files live on your computer. Click any file to open it directly.
         </div>
       </div>`;
-
-    // Insert panel into reader area, hiding the PDF controls
-    const pdfArea = document.getElementById('pdf-area') || document.querySelector('.reader-content') || document.getElementById('reader-view');
-    const toolbar = document.getElementById('pdf-toolbar') || document.querySelector('.pdf-controls');
-    if (toolbar) toolbar.style.display = 'none';
-    // Prepend panel before any canvas
-    const canvas = document.getElementById('pdf-canvas');
-    if (canvas) canvas.parentNode.insertBefore(panel, canvas);
-    else pdfArea.appendChild(panel);
-
     renderSidebar();
     return;
   }
@@ -942,11 +916,12 @@ async function openBook(book) {
   const base = LIBRARY.pdfs_base || './pdfs/';
   const url  = base + book.file;
 
-  // Restore PDF toolbar if coming from a local-file book
+  // Restore PDF reader elements if coming from a local-file book
   const prevPanel = document.getElementById('local-file-panel');
   if (prevPanel) prevPanel.remove();
-  const toolbar = document.getElementById('pdf-toolbar') || document.querySelector('.pdf-controls');
-  if (toolbar) toolbar.style.display = '';
+  document.getElementById('reader-toolbar').style.display = '';
+  document.getElementById('reader-controls').style.display = '';
+  document.getElementById('pdf-viewport').style.display = '';
 
   try {
     const loadingTask = pdfjsLib.getDocument({url, verbosity: 0});
@@ -1753,9 +1728,11 @@ async function initApp() {
   await openDB();
   await loadLibrary();
   renderLibrary();
-  // Preload flashcards count
   loadFlashcardsForLibrary();
 }
+
+// Auto-launch on page load (no password gate)
+initApp();
 
 async function loadFlashcardsForLibrary() {
   const allHs = await dbGetAll('highlights');
