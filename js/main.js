@@ -140,41 +140,38 @@ const experienceData = {
         role: "Finance Analyst",
         companyDate: "Arcesium | May 2025 - Present",
         details: [
-            "<strong>Managed Middle Office operations</strong> for 4 Hedge Fund clients during US Night Shift, serving as the primary contact for live market requests and high-priority trade amendments.",
-            "<strong>Handled end-to-end trade lifecycles</strong> via the Arcesium Opterra platform for complex products (Swaps, Swaptions, FX Options, and Fixed Income), guaranteeing accurate settlement.",
-            "Facilitated <strong>Reference Data creation</strong> and security master setups for new fund onboarding processes.",
-            "Resolved trade kickouts natively by investigating data errors to ensure <strong>100% adherence</strong> to Client SLAs.",
-            "<strong>Automated daily tasks</strong> natively using Python, Excel Macros, and Generative AI, successfully increasing departmental efficiency by up to <strong>20%</strong>."
+            "<strong>Managed Middle Office operations</strong> for 4 Hedge Fund clients on US Night Shift in a follow-the-sun support model, serving as the primary contact for live market requests, trade amendments and query remediation.",
+            "<strong>Executed end-to-end trade lifecycle</strong> for Swaps, Swaptions, FX Options and Fixed Income (Credit Facilities), ensuring accurate booking, settlement and risk management for complex Rates products.",
+            "<strong>Built 6 AI agents</strong> automating BAU and security creation, saving up to <strong>70% billable hours</strong>; own the AI-based ticket management implementation across allotted clients (ongoing 3-month project).",
+            "<strong>Automated FX rate computation and catastrophe bond creation</strong> using Python, VBA and Claude Enterprise, reducing manual operational effort by <strong>20%</strong>.",
+            "Resolved trade kickouts and booking model discrepancies, ensuring <strong>100% adherence</strong> to Client SLAs.",
+            "Facilitated <strong>Reference Data</strong> and security master setup for fund onboarding with Technology and Ops teams.",
+            "<strong>Trained and mentored</strong> a junior analyst on night-shift operations, covering trade processing and escalation protocols."
         ]
     },
     bloomberg: {
         role: "Bloomberg Champion",
-        companyDate: "Bloomberg | Mar 2024 - Mar 2025",
+        companyDate: "T.A. Pai Management Institute | 2024",
         details: [
-            "<strong>1st Runner-Up</strong> in the highly competitive TAPMI Bloomberg Olympiad 2025.",
-            "<strong>Represented TAPMI</strong> securely at the CFA Research Challenge.",
-            "Acquired <strong>40+ hours of extensive training</strong> from Bloomberg professionals on Financial Statement Analysis and predictive Valuation models.",
-            "Assisted academic professors directly in high-level research using financial data arrays sourced from the Bloomberg terminal.",
-            "<strong>Conducted terminal training</strong> for 700+ university students and successfully managed the completion of BMC & ESG certifications for 500+ students, significantly increasing campus-wide terminal usage."
+            "One of <strong>3 Bloomberg Champions</strong> out of 500+ students under the Bloomberg Championship Program.",
+            "Provided comprehensive <strong>training to 500+ students</strong> on the use of Bloomberg Terminals for financial analysis.",
+            "Assisted professors in using the Bloomberg Terminal to draw financial data and insights for academic research."
         ]
     },
     samnidhy: {
-        role: "Sr. Equity Research Analyst",
-        companyDate: "Samnidhy | Mar 2024 - Mar 2025",
+        role: "Equity Analyst",
+        companyDate: "SAMNIDHY | 2023 - 2024",
         details: [
-            "<strong>Spearheaded equity research</strong> initiatives and directed overarching strategy formulations.",
-            "Conducted highly <strong>in-depth fundamental analyses</strong> of companies spanning multiple diverse financial sectors.",
-            "Consistently provided detailed and actionable investment recommendations and extensive research reporting.",
-            "Played a pivotal role in mentoring junior analysts on market trends and risk assessment formulas."
+            "Managed a <strong>48-lakh AUM portfolio</strong> with 56 analysts, achieving <strong>24% average return</strong> and 0.79 Beta.",
+            "Analysed the Indian FMCG sector and authored equity research reports, generating a <strong>16% return in 7 months</strong>."
         ]
     },
     bluecopper: {
         role: "Market Research Intern",
         companyDate: "Blue Copper Technologies | Apr 2024 - Jun 2024",
         details: [
-            "Executed deep secondary market research to identify core customer pain points, actively <strong>refining client acquisition strategies</strong>.",
-            "Designed a highly complex ZAPIER workflow for comprehensive content automation, radically reducing manual work bottlenecks by <strong>up to 70%</strong> and overall operating cost by <strong>83%</strong>.",
-            "Conducted thorough competitive analysis on <strong>7+ major payment rails</strong>, strategically selecting the absolute optimal option for business revenue operations."
+            "Conducted <strong>market research</strong> to identify pain points and refine client acquisition strategies.",
+            "Designed a <strong>ZAPIER automation</strong> reducing manual work by <strong>70%</strong>."
         ]
     }
 };
