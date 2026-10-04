@@ -154,8 +154,12 @@ const experienceData = {
         companyDate: "T.A. Pai Management Institute | 2024",
         details: [
             "One of <strong>3 Bloomberg Champions</strong> out of 500+ students under the Bloomberg Championship Program.",
+            "<strong>1st Runner-Up</strong> in the highly competitive TAPMI Bloomberg Olympiad 2025.",
+            "<strong>Represented TAPMI</strong> securely at the CFA Research Challenge.",
+            "Acquired <strong>40+ hours of extensive training</strong> from Bloomberg professionals on Financial Statement Analysis and predictive Valuation models.",
             "Provided comprehensive <strong>training to 500+ students</strong> on the use of Bloomberg Terminals for financial analysis.",
-            "Assisted professors in using the Bloomberg Terminal to draw financial data and insights for academic research."
+            "Assisted professors in using the Bloomberg Terminal to draw financial data and insights for academic research.",
+            "<strong>Conducted terminal training</strong> for 700+ university students and successfully managed the completion of BMC & ESG certifications for 500+ students, significantly increasing campus-wide terminal usage."
         ]
     },
     samnidhy: {
@@ -163,15 +167,20 @@ const experienceData = {
         companyDate: "SAMNIDHY | 2023 - 2024",
         details: [
             "Managed a <strong>48-lakh AUM portfolio</strong> with 56 analysts, achieving <strong>24% average return</strong> and 0.79 Beta.",
-            "Analysed the Indian FMCG sector and authored equity research reports, generating a <strong>16% return in 7 months</strong>."
+            "Analysed the Indian FMCG sector and authored equity research reports, generating a <strong>16% return in 7 months</strong>.",
+            "<strong>Spearheaded equity research</strong> initiatives and directed overarching strategy formulations.",
+            "Conducted highly <strong>in-depth fundamental analyses</strong> of companies spanning multiple diverse financial sectors.",
+            "Consistently provided detailed and actionable investment recommendations and extensive research reporting.",
+            "Played a pivotal role in mentoring junior analysts on market trends and risk assessment formulas."
         ]
     },
     bluecopper: {
         role: "Market Research Intern",
         companyDate: "Blue Copper Technologies | Apr 2024 - Jun 2024",
         details: [
-            "Conducted <strong>market research</strong> to identify pain points and refine client acquisition strategies.",
-            "Designed a <strong>ZAPIER automation</strong> reducing manual work by <strong>70%</strong>."
+            "Executed deep secondary market research to identify core customer pain points, actively <strong>refining client acquisition strategies</strong>.",
+            "Designed a <strong>ZAPIER automation</strong> workflow for content automation, reducing manual work by <strong>up to 70%</strong> and overall operating cost by <strong>83%</strong>.",
+            "Conducted thorough competitive analysis on <strong>7+ major payment rails</strong>, strategically selecting the optimal option for business revenue operations."
         ]
     }
 };
