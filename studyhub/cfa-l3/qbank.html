@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CFA L3 Question Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/frame.css">
+<style>.opt{display:block;width:100%;text-align:left;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.6rem .9rem;margin:.4rem 0;font:inherit;cursor:pointer}.opt:hover{border-color:var(--accent2)}.opt.right{border-color:var(--good);background:rgba(52,211,153,.12)}.opt.wrong{border-color:var(--bad);background:rgba(248,113,113,.12)}.timer{font-size:1.3rem;font-weight:700;color:var(--accent2);font-variant-numeric:tabular-nums}.sol{border-left:3px solid var(--accent2);background:var(--surface2);padding:.5rem .8rem;border-radius:6px;margin-top:.6rem}</style></head>
+<body><h1>Question bank</h1><p class="mut" id="sub"></p>
+<div class="panel" id="setup"><div class="row"><label class="f"><span>Topic</span><select id="t"></select></label><label class="f"><span>Difficulty</span><select id="d"><option value="0">Any</option><option value="1">1 Easy</option><option value="2">2 Medium</option><option value="3">3 Hard</option></select></label><label class="f"><span>Only</span><select id="o"><option value="all">All questions</option><option value="new">Unseen</option><option value="wrong">Previously missed</option></select></label>
+<button class="btn" onclick="start(false)">Practice</button><button class="btn" onclick="start(true)">Timed mock (1.5 min each)</button></div>
+<p class="mut">Level III item sets use three answer options. Wrong answers are added to your Error Log automatically.</p></div>
+<div class="panel" id="run" hidden><div class="row" style="justify-content:space-between"><b id="prog"></b><span class="timer" id="tm"></span></div><div id="q"></div><div id="fb"></div><div class="row" style="margin-top:.6rem"><button class="btn" id="nx" onclick="next()" hidden>Next</button><button class="mini" onclick="finish()">End session</button></div></div>
+<div class="panel" id="res" hidden></div>
+<script src="assets/l3_data.js"></script><script src="assets/l3_qbank.js"></script>
+<script>
+try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}
+const G=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=id=>document.getElementById(id);
+let Q=[],i=0,ans=[],timed=false,tleft=0,tt=null,st=G('cfa3_qb',{});
+$('t').innerHTML='<option value="all">All topics</option>'+TOPICS3.map(t=>'<option value="'+t.id+'">'+esc(t.label)+'</option>').join('');
+const seen=Object.keys(st).length;$('sub').textContent=QB3.length+' starter questions · '+seen+' attempted. This is a starter set; add more to assets/l3_qbank.js in the same format, and use the official CFA Institute mocks for volume.';
+function start(tm){timed=tm;const t=$('t').value,d=+$('d').value,o=$('o').value;
+  Q=QB3.filter(q=>(t==='all'||q.t===t)&&(!d||q.d===d)&&(o==='all'||(o==='new'&&!st[q.id])||(o==='wrong'&&st[q.id]&&st[q.id].w>0)));
+  if(!Q.length){$('sub').textContent='No questions match those filters.';return}
+  Q.sort(()=>Math.random()-.5);i=0;ans=[];$('setup').hidden=true;$('res').hidden=true;$('run').hidden=false;
+  clearInterval(tt);$('tm').textContent='';if(tm){tleft=Math.round(Q.length*90);tick();tt=setInterval(tick,1000)}show()}
+function tick(){if(tleft<=0){finish();return}const m=Math.floor(tleft/60),s=tleft%60;$('tm').textContent=m+':'+String(s).padStart(2,'0');tleft--}
+function show(){const q=Q[i];$('prog').textContent='Question '+(i+1)+' of '+Q.length;$('fb').innerHTML='';$('nx').hidden=true;
+  $('q').innerHTML='<p>'+esc(q.q)+'</p>'+Object.keys(q.o).map(k=>'<button class="opt" onclick="pick(\''+k+'\')"><b>'+k+'.</b> '+esc(q.o[k])+'</button>').join('')}
+function pick(k){const q=Q[i];if(ans[i])return;ans[i]=k;const ok=k===q.a;
+  document.querySelectorAll('.opt').forEach(b=>{const l=b.querySelector('b').textContent[0];if(l===q.a)b.classList.add('right');else if(l===k)b.classList.add('wrong')});
+  const r=st[q.id]||{n:0,w:0};r.n++;if(!ok)r.w++;st[q.id]=r;S('cfa3_qb',st);
+  if(!ok){const e=G('cfa3_errors',[]),d=new Date(),iso=x=>new Date(x).toISOString().slice(0,10);e.push({id:Date.now()+Math.random(),date:iso(d),t:q.t,lm:q.lm,desc:'Q-bank '+q.id+': '+q.q.slice(0,80),cause:'Chose '+k+', answer '+q.a,box:0,due:iso(Date.now()+864e5),mastered:false});S('cfa3_errors',e)}
+  $('fb').innerHTML='<div class="sol"><b>'+(ok?'Correct. ':'Not quite. ')+'</b>'+esc(q.sol)+'</div>';$('nx').hidden=false;$('nx').textContent=i<Q.length-1?'Next':'Finish'}
+function next(){if(i<Q.length-1){i++;show()}else finish()}
+function finish(){clearInterval(tt);$('run').hidden=true;$('setup').hidden=false;$('res').hidden=false;
+  const done=ans.filter(Boolean).length,ok=Q.filter((q,j)=>ans[j]===q.a).length,by={};
+  Q.forEach((q,j)=>{if(!ans[j])return;by[q.t]=by[q.t]||[0,0];by[q.t][1]++;if(ans[j]===q.a)by[q.t][0]++});
+  $('res').innerHTML='<h2>Result: '+ok+' of '+done+' answered ('+(done?Math.round(ok/done*100):0)+'%)</h2>'+Object.keys(by).map(k=>'<div class="mut">'+esc(TOPICS3.find(t=>t.id===k).label)+': '+by[k][0]+'/'+by[k][1]+'</div>').join('')+'<p class="mut">Misses are in your Error Log, due tomorrow.</p>'}
+</script></body></html>

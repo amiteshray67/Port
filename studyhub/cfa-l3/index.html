@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CFA Level III Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"]{--bg:#0f172a;--surface:#1a2540;--surface2:#232f52;--border:#2e3b63;--text:#e8ecf8;--mut:#94a3c4;--accent:#6c5ce7;--accent2:#a29bfe;--good:#34d399;--warn:#f2b84b;--bad:#f87171}
+:root[data-theme="light"]{--bg:#f4f6fc;--surface:#fff;--surface2:#eceffa;--border:#d6dcf0;--text:#1c2340;--mut:#5b668c;--accent:#5b4bd6;--accent2:#6c5ce7;--good:#059669;--warn:#b7791f;--bad:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.55}
+a{color:var(--accent2)} h1,h2,h3,h4{margin:0 0 .5rem;line-height:1.25;text-wrap:balance} h2{font-size:1.15rem} h4{font-size:.85rem;color:var(--accent2);text-transform:uppercase;letter-spacing:.06em}
+.mut{color:var(--mut);font-size:.85em} .note{color:var(--mut);padding:.6rem 0} .warn{color:var(--warn)}
+.shell{display:flex;min-height:100vh}
+.sb{width:230px;flex:none;background:var(--surface);border-right:1px solid var(--border);padding:1rem .6rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sb .brand{padding:.2rem .6rem 1rem;font-weight:700;font-size:1rem}.sb .brand small{display:block;color:var(--mut);font-weight:400;font-size:.72rem}
+.sb-sec{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--mut);padding:.9rem .6rem .3rem}
+.sb-item{display:block;width:100%;text-align:left;background:none;border:0;color:var(--text);font:inherit;padding:.5rem .7rem;border-radius:8px;cursor:pointer}
+.sb-item:hover{background:var(--surface2)} .sb-item.active{background:var(--accent);color:#fff}
+.main{flex:1;min-width:0;padding:1.2rem max(16px,env(safe-area-inset-right,0px)) 3rem max(16px,env(safe-area-inset-left,0px))}
+.top{display:flex;gap:.6rem;align-items:center;margin-bottom:1rem}.top .sp{flex:1}
+.menu-btn{display:none}
+.theme-toggle,.menu-btn,.btn,.mini{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:.4rem .8rem;font:inherit;cursor:pointer}
+.btn{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}.mini{padding:.15rem .55rem;font-size:.78rem}.mini.ok{border-color:var(--good);color:var(--good)}.mini.no{border-color:var(--bad);color:var(--bad)}
+.view{display:none;max-width:1100px}.view.active{display:block}
+.view>h1{font-size:1.4rem}.lede{color:var(--mut);margin:-.2rem 0 1rem}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1.2rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.8rem 1rem}.stat-lbl{font-size:.62rem;letter-spacing:.1em;color:var(--mut)}.stat-val{font-size:1.6rem;font-weight:700;color:var(--accent2)}.stat-sub{font-size:.75rem;color:var(--mut)}
+.section-hdr{display:flex;justify-content:space-between;align-items:baseline;margin:1rem 0 .5rem}.link{cursor:pointer;color:var(--accent2)}
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1rem}
+.topic-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.8rem;cursor:pointer}.topic-card:hover{border-color:var(--accent2)}
+.tc-icon{font-size:1.4rem}.tc-name{font-weight:600}.tc-weight{color:var(--accent2);font-weight:700}.tc-status{font-size:.72rem;color:var(--mut)}
+.meter{height:6px;background:var(--surface2);border-radius:9px;margin:.4rem 0;overflow:hidden}.meter i{display:block;height:100%;background:var(--c);border-radius:9px}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem;align-items:center}.chip{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:99px;padding:.25rem .8rem;font:inherit;font-size:.82rem;cursor:pointer}.chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}.chip2{border:1px solid;border-radius:99px;padding:.2rem .7rem;margin-right:.4rem;font-size:.82rem}
+.sep{width:1px;height:20px;background:var(--border);margin:0 .3rem}
+.tasks{display:flex;flex-direction:column;gap:.35rem;min-width:0}.t{display:flex;gap:.6rem;align-items:center;border-left:4px solid var(--c,var(--accent));background:var(--surface2);padding:.4rem .7rem;border-radius:6px}.t .x{flex:1;min-width:0}.t em{font-style:normal;color:var(--mut);font-size:.8rem;white-space:nowrap}.t.buf{--c:var(--mut)}
+input,select,textarea{font:inherit;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:.35rem .6rem;max-width:100%}textarea{width:100%;min-height:70px;resize:vertical}
+label.f{display:flex;flex-direction:column;gap:.15rem;font-size:.78rem;color:var(--mut)}label.f input,label.f select{color:var(--text)}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.7rem}
+.pill{display:inline-block;border-radius:99px;padding:.15rem .7rem;font-size:.78rem;background:var(--surface2);border:1px solid var(--border);margin-right:.3rem}.pill.good{color:var(--good);border-color:var(--good)}.pill.warn{color:var(--warn);border-color:var(--warn)}.pill.bad{color:var(--bad);border-color:var(--bad)}
+.big{font-size:1.3rem;font-weight:700;margin:.5rem 0 .2rem}.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;color:var(--mut);margin:.5rem 0}.legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:.3rem}.hrbar{height:8px;background:var(--surface2);border-radius:9px;overflow:hidden}.hrbar i{display:block;height:100%;background:var(--accent)}
+.tl{display:flex;height:28px;border-radius:8px;overflow:hidden;margin:.6rem 0;font-size:.7rem;color:#0f172a;font-weight:600}.tl>div{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem;margin-bottom:1rem}.phase{border-top:3px solid var(--c);background:var(--surface);border-radius:8px;padding:.6rem .8rem}.phase h3{font-size:.9rem;margin:0}.phase .d{font-size:.72rem;color:var(--mut)}.phase p{margin:.3rem 0 0;font-size:.8rem}
+.wk{margin:1rem 0 .3rem;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.day{display:grid;grid-template-columns:96px 40px 1fr;gap:.6rem;padding:.5rem .6rem;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:.4rem}.day.we{background:var(--surface2)}.day.today{border-color:var(--accent2);box-shadow:0 0 0 2px var(--accent)}.day .dt{font-weight:600;font-size:.85rem}.day .dt small{display:block;color:var(--mut);font-weight:400}.day .hr{color:var(--accent2);font-weight:600}
+.vol{border-top:3px solid var(--c);background:var(--surface);border-radius:10px;margin-bottom:1rem;padding:.8rem 1rem}.vh{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.4rem}.vh h3{margin:0}.vh .w{color:var(--mut);font-size:.8rem}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{padding:.4rem .6rem;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}th{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}.n{text-align:right;white-space:nowrap}.chk{width:30px}
+table.grid input{width:80px}table.kv td:first-child{color:var(--mut)}tr.tot td{font-weight:700}
+.card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--c);border-radius:10px;margin-bottom:.5rem}.card-h{display:flex;gap:.6rem;align-items:center;width:100%;background:none;border:0;color:var(--text);font:inherit;padding:.6rem .8rem;cursor:pointer;text-align:left}.cn{flex:1;font-weight:500}.cb{font-size:.72rem;color:var(--mut)}.card-b{padding:0 1rem 1rem}.card-b img{max-width:100%}
+pre.fx{background:var(--surface2);border-radius:8px;padding:.5rem .8rem;white-space:pre-wrap;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.82rem;margin:.4rem 0}
+.tip{border-left:3px solid var(--warn);background:var(--surface2);padding:.4rem .8rem;border-radius:6px;font-size:.85rem;margin-top:.5rem}
+.fm{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--c);border-radius:10px;padding:.6rem .9rem;margin-bottom:.5rem}.fn{font-weight:600}
+.crow{display:flex;gap:.7rem;align-items:center;width:100%;text-align:left;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;margin-bottom:.4rem;font:inherit;cursor:pointer}.crow:hover{border-color:var(--accent2)}.dot{width:10px;height:10px;border-radius:50%;flex:none}.cw{font-weight:600;min-width:72px}.cq{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cm{color:var(--mut);font-size:.75rem;white-space:nowrap}
+.timer{font-size:1.6rem;font-weight:700;color:var(--accent2);font-variant-numeric:tabular-nums}.timer.over{color:var(--bad)}
+.verdict{font-weight:700;margin-bottom:.4rem}.verdict.ok{color:var(--good)}.verdict.no{color:var(--bad)}
+.er{border-left:4px solid var(--c);background:var(--surface);border-radius:8px;padding:.6rem .8rem;margin-bottom:.4rem}.row{display:flex;gap:.4rem;margin-top:.3rem;flex-wrap:wrap}
+.bar{display:grid;grid-template-columns:90px 1fr 50px;gap:.5rem;align-items:center;margin:.3rem 0}.bar div{height:10px;background:var(--surface2);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%}.bar em{font-style:normal;color:var(--mut);font-size:.8rem}
+.chart{width:100%;max-width:560px;background:var(--surface);border-radius:10px}.chart .gl{stroke:var(--border)}.chart .ax{fill:var(--mut);font-size:10px}.chart .zero{stroke:var(--mut);stroke-dasharray:3 3}
+.legend2 b{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 .3rem 0 .8rem}.labs{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:1rem}#lab-in{display:flex;flex-direction:column;gap:.6rem}
+iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);border-radius:12px;background:var(--bg)}
+.dlgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem}.dlgrid .panel{display:flex;flex-direction:column;gap:.5rem}
+.meta{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.5rem}
+@media(max-width:820px){.sb{position:fixed;z-index:20;left:-250px;transition:left .2s;height:100vh}body.nav-open .sb{left:0}.menu-btn{display:inline-block}.labs{grid-template-columns:1fr}.day{grid-template-columns:70px 1fr}.day .hr{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="sb" aria-label="Sections">
+  <div class="brand">📘 CFA Level III<small>Portfolio Management · Aug 2027</small></div>
+  <div class="sb-sec">Plan</div>
+  <button class="sb-item" data-view="dashboard" onclick="switchView('dashboard')">🏠 Dashboard</button>
+  <button class="sb-item" data-view="plan" onclick="switchView('plan')">📅 Daily plan</button>
+  <button class="sb-item" data-view="syllabus" onclick="switchView('syllabus')">📚 Syllabus by book</button>
+  <button class="sb-item" data-view="tracker" onclick="switchView('tracker')">✅ Progress tracker</button>
+  <div class="sb-sec">Learn</div>
+  <button class="sb-item" data-view="notes" onclick="switchView('notes')">🗂️ Concept notes</button>
+  <button class="sb-item" data-view="formulas" onclick="switchView('formulas')">∑ Formula sheet</button>
+  <button class="sb-item" data-view="explainers" onclick="switchView('explainers')">💡 Explainers</button>
+  <button class="sb-item" data-view="labs" onclick="switchView('labs')">🧪 Calculator labs</button>
+  <button class="sb-item" data-view="glossary" onclick="switchView('glossary')">🔤 Flashcards</button>
+  <div class="sb-sec">Practise</div>
+  <button class="sb-item" data-view="qbank" onclick="switchView('qbank')">❓ Question bank</button>
+  <button class="sb-item" data-view="cr" onclick="switchView('cr')">✍️ Constructed response</button>
+  <button class="sb-item" data-view="ips" onclick="switchView('ips')">🧾 IPS studio</button>
+  <button class="sb-item" data-view="ethics" onclick="switchView('ethics')">⚖️ Ethics drill</button>
+  <div class="sb-sec">Review</div>
+  <button class="sb-item" data-view="errors" onclick="switchView('errors')">🔁 Error log</button>
+  <button class="sb-item" data-view="sessions" onclick="switchView('sessions')">⏱️ Study sessions</button>
+  <button class="sb-item" data-view="downloads" onclick="switchView('downloads')">📥 Exports and backup</button>
+</nav>
+<main class="main">
+  <div class="top"><button class="menu-btn" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button><a href="../index.html" class="mut">← Study Hub</a><span class="sp"></span><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button></div>
+
+  <section class="view" id="v-dashboard"><h1>CFA Level III · Portfolio Management</h1><p class="lede">Exam 11 Aug 2027. Syllabus finished two months earlier, then revision and mocks.</p>
+    <div class="stats" id="db-stats"></div><div id="db-today"></div>
+    <div class="section-hdr"><h2>Topics</h2></div><div class="topics" id="db-topics"></div>
+    <div class="section-hdr"><h2>Weak spots</h2></div><div id="db-weak"></div>
+    <p class="mut" style="margin-top:1.5rem">† Asset Allocation and Ethics weights are not confirmed by CFA Institute for 2027. Treat them as planning estimates.</p></section>
+
+  <section class="view" id="v-plan"><h1>Daily plan</h1><p class="lede">Every module in order, packed into your available hours. Change anything and the plan recalculates.</p>
+    <div class="panel"><div class="ctrls">
+      <label class="f"><span>Start date</span><input type="date" id="pl-start" onchange="planInput()"></label>
+      <label class="f"><span>Weekday hours</span><input type="number" id="pl-wd" min="0" max="12" step="0.5" onchange="planInput()"></label>
+      <label class="f"><span>Saturday hours</span><input type="number" id="pl-sat" min="0" max="14" step="0.5" onchange="planInput()"></label>
+      <label class="f"><span>Sunday hours</span><input type="number" id="pl-sun" min="0" max="14" step="0.5" onchange="planInput()"></label>
+      <label class="f"><span>Depth <b id="pl-depthv"></b></span><input type="range" id="pl-depth" min="1" max="3" step="0.1" oninput="planInput()"></label>
+      <label class="f"><span>Syllabus done N months before exam</span><input type="number" id="pl-months" min="0" max="6" step="0.5" onchange="planInput()"></label>
+    </div><p class="mut">Depth multiplies the base hours of each module (1.0 is a quick read, 1.8 is a careful first pass with questions). Each module splits into Learn 60%, Practice 30%, Recap 10%.</p></div>
+    <div class="panel" id="pl-verdict"></div><div class="tl" id="pl-tl"></div><div class="phases" id="pl-phases"></div>
+    <div class="chips" id="pl-chips"></div><button class="mini" onclick="planToday()">Jump to today</button><div id="pl-list"></div></section>
+
+  <section class="view" id="v-syllabus"><h1>Syllabus by book</h1><p class="lede" id="sy-note"></p>
+    <div class="panel"><div class="section-hdr" style="margin:0"><b>Modules complete</b><b id="sy-pct"></b></div><div class="hrbar"><i id="sy-bar" style="width:0"></i></div></div><div id="sy-books"></div></section>
+
+  <section class="view" id="v-tracker"><iframe class="fr" id="fr-tracker" title="Progress tracker"></iframe></section>
+
+  <section class="view" id="v-notes"><h1>Concept notes</h1><p class="lede">Every concept as a short card: idea, formula, exam tip. <span id="ns-count"></span></p>
+    <div class="chips" id="ns-chips"></div><input id="ns-q" type="search" placeholder="Search concepts…" oninput="nsSearch_(this.value)" style="width:100%;max-width:420px;margin-bottom:.8rem"><div id="ns-cards"></div></section>
+
+  <section class="view" id="v-formulas"><h1>Formula sheet</h1><p class="lede" id="fm-count"></p><div class="chips" id="fm-chips"></div>
+    <input type="search" placeholder="Search formulas…" oninput="fmQ=this.value.toLowerCase();renderFormulas()" style="width:100%;max-width:420px;margin-bottom:.8rem"><div id="fm-list"></div></section>
+
+  <section class="view" id="v-explainers"><h1>Explainers</h1><p class="lede">Visual walk-throughs of the hardest ideas.</p><div id="exp-list"></div><h2 id="exp-title" style="margin-top:1rem"></h2><iframe id="exp-frame" class="fr" title="Explainer" sandbox="allow-scripts"></iframe></section>
+
+  <section class="view" id="v-labs"><h1>Calculator labs</h1><p class="lede" id="lab-note"></p><div class="chips" id="lab-tabs"></div><div class="labs"><div class="panel" id="lab-in"></div><div class="panel" id="lab-out" style="overflow-x:auto"></div></div></section>
+
+  <section class="view" id="v-glossary"><iframe class="fr" id="fr-glossary" title="Flashcards"></iframe></section>
+  <section class="view" id="v-qbank"><iframe class="fr" id="fr-qbank" title="Question bank"></iframe></section>
+
+  <section class="view" id="v-cr"><h1>Constructed-response trainer</h1><p class="lede">Roughly half the marks are written answers. Practise against the clock, compare to a model answer, and score yourself honestly. <span id="cr-sum"></span></p>
+    <div class="chips" id="cr-chips"></div>
+    <div class="panel" id="cr-work" hidden><div style="display:flex;justify-content:space-between;align-items:center"><div id="cr-q"></div><div class="timer" id="cr-time"></div></div>
+      <textarea id="cr-ans" style="min-height:150px" placeholder="Write your answer. Show the working and answer exactly what the command word asks."></textarea>
+      <button class="btn" onclick="crShow()" style="margin-top:.5rem">Show model answer</button>
+      <div id="cr-reveal" hidden style="margin-top:1rem"><h4>Model answer</h4><div id="cr-model"></div><label class="f" style="max-width:260px;margin-top:.6rem"><span id="cr-sl"></span><input type="number" id="cr-score"></label><button class="btn" onclick="crSave()" style="margin-top:.5rem">Save score</button><p class="mut">Scoring under 70% logs the drill to your error log.</p></div></div>
+    <div id="cr-list"></div>
+    <div class="section-hdr"><h2>Command words</h2></div><div class="panel tw"><table><thead><tr><th>Word</th><th>What it means</th><th>How to answer</th></tr></thead><tbody id="cr-words"></tbody></table></div>
+    <p class="mut">Check the current definitions in the CFA Institute candidate resources. The wording above is a study aid.</p></section>
+
+  <section class="view" id="v-ips"><h1>IPS studio</h1><p class="lede">Seven investor archetypes, each broken into the seven IPS components, with the clues examiners hide in a case and the mistakes candidates make. Add your own notes under each box.</p><div class="chips" id="ips-tabs"></div><div id="ips-body"></div></section>
+
+  <section class="view" id="v-ethics"><h1>Ethics drill</h1><p class="lede" id="eth-sum"></p>
+    <div class="panel"><div id="eth-case"></div><div class="row" id="eth-btns"><button class="btn" onclick="ethGuess('violation')">Violation</button><button class="btn" style="background:var(--good);border-color:var(--good)" onclick="ethGuess('compliant')">Compliant</button></div><div id="eth-fb" hidden></div></div>
+    <div class="section-hdr"><h2>Standards at a glance</h2></div><div class="panel tw"><table><tbody id="eth-std"></tbody></table></div></section>
+
+  <section class="view" id="v-errors"><h1>Error log</h1><p class="lede">Log every miss with its cause. Items come back after 1, 3, 7, 16 and 35 days. Get one right five times and it is mastered. <b id="er-sum"></b></p>
+    <div class="panel"><div class="ctrls"><label class="f"><span>Topic</span><select id="er-t"></select></label><label class="f"><span>LM no.</span><input id="er-lm" type="number" min="1" max="36"></label></div>
+      <label class="f" style="margin-top:.6rem"><span>What went wrong</span><input id="er-d" type="text"></label><label class="f" style="margin-top:.6rem"><span>Root cause (concept gap, careless, time, misread)</span><input id="er-c" type="text"></label><button class="btn" onclick="erAdd()" style="margin-top:.6rem">Add to log</button></div>
+    <div class="chips" id="er-chips"></div><div id="er-list"></div></section>
+
+  <section class="view" id="v-sessions"><h1>Study sessions</h1><div class="stats" id="ss-sum"></div>
+    <div class="panel"><div class="ctrls"><label class="f"><span>Date</span><input type="date" id="ss-d"></label><label class="f"><span>Topic</span><select id="ss-t"></select></label><label class="f"><span>Minutes</span><input type="number" id="ss-m" min="5" step="5"></label><label class="f"><span>Note</span><input id="ss-n" type="text"></label></div><button class="btn" onclick="ssAdd()" style="margin-top:.6rem">Log session</button></div>
+    <div class="panel"><h4>Time by topic</h4><div id="ss-bars"></div></div><div id="ss-list"></div></section>
+
+  <section class="view" id="v-downloads"><h1>Exports and backup</h1><p class="lede">Your progress lives in this browser. Back it up regularly.</p>
+    <div class="dlgrid">
+      <div class="panel"><h4>Backup</h4><button class="btn" onclick="exportBackup()">Download backup (.json)</button><label class="f"><span>Restore from backup</span><input type="file" accept=".json" onchange="importBackup(this)"></label><div id="dl-msg" class="mut"></div></div>
+      <div class="panel"><h4>Plan</h4><button class="btn" onclick="exportPlanIcs()">Calendar file (.ics)</button><button class="btn" onclick="exportPlanCsv()">Spreadsheet (.csv)</button><span class="mut">The calendar file adds one all-day event per study day.</span></div>
+      <div class="panel"><h4>Flashcards</h4><button class="btn" onclick="exportFlashcards()">Export for Anki (.csv)</button><span class="mut">Two columns: term and definition.</span></div>
+    </div></section>
+</main>
+</div>
+<script src="assets/l3_data.js"></script>
+<script src="assets/l3_tools.js"></script>
+<script src="assets/l3_glossary.js"></script>
+<script src="assets/l3_qbank.js"></script>
+<script src="assets/seed_explainers.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/views.js"></script>
+<script src="assets/labs.js"></script>
+<script>
+loadTheme();
+const first = (location.hash || '').slice(1);
+switchView(VIEWS[first] ? first : 'dashboard');
+window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (VIEWS[h]) switchView(h); });
+</script>
+</body>
+</html>
