@@ -20,7 +20,7 @@ description: >-
 | Mac repo path | `/Users/amiteshray/Documents/Claude/Projects/CFA PREP/_port_repo` |
 | Sandbox repo path | `/sessions/determined-nifty-allen/mnt/CFA PREP/_port_repo` |
 
-**FTP:** server `217.21.90.95` · user `u944949387` · pass `Sphs@05164426082001` · webroot `/domains/amiteshray.com/public_html/`
+**FTP:** server `217.21.90.95` · user `u944949387` · pass `$FTP_PASS` · webroot `/domains/amiteshray.com/public_html/`
 
 **KEY CONSTANTS in cfa-l2.html:**
 - `PAGE_IMAGES` — maps `"prefix-01"` → `"./assets/notes/prefix-01.jpg"`
@@ -178,7 +178,7 @@ if (m) { try { new Function(m[1]); console.log('JS valid'); } catch(e) { console
 ```bash
 FTP_HOST="217.21.90.95"
 FTP_USER="u944949387"
-FTP_PASS="Sphs@05164426082001"
+FTP_PASS="${FTP_PASS:?export FTP_PASS first (never commit it)}"
 # CRITICAL: always use the full absolute path below — partial paths upload to wrong directory
 FTP_LIVE_ROOT="/domains/amiteshray.com/public_html/studyhub"
 NOTES_DIR="/sessions/determined-nifty-allen/mnt/CFA PREP/_port_repo/studyhub/assets/notes"
@@ -260,11 +260,11 @@ Supported keys as of last update: `equity`, `fi`, `deriv`, `derivatives`, `econ`
 3. FTPS deploy — use the **full absolute path** for both files:
    ```bash
    curl -s -T "_port_repo/studyhub/assets/seed_explainers.js" --ftp-ssl --insecure --ftp-pasv \
-     -u "u944949387:Sphs@05164426082001" \
+     -u "u944949387:$FTP_PASS" \
      "ftp://217.21.90.95/domains/amiteshray.com/public_html/studyhub/assets/seed_explainers.js" \
      -w "seed_explainers: %{http_code}\n" -o /dev/null
    curl -s -T "_port_repo/studyhub/cfa-l2.html" --ftp-ssl --insecure --ftp-pasv \
-     -u "u944949387:Sphs@05164426082001" \
+     -u "u944949387:$FTP_PASS" \
      "ftp://217.21.90.95/domains/amiteshray.com/public_html/studyhub/cfa-l2.html" \
      -w "cfa-l2.html: %{http_code}\n" -o /dev/null
    ```

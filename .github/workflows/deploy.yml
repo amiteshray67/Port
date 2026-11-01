@@ -18,7 +18,7 @@ jobs:
         with:
           server: 217.21.90.95
           username: u944949387
-          password: Sphs@05164426082001
+          password: ${{ secrets.FTP_PASSWORD }}
           # Correct web root on Hostinger — previous /public_html/ was wrong and deployed to FTP home dir
           server-dir: /domains/amiteshray.com/public_html/
           protocol: ftps
