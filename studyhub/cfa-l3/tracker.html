@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CFA L3 Progress Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/frame.css">
+<style>.sub{border-top:3px solid var(--c);background:var(--surface);border-radius:10px;margin-bottom:1rem;padding:.8rem 1rem}.sub summary{cursor:pointer;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}.sub summary b{flex:1;min-width:160px}.bench{color:var(--good)}.bad{color:var(--bad)}svg{max-width:560px;width:100%}</style></head>
+<body>
+<h1>Progress tracker</h1><p class="mut">Five stages per module. Ticking Learn also marks the module done in the main hub. Readiness is weighted by each topic's exam weight.</p>
+<div class="grid" id="top"></div>
+<h2>Modules</h2><div id="subs"></div>
+<h2>Mock exams</h2>
+<div class="panel"><div class="row"><label class="f"><span>Date</span><input type="date" id="m-d"></label><label class="f"><span>Mock</span><input id="m-n" placeholder="CFAI mock 1" style="width:150px"></label><label class="f"><span>Item-set %</span><input id="m-i" type="number" min="0" max="100" style="width:90px"></label><label class="f"><span>Constructed response %</span><input id="m-c" type="number" min="0" max="100" style="width:90px"></label><button class="btn" onclick="addMock()">Add</button></div>
+<p class="mut">Total is the average of the two sections (item sets and constructed response carry about equal weight). 70% is a planning benchmark for readiness, not an official pass mark, because the pass mark is never published.</p>
+<div id="chart"></div><div class="tw"><table><thead><tr><th>Date</th><th>Mock</th><th>Item sets</th><th>CR</th><th>Total</th><th></th></tr></thead><tbody id="mocks"></tbody></table></div></div>
+<script src="assets/l3_data.js"></script>
+<script>
+const LSget=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},LSset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}
+const STAGES=[['learn','Learn',30],['eoc','EOC Qs',20],['cr','CR practice',15],['r1','Revision 1',20],['r2','Revision 2',15]];
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const state=()=>LSget('cfa3_tracker_v1',{mods:{},mocks:[]});
+function save(s){LSset('cfa3_tracker_v1',s)}
+function tick(lm,k,on){const s=state();s.mods[lm]=s.mods[lm]||{};s.mods[lm][k]=on?1:0;save(s);
+  if(k==='learn'){const d=LSget('cfa3_done',{});if(on)d[lm]=new Date().toISOString().slice(0,10);else delete d[lm];LSset('cfa3_done',d)}render()}
+function topicPct(t,s){const ms=MODULES.filter(m=>m.t===t.id);if(!ms.length)return 0;
+  return ms.reduce((a,m)=>a+STAGES.reduce((b,st)=>b+(((s.mods[m.lm]||{})[st[0]])?st[2]:0),0),0)/ms.length}
+function render(){const s=state();
+  const tp=TOPICS3.map(t=>({t,p:topicPct(t,s)})),totW=TOPICS3.reduce((a,t)=>a+t.mid,0),ready=tp.reduce((a,x)=>a+x.p*x.t.mid,0)/totW;
+  const last=s.mocks.slice(-1)[0],learn=MODULES.filter(m=>(s.mods[m.lm]||{}).learn).length;
+  document.getElementById('top').innerHTML='<div class="stat"><span>READINESS</span><b>'+Math.round(ready)+'%</b><span>weighted by topic</span></div><div class="stat"><span>MODULES LEARNT</span><b>'+learn+'/36</b></div><div class="stat"><span>LATEST MOCK</span><b>'+(last?Math.round((last.i+last.c)/2)+'%':'—')+'</b><span>'+(last?esc(last.n):'none yet')+'</span></div>'+
+    tp.map(x=>'<div class="stat" style="border-top:3px solid '+x.t.color+'"><span>'+esc(x.t.short.toUpperCase())+' · '+x.t.weight+'</span><b>'+Math.round(x.p)+'%</b><div class="meter" style="--c:'+x.t.color+'"><i style="width:'+x.p+'%"></i></div></div>').join('');
+  const open=JSON.parse(sessionStorage.getItem('open3')||'[]');
+  document.getElementById('subs').innerHTML=TOPICS3.map(t=>{const ms=MODULES.filter(m=>m.t===t.id);
+    return '<details class="sub" data-t="'+t.id+'"'+(open.includes(t.id)?' open':'')+' style="--c:'+t.color+'"><summary><b>'+t.icon+' '+esc(t.label)+'</b><span class="mut">'+t.weight+'</span><span style="width:140px"><div class="meter" style="--c:'+t.color+'"><i style="width:'+topicPct(t,s)+'%"></i></div></span><span>'+Math.round(topicPct(t,s))+'%</span></summary><div class="tw"><table><thead><tr><th>LM</th><th>Module</th>'+STAGES.map(x=>'<th class="c">'+x[1]+'</th>').join('')+'</tr></thead><tbody>'+
+    ms.map(m=>'<tr><td>'+m.lm+'</td><td>'+esc(m.n)+'</td>'+STAGES.map(x=>'<td class="c"><input type="checkbox" '+(((s.mods[m.lm]||{})[x[0]])?'checked':'')+' onchange="tick('+m.lm+',\''+x[0]+'\',this.checked)" aria-label="'+esc(m.n)+' '+x[1]+'"></td>').join('')+'</tr>').join('')+'</tbody></table></div></details>'}).join('');
+  document.querySelectorAll('details.sub').forEach(d=>d.addEventListener('toggle',()=>{const o=[...document.querySelectorAll('details.sub[open]')].map(x=>x.dataset.t);try{sessionStorage.setItem('open3',JSON.stringify(o))}catch(e){}}));
+  document.getElementById('mocks').innerHTML=s.mocks.map((m,i)=>{const t=(m.i+m.c)/2;return '<tr><td>'+m.d+'</td><td>'+esc(m.n)+'</td><td>'+m.i+'%</td><td>'+m.c+'%</td><td class="'+(t>=70?'bench':'bad')+'"><b>'+Math.round(t)+'%</b></td><td><button class="mini" onclick="delMock('+i+')">Delete</button></td></tr>'}).join('')||'<tr><td colspan="6" class="mut">No mocks logged.</td></tr>';
+  const pts=s.mocks.map(m=>(m.i+m.c)/2);document.getElementById('chart').innerHTML=pts.length<2?'':(()=>{const W=520,H=160,px=i=>30+i/(pts.length-1)*(W-50),py=v=>H-20-v/100*(H-40);
+    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mock totals"><line x1="30" x2="'+(W-20)+'" y1="'+py(70)+'" y2="'+py(70)+'" stroke="var(--good)" stroke-dasharray="4 4"/><text x="32" y="'+(py(70)-4)+'" fill="var(--good)" font-size="10">70% benchmark</text><polyline fill="none" stroke="var(--accent2)" stroke-width="2.4" points="'+pts.map((v,i)=>px(i)+','+py(v)).join(' ')+'"/>'+pts.map((v,i)=>'<circle cx="'+px(i)+'" cy="'+py(v)+'" r="4" fill="var(--accent2)"/>').join('')+'</svg>'})();}
+function addMock(){const i=parseFloat(document.getElementById('m-i').value),c=parseFloat(document.getElementById('m-c').value);if(isNaN(i)||isNaN(c))return;
+  const s=state();s.mocks.push({d:document.getElementById('m-d').value||new Date().toISOString().slice(0,10),n:document.getElementById('m-n').value||'Mock',i,c});s.mocks.sort((a,b)=>a.d<b.d?-1:1);save(s);['m-n','m-i','m-c'].forEach(x=>document.getElementById(x).value='');render()}
+function delMock(i){const s=state();s.mocks.splice(i,1);save(s);render()}
+document.getElementById('m-d').value=new Date().toISOString().slice(0,10);render();
+</script></body></html>

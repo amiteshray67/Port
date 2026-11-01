@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CFA L3 Flashcards</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/frame.css">
+<style>.fc{max-width:560px;min-height:220px;margin:1rem auto;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:.6rem;cursor:pointer}.fc h2{margin:0;font-size:1.3rem}.fc .h{color:var(--accent2)}.fc .s{font-size:1rem}.conf{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}.lr{display:flex;justify-content:space-between;gap:.6rem;padding:.35rem 0;border-bottom:1px solid var(--border)}</style></head>
+<body><h1>Flashcards</h1><p class="mut">45+ terms. The deck of the day rotates through 15 groups, so every term comes round once every two weeks. Rate each card; weak ones come back first.</p>
+<div class="chips" id="modes"></div><div class="mut" id="info"></div>
+<div class="fc" id="card" onclick="flip()" tabindex="0" role="button" aria-label="Flip card"></div>
+<div class="conf" id="conf" hidden><button class="btn" style="background:var(--bad);border-color:var(--bad)" onclick="rate(0)">Didn't know</button><button class="btn" style="background:var(--warn);border-color:var(--warn);color:#111" onclick="rate(1)">Unsure</button><button class="btn" style="background:var(--good);border-color:var(--good)" onclick="rate(2)">Knew it</button></div>
+<h2>All terms</h2><input type="search" id="q" placeholder="Search…" oninput="list()" style="width:100%;max-width:360px;margin-bottom:.6rem"><div id="all"></div>
+<script src="assets/l3_data.js"></script><script src="assets/l3_glossary.js"></script>
+<script>
+try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}
+const G=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let mode='today',deck=[],i=0,shown=false,conf=G('cfa3_gloss',{});
+const todayDeck=()=>{const d=Math.floor(Date.now()/864e5)%DAYS3+1;return d};
+function setMode(m){mode=m;build()}
+function build(){const t=todayDeck();
+  document.getElementById('modes').innerHTML=[['today','Deck of the day ('+t+'/'+DAYS3+')'],['weak','Weak cards'],['all','Everything']].concat(TOPICS3.map(x=>[x.id,x.icon+' '+x.short])).map(x=>'<button class="chip" aria-pressed="'+(mode===x[0])+'" onclick="setMode(\''+x[0]+'\')">'+x[1]+'</button>').join('');
+  deck=TERMS3.filter(x=>mode==='today'?x.day===t:mode==='weak'?(conf[x.id]===0||conf[x.id]===1):mode==='all'?true:x.t===mode);
+  deck=deck.slice().sort(()=>Math.random()-.5);i=0;shown=false;draw()}
+function draw(){const c=document.getElementById('card');document.getElementById('info').textContent=deck.length?'Card '+(i+1)+' of '+deck.length:'';
+  if(!deck.length){c.innerHTML='<div class="mut">No cards in this set.</div>';document.getElementById('conf').hidden=true;return}
+  const x=deck[i];c.innerHTML=shown?'<h2>'+esc(x.n)+'</h2><div class="s">'+esc(x.s)+'</div>'+(x.f?'<pre style="white-space:pre-wrap;margin:0">'+esc(x.f)+'</pre>':''):'<h2>'+esc(x.n)+'</h2><div class="h">'+esc(x.h)+'</div><div class="mut">Tap to reveal</div>';
+  document.getElementById('conf').hidden=!shown}
+function flip(){if(!deck.length)return;shown=!shown;draw()}
+function rate(v){conf[deck[i].id]=v;S('cfa3_gloss',conf);i=(i+1)%deck.length;shown=false;draw();list()}
+document.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){if(e.target.id==='q')return;e.preventDefault();flip()}});
+function list(){const q=document.getElementById('q').value.toLowerCase();
+  document.getElementById('all').innerHTML=TERMS3.filter(x=>!q||(x.n+x.s).toLowerCase().includes(q)).map(x=>'<div class="lr"><span><b>'+esc(x.n)+'</b> <span class="mut">'+esc(x.s)+'</span></span><span>'+['🔴','🟡','🟢'][conf[x.id]]||''+'</span></div>').join('')}
+build();list();
+</script></body></html>
