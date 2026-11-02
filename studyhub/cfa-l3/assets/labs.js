@@ -3,7 +3,7 @@
 const num = (id) => { const v = parseFloat($(id).value); return isNaN(v) ? 0 : v; };
 const f2 = (x, d) => (isFinite(x) ? x.toLocaleString('en-US', { minimumFractionDigits: d == null ? 2 : d, maximumFractionDigits: d == null ? 2 : d }) : '—');
 const pc = (x, d) => f2(x * 100, d == null ? 2 : d) + '%';
-function fld(id, label, val, step) { return '<label class="f"><span>' + label + '</span><input id="' + id + '" type="number" step="' + (step || 'any') + '" value="' + val + '" oninput="LABS[curLab].run()"></label>'; }
+function fld(id, label, val, step) { return '<label class="f"><span>' + label + '</span><input id="' + id + '" type="number" step="' + (step || 'any') + '" value="' + val + '" oninput="labSave();LABS[curLab].run()"></label>'; }
 function out(rows) { return '<table class="kv">' + rows.map(r => '<tr><td>' + r[0] + '</td><td class="n"><b>' + r[1] + '</b></td></tr>').join('') + '</table>'; }
 function svgLines(series, xs, o) {
   o = o || {}; const W = 520, H = 240, m = { l: 46, r: 12, t: 12, b: 28 };
@@ -20,7 +20,7 @@ function svgLines(series, xs, o) {
 
 const LABS = {
   opt: { name: 'Option strategy payoff', note: 'Profit at expiry for common overlays. Premiums are per share.',
-    html: () => '<label class="f"><span>Strategy</span><select id="o-s" onchange="LABS.opt.run()"><option value="cc">Covered call</option><option value="pp">Protective put</option><option value="col">Collar</option><option value="bcs">Bull call spread</option><option value="lc">Long call</option><option value="str">Long straddle</option></select></label>' + fld('o-s0', 'Spot / purchase price', 100) + fld('o-k1', 'Strike 1 (put or long call)', 95) + fld('o-k2', 'Strike 2 (short call)', 110) + fld('o-p1', 'Premium 1', 2.5) + fld('o-p2', 'Premium 2', 3),
+    html: () => '<label class="f"><span>Strategy</span><select id="o-s" onchange="labSave();LABS.opt.run()"><option value="cc">Covered call</option><option value="pp">Protective put</option><option value="col">Collar</option><option value="bcs">Bull call spread</option><option value="lc">Long call</option><option value="str">Long straddle</option></select></label>' + fld('o-s0', 'Spot / purchase price', 100) + fld('o-k1', 'Strike 1 (put or long call)', 95) + fld('o-k2', 'Strike 2 (short call)', 110) + fld('o-p1', 'Premium 1', 2.5) + fld('o-p2', 'Premium 2', 3),
     run() {
       const st = $('o-s').value, S0 = num('o-s0'), K1 = num('o-k1'), K2 = num('o-k2'), p1 = num('o-p1'), p2 = num('o-p2');
       const call = (S, K) => Math.max(S - K, 0), put = (S, K) => Math.max(K - S, 0);
@@ -42,7 +42,7 @@ const LABS = {
     } },
   br: { name: 'Brinson attribution', note: 'Allocation, selection and interaction by sector (Brinson-Fachler allocation).',
     html: () => '<table class="grid"><thead><tr><th>Sector</th><th>Port wt %</th><th>Bench wt %</th><th>Port ret %</th><th>Bench ret %</th></tr></thead><tbody>' +
-      [['Equity', 60, 50, 9, 8], ['Bonds', 30, 40, 3, 4], ['Alts', 10, 10, 6, 5]].map((r, i) => '<tr><td>' + r[0] + '</td>' + r.slice(1).map((v, j) => '<td><input id="b-' + i + '-' + j + '" type="number" step="any" value="' + v + '" oninput="LABS.br.run()"></td>').join('') + '</tr>').join('') + '</tbody></table>',
+      [['Equity', 60, 50, 9, 8], ['Bonds', 30, 40, 3, 4], ['Alts', 10, 10, 6, 5]].map((r, i) => '<tr><td>' + r[0] + '</td>' + r.slice(1).map((v, j) => '<td><input id="b-' + i + '-' + j + '" type="number" step="any" value="' + v + '" oninput="labSave();LABS.br.run()"></td>').join('') + '</tr>').join('') + '</tbody></table>',
     run() {
       const rows = [0, 1, 2].map(i => [0, 1, 2, 3].map(j => num('b-' + i + '-' + j) / 100)), names = ['Equity', 'Bonds', 'Alts'];
       const Rb = rows.reduce((s, r) => s + r[1] * r[3], 0), Rp = rows.reduce((s, r) => s + r[0] * r[2], 0);
@@ -91,8 +91,11 @@ const LABS = {
         '<p class="mut">An underfunded plan with shorter-duration assets loses surplus when rates fall, because liabilities rise faster. Lengthen asset duration or buy futures to match DV01, or hold cash-flow-matched bonds for full immunization. Duration matching only covers parallel shifts, so check key-rate durations too.</p>';
     } }
 };
-let curLab = 'opt';
+let curLab = UI.get('curLab', 'opt'); if (!LABS[curLab]) curLab = 'opt';
+function labSave() { const o = {}; document.querySelectorAll('#lab-in input,#lab-in select').forEach(el => { if (el.id) o[el.id] = el.value; }); UI.set('lab_' + curLab, o); }
+function labRestore() { const o = UI.get('lab_' + curLab, null); if (!o) return; Object.keys(o).forEach(id => { const el = $(id); if (el) el.value = o[id]; }); }
+function labReset() { UI.set('lab_' + curLab, null); renderLabs(); }
 function renderLabs() {
   $('lab-tabs').innerHTML = Object.keys(LABS).map(k => '<button class="chip" aria-pressed="' + (k === curLab) + '" onclick="curLab=\'' + k + '\';renderLabs()">' + LABS[k].name + '</button>').join('');
-  $('lab-note').textContent = LABS[curLab].note; $('lab-in').innerHTML = LABS[curLab].html(); LABS[curLab].run();
+  $('lab-note').textContent = LABS[curLab].note; $('lab-in').innerHTML = LABS[curLab].html() + '<button class="mini" onclick="labReset()">Reset to defaults</button>'; labRestore(); LABS[curLab].run();
 }

@@ -121,7 +121,7 @@ iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);bo
     <div class="chips" id="ns-chips"></div><input id="ns-q" type="search" placeholder="Search concepts…" oninput="nsSearch_(this.value)" style="width:100%;max-width:420px;margin-bottom:.8rem"><div id="ns-cards"></div></section>
 
   <section class="view" id="v-formulas"><h1>Formula sheet</h1><p class="lede" id="fm-count"></p><div class="chips" id="fm-chips"></div>
-    <input type="search" placeholder="Search formulas…" oninput="fmQ=this.value.toLowerCase();renderFormulas()" style="width:100%;max-width:420px;margin-bottom:.8rem"><div id="fm-list"></div></section>
+    <input type="search" placeholder="Search formulas…" id="fm-q" oninput="fmQ=this.value.toLowerCase();UI.set('fmQ',fmQ);renderFormulas()" style="width:100%;max-width:420px;margin-bottom:.8rem"><div id="fm-list"></div></section>
 
   <section class="view" id="v-explainers"><h1>Explainers</h1><p class="lede">Visual walk-throughs of the hardest ideas.</p><div id="exp-list"></div><h2 id="exp-title" style="margin-top:1rem"></h2><iframe id="exp-frame" class="fr" title="Explainer" sandbox="allow-scripts"></iframe></section>
 
@@ -133,7 +133,7 @@ iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);bo
   <section class="view" id="v-cr"><h1>Constructed-response trainer</h1><p class="lede">Roughly half the marks are written answers. Practise against the clock, compare to a model answer, and score yourself honestly. <span id="cr-sum"></span></p>
     <div class="chips" id="cr-chips"></div>
     <div class="panel" id="cr-work" hidden><div style="display:flex;justify-content:space-between;align-items:center"><div id="cr-q"></div><div class="timer" id="cr-time"></div></div>
-      <textarea id="cr-ans" style="min-height:150px" placeholder="Write your answer. Show the working and answer exactly what the command word asks."></textarea>
+      <textarea id="cr-ans" oninput="crDraft(this.value)" style="min-height:150px" placeholder="Write your answer. Show the working and answer exactly what the command word asks."></textarea>
       <button class="btn" onclick="crShow()" style="margin-top:.5rem">Show model answer</button>
       <div id="cr-reveal" hidden style="margin-top:1rem"><h4>Model answer</h4><div id="cr-model"></div><label class="f" style="max-width:260px;margin-top:.6rem"><span id="cr-sl"></span><input type="number" id="cr-score"></label><button class="btn" onclick="crSave()" style="margin-top:.5rem">Save score</button><p class="mut">Scoring under 70% logs the drill to your error log.</p></div></div>
     <div id="cr-list"></div>
@@ -173,7 +173,11 @@ iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);bo
 <script src="assets/labs.js"></script>
 <script>
 loadTheme();
-const first = (location.hash || '').slice(1);
+$('fm-q').value = fmQ;
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+try { localStorage.setItem('cfa3_probe', '1'); localStorage.removeItem('cfa3_probe'); } catch (e) { UI.fail = true; }
+if (UI.fail) { const b = document.createElement('div'); b.className = 'panel warn'; b.textContent = 'This browser is blocking local storage, so progress will not be saved. Open the hub in a normal (non-private) window.'; document.querySelector('.main').prepend(b); }
+const first = (location.hash || ('#' + UI.get('view', ''))).slice(1);
 switchView(VIEWS[first] ? first : 'dashboard');
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (VIEWS[h]) switchView(h); });
 </script>

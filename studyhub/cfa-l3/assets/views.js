@@ -26,10 +26,10 @@ VIEWS.qbank = () => lazyFrame('qbank', 'qbank.html');
 VIEWS.glossary = () => lazyFrame('glossary', 'glossary.html');
 
 // ───── notes navigator (concept cards) ─────
-let nsTopic = 'all', nsQ = '', nsType = 'all';
-function nsFilter(t) { nsTopic = t; if ($('v-notes').classList.contains('active')) buildNsIndex(); }
-function nsType_(t) { nsType = t; buildNsIndex(); }
-function nsSearch_(v) { nsQ = v.toLowerCase(); renderNsCards(); }
+let nsTopic = UI.get('nsTopic', 'all'), nsQ = UI.get('nsQ', ''), nsType = UI.get('nsType', 'all');
+function nsFilter(t) { nsTopic = t; UI.set('nsTopic', t === 'all' ? null : t); if ($('v-notes').classList.contains('active')) buildNsIndex(); }
+function nsType_(t) { nsType = t; UI.set('nsType', t === 'all' ? null : t); buildNsIndex(); }
+function nsSearch_(v) { nsQ = v.toLowerCase(); UI.set('nsQ', nsQ); renderNsCards(); }
 function buildNsIndex() {
   $('ns-chips').innerHTML = topicChips('ns', nsTopic, 'nsFilter') +
     '<span class="sep"></span>' + ['all', 'concept', 'formula', 'exam'].map(x => '<button class="chip" aria-pressed="' + (nsType === x) + '" onclick="nsType_(\'' + x + '\')">' + (x === 'all' ? 'Any type' : x) + '</button>').join('');
@@ -48,8 +48,8 @@ function renderNsCards() {
 }
 
 // ───── formulas ─────
-let fmTopic = 'all', fmQ = '';
-function fmFilter(t) { fmTopic = t; renderFormulas(); }
+let fmTopic = UI.get('fmTopic', 'all'), fmQ = UI.get('fmQ', '');
+function fmFilter(t) { fmTopic = t; UI.set('fmTopic', t === 'all' ? null : t); renderFormulas(); }
 function renderFormulas() {
   $('fm-chips').innerHTML = topicChips('fm', fmTopic, 'fmFilter');
   const fil = FORMULAS.filter(f => (fmTopic === 'all' || f.t === fmTopic) && (!fmQ || (f.n + f.f + (f.note || '')).toLowerCase().includes(fmQ)));
@@ -59,9 +59,9 @@ function renderFormulas() {
 }
 
 // ───── IPS studio ─────
-let ipsId = 'indiv';
+let ipsId = UI.get('ipsId', 'indiv');
 function renderIps() {
-  $('ips-tabs').innerHTML = IPS.map(i => '<button class="chip" aria-pressed="' + (i.id === ipsId) + '" onclick="ipsId=\'' + i.id + '\';renderIps()">' + i.icon + ' ' + esc(i.label) + '</button>').join('');
+  $('ips-tabs').innerHTML = IPS.map(i => '<button class="chip" aria-pressed="' + (i.id === ipsId) + '" onclick="ipsId=\'' + i.id + '\';UI.set(\'ipsId\',ipsId);renderIps()">' + i.icon + ' ' + esc(i.label) + '</button>').join('');
   const a = IPS.find(i => i.id === ipsId), notes = LS.get(K.ips, {})[ipsId] || {};
   const rows = [['ret', 'Return objective'], ['risk', 'Risk objective'], ['time', 'Time horizon'], ['liq', 'Liquidity'], ['tax', 'Taxes'], ['legal', 'Legal and regulatory'], ['unique', 'Unique circumstances']];
   $('ips-body').innerHTML = '<div class="grid2">' + rows.map(r => '<div class="panel ips-r"><h4>' + r[1] + '</h4><div>' + a[r[0]] + '</div><textarea placeholder="Your own note or example from a mock" oninput="ipsSave(\'' + r[0] + '\',this.value)">' + esc(notes[r[0]] || '') + '</textarea></div>').join('') + '</div>' +
@@ -70,9 +70,9 @@ function renderIps() {
 function ipsSave(k, v) { const all = LS.get(K.ips, {}); all[ipsId] = all[ipsId] || {}; all[ipsId][k] = v; LS.set(K.ips, all); }
 
 // ───── constructed-response trainer ─────
-let crTopic = 'all', crCmd = 'all', crCur = null, crTimer = null, crLeft = 0;
-function crSetT(t) { crTopic = t; renderCr(); }
-function crSetC(c) { crCmd = c; renderCr(); }
+let crTopic = UI.get('crTopic', 'all'), crCmd = UI.get('crCmd', 'all'), crCur = null, crTimer = null, crLeft = 0;
+function crSetT(t) { crTopic = t; UI.set('crTopic', t === 'all' ? null : t); renderCr(); }
+function crSetC(c) { crCmd = c; UI.set('crCmd', c === 'all' ? null : c); renderCr(); }
 function renderCr() {
   const hist = LS.get(K.cr, {});
   $('cr-chips').innerHTML = topicChips('cr', crTopic, 'crSetT') + '<span class="sep"></span><select onchange="crSetC(this.value)" aria-label="Command word"><option value="all">Any command word</option>' + COMMAND_WORDS.map(c => '<option' + (c.w === crCmd ? ' selected' : '') + '>' + c.w + '</option>').join('') + '</select>';
@@ -88,7 +88,7 @@ function crOpen(id) {
   crCur = CR_DRILLS.find(d => d.id === id); clearInterval(crTimer);
   $('cr-work').hidden = false; $('cr-reveal').hidden = true;
   $('cr-q').innerHTML = '<div class="meta"><span class="pill">' + crCur.cmd + '</span><span class="pill">' + crCur.pts + ' points</span><span class="pill">' + topic(crCur.t).short + ' · LM ' + crCur.lm + '</span></div><p>' + esc(crCur.q) + '</p>';
-  $('cr-ans').value = ''; crLeft = Math.round(crCur.min * 60); crTick();
+  $('cr-ans').value = UI.get('crDraft_' + id, ''); crLeft = Math.round(crCur.min * 60); crTick();
   crTimer = setInterval(crTick, 1000);
   $('cr-work').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -104,8 +104,10 @@ function crSave() {
   const v = parseFloat($('cr-score').value); if (isNaN(v)) return;
   const h = LS.get(K.cr, {}); h[crCur.id] = { score: Math.min(crCur.pts, Math.max(0, v)), date: isoOf(todayMs()) }; LS.set(K.cr, h);
   if (v < crCur.pts * 0.7) addError({ t: crCur.t, lm: crCur.lm, desc: 'CR drill ' + crCur.id + ': ' + crCur.q.slice(0, 80), cause: 'Scored ' + v + '/' + crCur.pts });
+  UI.set('crDraft_' + crCur.id, null);
   $('cr-work').hidden = true; renderCr();
 }
+function crDraft(v) { if (crCur) UI.set('crDraft_' + crCur.id, v); }
 
 // ───── ethics drill ─────
 let ethCur = null, ethAns = null;
@@ -138,8 +140,8 @@ function addError(e) {
   all.push({ id: Date.now() + Math.random(), date: today, t: e.t, lm: e.lm || null, desc: e.desc, cause: e.cause || '', box: 0, due: isoOf(todayMs() + DAY), mastered: false });
   LS.set(K.err, all);
 }
-let erFilter = 'due';
-function erSet(f) { erFilter = f; renderErrors(); }
+let erFilter = UI.get('erFilter', 'due');
+function erSet(f) { erFilter = f; UI.set('erFilter', f === 'due' ? null : f); renderErrors(); }
 function renderErrors() {
   const all = LS.get(K.err, []), today = isoOf(todayMs());
   $('er-t').innerHTML = topicOptions('aa');
@@ -166,7 +168,7 @@ function erAct(id, a) {
 
 // ───── session logger ─────
 function renderSessions() {
-  const s = LS.get(K.sess, []); $('ss-t').innerHTML = topicOptions('aa'); if (!$('ss-d').value) $('ss-d').value = isoOf(todayMs());
+  const s = LS.get(K.sess, []); $('ss-t').innerHTML = topicOptions(UI.get('ssTopic', 'aa')); if (!$('ss-d').value) $('ss-d').value = isoOf(todayMs());
   const now = todayMs(), wk = isoOf(now - 6 * DAY), tot = s.reduce((a, x) => a + x.mins, 0), wkm = s.filter(x => x.date >= wk).reduce((a, x) => a + x.mins, 0);
   const days = {}; s.forEach(x => days[x.date] = 1); let streak = 0; for (let t = now; days[isoOf(t)]; t -= DAY) streak++;
   $('ss-sum').innerHTML = stat('TOTAL LOGGED', hh(tot / 60), s.length + ' sessions') + stat('LAST 7 DAYS', hh(wkm / 60), 'target ' + hh(2 * 5 + 8)) + stat('STREAK', streak + 'd', 'consecutive study days');
@@ -177,7 +179,7 @@ function renderSessions() {
 function ssAdd() {
   const m = parseInt($('ss-m').value); if (!m || m < 1) return;
   const s = LS.get(K.sess, []); s.push({ date: $('ss-d').value || isoOf(todayMs()), t: $('ss-t').value, mins: m, note: $('ss-n').value.trim() });
-  s.sort((a, b) => a.date < b.date ? -1 : 1); LS.set(K.sess, s); $('ss-m').value = ''; $('ss-n').value = ''; renderSessions();
+  UI.set('ssTopic', $('ss-t').value); s.sort((a, b) => a.date < b.date ? -1 : 1); LS.set(K.sess, s); $('ss-m').value = ''; $('ss-n').value = ''; renderSessions();
 }
 function ssDel(i) { const s = LS.get(K.sess, []); s.splice(i, 1); LS.set(K.sess, s); renderSessions(); }
 
