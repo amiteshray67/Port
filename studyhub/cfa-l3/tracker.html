@@ -10,7 +10,7 @@
 <div class="panel"><div class="row"><label class="f"><span>Date</span><input type="date" id="m-d"></label><label class="f"><span>Mock</span><input id="m-n" placeholder="CFAI mock 1" style="width:150px"></label><label class="f"><span>Item-set %</span><input id="m-i" type="number" min="0" max="100" style="width:90px"></label><label class="f"><span>Constructed response %</span><input id="m-c" type="number" min="0" max="100" style="width:90px"></label><button class="btn" onclick="addMock()">Add</button></div>
 <p class="mut">Total is the average of the two sections (item sets and constructed response carry about equal weight). 70% is a planning benchmark for readiness, not an official pass mark, because the pass mark is never published.</p>
 <div id="chart"></div><div class="tw"><table><thead><tr><th>Date</th><th>Mock</th><th>Item sets</th><th>CR</th><th>Total</th><th></th></tr></thead><tbody id="mocks"></tbody></table></div></div>
-<script src="assets/l3_data.js"></script>
+<script src="assets/stamp.js"></script><script src="assets/l3_data.js"></script>
 <script>
 const LSget=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},LSset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}

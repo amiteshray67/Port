@@ -35,6 +35,8 @@ jobs:
             studyhub/assets/notes/*.jpg
             # Exclude seed_explainers.js — 12MB, deployed directly via FTP
             studyhub/assets/seed_explainers.js
+            # Sync data lives only on the server
+            studyhub/cfa-l3/sync_data/**
             # Exclude skill/agent files — not part of website
             .agents/**
             .claude/**

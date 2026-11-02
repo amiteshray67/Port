@@ -7,7 +7,7 @@
 <div class="fc" id="card" onclick="flip()" tabindex="0" role="button" aria-label="Flip card"></div>
 <div class="conf" id="conf" hidden><button class="btn" style="background:var(--bad);border-color:var(--bad)" onclick="rate(0)">Didn't know</button><button class="btn" style="background:var(--warn);border-color:var(--warn);color:#111" onclick="rate(1)">Unsure</button><button class="btn" style="background:var(--good);border-color:var(--good)" onclick="rate(2)">Knew it</button></div>
 <h2>All terms</h2><input type="search" id="q" placeholder="Search…" oninput="list()" style="width:100%;max-width:360px;margin-bottom:.6rem"><div id="all"></div>
-<script src="assets/l3_data.js"></script><script src="assets/l3_glossary.js"></script>
+<script src="assets/stamp.js"></script><script src="assets/l3_data.js"></script><script src="assets/l3_glossary.js"></script>
 <script>
 try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}
 const G=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
