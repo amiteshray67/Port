@@ -30,3 +30,4 @@ build/
 # CFA Library PDFs — uploaded via FTP, not committed (large + copyrighted)
 library/pdfs/*.pdf
 library/pdfs/*.PDF
+studyhub/cfa-l3/sync_data/

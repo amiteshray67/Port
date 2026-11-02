@@ -8,7 +8,7 @@
 <p class="mut">Level III item sets use three answer options. Wrong answers are added to your Error Log automatically.</p></div>
 <div class="panel" id="run" hidden><div class="row" style="justify-content:space-between"><b id="prog"></b><span class="timer" id="tm"></span></div><div id="q"></div><div id="fb"></div><div class="row" style="margin-top:.6rem"><button class="btn" id="nx" onclick="next()" hidden>Next</button><button class="mini" onclick="finish()">End session</button></div></div>
 <div class="panel" id="res" hidden></div>
-<script src="assets/l3_data.js"></script><script src="assets/l3_qbank.js"></script>
+<script src="assets/stamp.js"></script><script src="assets/l3_data.js"></script><script src="assets/l3_qbank.js"></script>
 <script>
 try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}
 const G=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};

@@ -92,7 +92,7 @@ iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);bo
   <button class="sb-item" data-view="downloads" onclick="switchView('downloads')">📥 Exports and backup</button>
 </nav>
 <main class="main">
-  <div class="top"><button class="menu-btn" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button><a href="../index.html" class="mut">← Study Hub</a><span class="sp"></span><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button></div>
+  <div class="top"><button class="menu-btn" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button><a href="../index.html" class="mut">← Study Hub</a><span class="sp"></span><button class="mini" id="sync-btn" onclick="switchView('downloads')" title="Cross-device sync">☁ Sync off</button><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button></div>
 
   <section class="view" id="v-dashboard"><h1>CFA Level III · Portfolio Management</h1><p class="lede">Exam 11 Aug 2027. Syllabus finished two months earlier, then revision and mocks.</p>
     <div class="stats" id="db-stats"></div><div id="db-today"></div>
@@ -156,6 +156,7 @@ iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);bo
     <div class="panel"><h4>Time by topic</h4><div id="ss-bars"></div></div><div id="ss-list"></div></section>
 
   <section class="view" id="v-downloads"><h1>Exports and backup</h1><p class="lede">Your progress lives in this browser. Back it up regularly.</p>
+    <div class="panel" id="sync-panel"></div>
     <div class="dlgrid">
       <div class="panel"><h4>Backup</h4><button class="btn" onclick="exportBackup()">Download backup (.json)</button><label class="f"><span>Restore from backup</span><input type="file" accept=".json" onchange="importBackup(this)"></label><div id="dl-msg" class="mut"></div></div>
       <div class="panel"><h4>Plan</h4><button class="btn" onclick="exportPlanIcs()">Calendar file (.ics)</button><button class="btn" onclick="exportPlanCsv()">Spreadsheet (.csv)</button><span class="mut">The calendar file adds one all-day event per study day.</span></div>
@@ -163,6 +164,7 @@ iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);bo
     </div></section>
 </main>
 </div>
+<script src="assets/stamp.js"></script>
 <script src="assets/l3_data.js"></script>
 <script src="assets/l3_tools.js"></script>
 <script src="assets/l3_glossary.js"></script>
@@ -171,6 +173,7 @@ iframe.fr{width:100%;height:calc(100vh - 90px);border:1px solid var(--border);bo
 <script src="assets/core.js"></script>
 <script src="assets/views.js"></script>
 <script src="assets/labs.js"></script>
+<script src="assets/sync.js"></script>
 <script>
 loadTheme();
 $('fm-q').value = fmQ;

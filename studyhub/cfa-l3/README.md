@@ -37,3 +37,7 @@ Use the same flow as L2 with these prefixes: `aa-`, `pc-`, `perf-`, `der-`, `pat
 
 ## What is saved
 Everything is saved in the browser (localStorage) as you work: module ticks, mocks, errors, sessions, plan settings, quiz and flashcard stats, IPS notes, plus every filter, tab, calculator input, constructed-response draft and the last view you were on. Data is per browser and device. Use Exports and backup to move it. If the browser blocks storage (private window), the hub shows a warning.
+
+## Cross-device sync
+`sync.php` plus `assets/sync.js`. Open Exports and backup, create a sync code, and paste it on your other device. Data is encrypted in the browser (AES-GCM, key derived from the code), so the server only stores ciphertext in `sync_data/` (created on first use, not in git). Edits made on two devices are combined with a three-way merge against the last synced snapshot, so adding on one device and deleting on another both survive. It needs PHP, which Hostinger shared hosting has. It will not work on GitHub Pages or when opening the files straight from disk.
+Not synced on purpose: theme, filters, tabs and calculator inputs, which are per device.
