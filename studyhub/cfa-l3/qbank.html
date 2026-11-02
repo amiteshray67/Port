@@ -16,6 +16,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;',
 const $=id=>document.getElementById(id);
 let Q=[],i=0,ans=[],timed=false,tleft=0,tt=null,st=G('cfa3_qb',{});
 $('t').innerHTML='<option value="all">All topics</option>'+TOPICS3.map(t=>'<option value="'+t.id+'">'+esc(t.label)+'</option>').join('');
+['t','d','o'].forEach(id=>{const v=G('cfa3_qb_setup',{})[id];if(v!=null)$(id).value=v;$(id).addEventListener('change',()=>{const s=G('cfa3_qb_setup',{});s[id]=$(id).value;S('cfa3_qb_setup',s)})});
 const seen=Object.keys(st).length;$('sub').textContent=QB3.length+' starter questions · '+seen+' attempted. This is a starter set; add more to assets/l3_qbank.js in the same format, and use the official CFA Institute mocks for volume.';
 function start(tm){timed=tm;const t=$('t').value,d=+$('d').value,o=$('o').value;
   Q=QB3.filter(q=>(t==='all'||q.t===t)&&(!d||q.d===d)&&(o==='all'||(o==='new'&&!st[q.id])||(o==='wrong'&&st[q.id]&&st[q.id].w>0)));

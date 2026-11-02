@@ -34,3 +34,6 @@ Same architecture as `cfa-l2.html`: static HTML, no build step, state in localSt
 
 ## StudyHubUpdater
 Use the same flow as L2 with these prefixes: `aa-`, `pc-`, `perf-`, `der-`, `path-`, `eth-`. Explainers here use `{id, topic, title, html}`. Generate the file with `json.dumps` so newlines are escaped.
+
+## What is saved
+Everything is saved in the browser (localStorage) as you work: module ticks, mocks, errors, sessions, plan settings, quiz and flashcard stats, IPS notes, plus every filter, tab, calculator input, constructed-response draft and the last view you were on. Data is per browser and device. Use Exports and backup to move it. If the browser blocks storage (private window), the hub shows a warning.

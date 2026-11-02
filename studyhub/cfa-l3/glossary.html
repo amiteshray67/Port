@@ -12,9 +12,9 @@
 try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}
 const G=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let mode='today',deck=[],i=0,shown=false,conf=G('cfa3_gloss',{});
+let mode=G('cfa3_gloss_mode','today'),deck=[],i=0,shown=false,conf=G('cfa3_gloss',{});
 const todayDeck=()=>{const d=Math.floor(Date.now()/864e5)%DAYS3+1;return d};
-function setMode(m){mode=m;build()}
+function setMode(m){mode=m;S('cfa3_gloss_mode',m);build()}
 function build(){const t=todayDeck();
   document.getElementById('modes').innerHTML=[['today','Deck of the day ('+t+'/'+DAYS3+')'],['weak','Weak cards'],['all','Everything']].concat(TOPICS3.map(x=>[x.id,x.icon+' '+x.short])).map(x=>'<button class="chip" aria-pressed="'+(mode===x[0])+'" onclick="setMode(\''+x[0]+'\')">'+x[1]+'</button>').join('');
   deck=TERMS3.filter(x=>mode==='today'?x.day===t:mode==='weak'?(conf[x.id]===0||conf[x.id]===1):mode==='all'?true:x.t===mode);

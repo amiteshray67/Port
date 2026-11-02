@@ -2,6 +2,13 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const DAY = 86400000;
+// UI state: every filter, tab, selection and lab input is saved here so a reload puts you back where you were.
+const UI = {
+  _c: null,
+  all() { if (!this._c) { try { this._c = JSON.parse(localStorage.getItem('cfa3_ui') || '{}'); } catch (e) { this._c = {}; } } return this._c; },
+  get(k, d) { const v = this.all()[k]; return v === undefined ? d : v; },
+  set(k, v) { const a = this.all(); if (v === null || v === '' || v === undefined) delete a[k]; else a[k] = v; try { localStorage.setItem('cfa3_ui', JSON.stringify(a)); } catch (e) { UI.fail = true; } }
+};
 const K = { done: 'cfa3_done', cfg: 'cfa3_cfg', err: 'cfa3_errors', sess: 'cfa3_sessions', cr: 'cfa3_cr', eth: 'cfa3_eth', tracker: 'cfa3_tracker_v1', ips: 'cfa3_ips', qb: 'cfa3_qb' };
 const LS = {
   get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
@@ -80,6 +87,7 @@ function switchView(name) {
   const v = $('v-' + name); if (v) v.classList.add('active');
   if (VIEWS[name]) VIEWS[name]();
   document.body.classList.remove('nav-open');
+  UI.set('view', name === 'dashboard' ? null : name);
   try { history.replaceState(null, '', '#' + name); } catch (e) {}
 }
 function toggleTheme() {
@@ -133,7 +141,7 @@ function taskHtml(t) {
 }
 
 // ───── daily plan ─────
-let planMonth = 'all';
+let planMonth = UI.get('planMonth', 'all');
 function renderPlan() {
   const c = getCfg(); ['start','wd','sat','sun','depth','months'].forEach(k => { const el = $('pl-' + k); if (el && document.activeElement !== el) el.value = c[k]; });
   $('pl-depthv').textContent = Number(c.depth).toFixed(1) + 'x';
@@ -159,7 +167,7 @@ function renderPlan() {
   $('pl-phases').innerHTML = seg.map(s => '<div class="phase" style="--c:' + s.c + '"><h3>' + s.n + '</h3><span class="d">' + fshort(s.a) + ' → ' + fshort(s.b - DAY) + ' · ' + Math.round((s.b - s.a) / DAY) + ' days</span><p>' + s.d + '</p></div>').join('');
   // month chips and list
   const months = []; p.days.forEach(d => { const dt = new Date(d.t), k = dt.getUTCFullYear() + '-' + dt.getUTCMonth(); if (!months.find(m => m.k === k)) months.push({ k, l: MONTHS[dt.getUTCMonth()] + ' ' + dt.getUTCFullYear() }); });
-  $('pl-chips').innerHTML = '<button class="chip" onclick="planMonth=\'all\';renderPlan()" aria-pressed="' + (planMonth === 'all') + '">All</button>' + months.map(m => '<button class="chip" onclick="planMonth=\'' + m.k + '\';renderPlan()" aria-pressed="' + (planMonth === m.k) + '">' + m.l + '</button>').join('');
+  $('pl-chips').innerHTML = '<button class="chip" onclick="setPlanMonth(\'all\')" aria-pressed="' + (planMonth === 'all') + '">All</button>' + months.map(m => '<button class="chip" onclick="setPlanMonth(\'' + m.k + '\')" aria-pressed="' + (planMonth === m.k) + '">' + m.l + '</button>').join('');
   const now = todayMs(); let html = '', lastW = null;
   p.days.forEach(d => {
     const dt = new Date(d.t); if (planMonth !== 'all' && planMonth !== dt.getUTCFullYear() + '-' + dt.getUTCMonth()) return;
@@ -174,6 +182,7 @@ function planInput() {
   if (parseISO(c.start) >= parseISO(EXAM.date)) return;
   saveCfg(c); renderPlan();
 }
+function setPlanMonth(m) { planMonth = m; UI.set('planMonth', m === 'all' ? null : m); renderPlan(); }
 function planToday() { const el = document.querySelector('#pl-list .day.today'); if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
 
 // ───── syllabus (book by book) ─────
